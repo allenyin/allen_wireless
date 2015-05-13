@@ -294,7 +294,7 @@ ffa0829c:	12 9e 00 00
 ffa082a0:	83 c6 40 00 	A0 = A0 << 0x8;
 ffa082a4:	83 c6 40 10 	A1 = A1 << 0x8;
 ffa082a8:	07 c0 00 38 	R0.H = A1, R0.L = A0;
-ffa082ac:	10 c4 00 c0 	A1 = ABS A1, A0 = ABS A0;
+ffa082ac:	10 c4 3f c0 	A1 = ABS A1, A0 = ABS A0;
 ffa082b0:	06 c9 3f f1 	R4.H = (A1 -= R7.H * R7.H), R4.L = (A0 -= R7.L * R7.L) (IS) || R6 = [I0++] || NOP;
 ffa082b4:	06 9c 00 00 
 ffa082b8:	00 c8 2e 80 	A1 = R5.H * R6.L, A0 = R5.L * R6.L || NOP || NOP;
@@ -428,7 +428,7 @@ ffa084a4:	12 9e 00 00
 ffa084a8:	83 c6 40 00 	A0 = A0 << 0x8;
 ffa084ac:	83 c6 40 10 	A1 = A1 << 0x8;
 ffa084b0:	07 c0 00 38 	R0.H = A1, R0.L = A0;
-ffa084b4:	10 c4 00 c0 	A1 = ABS A1, A0 = ABS A0;
+ffa084b4:	10 c4 3f c0 	A1 = ABS A1, A0 = ABS A0;
 ffa084b8:	06 c9 3f f1 	R4.H = (A1 -= R7.H * R7.H), R4.L = (A0 -= R7.L * R7.L) (IS) || R6 = [I0++] || NOP;
 ffa084bc:	06 9c 00 00 
 ffa084c0:	00 c8 2e 80 	A1 = R5.H * R6.L, A0 = R5.L * R6.L || NOP || NOP;
@@ -549,7 +549,7 @@ ffa08688:	40 b9       	R0 = [FP -0x30];
 ffa0868a:	04 59       	R4 = R4 ^ R0;
 ffa0868c:	04 30       	R0 = R4;
 ffa0868e:	00 00       	NOP;
-ffa08690:	08 cc 00 80 	A1 = A0 = 0 || R2 = [I0++] || NOP;
+ffa08690:	08 cc 3f 80 	A1 = A0 = 0 || R2 = [I0++] || NOP;
 ffa08694:	02 9c 00 00 
 ffa08698:	12 cc 02 00 	SAA (R1:0, R3:2) || R0 = [I3++] || R2 = [I0++];
 ffa0869c:	18 9c 02 9c 
@@ -597,7 +597,7 @@ ffa08740:	09 4f       	R1 <<= 0x1;
 ffa08742:	88 51       	R6 = R0 + R1;
 ffa08744:	00 00       	NOP;
 ffa08746:	00 00       	NOP;
-ffa08748:	08 cc 00 80 	A1 = A0 = 0 || R0 = [I3++] || R2 = [I0++];
+ffa08748:	08 cc 3f 80 	A1 = A0 = 0 || R0 = [I3++] || R2 = [I0++];
 ffa0874c:	18 9c 02 9c 
 ffa08750:	12 cc 02 00 	SAA (R1:0, R3:2) || R0 = [I3++] || R2 = [I0++];
 ffa08754:	18 9c 02 9c 

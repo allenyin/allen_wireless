@@ -11,7 +11,7 @@ CC  = gcc
 CPP = g++
 TARGET = /usr/local/bin
 
-CPPFLAGS := -Iinclude -Iproto -I/usr/local/include -I../common_host
+CPPFLAGS := -Iinclude -Iproto -I/usr/include -I../common_host
 CPPFLAGS += -Wall -Wcast-align -Wpointer-arith -Wshadow -Wsign-compare \
 -Wformat=2 -Wno-format-y2k -Wmissing-braces -Wparentheses -Wtrigraphs \
 -Wextra -pedantic -std=c++11 -Wno-int-to-pointer-cast 
@@ -20,8 +20,10 @@ CFLAGS := -Wall -Wcast-align -Wpointer-arith -Wshadow -Wsign-compare \
 -Wformat=2 -Wno-format-y2k -Wmissing-braces -Wparentheses -Wtrigraphs \
 -Wextra -pedantic -std=c99
 
-LDFLAGS := -lGL -lGLU -lpthread -lCg -lCgGL -lgsl -lcblas -latlas -lm \
+#LDFLAGS := -lGL -lGLU -lpthread -lCg -lCgGL -lgsl -lcblas -latlas -lm \
 -lmatio -lhdf5
+LDFLAGS := -lGL -lGLU -lc -lm -lpthread -lCg -lCgGL -lgsl -lcblas -latlas \
+	-lmatio -lhdf5 -lprotobuf
 
 GLIBS := gtk+-2.0 gtkglext-1.0 gtkglext-x11-1.0 protobuf
 GTKFLAGS = `pkg-config --cflags $(GLIBS) `
@@ -64,14 +66,13 @@ ifeq ($(strip $(STACKPROTECTOR)),true)
 	CFLAGS   += -fstack-protector-all
 endif
 
-all: gtkclient wf_plot
-convert: convert
+all: spikes.pb.cc parameters.pb.cc gtkclient wf_plot convert
 
 spikes.pb.cc : proto/spikes.proto
-	protoc $< --cpp_out=.
+	protoc $< --cpp_out=proto/
 
 parameters.pb.cc : proto/parameters.proto
-	protoc $< --cpp_out=.
+	protoc $< --cpp_out=proto/
 
 src/%.o: src/%.cpp $(COM_HDR)
 	$(CPP) -c $(CPPFLAGS) $(GTKFLAGS) $< -o $@
@@ -83,24 +84,24 @@ src/%.o: src/%.c
 	$(CC) -c $(CFLAGS) $< -o $@
 
 gtkclient: $(GOBJS)
-	$(CPP) -o $@ $(GTKLD) $(LDFLAGS) $^
+	$(CPP) -o $@ $(GTKFLAGS) $^ $(GTKLD) $(LDFLAGS)
 
 convert: $(COBJS)
-	$(CPP) -o $@ -lmatio -lhdf5 -lz $^
+	$(CPP) -o $@ $^ -lmatio -lhdf5 -lz
 
 
 wf_plot: src/wf_plot.o
-	$(CC) -o $@ -lGL -lGLU -lglut -lpthread -lmatio -lhdf5 -lpng $^
+	$(CC) -o $@ $^ -lGL -lGLU -lglut -lpthread -lmatio -lhdf5 -lpng
 
 clean:
-	rm -rf gtkclient convert wf_plot src/*.o proto/*.o
+	rm -rf gtkclient convert wf_plot src/*.o proto/*.o proto/proto/*.pb.cc proto/proto/*.pb.h
 
 deps:
 	sudo apt-get install libgtk2.0-dev \
 	libgtkgl2.0-dev libgtkglext1-dev freeglut3-dev nvidia-cg-toolkit \
 	libgsl0-dev libatlas-base-dev libjack-jackd2-dev python-matplotlib \
-	python-jsonpickle python-opengl libboost1.49-all-dev pkg-config \
-	libhdf5-dev libsdl1.2-dev libprotobuf-dev protobuf-compiler
+	python-jsonpickle python-opengl pkg-config \
+	libhdf5-dev libsdl1.2-dev libprotobuf-dev protobuf-compiler libmatio-dev libboost1.55-all-dev 
 
 	echo "make sure /usr/lib64 is in /etc/ld.so.conf.d/libc.conf"
 	echo "otherwise Cg may not be found. "

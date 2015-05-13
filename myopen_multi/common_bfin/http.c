@@ -41,7 +41,7 @@ int httpResp( char* payload, int paylen ){
 		if(pos){
 			char* p; 
 			p = payload; p+= pos; 
-			int rawlen = atoi(p, 10); 
+			int rawlen = atoi_(p, 10); 
 			if(rawlen >= 32 && rawlen <= 4000){
 				u32* wr_ptr = pWR_PTR; 
 				u32 ptr = ((*wr_ptr) & 0x3ffe0) - (rawlen*16*2); 
@@ -96,25 +96,25 @@ int httpResp( char* payload, int paylen ){
 		pos = substr("xpos_chan=",payload,paylen); 
 		if(pos){
 			p = payload; p += pos; 
-			//g_mouseXpos = (u8)(PhysicalToLogicalChan(atoi( p, 3)) & 0xff); 
+			//g_mouseXpos = (u8)(PhysicalToLogicalChan(atoi_( p, 3)) & 0xff); 
 			paramChanged = 1; 
 		}
 		pos = substr("ypos_chan=",payload,paylen); 
 		if(pos){
 			p = payload; p += pos; 
-			//g_mouseYpos = (u8)(PhysicalToLogicalChan(atoi( p, 3)) & 0xff); 
+			//g_mouseYpos = (u8)(PhysicalToLogicalChan(atoi_( p, 3)) & 0xff); 
 			paramChanged = 1; 
 		}
 		pos = substr("xneg_chan=",payload,paylen); 
 		if(pos){
 			p = payload; p += pos; 
-			//g_mouseXneg = (u8)(PhysicalToLogicalChan(atoi( p, 3)) & 0xff); 
+			//g_mouseXneg = (u8)(PhysicalToLogicalChan(atoi_( p, 3)) & 0xff); 
 			paramChanged = 1; 
 		}
 		pos = substr("yneg_chan=",payload,paylen); 
 		if(pos){
 			p = payload; p += pos; 
-			//g_mouseYneg = (u8)(PhysicalToLogicalChan(atoi( p, 3)) & 0xff); 
+			//g_mouseYneg = (u8)(PhysicalToLogicalChan(atoi_( p, 3)) & 0xff); 
 			paramChanged = 1; 
 		}
 		//set the destination IP
@@ -122,7 +122,7 @@ int httpResp( char* payload, int paylen ){
 		if(pos){
 			payload += pos; paylen -= pos; //speed up the search..
 			p = payload; 
-			u32 tip = atoi(p,3) & 0xff; 
+			u32 tip = atoi_(p,3) & 0xff; 
 			NetDataDestIP &= 0xffffff00 ; //big-endian order.
 			NetDataDestIP += tip; 
 			paramChanged = 1; 
@@ -131,7 +131,7 @@ int httpResp( char* payload, int paylen ){
 		if(pos){
 			payload += pos; paylen -= pos; //speed up the search..
 			p = payload; 
-			u32 tip = atoi(p,3) & 0xff; 
+			u32 tip = atoi_(p,3) & 0xff; 
 			NetDataDestIP &= 0xffff00ff ; 
 			NetDataDestIP += tip << 8; 
 			paramChanged = 1; 
@@ -140,7 +140,7 @@ int httpResp( char* payload, int paylen ){
 		if(pos){
 			payload += pos; paylen -= pos; //speed up the search..
 			p = payload; 
-			u32 tip = atoi(p,3) & 0xff; 
+			u32 tip = atoi_(p,3) & 0xff; 
 			NetDataDestIP &= 0xff00ffff ; 
 			NetDataDestIP += tip << 16; 
 			paramChanged = 1; 
@@ -149,7 +149,7 @@ int httpResp( char* payload, int paylen ){
 		if(pos){
 			payload += pos; paylen -= pos; //speed up the search..
 			p = payload; 
-			u32 tip = atoi(p,3) & 0xff; 
+			u32 tip = atoi_(p,3) & 0xff; 
 			NetDataDestIP &= 0x00ffffff ; 
 			NetDataDestIP += tip << 24; 
 			paramChanged = 1; 

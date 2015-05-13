@@ -16,7 +16,7 @@ CFLAGS = $(INCLUDES) $(CPUDEFINES) -mcpu=bf532 $(OPT) -include memory.h -Wall
 # -fomit-frame-pointer
 # -ffixed-FP -ffixed-P5 -ffixed-P4 -ffixed-P0
 # note: -O means debug symbols are not loaded.
-LDR = /home/tlh24/svn/bfin/ldr-utils/ldr
+#LDR = /home/tlh24/svn/bfin/ldr-utils/ldr
 LDRFILE = $(shell ls *.ldr)
 
 LDFLAGS = -T bftiny.x

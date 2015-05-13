@@ -3,7 +3,7 @@ LOCAL = test.o spi.o test_spi.o divsi3.o
 # note: the order of objects in the .ldr mirrors the order in this list!
 
 CPUDEFINES = -D__ADSPBF527__  -D__BLACKFIN__
-INCLUDES = -I../common/ -I/opt/uClinux/bfin-elf/bfin-elf/include/
+INCLUDES = -I../common_bfin/ -I/opt/uClinux/bfin-elf/bfin-elf/include/
 ASMFLAGS = -x assembler-with-cpp $(INCLUDES) $(CPUDEFINES) -Wall
 ASMFLAGS += -mcpu=bf527 -include memory.h -include defBF527.h
 CFLAGS = $(INCLUDES) $(CPUDEFINES) -mcpu=bf527 -Wall -include memory.h
@@ -46,10 +46,10 @@ all: $(LOCAL) $(COMMON) test.dxe
 %.o: %.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 	
-%.o: ../common/%.c
+%.o: ../common_bfin/%.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 	
-%.o: ../common/%.asm
+%.o: ../common_bfin/%.asm
 	$(CC) $(ASMFLAGS) -c -o $@ $<
 	
 # this is for loading with the JTAG cable (icebear, from section5.ch)

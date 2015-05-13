@@ -3,9 +3,9 @@
 #include "memory.h"
 #include "util.h"
 #include "print.h"
-#include "spi.h"
 #include "ethernet.h"
 #include "nordic_regs.h"
+#include "spi.h"
 
 //OLED
 #define OLED_SDI (0x1 << 9)
