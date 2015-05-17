@@ -884,10 +884,11 @@ void* sock_thread(void* param){
 	g_rxsock[tid] = setup_socket(4340+g_radioChannel[tid],0); //udp sock.
 	int bcastsock = setup_socket(4340,0); 
 
+    // multicast group 
 	struct ip_mreqn group;
-	group.imr_multiaddr.s_addr = inet_addr("239.0.200.0");
-	group.imr_address.s_addr = htonl(INADDR_ANY);
-	group.imr_ifindex = 0;
+	group.imr_multiaddr.s_addr = inet_addr("239.0.200.0");  // IP multicast address of group
+	group.imr_address.s_addr = htonl(INADDR_ANY);           // IP addr of local interface, chosen by system.
+	group.imr_ifindex = 0;                                  // any interface
 	if(setsockopt(bcastsock, IPPROTO_IP, IP_ADD_MEMBERSHIP,
 		(char *)&group, sizeof(group)) < 0)
 		printf("Error adding multicast group");
