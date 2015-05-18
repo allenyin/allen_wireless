@@ -68,7 +68,8 @@ cgVertexShader*		g_vsThreshold;
 float		g_cursPos[2];
 float		g_viewportSize[2] = {640, 480}; //width, height.
 
-char g_bridgeIP[NSCALE][256]; //which thread has which bridge IP. threadsafe
+char g_bridgeIP[NSCALE][256];
+pthread_mutex_t mutex_bridge_IP = PTHREAD_MUTEX_INITIALIZER;
 unsigned int  g_radioChannel[NSCALE] = {124, 114, 94, 84};
 
 static float	g_fbuf[NFBUF][NSAMP*3]; //continuous waveform. range [-1 .. 1]
@@ -894,43 +895,43 @@ void* sock_thread(void* param){
 		printf("Error adding multicast group");
 
 	// this code needs to be seriously refactored to allow multiple bridges.
-		// or does it? 
 	while(!isBridgeFound){
+        printf("Thread number %ld waiting for bridge connection...\n", pthread_self());
 		socklen_t fromlen = sizeof(from);
 		int n = recvfrom(bcastsock, buf, sizeof(buf),0,
 						 (sockaddr*)&from, &fromlen);
 		if(fromlen > 0 && n > 0){
 			buf[n] = 0;
-			printf("rxed buf: %s\n", buf);
+			printf("Thread %ld: rxed buf= %s\n", pthread_self(), buf);
 			inet_ntop(AF_INET, (const void*)(&(from.sin_addr)),
 						 destName, 256);
-			printf("a wild bridge appears at %s\n",destName);
+			printf("Thread %ld: a wild bridge appears at %s\n", pthread_self(), destName);
+            pthread_mutex_unlock( &mutex_bridge_IP);
 			for(int t = 0; t < NSCALE; t++){
 					if(strcmp(g_bridgeIP[t], destName) == 0){
 						addressBound = true;
 					}
 			}
-			if(addressBound) {
-				printf("bridge already bound at %s\n",destName);
-				addressBound = false;
-				continue;
-			}
-			else
-			{
+			if(!addressBound) {
 			//send a response.
 				strcpy(g_bridgeIP[tid], destName);
 				isBridgeFound = true;
-				
 				buf[0] = g_radioChannel[tid]; /** radio channel. **/
-				printf("radio channel set to %d. It's super effective!\n", buf[0]); 
+				printf("Thread %ld: radio channel set to %d. It's super effective!\n", pthread_self(), buf[0]); 
 #ifdef EMG
 				buf[0] += 128; //put the bridge in EMG compat mode.
 #endif
 				buf[1] = 0;
 				n = sendto(bcastsock,buf,2,0,(sockaddr*)&from,sizeof(from));
 			}
+            else {
+				printf("Thread %ld: bridge already bound at %s\n", pthread_self(), destName);
+				addressBound = false;
+			}
+        pthread_mutex_unlock( &mutex_bridge_IP);
 		}
 	}
+
 	//must close that socket so another client may use it. 
 	close_socket(bcastsock); 
 	g_txsock[tid] = connect_socket(4342+g_radioChannel[tid],destName,0); //one port is Ok -- differentiate by IP at this point.
@@ -1018,6 +1019,7 @@ packet format in the file, as saved here:
 				}
 				g_dropped[tid] = drop;
 			}
+            // skip the 4-byte bridge header.
 			ptr += 4;
 			n -= 4;
 			packet* p = (packet*)ptr;
@@ -1031,27 +1033,27 @@ packet format in the file, as saved here:
 				//see if it matched a template.
 				float z = 0;
 				//g_headstage->headecho = ((p->flag) >> 4) & 0xf ;
-/*
- synchronization math:
- each packet has 6 samples (24 bytes) + 8 bytes template match.
- each headstage ADC runs at 1msps, so over 32 channels we have 31.25ksps.
- each packet hence takes 0.000192 seconds, or packets at 5.20833khz.
- in turn, each packet contains 32 channels of template match (a and b)
- 	so all 128 channels are cycled through in 4 packets,
- 	or every one updated at 1.302kHz.  Hence the ms timer is slightly undersampling it.
- one frame consists of 16 packets, so we get a new frame at 325.52Hz.
- there is likely variable latency in the ethernet switch
- so we really should timestamp the packets on the bridge ...
- 32 bit ms timer done!
+                /*
+                 synchronization math:
+                 each packet has 6 samples (24 bytes) + 8 bytes template match.
+                 each headstage ADC runs at 1msps, so over 32 channels we have 31.25ksps.
+                 each packet hence takes 0.000192 seconds, or packets at 5.20833khz.
+                 in turn, each packet contains 32 channels of template match (a and b)
+                    so all 128 channels are cycled through in 4 packets,
+                    or every one updated at 1.302kHz.  Hence the ms timer is slightly undersampling it.
+                 one frame consists of 16 packets, so we get a new frame at 325.52Hz.
+                 there is likely variable latency in the ethernet switch
+                 so we really should timestamp the packets on the bridge ...
+                 32 bit ms timer done!
 
- Now, we need some accurate way of converting bridge time, in ms, to wall clock time.
- we know the instant that we get a packet on the line, wall time
- and we know bridge timestamps of each of those packets, especially the last.
- since there is no clear way of measuring latency, assume that the last packet's
- time is synchronous with the wall clock at rx time -> can build up an offset.
- if the offset is within a few seconds, update by smoothing.
- if it is off by a lot, just replace.
-*/
+                 Now, we need some accurate way of converting bridge time, in ms, to wall clock time.
+                 we know the instant that we get a packet on the line, wall time
+                 and we know bridge timestamps of each of those packets, especially the last.
+                 since there is no clear way of measuring latency, assume that the last packet's
+                 time is synchronous with the wall clock at rx time -> can build up an offset.
+                 if the offset is within a few seconds, update by smoothing.
+                 if it is off by a lot, just replace.
+                */
 				if(i == npack-1){ //update the offset.
 					double off = rxtime - ((double)p->ms / BRIDGE_CLOCK);
 					if(abs(off - g_timeOffset) > 1.0) g_timeOffset = off;
@@ -1071,7 +1073,8 @@ packet format in the file, as saved here:
 					//		 ((double)p->ms / BRIDGE_CLOCK));
 				}
 				for(int j=0; j<128;j++){
-					g_templMatch[tid][j][0] = g_templMatch[tid][j][1] = false;
+					g_templMatch[tid][j][0] = false;
+                    g_templMatch[tid][j][1] = false;
 				}
 				double time = ((double)p->ms / BRIDGE_CLOCK) + g_timeOffset;
 				unsigned int headecho = g_headstage->getHeadecho(tid);
@@ -1136,8 +1139,10 @@ packet format in the file, as saved here:
 					
 					for(int k=0; k<NFBUF; k++){
 						int h = g_channel[k];
-						if(h > (tid+1)*128 || h < (tid*128)){ continue;} //this channel is not in this bridge?
-						  //should call this before?
+						if(h > (tid+1)*128 || h < (tid*128)){ //this channel is not in this bridge?
+                            continue;
+                        } 
+                        //should call this before?
 						
 						g_sortAperture[k][0][g_sortI] = 2048;
 						g_sortAperture[k][1][g_sortI] = 2048;
@@ -1264,7 +1269,7 @@ packet format in the file, as saved here:
 			// each command packet.  redundancy = safety = good.
 			if( send_delay >= 3 ){
 				send_delay = 0;
-				//printf("sending message to bridge ..\n");
+				printf("sending message to bridge ..\n");
 				double txtime = gettime();
 				unsigned int* ptr = g_headstage->getSendbuf(tid);
 				ptr += (g_headstage->getSendR(tid) % g_headstage->getSendL(tid)) * 8; //8 because we send 8 32-bit ints /pkt.
