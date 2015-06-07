@@ -640,8 +640,9 @@ int main(void){
 				write = 0; 
 			}
 			if((*pPORTFIO & (NRF_IRQ0 | NRF_IRQ1 | NRF_IRQ2)) == 
-				(NRF_IRQ0 | NRF_IRQ1 | NRF_IRQ2))
+				(NRF_IRQ0 | NRF_IRQ1 | NRF_IRQ2)){
 				write = 1; //no-change fall-through: only write one RXed packet.
+            }
 			
 			*FIO_SET = NRF_CSN0 | NRF_CSN1 | NRF_CSN2;
 			secs = ustimer() / 4578;
