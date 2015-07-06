@@ -27,18 +27,18 @@ The recent changes in KiCad's EESchema introduces some problems in using project
 In general, the KiCad files in bridge_hardware and headstage_hardware are for reference only, no save/modification should be needed.
 
 The following steps were used to convert the old project files (example using headstage_hardware/):
-1 Extract stage9 from /emg_dsp.
-2 Create component and footprint library folders. `cd headstage_hardware; mkdir headstage_library headstage_library.pretty`
-3 Open the schematic file, press OK for the rescue components dialog. Copy the cached component to our newly created library: `cp stage9-cache.lib headstage_library/headstage.lib`
-4 Go to *Preferences*->*Component Libraries* and add headstage as an active library.
-5 Ctrl-E on any of the component to open library editor. Set active library to be *headstage* and save component.
-6 Close schematic and open again. Now editing any of the components in the library editor should show the active library as *headstage.lib*
-7  **Important! When closing the schematic, do not click on save!**
-8 Open the .brd file, click ok on the resulting dialog.
-9 Ctrl-E on any of the footprint to open the footprint editor. Click on *Create new library and save footprint* from the menu bar, and select the *headstage_library.pretty* folder to store the new library.
-10 Go to *Preferences*->*Footprint libraries Wizard*->*Files on my computer* and select the *headstage_library.pretty* folder. This will add that directory to the footpring libraries available in this project. Make sure to select avaliable to project only.
-11 *Select active library* in the footprint editor and make it *headstage_library.pretty*.
-12 Close footprint editor and go back to the board. Go to *file*->*Archive Footprints*->*Create footprint archive* and select *headstage_library.pretty* as the library. Click yes to replace library. Now *headstage_library.pretty/* contains all the footprint used in the board as .mod files.
-13 Make sure when footprint editor is opened, the active library is set correctly to the one we just created.
-14 Again remeber to **Not save the board file!!**
-15 Open the schematic file and run Cvpcb to associate the components and the footprints in our own custom libraries. It's possible that a footprint is found in multiple libraries, chose to associate with the ones in *headstage*.
+1. Extract stage9 from /emg_dsp.
+2. Create component and footprint library folders. `cd headstage_hardware; mkdir headstage_library headstage_library.pretty`
+3. Open the schematic file, press OK for the rescue components dialog. Copy the cached component to our newly created library: `cp stage9-cache.lib headstage_library/headstage.lib`
+4. Go to *Preferences*->*Component Libraries* and add headstage as an active library.
+5. Ctrl-E on any of the component to open library editor. Set active library to be *headstage* and save component.
+6. Close schematic and open again. Now editing any of the components in the library editor should show the active library as *headstage.lib*
+7.  **Important! When closing the schematic, do not click on save!**
+8. Open the .brd file, click ok on the resulting dialog.
+9. Ctrl-E on any of the footprint to open the footprint editor. Click on *Create new library and save footprint* from the menu bar, and select the *headstage_library.pretty* folder to store the new library.
+10. Go to *Preferences*->*Footprint libraries Wizard*->*Files on my computer* and select the *headstage_library.pretty* folder. This will add that directory to the footpring libraries available in this project. Make sure to select avaliable to project only.
+11. *Select active library* in the footprint editor and make it *headstage_library.pretty*.
+12. Close footprint editor and go back to the board. Go to *file*->*Archive Footprints*->*Create footprint archive* and select *headstage_library.pretty* as the library. Click yes to replace library. Now *headstage_library.pretty/* contains all the footprint used in the board as .mod files.
+13. Make sure when footprint editor is opened, the active library is set correctly to the one we just created.
+14. Again remeber to **Not save the board file!!**
+15. Open the schematic file and run Cvpcb to associate the components and the footprints in our own custom libraries. It's possible that a footprint is found in multiple libraries, chose to associate with the ones in *headstage*.
