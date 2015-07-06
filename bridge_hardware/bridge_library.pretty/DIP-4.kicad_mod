@@ -1,0 +1,12 @@
+(module DIP-4 (layer F.Cu) (tedit 4E94A970)
+  (fp_text reference U39 (at 2.54 -2.54) (layer F.SilkS) hide
+    (effects (font (size 0.762 0.762) (thickness 0.1524)))
+  )
+  (fp_text value FOD817A (at 2.57302 1.41224 270) (layer F.SilkS)
+    (effects (font (size 0.762 0.762) (thickness 0.1905)))
+  )
+  (pad 1 thru_hole circle (at 0 0) (size 1.778 1.778) (drill 1.016) (layers *.Cu *.Mask F.SilkS))
+  (pad 2 thru_hole circle (at 0 2.54) (size 1.778 1.778) (drill 1.016) (layers *.Cu *.Mask F.SilkS))
+  (pad 3 thru_hole circle (at 7.62 2.54) (size 1.778 1.778) (drill 1.016) (layers *.Cu *.Mask F.SilkS))
+  (pad 4 thru_hole circle (at 7.62 0) (size 1.778 1.778) (drill 1.016) (layers *.Cu *.Mask F.SilkS))
+)

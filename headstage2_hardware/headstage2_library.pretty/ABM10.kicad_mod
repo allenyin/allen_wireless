@@ -1,0 +1,12 @@
+(module ABM10 (layer F.Cu) (tedit 558DDEC3)
+  (fp_text reference U11 (at -1.83134 1.34366) (layer F.SilkS)
+    (effects (font (size 0.508 0.508) (thickness 0.127)))
+  )
+  (fp_text value ABM10XTAL (at 0 -0.29972) (layer F.SilkS) hide
+    (effects (font (size 0.508 0.508) (thickness 0.127)))
+  )
+  (pad 1 smd rect (at -0.8255 0.635) (size 0.889 0.8128) (layers F.Cu F.Paste F.Mask))
+  (pad 2 smd rect (at 0.8255 0.635) (size 0.889 0.8128) (layers F.Cu F.Paste F.Mask))
+  (pad 3 smd rect (at 0.8255 -0.635) (size 0.889 0.8128) (layers F.Cu F.Paste F.Mask))
+  (pad 4 smd rect (at -0.8255 -0.635) (size 0.889 0.8128) (layers F.Cu F.Paste F.Mask))
+)

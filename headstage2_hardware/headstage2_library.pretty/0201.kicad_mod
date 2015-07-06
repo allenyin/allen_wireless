@@ -1,0 +1,10 @@
+(module 0201 (layer F.Cu) (tedit 558DBED8)
+  (fp_text reference Ref** (at 0 -0.39878) (layer F.SilkS) hide
+    (effects (font (size 0.508 0.508) (thickness 0.127)))
+  )
+  (fp_text value Value (at 0.09906 0.39878) (layer F.SilkS) hide
+    (effects (font (size 0.508 0.508) (thickness 0.127)))
+  )
+  (pad 1 smd rect (at -0.24892 0) (size 0.26924 0.39878) (layers F.Cu F.Paste F.Mask))
+  (pad 2 smd rect (at 0.24892 0) (size 0.26924 0.39878) (layers F.Cu F.Paste F.Mask))
+)

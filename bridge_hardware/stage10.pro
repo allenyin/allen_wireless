@@ -1,4 +1,4 @@
-update=Fri 05 Jun 2015 06:29:57 PM EDT
+update=Mon 06 Jul 2015 01:16:24 PM EDT
 last_client=kicad
 [pcbnew]
 version=1
@@ -50,3 +50,4 @@ LibName2=power
 LibName3=device
 LibName4=emg_sym
 LibName5=/home/tlh24/svn/myopen/emg_dsp/lib/linear
+LibName6=bridge_library/bridge

@@ -1,0 +1,9 @@
+(module TP (layer F.Cu) (tedit 46A29558)
+  (fp_text reference TP24 (at 0.10922 1.21158) (layer F.SilkS) hide
+    (effects (font (size 0.59944 0.59944) (thickness 0.127)))
+  )
+  (fp_text value TWI_SDA (at -1.74752 1.70942) (layer F.SilkS)
+    (effects (font (size 0.762 0.762) (thickness 0.1524)))
+  )
+  (pad 1 thru_hole circle (at 0 0) (size 1.6002 1.6002) (drill 1.00076) (layers *.Cu *.Mask F.SilkS))
+)

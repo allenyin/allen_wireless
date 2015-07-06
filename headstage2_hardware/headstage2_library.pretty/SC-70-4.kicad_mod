@@ -1,0 +1,12 @@
+(module SC-70-4 (layer F.Cu) (tedit 558DA14A)
+  (fp_text reference Ref** (at 0.21336 -0.19304) (layer F.SilkS)
+    (effects (font (size 0.508 0.508) (thickness 0.127)))
+  )
+  (fp_text value MAX6711T (at 0 0.20066) (layer F.SilkS) hide
+    (effects (font (size 0.508 0.508) (thickness 0.127)))
+  )
+  (pad 1 smd rect (at -0.65 0.975) (size 0.45 0.6) (layers F.Cu F.Paste F.Mask))
+  (pad 2 smd rect (at 0.5 0.975) (size 0.75 0.6) (layers F.Cu F.Paste F.Mask))
+  (pad 3 smd rect (at 0.65 -0.975) (size 0.45 0.6) (layers F.Cu F.Paste F.Mask))
+  (pad 4 smd rect (at -0.65 -0.975) (size 0.45 0.6) (layers F.Cu F.Paste F.Mask))
+)

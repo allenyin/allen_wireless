@@ -1,4 +1,4 @@
-update=Fri 05 Jun 2015 02:40:15 PM EDT
+update=Mon 06 Jul 2015 12:40:23 PM EDT
 last_client=kicad
 [pcbnew]
 version=1
@@ -43,12 +43,11 @@ LibDir=
 LibName1=../lib/emg_foot
 [eeschema]
 version=1
-LibDir=
+LibDir=headstage_library
 [eeschema/libraries]
 LibName1=stage9-rescue
 LibName2=power
 LibName3=device
 LibName4=emg_sym
 LibName5=/home/tlh24/svn/myopen/emg_dsp/lib/linear
-LibName6=emg_disp_lib/linear
-LibName7=emg_disp_lib/device
+LibName6=headstage_library/headstage

@@ -1,0 +1,3 @@
+(fp_lib_table
+  (lib (name headstage_library)(type KiCad)(uri "$(KIPRJMOD)/headstage_library.pretty")(options "")(descr ""))
+)
