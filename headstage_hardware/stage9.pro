@@ -1,4 +1,4 @@
-update=Mon 06 Jul 2015 12:40:23 PM EDT
+update=Mon 06 Jul 2015 01:53:29 PM EDT
 last_client=kicad
 [pcbnew]
 version=1
@@ -43,7 +43,7 @@ LibDir=
 LibName1=../lib/emg_foot
 [eeschema]
 version=1
-LibDir=headstage_library
+LibDir=../lib/
 [eeschema/libraries]
 LibName1=stage9-rescue
 LibName2=power

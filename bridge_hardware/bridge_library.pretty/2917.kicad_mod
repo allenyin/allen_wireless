@@ -1,9 +1,9 @@
 (module 2917 (layer F.Cu) (tedit 4CA4F4DD)
-  (fp_text reference C1 (at 0 -1.24968) (layer F.SilkS) hide
+  (fp_text reference C70 (at 0 -1.24968) (layer F.SilkS) hide
     (effects (font (size 0.508 0.508) (thickness 0.127)))
   )
-  (fp_text value 150uf (at 0.91694 3.5941) (layer F.SilkS)
-    (effects (font (size 0.8001 0.8001) (thickness 0.127)))
+  (fp_text value 150uf (at -2.0701 -3.08864) (layer F.SilkS)
+    (effects (font (size 0.762 0.762) (thickness 0.127)))
   )
   (fp_line (start -4.0005 2.30124) (end 4.0005 2.30124) (layer F.SilkS) (width 0.381))
   (fp_line (start -4.0005 -2.30124) (end 4.0005 -2.30124) (layer F.SilkS) (width 0.381))
