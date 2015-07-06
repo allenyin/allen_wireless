@@ -14,13 +14,17 @@ _get_asm:
 	w[p1 + (FIO_FLAG_S - FIO_FLAG_D)] = r7;
 	r7 = STEP (x); //portF pin 8, step.
 	w[p1 + (FIO_FLAG_C - FIO_FLAG_D)] = r7;//clear before waiting.
-//rather than using a software wait loop, should enable wakeup and interupts in the
-// SIC_IWR register,and then issue the IDLE instruction to save further power.
-// will have to test this, as we are running in a SW loop, not interrupt driven processing.
-// did test this - takes too long for processor to emerge from sleep.
+
+/*--------------------------------
+    rather than using a software wait loop, should enable wakeup and interupts in the
+    SIC_IWR register,and then issue the IDLE instruction to save further power.
+    will have to test this, as we are running in a SW loop, not interrupt driven processing.
+    did test this - takes too long for processor to emerge from sleep.
 	//cli r0;
 	//idle; //wait for wake-up event.
 	//sti r0;
+------------------------------------*/
+
 wait_samples:
 	r3 = w[p0 + (SPORT0_STAT - SPORT0_RX)];
 	cc =! bittst(r3, 0);
@@ -40,10 +44,12 @@ wait_samples:
 	r1 = r1 & r2;
 	r1 <<= 16;  //secondary channel in the upper word.
 	r2 = r0 + r1;
-	//set STEP to move to the next channel - this should be slightly after the
-	// falling edge of RFS
-	//(CS to the ADCS7476, which samples on the falling edge)
-	//if the channel=31, assert reset instead
+	
+    /* Set STEP to move to the next channel - this should be slightly after the
+	   falling edge of RFS
+	   (CS to the ADCS7476, which samples on the falling edge)
+	   if the channel=31, assert reset instead
+    */
 	r5 = 30; //30 due to *two* pipeline delays (MUX, sample)
 	r4 = MUXRESET;
 	cc = r5 == r6;
