@@ -14,4 +14,5 @@ Folders:
     * flasher: Code used to write to the flash memories of the bridge and headstage, see Instructions in crispy.
     * common_bfin: Common blackfin files.
     * common_host: Files for bridge.
+    
     TODO: Sync the firmware with the ones in Rabbit, which are actually used to flash the hardware. Sync the gtkclient_multi with that in the wheelchair room.
