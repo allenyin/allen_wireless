@@ -1,5 +1,5 @@
 (module omnetics_36_dual (layer F.Cu) (tedit 558DC6A0)
-  (fp_text reference Ref** (at 0 -2.032) (layer F.SilkS) hide
+  (fp_text reference U5 (at 0 -2.032) (layer F.SilkS) hide
     (effects (font (size 0.508 0.508) (thickness 0.127)))
   )
   (fp_text value OMNETICS_A79025 (at 0.1016 2.2098) (layer F.SilkS) hide
