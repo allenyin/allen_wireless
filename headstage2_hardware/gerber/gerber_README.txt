@@ -17,10 +17,15 @@ Other files:
 
 Note: all layers are viewed from the TOP of the board. 
 
+13 - headstage2-top.pos
+14 - headstage2-bottom.pos
+
+These two files are generated pick-and-place files.
+
 
 * PCB to be finished to 0.027" +0.005" -0.002" thickness (0.68mm) 
 * PCB to be manufactured in accordance with IPC-6011 and IPC-6012 class 2. 
-* PCB to be constructed of FR4, high temperature option required, Tg >= 170C
+* PCB to be constructed of FR4 or 370HR, high temperature option required, Tg >= 170C
 * Minimum trace-width/clearance: 0.005"/0.005"
 * Minimim via diameter/drill: 0.016"/0.006"
 * All holes to be plated through.

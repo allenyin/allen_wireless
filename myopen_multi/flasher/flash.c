@@ -635,8 +635,11 @@ int main(int argv, char* argc[]){
 		clear_pin(SCLK); 
 		clear_pin(_CS); 
 		write_byte(0x9f); 
+        /*
 		if(i == 0) disp = 1; 
 		else disp = 0; 
+        */
+        disp = 1;
 		for(j=0; j<4; j++){//see page 44 of the spec sheet.
 			byte = read_byte(); 
 			if(disp)printf("read: 0x%x \n", byte);

@@ -906,7 +906,7 @@ void* sock_thread(void* param){
 			inet_ntop(AF_INET, (const void*)(&(from.sin_addr)),
 						 destName, 256);
 			printf("Thread %ld: a wild bridge appears at %s\n", pthread_self(), destName);
-            pthread_mutex_unlock( &mutex_bridge_IP);
+            pthread_mutex_lock( &mutex_bridge_IP);
 			for(int t = 0; t < NSCALE; t++){
 					if(strcmp(g_bridgeIP[t], destName) == 0){
 						addressBound = true;

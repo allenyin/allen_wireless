@@ -1,4 +1,4 @@
-Cmp-Mod V01 Created by Cvpcb 0.201506030104+5696~23~ubuntu14.04.1-product   date = Tue 30 Jun 2015 07:39:48 PM EDT
+Cmp-Mod V01 Created by Cvpcb 0.201506030104+5696~23~ubuntu14.04.1-product   date = Fri 10 Jul 2015 08:02:48 PM EDT
 
 BeginCmp
 TimeStamp = /55790A81;
@@ -570,7 +570,7 @@ EndCmp
 BeginCmp
 TimeStamp = /55736A52;
 Reference = R30;
-ValeurCmp = 22K;
+ValeurCmp = 200;
 IdModule  = headstage2_library:0402;
 EndCmp
 
@@ -724,7 +724,7 @@ EndCmp
 BeginCmp
 TimeStamp = /5571F126;
 Reference = U9;
-ValeurCmp = BatLeads;
+ValeurCmp = - +;
 IdModule  = headstage2_library:2x100mil;
 EndCmp
 

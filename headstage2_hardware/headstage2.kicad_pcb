@@ -3,7 +3,7 @@
   (general
     (links 486)
     (no_connects 0)
-    (area 114.086639 79.372459 169.694861 112.438181)
+    (area 113.403621 79.34706 169.939245 113.66754)
     (thickness 0.6858)
     (drawings 15)
     (tracks 2561)
@@ -41,7 +41,7 @@
   )
 
   (setup
-    (last_trace_width 0.635)
+    (last_trace_width 0.127)
     (user_trace_width 0.127)
     (user_trace_width 0.2032)
     (user_trace_width 0.254)
@@ -2082,7 +2082,7 @@
     (fp_text reference R30 (at 0.127 -0.889) (layer F.SilkS)
       (effects (font (size 0.508 0.508) (thickness 0.127)))
     )
-    (fp_text value 22K (at 0.127 -0.508) (layer F.SilkS) hide
+    (fp_text value 200 (at 0.127 -0.508) (layer F.SilkS) hide
       (effects (font (size 0.508 0.508) (thickness 0.127)))
     )
     (fp_line (start -0.889 -0.381) (end -0.762 -0.508) (layer F.SilkS) (width 0.127))

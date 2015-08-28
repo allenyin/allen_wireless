@@ -20,7 +20,7 @@ Note: all layers are viewed from the TOP of the board.
 
 * PCB to be finished to 0.027" +0.005" -0.002" thickness (0.68mm) 
 * PCB to be manufactured in accordance with IPC-6011 and IPC-6012 class 2. 
-* PCB to be constructed of FR4, high temperature option required, Tg >= 170C
+* PCB to be constructed of FR4 or 370HR, high temperature option required, Tg >= 170C
 * Minimum trace-width/clearance: 0.005"/0.005"
 * Minimim via diameter/drill: 0.016"/0.006"
 * All holes to be plated through.
@@ -28,4 +28,7 @@ Note: all layers are viewed from the TOP of the board.
   With 150 micro inches Nickel (Ni) followed by immersion gold. 
 * Solder mask may be enlarged as needed. 
 * Silkcreen is to be white, on both sides of board.
+
+Allen Yin
+allen.s.yin@gmail.com
 

@@ -1,7 +1,7 @@
 (export (version D)
   (design
     (source /home/allenyin/allen_wireless/headstage2_hardware/headstage2.sch)
-    (date "Wed 08 Jul 2015 04:13:48 PM EDT")
+    (date "Fri 10 Jul 2015 08:02:28 PM EDT")
     (tool "Eeschema 0.201506030104+5696~23~ubuntu14.04.1-product")
     (sheet (number 1) (name /) (tstamps /)
       (title_block
@@ -160,7 +160,7 @@
       (sheetpath (names /) (tstamps /))
       (tstamp 55736113))
     (comp (ref R30)
-      (value 22K)
+      (value 200)
       (footprint 0402)
       (libsource (lib device) (part R))
       (sheetpath (names /) (tstamps /))
@@ -564,6 +564,9 @@
     (comp (ref C4)
       (value 100nF)
       (footprint 0402)
+      (fields
+        (field (name Material) "X5R or X7R")
+        (field (name Tolerance) 16V))
       (libsource (lib device) (part C))
       (sheetpath (names /) (tstamps /))
       (tstamp 557BBA87))
@@ -576,6 +579,9 @@
     (comp (ref C11)
       (value 100nF)
       (footprint 0402)
+      (fields
+        (field (name Material) "X5R or X7R")
+        (field (name Tolerance) 16V))
       (libsource (lib device) (part C))
       (sheetpath (names /) (tstamps /))
       (tstamp 557BF7DB))
@@ -588,6 +594,9 @@
     (comp (ref C6)
       (value 100nF)
       (footprint 0402)
+      (fields
+        (field (name Material) "X5R or X7R")
+        (field (name Tolerance) 16V))
       (libsource (lib device) (part C))
       (sheetpath (names /) (tstamps /))
       (tstamp 557C2836))
@@ -600,6 +609,9 @@
     (comp (ref C12)
       (value 100nF)
       (footprint 0402)
+      (fields
+        (field (name Material) "X5R or X7R")
+        (field (name Tolerance) 16V))
       (libsource (lib device) (part C))
       (sheetpath (names /) (tstamps /))
       (tstamp 557C4626))
