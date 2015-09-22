@@ -1,4 +1,5 @@
-CFLAGS  = -Wall -g
+#CFLAGS  = -Wall -g
+CFLAGS = -g
 
 CFLAGS += $(DBGFLAGS)
 

@@ -89,7 +89,8 @@ clean:
 	rm -f *.o *.ldr *.dxe radio_control.asm enc.asm enc_create
 
 flash:
-	sudo ../flasher/flash stage.ldr
+	#sudo ../flasher/flash stage.ldr
+	python ../flasher/flash.py stage.ldr
 
 reset:
 	sudo ../flasher/flash --reset

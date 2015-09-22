@@ -69,7 +69,8 @@ clean:
 	rm -f *.o *.do *.ldr *.dxe
 
 flash: test.ldr
-	sudo ../flasher/flash test.ldr
+	#sudo ../flasher/flash test.ldr
+	python ../flasher/flash.py test.ldr
 
 reset:
 	sudo ../flasher/flash --reset
