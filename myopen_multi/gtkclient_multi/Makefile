@@ -2,7 +2,7 @@
 
 # The following can be set at the command line
 # ie: make DBG=true JACK=false
-DBG = false
+DBG = true 
 JACK = false
 MUDFLAP = false
 STACKPROTECTOR = false

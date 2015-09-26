@@ -1269,7 +1269,7 @@ packet format in the file, as saved here:
 			// each command packet.  redundancy = safety = good.
 			if( send_delay >= 3 ){
 				send_delay = 0;
-				printf("sending message to bridge ..\n");
+				//printf("sending message to bridge ..\n");
 				double txtime = gettime();
 				unsigned int* ptr = g_headstage->getSendbuf(tid);
 				ptr += (g_headstage->getSendR(tid) % g_headstage->getSendL(tid)) * 8; //8 because we send 8 32-bit ints /pkt.
