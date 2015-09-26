@@ -70,7 +70,7 @@ float		g_viewportSize[2] = {640, 480}; //width, height.
 
 char g_bridgeIP[NSCALE][256];
 pthread_mutex_t mutex_bridge_IP = PTHREAD_MUTEX_INITIALIZER;
-unsigned int  g_radioChannel[NSCALE] = {124, 114, 94, 84};
+unsigned int  g_radioChannel[NSCALE] = {84};
 
 static float	g_fbuf[NFBUF][NSAMP*3]; //continuous waveform. range [-1 .. 1]
 i64				g_fbufW[NFBUF]; //where to write to (always increment), might not be thread safe
@@ -896,7 +896,7 @@ void* sock_thread(void* param){
 
 	// this code needs to be seriously refactored to allow multiple bridges.
 	while(!isBridgeFound){
-        printf("Thread number %ld waiting for bridge connection...\n", pthread_self());
+        //printf("Thread number %ld waiting for bridge connection...\n", pthread_self());
 		socklen_t fromlen = sizeof(from);
 		int n = recvfrom(bcastsock, buf, sizeof(buf),0,
 						 (sockaddr*)&from, &fromlen);

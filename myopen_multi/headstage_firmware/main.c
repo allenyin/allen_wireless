@@ -469,8 +469,10 @@ int main()
 	(writing this b/c worried about timing budgets & data validity)
 	*/
 	//radio_tx_test(); 
-	radio_bidi_asm(); //infinite loop! ends here!
-	//radio_tst_bidi(); //infinite loop.
+	
+    radio_bidi_asm(); //infinite loop! ends here!
+	
+    //radio_tst_bidi(); //infinite loop.
 	
 	return 0;
 }

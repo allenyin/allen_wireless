@@ -1,0 +1,20 @@
+/opt/uClinux/bfin-elf/bin/bfin-elf-gcc -x assembler-with-cpp -I. -I/opt/uClinux/bfin-elf/bfin-elf/include/ -I../common_bfin/ -D__ADSPBF532__ -D__BLACKFIN__ -Wall -mcpu=bf532 -O2 -include memory.h -include defBF532.h -D__ASM__ -c -o crt0.o crt0.asm
+/opt/uClinux/bfin-elf/bin/bfin-elf-gcc -x assembler-with-cpp -I. -I/opt/uClinux/bfin-elf/bfin-elf/include/ -I../common_bfin/ -D__ADSPBF532__ -D__BLACKFIN__ -Wall -mcpu=bf532 -O2 -include memory.h -include defBF532.h -D__ASM__ -c -o radio5.o radio5.asm
+g++ -Wall enc_create.cpp -o enc_create
+./enc_create
+/opt/uClinux/bfin-elf/bin/bfin-elf-gcc -x assembler-with-cpp -I. -I/opt/uClinux/bfin-elf/bfin-elf/include/ -I../common_bfin/ -D__ADSPBF532__ -D__BLACKFIN__ -Wall -mcpu=bf532 -O2 -include memory.h -include defBF532.h -D__ASM__ -c -o enc.o enc.asm
+/opt/uClinux/bfin-elf/bin/bfin-elf-gcc -x assembler-with-cpp -I. -I/opt/uClinux/bfin-elf/bfin-elf/include/ -I../common_bfin/ -D__ADSPBF532__ -D__BLACKFIN__ -Wall -mcpu=bf532 -O2 -include memory.h -include defBF532.h -D__ASM__ -D_AGC_ -c -o divsi3.o ../common_bfin/divsi3.asm
+/opt/uClinux/bfin-elf/bin/bfin-elf-gcc -I. -I/opt/uClinux/bfin-elf/bfin-elf/include/ -I../common_bfin/ -D__ADSPBF532__ -D__BLACKFIN__ -mcpu=bf532 -O2 -include memory.h -Wall -c -o main.o main.c
+/opt/uClinux/bfin-elf/bin/bfin-elf-gcc -I. -I/opt/uClinux/bfin-elf/bfin-elf/include/ -I../common_bfin/ -D__ADSPBF532__ -D__BLACKFIN__ -mcpu=bf532 -O2 -include memory.h -Wall -c -o print.o ../common_bfin/print.c
+/opt/uClinux/bfin-elf/bin/bfin-elf-gcc -I. -I/opt/uClinux/bfin-elf/bfin-elf/include/ -I../common_bfin/ -D__ADSPBF532__ -D__BLACKFIN__ -mcpu=bf532 -O2 -include memory.h -Wall -c -o util.o ../common_bfin/util.c
+/opt/uClinux/bfin-elf/bin/bfin-elf-gcc -I. -I/opt/uClinux/bfin-elf/bfin-elf/include/ -I../common_bfin/ -D__ADSPBF532__ -D__BLACKFIN__ -mcpu=bf532 -O2 -include memory.h -Wall -c -o spi.o ../common_bfin/spi.c
+/opt/uClinux/bfin-elf/bin/bfin-elf-ld -T bftiny.x -o stage.dxe crt0.o radio5.o enc.o divsi3.o main.o print.o util.o spi.o
+rm -f *.ldr
+/opt/uClinux/bfin-elf/bin/bfin-elf-ldr -T BF532 -c stage.ldr stage.dxe
+Creating LDR stage.ldr ...
+ Adding DXE 'stage.dxe' ... [jump block to 0xFFA08000] [ELF block: 528 @ 0xFF907000] [ELF block: 12904 @ 0xFFA08000] OK!
+Done!
+/opt/uClinux/bfin-elf/bin/bfin-elf-objdump -d stage.dxe > decompile.asm
+perl register_check.pl
+/opt/uClinux/bfin-elf/bin/bfin-elf-ld -T bftiny.x -g -o stage.elf crt0.o radio5.o enc.o divsi3.o main.o print.o util.o spi.o
+rm -f ../common/spi.o

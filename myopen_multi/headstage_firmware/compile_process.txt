@@ -1,0 +1,64 @@
+Compilers:
+    - compiler  = CC  = bfin-elf-gcc
+Binutils:
+    - assembler = AS  = bfin-elf-as
+    - linker    = LD  = bfin-elf-ld
+Executable file outputs (ELF):
+    - debugger  =     = bfin-elf-gdb
+    - loader    = LDR = bfin-elf-ldr
+    - sim       =     = bfin-elf-run 
+Object Inspection:
+    - objdump   = OBDMP = bfin-elf-objdump ... used to do disassembly on the final files
+    - objcopy   = BIN   = bfin-elf-objcopy ... 
+
+OPT = -02        
+    -02 : optimize even more - all supported optimizations not invovle a space-speed tradeoff
+
+CPUDEFINES = -D__ADSPBF532__ -D__BLACKFIN___
+    -D__ADSPBF532__ : define __ADSPBF532__ macro, this enables code in some files specific to BF532
+    -D__BLACKFIN__ : define __BLACKFIN__ macro. Defines u32 as unsigned long in spi.h
+
+INCLUDES = -I. -I/opt/uClinux/bfin-elf/bfin-elf/include/ -I../common_bfin/
+ 
+ASMFLAGS = -x assembler-with-cpp $(INCLUDES) $(CPUDEFINES) -Wall
+    -x assembler-with-cpp : source langauge is assembler-with-cpp
+    -Wall : Show all compiler warnings
+
+ASMFLAGS += -mcpu=bf532 $(OPT) -include memory.h -include defBF532.h -D__ASM__
+    -mcpu=bf532 : ADSP version
+    -include memory.h : memory.h contains registers addresses used in code...probably need to modify this
+    -include defBF532.h : bf532 system and MMR bits. From /opt/uCLinux/bfin-elf/bfin-elf/include
+
+CFLAGS = $(INCLUDES) $(CPUDEFINES) -mcpu=bf532 $(OPT) -include memory.h -Wall
+
+LDFALGS = -T bftiny.x
+    -T bftiny.x : use "bftiny.x" as linker script
+
+--------------------------------------
+Compile without linking (-c) to output object files (.o)
+1. All the .asm files in current directory:
+    - crt0.asm -> crt0.o
+    - radio5.asm -> radio5.o
+    - enc_create.cpp -> enc_create, running enc_create gives enc.asm -> enc.o
+2. All the .asm files in ../common_bfin:
+    - divsi3.asm -> divsi3.o
+3. All the .c files in ../common_bfin:
+    - print.c -> print.o
+    - util.c -> util.o
+    - spi.c -> spi.o  
+4. Compiling main:
+    - main.c -> main.o
+---------------------------------------
+Linking:
+1. Compile the DXE file. DXE file is similar to the ELF format, requires:
+    - {crt0.o, radio5.o, enc.o divsi3.o main.o print.o util.o spi.o} + bftiny.x -> stage.dxe
+    - linker script = bftiny.x
+    - uses bfin-elf-ld
+---------------------------------------
+Loader (LDR) script:
+1. Create loader file from dxe file:
+    - stage.dxe -> stage.ldr 
+    - Using BF532 as target (-T BF532), through bfin-elf-ldr
+
+
+

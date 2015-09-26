@@ -1,7 +1,7 @@
 #ifndef __GTKCLIENT_H__
 #define __GTKCLIENT_H__
 
-#define NSCALE 4
+#define NSCALE 1
 
 #define NSAMP (24*1024)
 #define NDISPW 256

@@ -7,11 +7,14 @@ COMMON = print.o util.o spi.o
 # CSRCS = main.o usb_write.o usb.o
 CSRCS = main.o
 # note: the order of objects in the .ldr mirrors the order in this list!
+
+
 OPT = -O2
 CPUDEFINES = -D__ADSPBF532__ -D__BLACKFIN__
 INCLUDES = -I. -I/opt/uClinux/bfin-elf/bfin-elf/include/ -I../common_bfin/
 ASMFLAGS = -x assembler-with-cpp $(INCLUDES) $(CPUDEFINES) -Wall
-ASMFLAGS += -mcpu=bf532 $(OPT) -include memory.h -include defBF532.h -D__ASM__
+#ASMFLAGS += -mcpu=bf532 $(OPT) -include memory.h -include defBF532.h -D__ASM__
+ASMFLAGS += -mcpu=bf532 -include memory.h -include defBF532.h -D__ASM__ -g
 CFLAGS = $(INCLUDES) $(CPUDEFINES) -mcpu=bf532 $(OPT) -include memory.h -Wall
 # -fomit-frame-pointer
 # -ffixed-FP -ffixed-P5 -ffixed-P4 -ffixed-P0
@@ -24,12 +27,6 @@ LDFLAGS = -T bftiny.x
 OBJS = $(ASMSRCS) $(CSRCS) $(COMMON)
 BOBJS = $(B_ASMSRCS:%.asm=%.bo) $(CSRCS:%.c=%.bo)
 
-# BFINROOT = /opt/uClinux/bfin-uclinux/bin
-# AS = $(BFINROOT)/bfin-uclinux-as
-# CC = $(BFINROOT)/bfin-uclinux-gcc
-# LD = $(BFINROOT)/bfin-uclinux-ld
-# OBDMP = $(BFINROOT)/bfin-uclinux-objdump
-# BIN = $(BFINROOT)/bfin-uclinux-objcopy
 BFINROOT = /opt/uClinux/bfin-elf/bin
 AS = $(BFINROOT)/bfin-elf-as
 CC = $(BFINROOT)/bfin-elf-gcc
@@ -67,6 +64,7 @@ stage.elf: $(OBJS)
 
 stage.dxe: $(OBJS)
 	$(LD) $(LDFLAGS) -o stage.dxe $(OBJS)
+	$(LD) $(LDFLAGS) -Map=Linker.map $(OBJS) 
 
 enc_create: enc_create.cpp
 	g++ -Wall $< -o $@
@@ -86,14 +84,15 @@ record:
 #	sudo ttyUSB_client/usbtest > ttyUSB_client/out.txt
 
 clean:
-	rm -f *.o *.ldr *.dxe radio_control.asm enc.asm enc_create
+	rm -f *.o *.ldr *.dxe radio_control.asm enc.asm enc_create Linker.map
 
 flash:
 	#sudo ../flasher/flash stage.ldr
 	python ../flasher/flash.py stage.ldr
 
 reset:
-	sudo ../flasher/flash --reset
+	#sudo ../flasher/flash --reset
+	python ../flasher/flash.py --reset
 
 debug: # also need bfin-gdbproxy bfin --reset
 	/opt/uClinux/bfin-elf/bin/bfin-elf-gdb
