@@ -2,7 +2,7 @@
 #define __MEMORY_H__
 
 //memory.h --have to clean this up, it's crufty!
-/* BF-532 has two memory banks -
+/* BF-532 has two (data SRAM) memory banks -
 0xff904000 (B) and 0xff804000 (A)
 rules for memory conflicts:  (from Analog EE-197, look it up!)
 A one cycle stall is incurred during a collision of simultaneous
@@ -19,7 +19,8 @@ hence, the weights and taps should, at least, be on different sub-banks.*/
 memory map:
 	0xFF90 4000	filter coeficients, b[0] b[1] a[0] a[1] ordering.
 			4864 bytes = length 0x1300; end at 0xff90 5300
-	0xFF80 4000	mean		-- different bank so we don't get collisions.
+	
+    0xFF80 4000	mean		-- different bank so we don't get collisions.
 				x1 n-1
 				x1 n-2
 				y1 n-1	x2 n-1
@@ -33,6 +34,13 @@ memory map:
 	length b00
 	0xFF80 4b00	end of delay buffer.
 */
+
+/*
+ * Allen's comments:
+ * In the firmware comments written by Tim, "channel" in fact refers to one set of 
+ * SPORT0 and SPORT1 samples, which corresponds to sampling from 4 physical channels.
+ */
+
 #define A1 				0xFF904000  /** BANK B **/ //i0 accesses.
 #define A1_AGC			4			//units: 32bit words.
 #define A1_LMS			7
@@ -46,10 +54,11 @@ memory map:
 #define A1_APERTUREA	(A1_TEMPA + A1_TEMPLATE) //68
 #define A1_TEMPB		(A1_APERTUREA + A1_APERTURE) //72
 #define A1_APERTUREB	(A1_TEMPB + A1_TEMPLATE) //88
-#define A1_STRIDE		(A1_APERTUREB + A1_APERTURE) // 90; // total 11520 0x2D00
-		// (agc+lms+iir)*2 + (template + aperture)*2 = 90 ok!
+#define A1_STRIDE		(A1_APERTUREB + A1_APERTURE) // 90; 
+/* (agc+lms+iir)*2 + (template + aperture)*2 = 90 ok! 32-bits words per channel
+    total = 90*(4 bytes/word)*32 channels = 11520 = 0x2D00 (32-bit aligned memory) */
 #define FP_BASE			0xFF906F00 //length: 0x200, 512 bytes.
-	// ** Frame pointer counts down! **
+// ** Frame pointer counts down! **
 
 #define TEMP_BUFFER 	0xFF906F00 //128 bytes = 0x80;
 #define PRINTF_BUFFER_SIZE 128
@@ -68,10 +77,10 @@ memory map:
 							//second half is 7-b encoded.
 
 #define ENC_LUT			0xff806100 //256 bytes, map 8 bits -> 7 bits.
-#define STATE_LUT		0xff806200 // 16 32bit words, 64 bytes.
+#define STATE_LUT		0xff806200 // 16 32bit words; length = 64 bytes.
 
 #define WFBUF			0xFF807000  //really the transmit buffer.
-#define WFBUF_LEN		1024		// length 2 512 byte, 16-packet frames.
+#define WFBUF_LEN		1024		// length = 2 frames * 512 byte/frame; 512 bytes =  16-packet frames * (32bytes/pkt)
 
 
 

@@ -14,8 +14,8 @@ start:
 	R1 = SYSCFG_VALUE;
 	SYSCFG = R1;
 	
-	sp.h = 0xFFB0;		//Set up supervisor stack in scratch pad
-	sp.l = 0x0400;
+	sp.h = 0xFFB0;		// Set up supervisor stack in scratch pad
+	sp.l = 0x0400;      // only 1kB though...why? (Allen)
 	fp = sp;
 
 
@@ -60,16 +60,16 @@ setupPLL:
  	w[p0] = r1;          // Apply PLL_CTL changes.
 	ssync;
  	
-	cli r0;
- 	idle;	// wait for Loop_count expired wake up
-	sti r0;
+	cli r0; // disable all interrupts
+ 	idle;	// Wake up when PLL-wakeup interrupt happens
+	sti r0; // re0enable interrupts after wakeup
 
 	// now, set clock dividers:
 	p0.l = LO(PLL_DIV);
 	p0.h = HI(PLL_DIV);
 
 	// SCLK = VCOCLK / SCLK_DIVIDER
-	r0.l = 5; //page 339.  CCLK = vco ; SCLK = VCO/4; 400-> 80mhz.
+	r0.l = 5; //page 339.  CCLK = vco ; SCLK = VCO/5; 400-> 80mhz.
 
 	w[p0] = r0; // set Core and system clock dividers
 	//note: this can be changed at any time to decrease power consumption!
@@ -178,8 +178,8 @@ setupPLL:
 	// IMASK : page 195, NOT THE SAME as SIC_IMASK (above) --both need to be set up correctly.
 	//r0 = 0x9c40(z);    // enable irq 15, 10 (sport1rx) 11 (sport0tx) 6 (core timer) 12 (SPI) 0x9c40
 	r0 = 0x8000(z); //only enable the lowest-priority interrupt. 
-	sti r0;            // set mask
-	raise 15;          // raise sw interrupt
+	sti r0;            // set IMASK to r0 (special instruction...)
+	raise 15;          // raise sw interrupt... this would jump to call_main, starting the program
 	
 	p0.l = wait;
 	p0.h = wait;
@@ -268,7 +268,8 @@ EXC_HANDLER:          // exception handler
 	//save registers to memory so we may print them out. 
 	r0 = seqstat;
 	r1 = retx; 
-	jump EXC_HANDLER; 
+	jump EXC_HANDLER; // this line here makes an infinite loop.
+                      // delete to save all registers to memory
 	[--sp] = p5; 
 	p5.l = _g_excregs ; 
 	p5.h = _g_excregs ; 

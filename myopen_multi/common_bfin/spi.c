@@ -22,8 +22,9 @@ void spi_delay(){
 
 //this is for writing a SPI register on the radio, for setup ETC!
 u8 spi_write_register(u8 reg, u8 val){
-	reg = reg | 0x20; 
-	*FIO_CLEAR = SPI_CSN; 
+    // NRF command - to write register number, give it 001A,AAAA, where AAAAA=5 bit reg addr
+	reg = reg | 0x20;   
+	*FIO_CLEAR = SPI_CSN;   
 	asm volatile("ssync;"); 
 	*pSPI_TDBR = (u16)reg;
 	spi_delay(); 
@@ -107,8 +108,6 @@ void spi_write_packet(void* packet){
 
 	//setup DMA for writing the packet. this takes less processor resources, 
 	//and less *time* when the processor is heavily loaded = more efficient use of radio.
-	//*pSPI_CTL = 0; 
-	//asm volatile("ssync"); does nothing.. 
 	*pSPI_CTL = TDBR_DMA | SZ | MSTR | SPE; //pretty sure SPI has to be enabled before DMA.
 	*pDMA5_X_COUNT = 32; 
 	*pDMA5_X_MODIFY = 1; 
@@ -261,7 +260,7 @@ void radio_set_tx(){
 	asm volatile("ssync;"); 
 	spi_write_register(NOR_CONFIG, 0 ); // needed? seems to decrease reliability
 	spi_write_byte(NOR_FLUSH_TX);
-	spi_write_register(NOR_STATUS, 0x70); 
+	spi_write_register(NOR_STATUS, 0x70); // clear status bits - RX_DR, TX_DS, MAX_RT
 	/** by default, CRC is enabled for transmission - it is critical that the 
 	filter taps be written to the right location, with the correct values **/
 	spi_write_register(NOR_CONFIG, NOR_EN_CRC | NOR_CRC0 |
@@ -299,11 +298,11 @@ u8 radio_init(u8 chan){
 	asm volatile("ssync"); 
 	*pSPI_BAUD = SPI_BAUDDIV; 
 	*pSPI_CTL = TDBR_CORE | SZ | EMISO | GM | MSTR | SPE; 
-	*pSPI_FLG = 0x0000; //we don't use this -- use portF. 
-	*FIO_SET = SPI_CSN; //active low signal. 
-	*FIO__INEN |= SPI_IRQ; 
-	*FIO__DIR &= 0xffff ^ SPI_IRQ; 
-	*FIO__DIR |= SPI_CSN | SPI_CE; 
+	*pSPI_FLG = 0x0000;     //we don't use this -- use portF. 
+	*FIO_SET = SPI_CSN;     //active low signal. Set = deselect CSN. 
+	*FIO__INEN |= SPI_IRQ;  // Enable PF3 as input, given SPI_IRQ=0x8
+	*FIO__DIR &= 0xffff ^ SPI_IRQ; // PF3 as input, all other PFx pins = output
+	*FIO__DIR |= SPI_CSN | SPI_CE; // Make sure SPI_CSN (PF1) and SPI_CE (PF0) are outputs...redundant
 	if(chan > 124) chan = 124; 
 #ifndef __ADSPBF532__ //headstage has no UART/display.
 	printf_int("radio channel set to ", chan); 

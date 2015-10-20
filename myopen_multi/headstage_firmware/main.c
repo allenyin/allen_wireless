@@ -424,16 +424,19 @@ int main()
 	//make sure cache is off.
 	*pIMEM_CONTROL = 1;  
 	asm volatile("csync"); 
+    // DAG0 non-cacheable fetches use port A. Shouldn't really matter
 	*pDMEM_CONTROL = 1; 
 	asm volatile("csync"); 
 	
-	*pFIO_INEN = 0x8; //stage8.
-	*pFIO_DIR = ~(*pFIO_INEN); 
+	*pFIO_INEN = 0x8; // Enable PF3 as input.
+	*pFIO_DIR = ~(*pFIO_INEN); // All other PF pins output
+    // PF7=PF8=1: Reset mux, step RHA
+    // PF0=PF1=PF2=1: Nordic CE pin, Nordic CS deselect (active low), Flash CS deselect
 	*pFIO_FLAG_D = 0x0187; 
 	
 	radio_init(124);  //channel seems to make no difference. used to be 124.
-	*FIO_CLEAR = SPI_CE; 
-	*FIO_CLEAR = 0x0080; //mux reset. active low.
+	*FIO_CLEAR = SPI_CE; // CE on radio 
+	*FIO_CLEAR = 0x0080; //Clear PF3 - captured state from NRF-IRQ
 	for(k=0; k<1000; k++){
 		asm volatile("nop; nop; nop; nop;"); 	
 	}
