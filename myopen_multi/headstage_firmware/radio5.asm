@@ -865,7 +865,7 @@ wait_16pkts:
 	r5 = [FP - FP_QPACKETS];
 	cc = bittst(r5, 4)
 	if !cc jump wait_16pkts;
-	//got 8 packets in the queue at this point.
+	//got 16 packets in the queue at this point.
 	call _get_asm;
 	r5 = 0;
 	[FP - FP_QPACKETS] = r5;

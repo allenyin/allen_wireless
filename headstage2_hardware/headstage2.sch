@@ -3631,8 +3631,6 @@ Connection ~ 5675 3525
 Wire Wire Line
 	5675 3425 5675 3825
 Wire Wire Line
-	5625 3625 6225 3625
-Wire Wire Line
 	5625 3525 5700 3525
 Wire Wire Line
 	5625 3425 6000 3425
@@ -4032,4 +4030,6 @@ Text Label 13050 3250 0    60   ~ 0
 DR0SEC_out
 Text Label 11075 3025 0    60   ~ 0
 DR0SEC_out
+Wire Wire Line
+	5625 3625 6225 3625
 $EndSCHEMATC

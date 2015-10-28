@@ -8,8 +8,8 @@
 #endif
 
 #define FIO_CLEAR		pFIO_FLAG_C
-#define FIO_SET		pFIO_FLAG_S
-#define FIO_TOGGLE	pFIO_FLAG_T
+#define FIO_SET		    pFIO_FLAG_S
+#define FIO_TOGGLE	    pFIO_FLAG_T
 #define FIO_IN			pFIO_FLAG_D
 #define FIO__INEN		pFIO_INEN
 #define FIO__DIR		pFIO_DIR
@@ -35,8 +35,8 @@
 #include <cdefBF537.h>
 
 #define FIO_CLEAR		pPORTFIO_CLEAR
-#define FIO_SET		pPORTFIO_SET
-#define FIO_TOGGLE	pPORTFIO_TOGGLE
+#define FIO_SET		    pPORTFIO_SET
+#define FIO_TOGGLE	    pPORTFIO_TOGGLE
 #define FIO_IN			pPORTFIO
 #define FIO__INEN		pPORTFIO_INEN
 #define FIO__DIR		pPORTFIO_DIR
