@@ -38,8 +38,8 @@ wait_samples:
 	[FP - FP_CHAN] = r6;
 
 	//read in the samples -- SPORT0
-	r0 = w[p0] (z);
-	r1 = w[p0] (z);
+	r0 = w[p0] (z); // SPORT0-primary: Ch0-31
+	r1 = w[p0] (z); // SPORT0-sec:     Ch32-63
 	r2.l = 0xfff;
 	r0 = r0 & r2;
 	r1 = r1 & r2;
@@ -67,7 +67,7 @@ wait_samples:
 	r5 = [i0++]; //r5 = 32000,-16384. (lo, high)
 .align 8
 	a0 = r2.l * r5.l, a1 = r2.h * r5.l || r1 = [i1++]; // r1 = integrated mean
-	a0 += r2.l * r5.l, a1 += r2.h * r5.l || r6 = [i0++]; //r6 = 16384 (1), 800 (mu)
+	a0 += r2.l * r5.l, a1 += r2.h * r5.l || r6 = [i0++]; //r6 = 16384 (0.5), 800 (mu)
 	r0.l = (a0 += r1.l * r5.h), r0.h = (a1 += r1.h * r5.h) (s2rnd);
 	a0 = r1.l * r6.l , a1 = r1.h * r6.l; //integrator
 	r2.l = (a0 += r0.l * r6.h), r2.h = (a1 += r0.h * r6.h) (s2rnd)
@@ -200,8 +200,8 @@ r5.l = (a0 += r1.l * r6.l), r5.h = (a1 += r1.h * r6.h) || r1 = [i1++m3] || r2 = 
 	[--sp] = r0; //store the samples on the stack.
 
 	//read in the samples -- SPORT1
-	r0 = w[p0 + (SPORT1_RX - SPORT0_RX)] (z);
-	r1 = w[p0 + (SPORT1_RX - SPORT0_RX)] (z);
+	r0 = w[p0 + (SPORT1_RX - SPORT0_RX)] (z);   // SPORT1_PRI: Ch64-95
+	r1 = w[p0 + (SPORT1_RX - SPORT0_RX)] (z);   // SPORT1_SEC: Ch96-127
 	r2.l = 0xfff;
 	r0 = r0 & r2;
 	r1 = r1 & r2;
