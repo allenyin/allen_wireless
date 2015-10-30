@@ -1,4 +1,4 @@
-(module D0603 (layer F.Cu) (tedit 558DC10B)
+(module D0603 (layer F.Cu) (tedit 5633A638)
   (fp_text reference Ref** (at 0 0.7493) (layer F.SilkS) hide
     (effects (font (size 0.508 0.508) (thickness 0.127)))
   )
@@ -17,6 +17,6 @@
   (fp_line (start -1.016 -0.635) (end -1.143 -0.635) (layer F.SilkS) (width 0.127))
   (fp_line (start -1.143 -0.635) (end -1.27 -0.508) (layer F.SilkS) (width 0.127))
   (fp_line (start -1.27 -0.508) (end -1.27 -0.381) (layer F.SilkS) (width 0.127))
-  (pad 1 smd rect (at -0.75 0) (size 0.6 0.9) (layers F.Cu F.Paste F.Mask))
-  (pad 2 smd rect (at 0.75 0) (size 0.6 0.9) (layers F.Cu F.Paste F.Mask))
+  (pad 2 smd rect (at -0.75 0) (size 0.6 0.9) (layers F.Cu F.Paste F.Mask))
+  (pad 1 smd rect (at 0.75 0) (size 0.6 0.9) (layers F.Cu F.Paste F.Mask))
 )

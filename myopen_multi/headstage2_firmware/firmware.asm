@@ -680,6 +680,7 @@ _radio_bidi_asm:
     /* FP_QS: points to how many samples we have currently written to a packet -- 6 samples
      *        per transmitted channel, per packet.
      */
+    r0 = 0;
     [FP- FP_QS] = r0;
     
     // FP_QPACKETS: points to number of queued packets -- 16 packets in a frame before transmitting to radio
