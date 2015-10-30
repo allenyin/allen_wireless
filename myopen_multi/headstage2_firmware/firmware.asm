@@ -75,22 +75,22 @@ wait_samples:
 
     // queue CONVERT63 in transmit FIFO. This step is a lot easier than the RHA version's code.
     r7 = NEXT_CHANNEL;
-    w[p0 + (SPORT0_TX - SPORT0_RX)] = r7 (z);   // SPORT0 primary TX
-    w[p0 + (SPORT0_TX - SPORT0_RX)] = r7 (z);   // SPORT0 sec TX
-    w[p0 + (SPORT1_TX - SPORT0_RX)] = r7 (z);   // SPORT1 primary TX
-    w[p0 + (SPORT1_TX - SPORT0_RX)] = r7 (z);   // SPORT1 sec TX
+    w[p0 + (SPORT0_TX - SPORT0_RX)] = r7;   // SPORT0 primary TX
+    w[p0 + (SPORT0_TX - SPORT0_RX)] = r7;   // SPORT0 sec TX
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r7;   // SPORT1 primary TX
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r7;   // SPORT1 sec TX
     
     // integrator (offset removal), highpass, and gain stage
-    r5 = [i0++]; // r5 = 32000 (pre-gain=0.9765), -16384 (lo, hi)
+    r5 = [i0++]; // r5 = 32000(pre-gain=0.9765), -32768(-1) (lo, hi)
 .align 8
-    // In comments r6.h = 1600(mu=0.0488) means r6.h contains 1600, which is 0.0488 in Q15 format
+    // In comments, r6.h = 1600(mu=0.0488) means r6.h contains 1600, which is 0.0488 in Q15 format
     // Multiply-accumulate default option is Q15 (signed frac) with saturation.
     
     a0 = r2.l * r5.l, a1 = r2.h * r5.l || r1 = [i1++];  // a0 = gain scaled sample; r1 = prev integrated mean
     r6 = [i0++];                                        // r6.l = 16384 (0.5), r6.h = 1600 (mu=0.0488)
-    r0.l = (a0 -= r1.l), r0.h = (a0 -= r1.h);           // r0 = output of stage = y = gx-previous integr mean
-    a0 = r1.l, a1 = r1.h;                               // a0, a1 contains prev integrated mean
-    r2.l = (a0 += r0.l * r6.h), r2.h = (a1 += r0.h * r6.h) || r5 = [i1++] || r7 = [i0++];
+    r0.l = (a0 += r1.l * r5.h), r0.h = (a1 += r1.h * r5.h); // r0=output of stage=y=gx-(previous integr mean)
+    a0 = r0.l * r6.h, a1 = r0.h * r6.h;                     // a0,a1=mu*y
+    r2.l = (a0 -= r1.l * r5.h), r2.h = (a1 -= r1.h * r5.h) || r5 = [i1++] || r7 = [i0++];
     
     /* r2 = new integr mean = mu*y+prev integr mean;
        r5 = AGC gain (lo, hi are diff), r7 = sqrt of AGC target (lo, hi are the same)
@@ -248,27 +248,395 @@ r5.l = (a0 += r1.l * r6.l), r5.h = (a1 += r1.h * r6.h) || r1 = [i1++m3] || r2 = 
 	[i2++] = r1; // save current y4(n-1) in y4(n-2)'s spot. (normally pipelined)
 	[--sp] = r0; // store IIR result (current y4(n)) on the stack.
 
+    // Process the other two channels in this group. Pretty much identical as before.
+    r1 = w[p0] (z);   // SPORT0-primary: Ch96-127
+    r0 = w[p0] (z);   // SPORT0-sec:     Ch64-95
+    r2.l = 0xffff;  // word read is 16-bits, no longer 12-bits.
+    r0 = r0 & r2;
+    r1 = r1 & r2;
+    r1 <<= 16;      // Ch96-127 in the upper word
+    r2 = r0 + r1;   // r2 = Ch32, Ch0 (lo, hi). 16-bits samples
+  
+    // integrator (offset removal), highpass, and gain stage
+    r5 = [i0++]; // r5 = 32000 (pre-gain=0.9765), -16384 (lo, hi)
+.align 8
+    a0 = r2.l * r5.l, a1 = r2.h * r5.l || r1 = [i1++];  
+    r6 = [i0++];                                        
+    r0.l = (a0 += r1.l * r5.h), r0.h = (a1 += r1.h * r5.h); 
+    a0 = r0.l * r6.h, a1 = r0.h * r6.h;
+    r2.l = (a0 -= r1.l * r5.h), r2.h = (a1 -= r1.h * r5.h) || r5 = [i1++] || r7 = [i0++];
+
+    // start AGC
+    a0 = r0.l * r5.l, a1 = r0.h * r5.h || [i2++] = r2;  
+    a0 = a0 << 6;           
+    a1 = a1 << 6;           
+    r0.l = a0, r0.h = a1;   // r0 contains the 16-bits output of AGC stage.
+
+    // Update AGC-gain
+    a0 = abs a0, a1 = abs a1;
+    r4.l = (a0 -= r7.l * r7.l), r4.h = (a1 -= r7.h * r7.h) (is) // subtract target from value, saturate diff
+        || r6 = [i0++];                                         // r6.l = 16384 (0.5), r6.h = 1
+    a0 = r5.l * r6.l, a1 = r5.h * r6.l || nop;
+    r3.l = (a0 -= r4.l * r6.h), r3.h = (a1 -= r4.h * r6.h) (s2rnd) || nop;  // inc or dec gain
+.align 8
+    r3 = abs r3 (v) || r7 = [FP - FP_WEIGHTDECAY];  // r3=abs of new gain. r7.l = 3, r7.h = 0x7fff (0.9999)
+
+    // Start LMS
+    r4.l = (a0 = r0.l * r7.l), r4.h = (a1 = r0.h * r7.l) (is) || i1 += m1 || [i2++] = r3;
+        // Saturate the sample (now in r4). Move i1 back 8 W1_STRIDE. Save r3 - new AGC gain.
+    mnop || r1 = [i1++] || [i2++] = r4;   // Move i1 to non-saturated x(n,c-8%32). Save saturated sample.
+    mnop || r1 = [i1++m2] || r2 = [i0++]; // Move i1 to non-sat x(n,c-7%32). r2=w6, i0@w5.
+
+    // Start summing samples and corresponding LMS weights.
+    a0 = r1.l * r2.l, a1 = r1.h * r2.h || r1 = [i1++m2] || r2 = [i0++]; // r2=w5, i0@w4
+	a0+= r1.l * r2.l, a1+= r1.h * r2.h || r1 = [i1++m2] || r2 = [i0++]; // r2=w4, i0@w3
+	a0+= r1.l * r2.l, a1+= r1.h * r2.h || r1 = [i1++m2] || r2 = [i0++]; // r2=w3, i0@w2
+	a0+= r1.l * r2.l, a1+= r1.h * r2.h || r1 = [i1++m2] || r2 = [i0++]; // r2=w2, i0@w1
+	a0+= r1.l * r2.l, a1+= r1.h * r2.h || r1 = [i1++m2] || r2 = [i0++]; // r2=w1, i0@w0
+	a0+= r1.l * r2.l, a1+= r1.h * r2.h || r1 = [i1++m2] || r2 = [i0++]; // r2=w0, i0@IIR LPF1 b0
+    r6.l = (a0 += r1.l * r2.l), r6.h = (a1 += r1.h * r2.h) || r1 = [i1++m1] || r2 = [i0++m0];
+        // r6 = sum = noise for cur channel. Move i1 back 8 chans. i0 @ w6.
+    
+    r0 = r0 -|- r6 (s) || [i2++] = r0 || r1 = [i1--];  // New r0 = sample w/ noise removed = LMS out = y
+                                                       // Save AGC result. Move i1 to saturated samples.
+    r6 = r0 >>> 15 (v, s) || r1 = [i1++m2] || r2 = [i0++];  // r6=sign(y). r1=sat x(n,c-7%32). r2=w6. i0@w5
+.align 8
+    // LMS weight update with weight-decay term
+    a0 = r2.l * r7.h, a1 = r2.h * r7.h || nop || nop;
+r5.l = (a0 += r1.l * r6.l), r5.h = (a1 += r1.h * r6.h) || r1 = [i1++m2] || r2 = [i0--]; // r2=w5, i0@w6
+    a0 = r2.l * r7.h, a1 = r2.h * r7.h || [i0++m3] = r5;                                // Update w6. i0@w4.
+
+r5.l = (a0 += r1.l * r6.l), r5.h = (a1 += r1.h * r6.h) || r1 = [i1++m2] || r2 = [i0--]; // r2=w4, i0@w5
+    a0 = r2.l * r7.h, a1 = r2.h * r7.h || [i0++m3] = r5;                                // Update w5, i0@w3
+
+r5.l = (a0 += r1.l * r6.l), r5.h = (a1 += r1.h * r6.h) || r1 = [i1++m2] || r2 = [i0--]; // r2=w3, i0@w4
+    a0 = r2.l * r7.h, a1 = r2.h * r7.h || [i0++m3] = r5;                                // Update w4, i0@w2
+
+r5.l = (a0 += r1.l * r6.l), r5.h = (a1 += r1.h * r6.h) || r1 = [i1++m2] || r2 = [i0--]; // r2=w2, i0@w3
+    a0 = r2.l * r7.h, a1 = r2.h * r7.h || [i0++m3] = r5;                                // Update w3, i0@w1
+
+r5.l = (a0 += r1.l * r6.l), r5.h = (a1 += r1.h * r6.h) || r1 = [i1++m2] || r2 = [i0--]; // r2=w1, i0@w2
+    a0 = r2.l * r7.h, a1 = r2.h * r7.h || [i0++m3] = r5;                                // Update w2, i0@w0
+
+r5.l = (a0 += r1.l * r6.l), r5.h = (a1 += r1.h * r6.h) || r1 = [i1++m2] || r2 = [i0--]; // r2=w0, i0@w1
+    a0 = r2.l * r7.h, a1 = r2.h * r7.h || [i0++m3] = r5;                                // Update w1, i0@b0
+
+r5.l = (a0 += r1.l * r6.l), r5.h = (a1 += r1.h * r6.h) || r1 = [i1++m3] || r2 = [i0--]; // i1@x1(n-1). i0@w0
+    mnop || [i0++] = r5;    // Update w0. i0@b0.
+
+    // Start 4 back-to-back IIR filters
+    mnop || r5 = [i0++] || r1 = [i1++];                                   // r0=samp; r1=x1(n-1); r5=b0.0
+	a0  = r0.l * r5.l, a1  = r0.h * r5.h || r6 = [i0++] || r2 = [i1++] ;           // r6=b0.1; r2=x1(n-2)
+	a0 += r1.l * r6.l, a1 += r1.h * r6.h || r7 = [i0++] || r3 = [i1++];            // r7=a0.0; r3=y1(n-1)
+	a0 += r2.l * r5.l, a1 += r2.h * r5.h || r5 = [i0++] || r4 = [i1++] ;           // r5=a0.1; r4= 1(n-2)
+	a0 += r3.l * r7.l, a1 += r3.h * r7.h || [i2++] = r0 ;                          // save x1(n-1)
+	r0.l = (a0 += r4.l * r5.l), r0.h = (a1 += r4.h * r5.h) (s2rnd) || [i2++] = r1; // r0=y1(n); save x1(n-2)
+
+	r5 = [i0++] || [i2++] = r0;                                            // r5=b1.0; save y1(n-1)
+	a0  = r0.l * r5.l, a1  = r0.h * r5.h || r6 = [i0++] || [i2++] = r3;    // r6=b1.1; save y1(n-2)
+	a0 += r3.l * r6.l, a1 += r3.h * r6.h || r7 = [i0++] || r1 = [i1++];    // r7=a1.0; r1 = y2(n-1)
+	a0 += r4.l * r5.l, a1 += r4.h * r5.h || r2 = [i1++];                   // r2=y2(n-2)
+	a0 += r1.l * r7.l, a1 += r1.h * r7.h || r5 = [i0++];                   // r5=a1.1
+	r0.l = (a0 += r2.l * r5.l), r0.h = (a1 += r2.h * r5.h) (s2rnd) || NOP; // r0=y2(n)
+
+	r5 = [i0++] || [i2++] = r0;                                            // r5=b2.0; save y2(n-1)
+	a0  = r0.l * r5.l, a1  = r0.h * r5.h || r6 = [i0++] || [i2++] = r1;    // r6=b2.1; save y2(n-2)
+	a0 += r1.l * r6.l, a1 += r1.h * r6.h || r7 = [i0++] || r3 = [i1++];    // r7=a2.0; r3=y3(n-1)
+	a0 += r2.l * r5.l, a1 += r2.h * r5.h || r4 = [i1++];                   // r4=y3(n-2)
+	a0 += r3.l * r7.l, a1 += r3.h * r7.h || r5 = [i0++];                   // r5=a2.1
+	r0.l = (a0 += r4.l * r5.l), r0.h = (a1 += r4.h * r5.h) (s2rnd) || NOP; // r0=y3(n)
+
+	r5 = [i0++] || [i2++] = r0;                                            // r5=b3.0; save y3(n-1)
+	a0  = r0.l * r5.l, a1  = r0.h * r5.h || r6 = [i0++] || [i2++] = r3;    // r6=b3.1; save y3(n-2)
+	a0 += r3.l * r6.l, a1 += r3.h * r6.h || r7 = [i0++] || r1 = [i1++];    // r7=a3.0; r1= y4(n-1)
+	a0 += r4.l * r5.l, a1 += r4.h * r5.h || r2 = [i1++];                   // r2=y4(n-2)
+	a0 += r1.l * r7.l, a1 += r1.h * r7.h || r5 = [i0++];                   // r5=a3.1
+	r3.l = (a0 += r2.l * r5.l), r3.h = (a1 += r2.h * r5.h) (s2rnd);        // r3=y4(n)
+
+    nop || [i2++] = r3; // save current y4(n) in y4(n-1)'s spot
+    r2 = [sp++] || [i2++] = r1; // r2=IIR results of ch0-31 and ch32-63. Save y4(n-1) in y4(n-2)'s spot.
+
+    /* Template Comparison starts here, ala Plexon - no threshold.
+       Currently, r2 = filtered samples from [Ch32-63 | Ch0-31] (hi, lo).
+                  r3 = filterd samples from  [Ch96-127 | Ch64-95] (hi, lo).
+       All samples are 16-bits, we right-shift them to 8-bits and byte pack all of them
+       into one register (r4) so that it contains the samples for chs[96,64,32,0] (hi to lo).
+       The bytes are then converted from signed to unsigned binary offset by XOR with 0x80808080
+
+       Sorting in gtkclient results in 16 template points per channel, 8 bits per point. These templates,
+       and the "aperture" for each sorted channels are sent to the headstage, and stored in the 
+       corresponding memory location in A1.
+
+       16 previous byte-packed samples (group of 4) are saved in T1. Template matching/spike detection
+       consists of using SAA instruction to subtract each of the template point value from the corresponding
+       delayed samples. These differences are summed together and compared to the aperture value.
+
+       If the summed differences for a channel is smaller than that channel's aperture, then we detect
+       a spike for that channel.
+
+       We do this set of procedures twice, once for template A, then template B, for each channel. At the
+       end of the first pass, the current samples are written into T1.
        
-       
-            
-         
-
-
-
-
-
-   
+       Note that in template comparison comments, all notations in the from ch[96,64,32,0] show data
+       from hi-addr to lo-addr.
+    */     
+    r2 = r2 >>> 8 (v);      // vector-shift samples to 8-bits, preserve sign.
+    r3 = r3 >>> 8 (v);
+    r4 = bytepack(r2, r3);  // newest sample chs[96,64,32,0] (hi to lo)
+    r0 = [FP - FP_8080];    // r0 = 0x80808080
+    r4 = r4 ^ r0;           // convert to unsigned offset binary.
+    r0 = r4;                // r0 = r4 = new unsigned samples.
+.align 8; // Template A   
+    a0 = a1 = 0 || r2 = [i0++]; // reset accumulators. r2 = TempA(t).
+    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //1: Samp(t)-TempA(t). r0=sample(t-15). r2=TempA(t-15)
+    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //2: Samp(t-15)-TempA(t-15). r0=samp(t-14). r2=TempA(t-14)
+    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //3: Samp(t-14)-TempA(t-14). r0=samp(t-13). r2=TempA(t-13)
+    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //4
+    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //5
+    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //6
+    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //7
+    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //8
+    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //9
+    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //10
+    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //11
+    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //12
+    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //13
+    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //14
+    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //15: Samp(t-2)-TempA(t-2). r0=samp(t-1). r2=TempA(t-1)
+    saa(r1:0, r3:2) || [i3++] = r4;                //16: Samp(t-1)-TempA(t-1). Write new Samp(t)
     
+    /* Now results for ch[96,64,32,0] are in [a1.H, a1.L, ao.H, ao.L]. 
+       Compare to aperture, as unsigned frac.
+    */
+    r0 = a0, r1 = a1 (fu) || r2 = [i0++] || i3 += m0; // r2=apertureA[32,0]. i3@Samp(t-6)
+    // subtract aperture from results (with saturation)
+    r0 = r0 -|- r2 (s) || r3 = [i0++] || i3 -= m3;    // r0=chs[32,0] diff. r3=apertureA[96,64]. i3@Samp(t-8)
+    r1 = r1 -|- r3 (s) || i3 += m0;                   // r1=chs[96,64] diff. i3@Samp(t-15)
+    r0 = r0 >>> 15 (v); // shift to bit 0, the results of the shifts
+    r1 = r1 >>> 15 (v); // will be either -1 or 0.
+    r0 = -r0 (v);       // now result will be either 1 or 0.
+    r1 = -r1 (v);       // representing either a spike or miss
+    r1 <<= 1;
+    r6 = r0 + r1;       // r6 in form of: [..14bits..][96A,32A][..14bits..][64A,0A]
+.align 8; // Template B
+    a0 = a1 = 0 || r0 = [i3++] || r2 = [i0++]; //r0=Samp(t-15). r2=TempB(t-15)
+    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //1: Samp(t-15)-TempB(t-15). r0=Samp(t-14). r2=TempB(t-14)
+    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //2: Samp(t-14)-TempB(t-14). r0=Samp(t-13). r2=TempB(t-13)
+    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //3: Samp(t-13)-TempB(t-13). r0=Samp(t-12). r2=TempB(t-12)
+    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //4
+    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //5
+    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //6
+    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //7
+    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //8
+    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //9
+    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //10
+    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //11
+    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //12
+    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //13
+    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //14
+    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //15: Samp(t-1)-TempB(t-1). r0=Samp(t). r2=TempB(t)
+    saa(r1:0, r3:2) || nop;                        //16: Samp(t)-TempB(t). i3@Samp(t-15) of next group.
+    // Compare to aperture
+    r0 = a0, r1 = a1 (fu) || r2 = [i0++];   // r2=apertureB[32,0].
+    r0 = r0 -|- r2 (s) || r3 = [i0++];      // r0=ch[32,0] diff. r3=apertureB[96,64]
+    r1 = r1 -|- r3 (s);                     // r1=ch[96,64] diff.
+    r0 = r0 >>> 15 (v);
+    r1 = r1 >>> 15 (v);
+    r0 = -r0 (v);
+    r1 = -r1 (v);
+    r0 = r0 + r1;
+    r0 = r0 + r6;   // r0 in form of: [..12bits..][96B,32B,96A,32A][..12bits..][64B,0B,64A,0A]
 
+    p0 = [FP - FP_CHAN];
+    p1 = [FP - FP_ENC_LUT_BASE];  // 3 cycle latency before we can use p1
+    p5 = [FP - FP_MATCH_BASE];
+    r0.h = r0.h << 4;
+    r0.l = r0.l + r0.h; // r0.l is now [...8bits][96B,32B,96A,32A,64B,0B,64A,0A]
+    r0 = r0.b(z);       // zero-out everything in r0, except for the lower byte.
+    r6 = p0;            // r6 = current group of channels
     
+    // Now we update the spike results in the MATCH (8b) buffer.
+    p5 = p5 + p0;       // p5 points to the byte in MATCH corresponding to current group
+    r1 = b[p5];         // r1 = spike detected so far.
+    r1 = r1 | r0;       // OR it with what we got now
+    p0 = r1;            
+    b[p5] = r1;         // results represent spikes we got in the time of one packet.
+    // Update the corresponding 7b-encoded area
+    p3 = 32;
+    p5 = p5 + p3;       // p5 points to corresponding byte in 7b area
+    p1 = p1 + p0;       // offset to ENC_LUT using value of OR'd byte.
+    r2 = b[p1];
+    b[p5] = r2;         // write to 7b area.
+
+    /* If we have finished going through all 32 groups, add the requested samples to
+       radio packet.
+
+       In the below code,
+         FP_QS: how many samples have we written to the current packet - 6 max.
+         FP_QPACKETS: number of queued packets, 0-15.
+         FP_CHAN: current group of channel, 0-31.
+    */
+    r0 = 31; 
+    // if current channel is 31, then 1 iter has finished, write a sample (1 per TXCHAN) to pkt
+    cc = r6 == r0;
+    if !cc jump end_txchan (bp);    // finish if not group31.
+    /* Otherwise do the update.
+       p0 and p5 are free to use.
+       p3 points to SPI_TBDR -- need to be reset afterwards
+       p2 read through WFBUF while sending pkt, p4 writing to buffer.
+    */
+    p0 = [FP - FP_TXCHAN0];
+    p1 = [FP - FP_TXCHAN1];
+    p3 = [FP - FP_TXCHAN2];
+    p5 = [FP - FP_TXCHAN3];
+    r0 = b[p0];
+    r1 = b[p1];
+    r2 = b[p3];
+    r3 = b[p5];
+    b[p4++] = r0;
+    b[p4++] = r1;
+    b[p4++] = r2;
+    b[p4++] = r3;
+    r4 = [FP - FP_QS];
+    r7 = 6;
+    r4 += 1;
+    /* cur group is 31. 
+       So i3 is @samp(t-15) of group0. Next iteration, samp(t-14) becomes the
+       new samp(t-15). Therefore we increment i3 to point there.
+    */
+    i3 += 4;
     
+    cc = r4 == r7;
+    /* If we don't have 6 samples for TXCHANx yet in this pkt, then continue onto next iteration.
+       Otherwise, we add templat matches to current pkt and finish constructing it.
 
+       Each packet is 32-bytes. Each of the first 6 32-bit words contains a sample from each of 
+       the TXCHANx, 1 byte per sample.
 
+       The last 8 bytes of the packet contain template matches for 32 channels. Each byte is made
+       from a corresponding byte from the 7b-match region, with its MSBit replaced by either a bit
+       from the (packet # in frame flag), or a bit from the (echo field).
 
+       The first 4 template match bytes in the packet receives the (packet # in frame) bits, which are
+       derived from STATE_LUT.
 
+       The second 4 template match bytes in the packet receives the echo bits, which is received from
+       gtkclient's transmission.
 
+       The raw samples are in lo-memory addr, the template matches are in higher-memory address within
+       a packet.
+    */
+    if !cc jump end_txchan_qs (bp);
+    r5 = [FP - FP_QPACKETS];
+    p1 = r5;                       // Used to index to STATE_LUT, gives packe# in frame info
+    p0 = [FP - FP_STATE_LUT_BASE];
+    p5 = [FP - FP_MATCH_PTR7];     // p5 @ 7b-template match region, the template matches to read next.
+    r5 += 1;                       // Finishing cur pkt, so one more on the queue.
+    [FP - FP_QPACKETS] = r5;       // Update variable in memory
+    p0 = (p0 + p1) << 2;           // 4-byte align, index into STATE_LUT
+    r5 = [FP - FP_ECHO];           // echo flag in bits 31,23,15,7 of r5.
+    r7 = [p0];                     // r7 contains packet# in frame
+    
+    r0 = [p5++];                   // r0 has the first 4 bytes of 7b-encoded template match.
+    r1 = [p5++];                   // r1 has the second 4 bytes of 7b-encoded template match.
+    r0 = r0 | r7;                  // Add in the packet# in frame bits to r0
+    r1 = r1 | r5;                  // Add in the echo bits to r1
+    
+    // Make [FP_MATCH_PTR7] loop, reset the template matches.
+    r7 = p5;                       
+    p0 = -36;
+    p5 = p5 + p0;                  // move p5 to 8b-region, corresponding to second 7b-byte from above.
+    bitclr(r7,6);                   
+    bitset(r7,5);
+    [FP - FP_MATCH_PTR7] = r7;     // make sure [FP_MATCH_PTR7] stays in 7b-region and loops around.
+    
+    // Write template-match bytes to pkt
+    [p4++] = r0;
+    [p4++] = r1;
+    
+    // Reset the corresponding template-match bytes in 8bit region.
+    [p5--] = r4;
+    [p5--] = r4;
 
-.global radio_bidi_asm
+end_txchan_qs:
+    [FP - FP_QS] = r4;  // if we just finished a pkt, QS=0, otherwise it was incremented already.
+    // make p4 loop in WFBUF region
+    r7 = p4;            
+    bitclr(r7, 10);     // two 512-byte frames. loop back after going through 1024 bytes.
+    p4 = r7;
+end_txchan:
+    p1 = [FP - FP_FIO_FLAG_D];  // reset the pointers.
+    p3 = [FP - FP_SPI_TDBR];
+    rts;
+    
+_clearirq_asm: //just write the status register via spi to clear radio's IRQ.
+	[--sp] = rets;
+	r7 = SPI_CSN;
+	w[p1 + (FIO_FLAG_C - FIO_FLAG_D)] = r7;
+	call _get_asm;
+	r6 = NOR_STATUS + 0x20; //write to status register
+	w[p3] = r6;
+	call _get_asm;
+	r6 = 0x70;
+	w[p3] = r6; //clear irq: set RX_DR to clear bit, set TX_DS to clear bit, set MAX_RT to clear bit 
+	call _get_asm;
+	r7 = SPI_CSN;
+	w[p1 + (FIO_FLAG_S - FIO_FLAG_D)] = r7;
+	call _get_asm;
+	rets = [sp++];
+	rts;
+
+_waitirq_asm:   // wait for confirmation radio has sent the pkt.
+	[--sp] = rets;
+	r7 = 182; // should take max 360us = 178. min @ 1msps = 160
+	[fp - FP_TIMER] = r7;
+waitirq_loop:
+	r6 = w[p1];
+	cc = bittst(r6, 3); //irq pin.
+	if !cc jump waitirq_end;
+	call _get_asm;
+	r6 = 0;
+	r7 = [fp - FP_TIMER];
+	cc = r6 == r7;
+	if cc jump waitirq_end;
+	r7 += -1;
+	[fp - FP_TIMER] = r7;
+	call _get_asm;
+	jump waitirq_loop;
+waitirq_end:
+	call _get_asm;
+	rets = [sp++];
+	rts;
+
+_clearfifos_asm:
+    // p3 points to SPI_TBDR, restored from _get_asm
+    // sending to nordic thru SPI follows clearing CSN, preceeds setting CSN
+	[--sp] = rets;
+	// flush RX fifo (seems to improve reliability)
+	r7 = SPI_CSN;
+	w[p1 + (FIO_FLAG_C - FIO_FLAG_D)] = r7;
+	call _get_asm;
+	r6 = NOR_FLUSH_RX;
+	w[p3] = r6;     // option sent thru SPI when SPI_TBDR wrttien to.
+	call _get_asm;
+	r7 = SPI_CSN;
+	w[p1 + (FIO_FLAG_S - FIO_FLAG_D)] = r7;
+	call _get_asm;
+	// and flush TX fifo.
+	r7 = SPI_CSN;
+	w[p1 + (FIO_FLAG_C - FIO_FLAG_D)] = r7;
+	call _get_asm;
+	r6 = NOR_FLUSH_TX;
+	w[p3] = r6;
+	call _get_asm;
+	r7 = SPI_CSN;
+	w[p1 + (FIO_FLAG_S - FIO_FLAG_D)] = r7;
+	call _get_asm;
+	// return.
+	rets = [sp++];
+	rts;
+
+.global _radio_bidi_asm // start of firmware execution
 _radio_bidi_asm:
     // set SPI baudrate
     p5.l = LO(SPI_BAUD);
@@ -348,7 +716,7 @@ _radio_bidi_asm:
 
     // template encoding and state (echo bits) look up table
     r0.l = LO(ENC_LUT);
-    r0,h = HI(ENC_LUT);
+    r0.h = HI(ENC_LUT);
     [FP - FP_ENC_LUT_BASE] = r0;    // addressed byte-wise; no align needed.
     r0.l = LO(STATE_LUT);
     r0.h = HI(STATE_LUT);
@@ -478,10 +846,10 @@ lt2_top:
     /* Gain and integrator coefs for first stage:
        All coefficients here are in Q15 format. 16-bits, hence w[i0++] increment (16-bit word increment)
     */
-    r0.l = 32000;   w[i0++] = r0.l;
-    r0.l = -16384;  w[i0++] = r0.l;
-    r0.l = 16384;   w[i0++] = r0.l;
-    r0.l = 1600;    w[i0++] = r0,l; // mu changed from 800 to 1600, because we no longer do s2rnd
+    r0.l = 32000;   w[i0++] = r0.l; // 32000 = (Q15) 0.9765
+    r0.l = -32768;  w[i0++] = r0.l; // -32768 = (Q15) -1
+    r0.l = 16384;   w[i0++] = r0.l; // 16384 = (Q15) 0.5
+    r0.l = 1600;    w[i0++] = r0.l; // mu changed from 800 to 1600, because we no longer do s2rnd
                                     // in integrator stage.
     
     /* AGC: 
@@ -786,7 +1154,7 @@ intan_setup:    // clock cycle and FIFO contents for this process in intan_setup
     r2 = 295;
     r3 = 0;
 fast_settle_loop:
-    _config_wait_asm;
+    call _config_wait_asm;
     r2 += -1;
     cc = r2 == r3
     if !cc jump fast_settle_loop;
@@ -808,7 +1176,7 @@ fast_settle_loop:
     r2 = 9;
     r0 = 0xfe00 (z);    // dummy command...anything other than 0x5500 is ok
 ADC_calibrate_loop:
-    _config_wait_asm;
+    call _config_wait_asm;
     r2 += -1;
     cc = r2 == r3;
     if !cc jump ADC_calibrate_loop;
@@ -893,7 +1261,7 @@ wait_16pkts:
     
         // loop to send 32 bytes - equals 1 packet, 1 byte at a time.
         p5 = 32;
-        LSETUP(pb_top, pb_ot) lc1 = p5;
+        LSETUP(pb_top, pb_bot) lc1 = p5;
         pb_top:
             r6 = b[p2++];   // p2 is set to the base of packet frames - WFBUF
             w[p3] = r6;     // p2 goe from lo to hi addr. Sending samples first, then template matches.
@@ -1015,7 +1383,7 @@ wait_16pkts:
         r7 = 0;
         [FP - FP_ADDRESS] = r7;         // reset variable reg to 0
         [FP - FP_VALUE] = r7;           // reset variable reg to 0
-        call _get_asm;A
+        call _get_asm;
 
         // first nested-loop reads [4b echo | 28b address} and save in FP_address
         p5 = 4;
@@ -1090,7 +1458,7 @@ wait_16pkts:
     w[p1 + (FIO_FLAG_S - FIO_FLAG_D)] = r7;
     call _get_asm;
 
-no_rx_packet:
+no_rxpacket:
     // put it back in TX mode.
     r7 = SPI_CE;    // clear CE
     w[p1 + (FIO_FLAG_C - FIO_FLAG_D)] = r7;

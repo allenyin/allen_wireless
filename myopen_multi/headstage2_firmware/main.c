@@ -6,6 +6,118 @@
 #include "spi.h"
 #include "usb.h"
 
+u32 g_excregs[8+6+16] ; //the regular data registers + pointer registers. 
+
+void exception_report(unsigned long seqstat, unsigned long retx){
+	//shift the bottom 5 bits out on portf 0 and 1 (1 = clock); 
+	//radio may get a bit confused, but these are both inputs so it's ok
+	unsigned long mask, out; 
+	int i; 
+	*pFIO_FLAG_D = 0; 
+	printf_str("Exception!!"); 
+	printf_hex("hwerr:", (seqstat >> 14) & 0x1f); 
+	printf_hex("excause:", seqstat & 0x3f); 
+	printf_hex("retx:", retx); 
+	u32* p = g_excregs; 
+	printf_hex("r0:", *p++); 
+	printf_hex("r1:", *p++); 
+	printf_hex("r2:", *p++); 
+	printf_hex("r3:", *p++); 
+	printf_hex("r4:", *p++); 
+	printf_hex("r5:", *p++); 
+	printf_hex("r6:", *p++); 
+	printf_hex("r7:", *p++); 
+	uart_str("\n"); 
+	printf_hex("p0:", *p++); 
+	printf_hex("p1:", *p++); 
+	printf_hex("p2:", *p++); 
+	printf_hex("p3:", *p++); 
+	printf_hex("p4:", *p++); 
+	printf_hex("p5:", *p++); 
+	//loop registers. 
+	uart_str("\n"); 
+	printf_hex("i0:", *p++); 		
+	printf_hex("b0:", *p++); 		
+	printf_hex("l0:", *p++); 	
+	uart_str("\n"); 
+	printf_hex("i1:", *p++); 		
+	printf_hex("b1:", *p++); 		
+	printf_hex("l1:", *p++); 		
+	uart_str("\n"); 
+	printf_hex("i2:", *p++); 		
+	printf_hex("b2:", *p++); 		
+	printf_hex("l2:", *p++); 		
+	uart_str("\n"); 
+	printf_hex("i3:", *p++); 		
+	printf_hex("b3:", *p++); 		
+	printf_hex("l3:", *p++); 		
+	uart_str("\n"); 
+	printf_hex("m0:", *p++); 		
+	printf_hex("m1:", *p++); 		
+	printf_hex("m2:", *p++); 		
+	printf_hex("m3:", *p++); 		
+	while(1){
+		//pulse pf 7 (MUX0) for trigger.
+		*pFIO_FLAG_T = 0x100; 
+		asm volatile("ssync"); 
+		*pFIO_FLAG_T = 0x100; 
+		asm volatile("ssync"); 
+		
+		mask = 0x20; 
+		out = seqstat;
+		for(i=0; i<6; i++){
+			if(mask & out)
+				*pFIO_FLAG_S = 1; 
+			else
+				*pFIO_FLAG_C = 1;
+			*pFIO_FLAG_T = 2; 
+			asm volatile("ssync"); 
+			mask = mask >> 1; 
+			*pFIO_FLAG_T = 2; 
+			asm volatile("ssync"); 
+		}
+		*pFIO_FLAG_C = 1;
+		// insert a pause. 
+		for(i=0; i<30; i++){
+			asm volatile("nop; nop;"); 
+		}
+		//only shift out the last 16 bits of retx - we know the top 16 bits. 
+		mask = 0x8000; 
+		out = retx;
+		for(i=0; i<16; i++){
+			if(mask & out)
+				*pFIO_FLAG_S = 1; 
+			else
+				*pFIO_FLAG_C = 1;
+			*pFIO_FLAG_T = 2; 
+			asm volatile("ssync"); 
+			mask = mask >> 1; 
+			*pFIO_FLAG_T = 2; 
+			asm volatile("ssync"); 
+			//break into nibbles. (and format for the oscilloscope)
+			if((i & 3) == 3){
+				asm volatile("nop; nop; nop; nop; nop; nop; nop; nop;"); 
+				asm volatile("nop; nop; nop; nop; nop; nop; nop; nop;"); 
+				asm volatile("nop; nop; nop; nop; nop; nop; nop; nop;"); 
+			}
+		}
+		*pFIO_FLAG_C = 1;
+		// insert a pause. 
+		for(i=0; i<300; i++){
+			asm volatile("nop; nop;"); 
+		}
+	}
+}
+
+void nmi_report(void){
+	int i; 
+	printf_str("nonmaskable exception!"); 
+	printf_str("this should not occur - hardware problems!"); 
+	for(i=0; i<300; i++){
+		asm volatile("nop; nop;"); 
+	}
+}
+
 int main()
 {
 	u16 k; 
