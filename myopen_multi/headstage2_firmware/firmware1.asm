@@ -3,6 +3,8 @@
 
 #define LED_BLINK 0x0010    // blink LED
 #define NEXT_CHANNEL 0x3f00 // Intan command CONVERT(63) -- convert next channel
+#define TEST_CMD 0x1500     // convert ch21, for test
+#define SHIFT_BITS 0        // 17 bits-16 bits=2
 
 .align 8    // call is a 5-cycle latency if target is aligned.
 _get_asm:
@@ -34,9 +36,17 @@ _get_asm:
        Note: [FP_CHAN] = 30 means the content of the memory address pointed by FP_CHAN contains 30.
     */
 wait_samples:
-    r3 = w[p0 + (SPORT0_STAT - SPORT0_RX)];
+    r3 = w[p0 + (SPORT1_STAT - SPORT0_RX)];
     cc = bittst(r3, 0);
     if !cc jump wait_samples;
+
+    // queue next channel in transmit FIFO. This step is a lot easier than the RHA version's code.
+    r7 = NEXT_CHANNEL (z);
+    r7 << = SHIFT_BITS;
+    w[p0 + (SPORT0_TX - SPORT0_RX)] = r7;   // SPORT0 primary TX
+    w[p0 + (SPORT0_TX - SPORT0_RX)] = r7;   // SPORT0 sec TX
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r7;   // SPORT1 primary TX
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r7;   // SPORT1 sec TX
 
     // we got samples back from MISO, new CONVERT command transmitted!
     // now increment the channel, and queue up new command
@@ -64,21 +74,18 @@ wait_samples:
 
        The electrode to channel configurations between the two boards are not the same. So sorted templates
        are not interchangeable.
+
+       The transmit/receive length is 17-bits, to get the BFin and Intan to play nice. LSBit is in bit 0.
     */
-    r1 = w[p0 + (SPORT1_RX - SPORT0_RX)] (z);   // SPORT1-primary: Ch32-63
-    r0 = w[p0 + (SPORT1_RX - SPORT0_RX)] (z);   // SPORT1-sec:     Ch0-31
+    r1 = w[p0 + (SPORT1_RX - SPORT0_RX)];         // SPORT1-primary: Ch32-63
+    r0 = w[p0 + (SPORT1_RX - SPORT0_RX)];         // SPORT1-sec:     Ch0-31
+    r1 >> = SHIFT_BITS;      
+    r0 >> = SHIFT_BITS;      
     r2.l = 0xffff;  // word read is 16-bits, no longer 12-bits.
     r0 = r0 & r2;
     r1 = r1 & r2;
     r1 <<= 16;      // Ch32-63 in the upper word
     r2 = r0 + r1;   // r2 = Ch32, Ch0 (lo, hi). 16-bits samples
-
-    // queue CONVERT63 in transmit FIFO. This step is a lot easier than the RHA version's code.
-    r7 = NEXT_CHANNEL;
-    w[p0 + (SPORT0_TX - SPORT0_RX)] = r7;   // SPORT0 primary TX
-    w[p0 + (SPORT0_TX - SPORT0_RX)] = r7;   // SPORT0 sec TX
-    w[p0 + (SPORT1_TX - SPORT0_RX)] = r7;   // SPORT1 primary TX
-    w[p0 + (SPORT1_TX - SPORT0_RX)] = r7;   // SPORT1 sec TX
     
     // integrator (offset removal), highpass, and gain stage
     r5 = [i0++]; // r5 = 32000(pre-gain=0.9765), -32768(-1) (lo, hi)
@@ -90,13 +97,25 @@ wait_samples:
     r6 = [i0++];                                        // r6.l = 16384 (0.5), r6.h = 1600 (mu=0.0488)
     r0.l = (a0 += r1.l * r5.h), r0.h = (a1 += r1.h * r5.h); // r0=output of stage=y=gx-(previous integr mean)
     a0 = r0.l * r6.h, a1 = r0.h * r6.h;                     // a0,a1=mu*y
+    
     r2.l = (a0 -= r1.l * r5.h), r2.h = (a1 -= r1.h * r5.h) || r5 = [i1++] || r7 = [i0++];
+    //r5 = [i1++] || r7 = [i0++];     // testing: r2 should still contain the results, saved to integr mean
+
+/*
+    a0 = r2.l * r5.l, a1 = r2.h * r5.l || r1 = [i1++];
+    a0 += r2.l * r5.l, a1 += r2.h * r5.l || r6 = [i0++];
+    r0.l = (a0 += r1.l * r5.h), r0.h = (a1 += r1.h * r5.h) (s2rnd);
+    a0 = r1.l * r6.l, a1 = r1.h * r6.l;
+    r2.l = (a0 += r0.l * r6.h), r2.h = (a1 += r0.h * r6.h) (s2rnd) || r5 = [i1++] || r7 = [i0++];
+*/    
     
     /* r2 = new integr mean = mu*y+prev integr mean;
        r5 = AGC gain (lo, hi are diff), r7 = sqrt of AGC target (lo, hi are the same)
        We now start AGC
     */
     a0 = r0.l * r5.l, a1 = r0.h * r5.h || [i2++] = r2;  // a0,a1  = y * agc_gain. Save new mean in r2.
+    //a0 = a0 << 8;
+    //a1 = a1 << 8;
     a0 = a0 << 6;           // In Tim's firmware, a0 is shifted by 8, given a0 here starts out being 14-bits.
     a1 = a1 << 6;           // Here a0 starts out being 16-bits, so we shift 2 bits less to the left.
     r0.l = a0, r0.h = a1;   // r0 contains the 16-bits output of AGC stage, let it be y.
@@ -249,14 +268,16 @@ r5.l = (a0 += r1.l * r6.l), r5.h = (a1 += r1.h * r6.h) || r1 = [i1++m3] || r2 = 
 	[--sp] = r0; // store IIR result (current y4(n)) on the stack.
 
     // Process the other two channels in this group. Pretty much identical as before.
-    r1 = w[p0] (z);   // SPORT0-primary: Ch96-127
-    r0 = w[p0] (z);   // SPORT0-sec:     Ch64-95
+    r1 = w[p0];      // SPORT0-primary: Ch96-127
+    r0 = w[p0];      // SPORT0-sec:     Ch64-95
+    r1 >> = SHIFT_BITS;
+    r0 >> = SHIFT_BITS;
     r2.l = 0xffff;  // word read is 16-bits, no longer 12-bits.
     r0 = r0 & r2;
     r1 = r1 & r2;
     r1 <<= 16;      // Ch96-127 in the upper word
     r2 = r0 + r1;   // r2 = Ch32, Ch0 (lo, hi). 16-bits samples
-  
+ 
     // integrator (offset removal), highpass, and gain stage
     r5 = [i0++]; // r5 = 32000 (pre-gain=0.9765), -16384 (lo, hi)
 .align 8
@@ -264,10 +285,20 @@ r5.l = (a0 += r1.l * r6.l), r5.h = (a1 += r1.h * r6.h) || r1 = [i1++m3] || r2 = 
     r6 = [i0++];                                        
     r0.l = (a0 += r1.l * r5.h), r0.h = (a1 += r1.h * r5.h); 
     a0 = r0.l * r6.h, a1 = r0.h * r6.h;
-    r2.l = (a0 -= r1.l * r5.h), r2.h = (a1 -= r1.h * r5.h) || r5 = [i1++] || r7 = [i0++];
+    //r2.l = (a0 -= r1.l * r5.h), r2.h = (a1 -= r1.h * r5.h) || r5 = [i1++] || r7 = [i0++];
+    r5 = [i1++] || r7 = [i0++];   // testing: store result in integrated mean slots
 
+/*
+    a0 = r2.l * r5.l, a1 = r2.h * r5.l || r1 = [i1++];
+    a0 += r2.l * r5.l, a1 += r2.h * r5.l || r6 = [i0++];
+    r0.l = (a0 += r1.l * r5.h), r0.h = (a1 += r1.h * r5.h) (s2rnd);
+    a0 = r1.l * r6.l, a1 = r1.h * r6.l;
+    r2.l = (a0 += r0.l * r6.h), r2.h = (a1 += r0.h * r6.h) (s2rnd) || r5 = [i1++] || r7 = [i0++];
+*/
     // start AGC
     a0 = r0.l * r5.l, a1 = r0.h * r5.h || [i2++] = r2;  
+    //a0 = a0 << 8;
+    //a1 = a1 << 8;
     a0 = a0 << 6;           
     a1 = a1 << 6;           
     r0.l = a0, r0.h = a1;   // r0 contains the 16-bits output of AGC stage.
@@ -468,6 +499,7 @@ r5.l = (a0 += r1.l * r6.l), r5.h = (a1 += r1.h * r6.h) || r1 = [i1++m3] || r2 = 
     r2 = b[p1];
     b[p5] = r2;         // write to 7b area.
 
+
     /* If we have finished going through all 32 groups, add the requested samples to
        radio packet.
 
@@ -527,6 +559,8 @@ r5.l = (a0 += r1.l * r6.l), r5.h = (a1 += r1.h * r6.h) || r1 = [i1++m3] || r2 = 
        a packet.
     */
     if !cc jump end_txchan_qs (bp);
+
+    
     r5 = [FP - FP_QPACKETS];
     p1 = r5;                       // Used to index to STATE_LUT, gives packe# in frame info
     p0 = [FP - FP_STATE_LUT_BASE];
@@ -553,8 +587,8 @@ r5.l = (a0 += r1.l * r6.l), r5.h = (a1 += r1.h * r6.h) || r1 = [i1++m3] || r2 = 
     // Write template-match bytes to pkt
     [p4++] = r0;
     [p4++] = r1;
-   
-    r4 = 0; 
+
+    r4 = 0;    
     // Reset the corresponding template-match bytes in 8bit region.
     [p5--] = r4;
     [p5--] = r4;
@@ -850,6 +884,7 @@ lt2_top:
     */
     r0.l = 32000;   w[i0++] = r0.l; // 32000 = (Q15) 0.9765
     r0.l = -32768;  w[i0++] = r0.l; // -32768 = (Q15) -1
+    //r0.l = -16384;  w[i0++] = r0.l;
     r0.l = 16384;   w[i0++] = r0.l; // 16384 = (Q15) 0.5
     r0.l = 1600;    w[i0++] = r0.l; // mu changed from 800 to 1600, because we no longer do s2rnd
                                     // in integrator stage.
@@ -864,7 +899,7 @@ lt2_top:
     r0.l = 1;       w[i0++] = r0.l;     // Set this to zero to disable AGC. Q7.8
 
     // LMS coefs - 7 total.
-    r0 = 0(x);
+    r0 = 0 (x);
     [i0++] = r0;
     [i0++] = r0;
     [i0++] = r0;
@@ -1049,10 +1084,10 @@ zer_bot: nop;
     ssync;
     p5.l = LO(SPORT0_TCR1); // SPORT0-TCR1
     p5.h = HI(SPORT0_TCR1);
-    r0.l = TCKFE | LATFS | LTFS | TFSR | ITFS | ITCLK | TSPEN;
+    r0.l = TCKFE | LATFS | LTFS | TFSR | ITFS | ITCLK | TSPEN | DITFS;
     w[p5] = r0;
 
-    p5.l = LO(SPORT1_TCR1); // SPORT1-TCR1
+    p5.l = LO(SPORT1_TCR1);
     p5.h = HI(SPORT1_TCR1);
     w[p5] = r0;
 
@@ -1061,172 +1096,293 @@ zer_bot: nop;
     r0.l = RCKFE | LARFS | LRFS | RFSR | RSPEN;
     w[p5] = r0;
 
-    p5.l = LO(SPORT1_RCR1); // SPORT1-RCR1
+    p5.l = LO(SPORT1_RCR1);
     p5.h = HI(SPORT1_RCR1);
     w[p5] = r0;
 
     ssync;
-intan_setup:    // clock cycle and FIFO contents for this process in intan_setup spreadsheet.
-    r0 = 0x80fe (z);    // Write 0xFE to Intan reg 0
     p0 = [FP - FP_SPORT0_RX];
-    w[p0 + (SPORT0_TX - SPORT0_RX)] = r0;   // SPORT0 primary TX
-    w[p0 + (SPORT0_TX - SPORT0_RX)] = r0;   // SPORT0 sec TX
-    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;   // SPORT1 primary TX
-    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;   // SPORT1 sec TX
 
-    r0 = 0x8102 (z);    // Write 0x02 to Intan reg 1
-    w[p0 + (SPORT0_TX - SPORT0_RX)] = r0;   // SPORT0 primary TX
-    w[p0 + (SPORT0_TX - SPORT0_RX)] = r0;   // SPORT0 sec TX
-    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;   // SPORT1 primary TX
-    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;   // SPORT1 sec TX
+intan_setup:
+    r0 = 0x80fe (z);
+    r0 <<= SHIFT_BITS;
+    w[p0] = r0;
+    w[p0] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call _wait_FSCycle;
 
-    r0 = 0x8204 (z);    // Write 0x04 to Intan reg 2
-    w[p0 + (SPORT0_TX - SPORT0_RX)] = r0;   // SPORT0 primary TX
-    w[p0 + (SPORT0_TX - SPORT0_RX)] = r0;   // SPORT0 sec TX
-    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;   // SPORT1 primary TX
-    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;   // SPORT1 sec TX
+    r0 = 0x8102 (z);
+    r0 <<= SHIFT_BITS;
+    w[p0] = r0;
+    w[p0] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call _wait_FSCycle;
 
-    r0 = 0x8300 (z);    // Write 0x00 to Intan reg 3
-    w[p0 + (SPORT0_TX - SPORT0_RX)] = r0;   // SPORT0 primary TX
-    w[p0 + (SPORT0_TX - SPORT0_RX)] = r0;   // SPORT0 sec TX
-    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;   // SPORT1 primary TX
-    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;   // SPORT1 sec TX
+    r0 = 0x8204 (z);
+    r0 <<= SHIFT_BITS;
+    w[p0] = r0;
+    w[p0] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call _wait_FSCycle;
 
-    /* Transmit FIFO is now completely full, two will be transmitted every frame-sync cycle.
-       Refill two words (same command to both pri and sec) every cycle
-    */
-    r0 = 0x8480 (z);    // Write 0x80 to Intan reg 4
-    call _config_wait_asm;
+    r0 = 0x8300 (z);
+    r0 <<= SHIFT_BITS;
+    w[p0] = r0;
+    w[p0] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call _wait_FSCycle;
 
-    r0 = 0x8500 (z);    // Write 0x00 to Intan reg 5
-    call _config_wait_asm;
+    r0 = 0x8480 (z);
+    r0 <<= SHIFT_BITS;
+    w[p0] = r0;
+    w[p0] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call _wait_FSCycle;
 
-    r0 = 0x8600 (z);    // Write 0x00 to Intan reg 6
-    call _config_wait_asm;
+    r0 = 0x8500 (z);
+    r0 <<= SHIFT_BITS;
+    w[p0] = r0;
+    w[p0] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call _wait_FSCycle;
 
-    r0 = 0x8700 (z);    // Write 0x00 to Intan reg 7
-    call _config_wait_asm;
+    r0 = 0x8600 (z);
+    r0 <<= SHIFT_BITS;
+    w[p0] = r0;
+    w[p0] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call _wait_FSCycle;
+
+    r0 = 0x8700 (z);
+    r0 <<= SHIFT_BITS;
+    w[p0] = r0;
+    w[p0] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call _wait_FSCycle;
+
+    r0 = 0x8816 (z);
+    r0 <<= SHIFT_BITS;
+    w[p0] = r0;
+    w[p0] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call _wait_FSCycle;
+
+    r0 = 0x8900 (z);
+    r0 <<= SHIFT_BITS;
+    w[p0] = r0;
+    w[p0] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call _wait_FSCycle;
+
+    r0 = 0x8a17 (z);
+    r0 <<= SHIFT_BITS;
+    w[p0] = r0;
+    w[p0] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call _wait_FSCycle;
+
+    r0 = 0x8b00 (z);
+    r0 <<= SHIFT_BITS;
+    w[p0] = r0;
+    w[p0] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call _wait_FSCycle;
+
+    r0 = 0x8c15 (z);
+    r0 <<= SHIFT_BITS;
+    w[p0] = r0;
+    w[p0] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call _wait_FSCycle;
+
+    r0 = 0x8d00 (z);
+    r0 <<= SHIFT_BITS;
+    w[p0] = r0;
+    w[p0] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call _wait_FSCycle;
+
+    r0 = 0x8eff (z);
+    r0 <<= SHIFT_BITS;
+    w[p0] = r0;
+    w[p0] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call _wait_FSCycle;
+
+    r0 = 0x8fff (z);
+    r0 <<= SHIFT_BITS;
+    w[p0] = r0;
+    w[p0] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call _wait_FSCycle;
+
+    r0 = 0x90ff (z);
+    r0 <<= SHIFT_BITS;
+    w[p0] = r0;
+    w[p0] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call _wait_FSCycle;
+
+    r0 = 0x91ff (z);
+    r0 <<= SHIFT_BITS;
+    w[p0] = r0;
+    w[p0] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call _wait_FSCycle;
+
+// ADC calibration cycles - right now nothing in FIFO
+    r0 = 0x5500 (z);
+    r0 <<= SHIFT_BITS;
+    w[p0] = r0;
+    w[p0] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+
+    r0 = 0xfe00 (z);    // dummy 1
+    r0 << = SHIFT_BITS;
+    w[p0] = r0;
+    w[p0] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call _wait_FSCycle;
+
+    r0 = 0xfe00 (z);    // dummy 2
+    r0 << = SHIFT_BITS;
+    w[p0] = r0;
+    w[p0] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call _wait_FSCycle;
+
+    r0 = 0xfe00 (z);    // dummy 3
+    r0 << = SHIFT_BITS;
+    w[p0] = r0;
+    w[p0] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call _wait_FSCycle;
+
+    r0 = 0xfe00 (z);    // dummy 4
+    r0 << = SHIFT_BITS;
+    w[p0] = r0;
+    w[p0] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call _wait_FSCycle;
+
+    r0 = 0xfe00 (z);    // dummy 5
+    r0 << = SHIFT_BITS;
+    w[p0] = r0;
+    w[p0] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call _wait_FSCycle;
+
+    r0 = 0xfe00 (z);    // dummy 6
+    r0 << = SHIFT_BITS;
+    w[p0] = r0;
+    w[p0] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call _wait_FSCycle;
+
+    r0 = 0xfe00 (z);    // dummy 7
+    r0 << = SHIFT_BITS;
+    w[p0] = r0;
+    w[p0] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call _wait_FSCycle;
+
+    r0 = 0xfe00 (z);    // dummy 8
+    r0 << = SHIFT_BITS;
+    w[p0] = r0;
+    w[p0] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call _wait_FSCycle;
+
+    r0 = 0xfe00 (z);    // dummy 9
+    r0 << = SHIFT_BITS;
+    w[p0] = r0;
+    w[p0] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call _wait_FSCycle;
+// Now FIFO contains dummy-command 9.
+
+    r0 = 31;
+    //r0 <<= 9; // 8+shift_bits.
+    r0 <<= 8;
+    w[p0] = r0;
+    w[p0] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call _wait_FSCycle;
+
+    r0 = 0;
+    w[p0] = r0;
+    w[p0] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call _wait_FSCycle;
+
+    r0 = NEXT_CHANNEL;
+    r0 <<= SHIFT_BITS;
+    w[p0] = r0;
+    w[p0] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    //call _wait_FSCycle;     // end of this call, CONVERT1 is in FIFO; CONVERT0 just sent out
+
+    w[p0] = r0;
+    w[p0] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
     
-    r0 = 0x8816 (z);    // Write 0x16 to Intan reg 8
-    call _config_wait_asm;
+    w[p0] = r0;
+    w[p0] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;
 
-    r0 = 0x8900 (z);    // Write 0x00 to Intan reg 9
-    call _config_wait_asm;
-
-    r0 = 0x8a17 (z);    // Write 0x17 to Intan reg 10
-    call _config_wait_asm;
-
-    r0 = 0x8b00 (z);    // Write 0x00 to Intan reg 11
-    call _config_wait_asm;
-
-    r0 = 0x8c15 (z);    // Write 0x15 to Intan reg 12
-    call _config_wait_asm;
-
-    r0 = 0x8d00 (z);    // Write 0x00 to Intan reg 13
-    call _config_wait_asm;
-    
-    r0 = 0x8eff (z);    // Write 0xff to Intan reg 14
-    call _config_wait_asm;
-
-    r0 = 0x8fff (z);    // Write 0xff to Intan reg 15
-    call _config_wait_asm;
-
-    r0 = 0x90ff (z);    // Write 0xff to Intan reg 16
-    call _config_wait_asm;
-
-    r0 = 0x91ff (z);    // Write 0xff to Intan reg 17
-    call _config_wait_asm;
-    
-    // Finished all writes to Intan regs. Wait for all commands to finish.
-    r0 = 0xfe00 (z);    // Read Intan reg 62 -- dummy command so Intan doesn't run anything
-    call _config_wait_asm;
-    call _config_wait_asm;
-
-    /* Intan reg 0 sets fast-settle. Amplifier f_H set to 7.5kHz through Intan reg8-11 values.
-       This means we have to wait 2.5/7.5k = 333us, before turning fast-settle off.
-       At this point we are 18 frame-syncs after fast-settle is set, this is about 18us.
-       Need to wait 295us more. Do this by calling 295 _config_wait_asm times...
-    */
-    r2 = 295;
-    r3 = 0;
-fast_settle_loop:
-    call _config_wait_asm;
-    r2 += -1;
-    cc = r2 == r3
-    if !cc jump fast_settle_loop;
-
-    // finished settling, turn fast-settle off
-    r0 = 0x80de (z);    // Write 0xde to Intan reg 0
-    call _config_wait_asm;
-
-    /* Initiate ADC self-calibration routine.
-       Intan datasheet: 9 "dummy" commands must be sent after a CALIBRATE command to generate 
-                        necessary SCLK cycles. The nine commands following a CALIBRATE
-                        command are not executed by the RHD2000; the chip ignores other operations
-                        until calibration is complete.
-    */
-    r0 = 0x5500 (z);    // CALIBRATE command
-    call _config_wait_asm;
-
-    // start the 9 dummy cycles
-    r2 = 9;
-    r0 = 0xfe00 (z);    // dummy command...anything other than 0x5500 is ok
-ADC_calibrate_loop:
-    call _config_wait_asm;
-    r2 += -1;
-    cc = r2 == r3;
-    if !cc jump ADC_calibrate_loop;
-
-    // queue up CONVERT0. At this point, the transmit FIFO is full.
-    // channel0 result will be read out on MISO in 6 frame-syncs.
-    r0 = 0x0000 (z);    // CONVERT(0)
-    call _config_wait_asm;
-
-    call _nofill_wait_asm;
-    call _nofill_wait_asm;
-    call _nofill_wait_asm;  // end of this call, transmit FIFO contains only CONVERT(0)
-
-    r0 = 1 (z);
-    r0 <<= 8;   // CONVERT (1) command
-    call _config_wait_asm;  // end of this call, transmit FIFO contains only CONVERT(1)
     
     // finish all setup
     p1.l = LO(FIO_FLAG_D);  // restore p1 value,
     p1.h = HI(FIO_FLAG_D);  // expected by radio_loop and _get_asm
 
     jump radio_loop;
-    
-_config_wait_asm:    // Wait for the read/write to Intan to complete 
-    r1 = w[p0 + (SPORT0_STAT - SPORT0_RX)];
-    cc = ! bittst(r1, 0);
-    if cc jump _config_wait_asm;
-    
-    // Read the samples out of both receive FIFOs to clear space
-    r1 = w[p0] (z); // SPORT0_RX pri
-    r1 = w[p0] (z); // SPORT0_RX sec
-    r1 = w[p0 + (SPORT1_RX - SPORT0_RX)] (z); // SPORT1_RX pri
-    r1 = w[p0 + (SPORT1_RX - SPORT0_RX)] (z); // SPORT1_RX sec 
 
-    // Queue up the new command word in r0 prior to calling this routine.
-    // This command will be transmitted in 4 frame sync cycles.
-    w[p0 + (SPORT0_TX - SPORT0_RX)] = r0;   // SPORT0 primary TX
-    w[p0 + (SPORT0_TX - SPORT0_RX)] = r0;   // SPORT0 sec TX
-    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;   // SPORT1 primary TX
-    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;   // SPORT1 sec TX
-    rts;
+_wait_FSCycle:
+    r1 = w[p0 + (SPORT1_STAT - SPORT0_RX)];
+    cc = !bittst(r1, 0);
+    if cc jump _wait_FSCycle;
 
-_nofill_wait_asm:   
-    // Wait for the read/write to Intan to complete, no write to transmit FIFO
-    r1 = w[p0 + (SPORT0_STAT - SPORT0_RX)];
-    cc = ! bittst(r1, 0);
-    if cc jump _nofill_wait_asm;
-    
-    // Read the samples out of both receive FIFOs to clear space
-    r1 = w[p0] (z); // SPORT0_RX pri
-    r1 = w[p0] (z); // SPORT0_RX sec
-    r1 = w[p0 + (SPORT1_RX - SPORT0_RX)] (z); // SPORT1_RX pri
-    r1 = w[p0 + (SPORT1_RX - SPORT0_RX)] (z); // SPORT1_RX sec 
+    // Read the samples out of both receive FIFOs to keep it empty
+    r1 = w[p0];
+    r1 = w[p0];
+    r1 = w[p0 + (SPORT1_RX - SPORT0_RX)];
+    r1 = w[p0 + (SPORT1_RX - SPORT0_RX)];
     rts;
+    
+    
 
 radio_loop: // main thread, interleaved with _get_asm to process samples
 wait_16pkts:
@@ -1490,7 +1646,7 @@ no_rxpacket:
 	p5.l = LO(WDOG_STAT);
 	[p5] = r7; //value doesn't matter.
 	call _get_asm;
-
+/*
 	//blink. first clear LED.
 	r7 = LED_BLINK;
 	w[p1 + (FIO_FLAG_C - FIO_FLAG_D)] = r7;
@@ -1505,5 +1661,5 @@ no_rxpacket:
 	bitclr(r7, 8);
 	[FP - FP_BLINK] = r7;
 	call _get_asm;
-
+*/
 	jump radio_loop;

@@ -1,0 +1,88 @@
+In all configurations, SCLK frequency is 80MHz. TCLKDIV=1 or RCLKDIV=1 sets the transmit or 
+receive serial clock frequency ast 20MHz.
+
+Set 1:
+// Internal TCLK, active-lo, late frame sync
+
+*pSPORT0_TCR1 = TCKFE | LATFS | LTFS | TFSR | ITFS | ITCLK | DITFS | TSPEN;
+*pSPORT1_TCR1 = TCKFE | LATFS | LTFS | TFSR | ITFS | ITCLK | DITFS | TSPEN;
+*pSPORT0_RCR1 = RCKFE | LARFS | LRFS | RFSR | RSPEN;
+*pSPORT1_RCR1 = RCKFE | LARFS | LRFS | RFSR | RSPEN;
+
+Config 1:
+// Should have: TFS every 5 SCLK cycles, each active low lasts 17 SCLK cycles.
+
+    *pSPORT0_TCLKDIV = 1;
+    *pSPORT0_TFSDIV = 4;
+    *pSPORT0_TCR2 = TXSE | 0x10;
+
+    *pSPORT0_RCR2 = RXSE | 0x10;
+
+Results: Active low lasts 17 SCLK cycles, but TFS pulse off for every 3 SCLK cycles.
+
+Config 2:
+// Should have: TFS every 2 SCLK cycles, each active low lasts 17 SCLK cycles.
+
+    *pSPORT0_TCLKDIV = 1;
+    *pSPORT0_TFSDIV = 1;
+    *pSPORT0_TCR2 = TXSE | 0x10;
+
+    *pSPORT0_RCR2 = RXSE | 0x10;
+
+Results: Active low lasts 17 SCLK cycles, TFS pulse off for 1 SCLK cycles
+
+Config 3:
+// Should have: TFS every 3 SCLK cycles, each active low lasts 17 SCLK cycles.
+
+    *pSPORT0_TCLKDIV = 1;
+    *pSPORT0_TFSDIV = 2;
+    *pSPORT0_TCR2 = TXSE | 0x10;
+
+    *pSPORT0_RCR2 = RXSE | 0x10;
+
+Results: Active low lasts 17 SCLK cycles, TFS pulse off for 1 SCLK cycles.
+
+Config 4:
+// Should have: TFS every 4 SCLK cycles, each active low lasts 17 SCLK cycles.
+
+    *pSPORT0_TCLKDIV = 1;
+    *pSPORT0_TFSDIV = 3;
+    *pSPORT0_TCR2 = TXSE | 0x10;
+
+    *pSPORT0_RCR2 = RXSE | 0x10;
+
+Results: Active low lasts 17 SCLK cycles, TFS pulse off for 3 SCLK cycles.
+
+Config 5:
+// Should have: TFS every 4 SCLK cycles, each active low lasts 16 SCLK cycles.
+
+    *pSPORT0_TCLKDIV = 1;
+    *pSPORT0_TFSDIV = 3;
+    *pSPORT0_TCR2 = TXSE | 0xf;
+    
+    *pSPORT0_RCR2 = RXSE | 0xf;
+
+Results: FSync always low!
+
+Config 6:
+// Should have: TFS every 5 SCLK cycles, each active low lasts 16 SCLK cycles
+    
+    *pSPORT0_TCLKDIV = 1;
+    *pSPORT0_TFSDIV = 4;
+    *pSPORT0_TCR2 = TXSE | 0xf;
+
+    *pSPORT0_RCR2 = RXSE | oxf;
+
+Results: Active low lasts 16 SCLK cycles, high for 4 SCLK cycles. 
+
+----------------------------------------------------------------------
+Internal RCLK, late-frame-sync, active low
+    
+*pSPORT0_TCR1 = TCKFE | LATFS | LTFS | TFSR | TSPEN;      // internal RSCLK, late-frame-sync
+*pSPORT_RCR1 = RCKFE | LARFS | LRFS | RFSR | IRFS | IRCLK | RSPEN;   // this for using internal RSCLK, late-frame-sync
+
+--------------------------------------------------------------------
+Internal TCLK, early frame sync, active high
+
+*pSPORT0_TCR1 = TCKFE | TFSR | ITFS | ITCLK | TSPEN;  // active-hi, early-frame-sync, internal TSCLK
+*pSPORT0_RCR1 = RCKFE | RFSR | RSPEN;                 // active-hi early-frame-sync, internal TSCLK

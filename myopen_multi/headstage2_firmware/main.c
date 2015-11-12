@@ -142,6 +142,11 @@ int main()
 	}
 	
 	radio_set_tx();
+    // First disable all SPORT
+    *pSPORT0_TCR1 = 0x0000;
+    *pSPORT0_RCR1 = 0x0000;
+    *pSPORT1_TCR1 = 0x0000;
+    *pSPORT1_RCR1 = 0x0000;
     
     /* SCLK = 80MHz
      * TSCLKDIV = 1
@@ -160,30 +165,84 @@ int main()
      * RCKFE = 1: Rising RSCLK/TSCLK edge to sample data and externally generated frame sync.
      */
 
+    // Using TSCLK for late-frame-sync
     // SPORT0 transmit
     *pSPORT0_TCLKDIV = 1;
-    *pSPORT0_TFSDIV = 3;
-    *pSPORT0_TCR1 = TCKFE | LATFS | LTFS | TFSR | ITFS | ITCLK; // SPORT0 transmit not yet enabled
-    *pSPORT0_TCR2 = TXSE | 0xf; // allow secondary; 0xf=15 -> transmit word length=15+1=16 bits; 
+    *pSPORT0_TFSDIV = 4;
+    *pSPORT0_TCR2 = TXSE | 0xf; // allow secondary; 
 
     // SPORT1 transmit
     *pSPORT1_TCLKDIV = 1;
-    *pSPORT1_TFSDIV = 3;
-    *pSPORT1_TCR1 = TCKFE | LATFS | LTFS | TFSR | ITFS | ITCLK; // SPORT1 transmit not yet enabled
-    *pSPORT1_TCR2 = TXSE | 0xf; // allow secondary; 0xf=15 -> transmit word length=15+1=16 bits
+    *pSPORT1_TFSDIV = 4;
+    *pSPORT1_TCR2 = TXSE | 0xf; // allow secondary;
 
     // SPORT0 receive
     // Serial clock and frame syncs derived from TSCLK and TFS, so RCLKDIV and RFSDIV ignored.
-    *pSPORT0_RCR1 = RCKFE | LATFS | LRFS | RFSR;
-    *pSPORT0_RCR2 = RXSE | 0xf; // allow secondary; 0xf=15 -> receive word length=15+1=16 bits
+    *pSPORT0_RCR2 = RXSE | 0xf; // allow secondary; 
 
     // SPORT1 receive
     // Serial clock and frame syncs derived from TSCLK and TFS, so RCLKDIV and RFSDIV ignored.
-    *pSPORT1_RCR1 = RCKFE | LATFS | LRFS | RFSR;
     *pSPORT1_RCR2 = RXSE | 0xf;
 
-    asm volatile("ssync;");
+    /* Using RSCLK for late-frame-sync
+    *pSPORT0_RCLKDIV = 1;
+    *pSPORT0_RFSDIV = 4;
+    *pSPORT0_RCR2 = RXSE | 0xf;
+
+    *pSPORT1_RCLKDIV = 1;
+    *pSPORT1_RFSDIV = 4;
+    *pSPORT1_RCR2 = RXSE | 0xf;
+
+    *pSPORT0_TCR2 = TXSE | 0xf;
+    *pSPORT1_TCR2 = TXSE | 0xf;
+    */
+
+    // TSCLK for early-frame-sync
+    /*
+    *pSPORT0_TCLKDIV = 1;
+    *pSPORT0_TFSDIV = 19;
+    *pSPORT0_TCR2 = TXSE | 0xf;
+
+    *pSPORT1_TCLKDIV = 1;
+    *pSPORT1_TFSDIV = 19;
+    *pSPORT1_TCR2 = TXSE | 0xf;
+
+    *pSPORT0_RCR2 = RXSE | 0xf;
+    *pSPORT1_RCR2 = RXSE | 0xf;
+    */
+
+    //---- block from Tim firmware-----
+    //*pSPORT0_RCLKDIV = 1; //Determines the SCLK frequency and hence the data bit rate
+	//*pSPORT0_RFSDIV = 19; //number of clock cycles -1 before generating TFS pulse. 
+	//*pSPORT0_RCR2 = 0x010f; //16 bit word, secondary channel enabled, no stereo. 
 	
+	//*pSPORT1_RCLKDIV = 1; //Determines the SCLK frequency and hence the data bit rate
+	//*pSPORT1_RFSDIV = 19; //number of clock cycles -1 before generating TFS pulse. 
+	//*pSPORT1_RCR2 = 0x010f; //16 bit word, secondary channel enabled, no stereo. 
+    //---- Tim block end -------------
+    
+
+    //------------ Testing Frame Syncs only ----------
+    *pSPORT0_TCR1 = TCKFE | LATFS | LTFS | TFSR | ITFS | ITCLK | DITFS;
+    *pSPORT1_TCR1 = TCKFE | LATFS | LTFS | TFSR | ITFS | ITCLK | DITFS;
+    *pSPORT0_RCR1 = RCKFE | LARFS | LRFS | RFSR;
+    *pSPORT1_RCR1 = RCKFE | LARFS | LRFS | RFSR;
+    
+    asm volatile("ssync;");
+  /* 
+    *pSPORT0_TCR1 = TCKFE | LATFS | LTFS | TFSR | ITFS | ITCLK | TSPEN;// | DITFS;
+    *pSPORT1_TCR1 = TCKFE | LATFS | LTFS | TFSR | ITFS | ITCLK | TSPEN;// | DITFS;
+    *pSPORT0_RCR1 = RCKFE | LARFS | LRFS | RFSR | RSPEN;
+    *pSPORT1_RCR1 = RCKFE | LARFS | LRFS | RFSR | RSPEN;
+
+    asm volatile("ssync;");
+	*/
     radio_bidi_asm(); //infinite loop! ends here!
+    
+    /*
+    while (1) {
+        asm volatile("nop;");
+    }
+    */
 	return 0;
 }
