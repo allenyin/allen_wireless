@@ -168,12 +168,12 @@ int main()
     // Using TSCLK for late-frame-sync
     // SPORT0 transmit
     *pSPORT0_TCLKDIV = 1;
-    *pSPORT0_TFSDIV = 4;
+    *pSPORT0_TFSDIV = 3;
     *pSPORT0_TCR2 = TXSE | 0x10; // allow secondary; 
 
     // SPORT1 transmit
     *pSPORT1_TCLKDIV = 1;
-    *pSPORT1_TFSDIV = 4;
+    *pSPORT1_TFSDIV = 3;
     *pSPORT1_TCR2 = TXSE | 0x10; // allow secondary;
 
     // SPORT0 receive
