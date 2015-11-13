@@ -169,20 +169,20 @@ int main()
     // SPORT0 transmit
     *pSPORT0_TCLKDIV = 1;
     *pSPORT0_TFSDIV = 4;
-    *pSPORT0_TCR2 = TXSE | 0xf; // allow secondary; 
+    *pSPORT0_TCR2 = TXSE | 0x10; // allow secondary; 
 
     // SPORT1 transmit
     *pSPORT1_TCLKDIV = 1;
     *pSPORT1_TFSDIV = 4;
-    *pSPORT1_TCR2 = TXSE | 0xf; // allow secondary;
+    *pSPORT1_TCR2 = TXSE | 0x10; // allow secondary;
 
     // SPORT0 receive
     // Serial clock and frame syncs derived from TSCLK and TFS, so RCLKDIV and RFSDIV ignored.
-    *pSPORT0_RCR2 = RXSE | 0xf; // allow secondary; 
+    *pSPORT0_RCR2 = RXSE | 0x10; // allow secondary; 
 
     // SPORT1 receive
     // Serial clock and frame syncs derived from TSCLK and TFS, so RCLKDIV and RFSDIV ignored.
-    *pSPORT1_RCR2 = RXSE | 0xf;
+    *pSPORT1_RCR2 = RXSE | 0x10;
 
     /* Using RSCLK for late-frame-sync
     *pSPORT0_RCLKDIV = 1;

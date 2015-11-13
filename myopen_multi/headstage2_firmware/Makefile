@@ -1,7 +1,7 @@
 # Makefile for  program running in L1 memory
 .SUFFIXES: .o .c .asm .bo .asm
 
-ASMSRCS = crt0.o firmware1.o enc.o divsi3.o
+ASMSRCS = crt0.o frame_sync_test.o enc.o divsi3.o
 COMMON = print.o util.o spi.o
 CSRCS = main.o
 # note: the order of objects in the .ldr mirrors the order in this list!
