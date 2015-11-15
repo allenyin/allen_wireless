@@ -2,6 +2,9 @@
 memory files obtained from copying gdb output must be first processed.
 
 In vim, use regex command "%s/.\+:\s\+//g" to delete the address/pointer field.
+
+Edit 11/15/2015: No longer need the regex command, just save gdb.txt to whatever and run.
+                 The regex is taken care of in load_mem_values
 """
 import numpy as np
 import matplotlib.pyplot as plt
@@ -12,7 +15,7 @@ def load_mem_values(fname):
 
     data = []
     for line in f.readlines():
-        for val in line.replace('\n','').split('\t'):
+        for val in ((line.split(':'))[1].replace('\n','').split('\t'))[1:]:
             data.append(int(val, 16))
 
     f.close()
@@ -21,9 +24,9 @@ def load_mem_values(fname):
 def to16bits(n):
     '''
     Given a 32-bits word, split and return the two 16-bits word.
-    Return order is the higher word, followed by the lower word
+    Return order is the lower word, followed by the higher word
     '''
-    return ((n >> 16 & 0xffff), (n & 0xffff))
+    return ((n & 0xffff),(n >> 16 & 0xffff))
 
 def convert_mem_values(data):
     new_data = [];
@@ -86,11 +89,12 @@ def plot_mem_vals1(data):
     f = 6.4*10**3   # freq of signal
     f_s = 10**6     # 1MHz sampling freq
     sample_per_period = int(f_s/f)  # closest integer sample amount
+    n_periods = 2
     n_amp = 4
-    amp1 = [data[i] for i in range(sample_per_period*n_amp) if i%4==0]
-    amp2 = [data[i] for i in range(sample_per_period*n_amp) if i%4==1]
-    amp3 = [data[i] for i in range(sample_per_period*n_amp) if i%4==2]
-    amp4 = [data[i] for i in range(sample_per_period*n_amp) if i%4==3]
+    amp1 = [data[i] for i in range(sample_per_period*n_amp*n_periods) if i%4==0]
+    amp2 = [data[i] for i in range(sample_per_period*n_amp*n_periods) if i%4==1]
+    amp3 = [data[i] for i in range(sample_per_period*n_amp*n_periods) if i%4==2]
+    amp4 = [data[i] for i in range(sample_per_period*n_amp*n_periods) if i%4==3]
 
     '''
     Convert the ADC output to voltage values:
@@ -124,7 +128,7 @@ def plot_mem_vals1(data):
 
     return (amp1, amp2, amp3, amp4)
 
-data = load_mem_values('memdump1.txt')
+data = load_mem_values('memdump2.txt')
 data = convert_mem_values(data)
 data = check_setup_values(data)
 amp1,amp2,amp3,amp4 = plot_mem_vals1(data)

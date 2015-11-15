@@ -54,8 +54,10 @@
    Space needed for one period of samples, for 4 channels is:
    156 samples/period x 4 amps x 1 channel/amp x 0.5 word/sample = 312 words.
 
+    2 periods = 624
+
 -------------------------------
-   72 + 312 = 384 -> round up to 390 words
+   72 + 624 = 696 ---> round to 700 words
 */
 
 .global _radio_bidi_asm
@@ -65,7 +67,7 @@ _radio_bidi_asm:
     p1.l = LO(FP_BASE); // FP_BASE at 0xFF906F00
     p1.h = HI(FP_BASE);
     r0 = 0 (z);
-    p5 = 390;
+    p5 = 700;
     lsetup(lt_top, lt_bot) lc0 = p5; // write zeros to 80 locations
 lt_top:
     [p1++] = r0;
@@ -385,8 +387,8 @@ empty_pipeline:
 */
     
 get_period_samples:
-    // At this point we have CONVERT command operated on by ADC, need 155 more
-    p5 = 155;
+    // At this point we have CONVERT command operated on by ADC, need 155+156 more
+    p5 = 311;
     lsetup(push_top, push_bot) lc0 = p5;
 push_top:
     [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
@@ -414,13 +416,13 @@ wait_samples:
     r3 = [p0 + (SPORT1_RX - SPORT0_RX)];    // SPORT1 sec - 1st amp
     r2 >>= SHIFT_BITS;
     r3 >>= SHIFT_BITS;
-    w[p1++] = r3;
-    w[p1++] = r2;
+    w[p1++] = r3;                           // 1st amp at lower word
+    w[p1++] = r2;                           // 2nd amp at higher word
 
     r2 = [p0];                              // SPORT0 pri - 4th amp
     r3 = [p0];                              // SPORT0 sec - 3rd amp
     r2 >>= SHIFT_BITS;                      
     r3 >>= SHIFT_BITS;
-    w[p1++] = r3;
-    w[p1++] = r2;
+    w[p1++] = r3;                           // 3rd amp at lower word
+    w[p1++] = r2;                           // 4th amp at higher word
     rts;
