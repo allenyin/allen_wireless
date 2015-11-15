@@ -32,6 +32,8 @@
 #define REG17 0x91ff    // get back 0xffff
 #define CALIB 0x5500    // get back 0x8000
 
+#define CONVERT5 0x0800 // get back value to channel 5
+ 
 /* Total space needed to hold responses (in 16-bit words) for each amp:
    2 for empty pipeline
    1 for repeat command 1
@@ -40,7 +42,20 @@
    5  for each READ intan commands
 
    36 16-bit words per amplifier -> 18 32-bit words per amplifier
-   18*4 = 72 words total
+   18*4 = 72 words total.
+
+-------------------------------
+   Testing ADC performance1: 
+   
+   Repeatedly convert...say Channel0 on all amps.
+   One amp is given a 6.4kHz sine-wave input. ADC samples at 1MHz with TFSDIV=3, data-length=17bits.
+   This means it takes ~156 samples to get one period.
+
+   Space needed for one period of samples, for 4 channels is:
+   156 samples/period x 4 amps x 1 channel/amp x 0.5 word/sample = 312 words.
+
+-------------------------------
+   72 + 312 = 384 -> round up to 390 words
 */
 
 .global _radio_bidi_asm
@@ -50,7 +65,7 @@ _radio_bidi_asm:
     p1.l = LO(FP_BASE); // FP_BASE at 0xFF906F00
     p1.h = HI(FP_BASE);
     r0 = 0 (z);
-    p5 = 80;
+    p5 = 390;
     lsetup(lt_top, lt_bot) lc0 = p5; // write zeros to 80 locations
 lt_top:
     [p1++] = r0;
@@ -59,7 +74,21 @@ lt_bot: nop;
     // reset p1 location
     p1.l = LO(FP_BASE);
     p1.h = HI(FP_BASE);
+    
+    p0.l = LO(SPORT0_RX);
+    p0.h = HI(SPORT0_RX);
 
+intan_setup:
+    r0 = REG0 (z);
+    r0 = r0 << SHIFT_BITS;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+
+/* Need to load something in first before turning on SPORT
+   to prevent leftover in the TX_buffer to screw up things
+*/
     p5.l = LO(SPORT0_TCR1); // SPORT0-TCR1
     p5.h = HI(SPORT0_TCR1);
     r0.l = TCKFE | LATFS | LTFS | TFSR | ITFS | ITCLK | TSPEN | DITFS;
@@ -78,19 +107,11 @@ lt_bot: nop;
     p5.h = HI(SPORT1_RCR1);
     w[p5] = r0;
     ssync;
-
-    p0.l = LO(SPORT0_RX);
-    p0.h = HI(SPORT0_RX);
-
-intan_setup:
-    r0 = REG0 (z);
-    r0 = r0 << SHIFT_BITS;
-    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
-    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
-    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
-    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+// Now we are ready to go
 
     // do it again, first transmit gets glitched usually...
+    r0 = REG0 (z);
+    r0 = r0 << SHIFT_BITS;
     [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
     [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
     [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
@@ -345,11 +366,38 @@ spell_intan:
     [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
     [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
     [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
-    call wait_samples;
+    call wait_samples;  // call 1
 
-    // 1 extra to send the last one in FIFO, 2 wait to empty pipeline.
+    r0 = CONVERT5 (z);
+    r0 = r0 << SHIFT_BITS;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call wait_samples; // call 2
+
+/*
+empty_pipeline:
+    // 1 extra to send the last nonconvert command in FIFO, 2 to get the result out
     call wait_samples;
     call wait_samples;  
+    call wait_samples;
+*/
+    
+get_period_samples:
+    // At this point we have CONVERT command operated on by ADC, need 155 more
+    p5 = 155;
+    lsetup(push_top, push_bot) lc0 = p5;
+push_top:
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call wait_samples;
+push_bot: nop;
+    // empty the pipeline
+    call wait_samples;
+    call wait_samples;
     call wait_samples;
 
 we_finished:
@@ -361,18 +409,18 @@ wait_samples:
     cc = bittst(r1, 0);
     if !cc jump wait_samples;
     
-    // save new samples.
-    r2 = [p0 + (SPORT1_RX - SPORT0_RX)];
-    r3 = [p0 + (SPORT1_RX - SPORT0_RX)];
+    // save new samples, in order from amp1 to amp4
+    r2 = [p0 + (SPORT1_RX - SPORT0_RX)];    // SPORT1 pri - 2nd amp
+    r3 = [p0 + (SPORT1_RX - SPORT0_RX)];    // SPORT1 sec - 1st amp
     r2 >>= SHIFT_BITS;
     r3 >>= SHIFT_BITS;
-    w[p1++] = r2;
     w[p1++] = r3;
+    w[p1++] = r2;
 
-    r2 = [p0];
-    r3 = [p0];
-    r2 >>= SHIFT_BITS;
+    r2 = [p0];                              // SPORT0 pri - 4th amp
+    r3 = [p0];                              // SPORT0 sec - 3rd amp
+    r2 >>= SHIFT_BITS;                      
     r3 >>= SHIFT_BITS;
-    w[p1++] = r2;
     w[p1++] = r3;
+    w[p1++] = r2;
     rts;
