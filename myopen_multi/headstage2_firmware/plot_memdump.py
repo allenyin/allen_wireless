@@ -9,6 +9,21 @@ Edit 11/15/2015: No longer need the regex command, just save gdb.txt to whatever
 import numpy as np
 import matplotlib.pyplot as plt
 
+'''
+Convert the ADC output to voltage values:
+The outputs are in binary offset, where 0x0000 corresponds to 0V, and 0xffff = 3.37V,
+when connected to JTAG.
+
+The amps have a gain of 196. So to get the actual input value in mV, we do:
+
+    (3.37/65535)*val/196*1000
+where 65535=0xffff.
+
+'''
+VH = 3.37
+gain = 196
+scaler = VH/0xffff/196*1000 # convert to mV
+
 def load_mem_values(fname):
     # Read in the hex values, save in array data
     f = open(fname, 'r')
@@ -96,21 +111,7 @@ def plot_mem_vals1(data):
     amp3 = [data[i] for i in range(sample_per_period*n_amp*n_periods) if i%4==2]
     amp4 = [data[i] for i in range(sample_per_period*n_amp*n_periods) if i%4==3]
 
-    '''
-    Convert the ADC output to voltage values:
-    The outputs are in binary offset, where 0x0000 corresponds to 0V, and 0xffff = 3.37V,
-    when connected to JTAG.
-
-    The amps have a gain of 196. So to get the actual input value in mV, we do:
-
-        (3.37/65535)*val/196*1000
-    where 65535=0xffff.
-
-    '''
-    VH = 3.37
-    gain = 196
-    scaler = VH/0xffff/196*1000 # convert to mV
-
+    
     amp1 = [i*scaler for i in amp1]
     amp2 = [i*scaler for i in amp2]
     amp3 = [i*scaler for i in amp3]
@@ -122,16 +123,16 @@ def plot_mem_vals1(data):
     ax2.plot(xx, amp2, color='red')
     ax3.plot(xx, amp3, color='green')
     ax4.plot(xx, amp4, color='black')
-    ax1.set_ylabel('Amp1 ch5 (mV)')
-    ax2.set_ylabel('Amp2 ch5 (mV)')
-    ax3.set_ylabel('Amp3 ch5 (mV)')
-    ax4.set_ylabel('Amp4 ch5 (mV)')
+    ax1.set_ylabel('Amp1 ch0 (mV)')
+    ax2.set_ylabel('Amp2 ch0 (mV)')
+    ax3.set_ylabel('Amp3 ch0 (mV)')
+    ax4.set_ylabel('Amp4 ch0 (mV)')
     ax4.set_xlabel('Time (uS)')
-    plt.show()
+    plt.show(block=False)
 
     return (amp1, amp2, amp3, amp4)
 
-def plot_mem_vals2(data):
+def plot_mem_vals2(data, n_channels):
     '''
     Similar to plot_mem_vals1, except we are plotting all 32 channels within the same amp!
     Might be slow with lots of samples because I'm not allocating memory, but I don't plan to
@@ -141,44 +142,65 @@ def plot_mem_vals2(data):
     f_s = 10**6     # 1MHz sampling freq
     sample_per_period = int(f_s/f)  # 156 for 6.4kHz
     n_periods = 1.5
-    n_channels = 32
+    #n_channels = 32
+    n_samples = 7488
 
     channels = [list() for i in xrange(n_channels)]
     for ch in xrange(n_channels):
-        channels[ch] = [data[i] for i in range(int(sample_per_period*n_channels*n_periods)) if i%32==ch]
+        #channels[ch] = [data[i] for i in range(int(sample_per_period*n_channels*n_periods)) if i%n_channels==ch]
+        channels[ch] = [data[i] for i in range(7488) if i%n_channels==ch]
 
-    # convert to mV
-    VH = 3.37
-    gain = 196
-    scaler = VH/0xffff/196*1000
     channels = [ [i*scaler for i in ch] for ch in channels]
 
     # plot all these...6 rows of 6
     xx = range(len(channels[0]))
+    plt.figure()
+    ncols = np.ceil(np.sqrt(n_channels))
+    nrows = np.ceil(n_channels/ncols)
     for ch in xrange(n_channels):
-        plt.subplot(6, 6, ch+1)
+        plt.subplot(nrows, ncols, ch+1)
         plt.plot(xx, channels[ch], color='blue')
         if ch % 6 == 0:
             t = 'Channel%d (mV)' % (ch+1)
             plt.ylabel(t)
 
-    plt.show()
+    plt.show(block=False)
     return channels
 
+def plot_mem_vals3(data):
+    '''
+    Plot everything as a single channel
+    '''
+    nsamples = int(1.5*156*32)
+    samples = [i*scaler for i in data]
+    print "len of samples is ", len(samples)
+    xx = range(nsamples)
+    plt.figure()
+    plt.plot(xx, samples[0:nsamples], color='blue')
+    plt.ylabel('Signal (mV)')
+    plt.xlabel('Time (uS)')
+    plt.show(block=False)
+    return samples
 
 #Code for analyzing between amps
-'''
-data = load_mem_values('memdump2.txt')
-data = convert_mem_values(data)
-data = check_setup_values(data)
-amp1,amp2,amp3,amp4 = plot_mem_vals1(data)
-'''
-
+def between_amps(fname):
+    data = load_mem_values(fname)
+    data = convert_mem_values(data)
+    data = check_setup_values(data)
+    return plot_mem_vals1(data)
+    
 #Code for analyzing channels within an amp
-data = load_mem_values('gdb.txt')
-data = convert_mem_values(data)
-data = check_setup_values(data)
-data = plot_mem_vals2(data)
+def within_amp(fname, n_channels):
+    data = load_mem_values(fname)
+    data = convert_mem_values(data)
+    data = check_setup_values(data)
+    return plot_mem_vals2(data, n_channels)
+
+def within_amp_as_one_ch(fname):
+    data = load_mem_values(fname)
+    data = convert_mem_values(data)
+    data = check_setup_values(data)
+    return plot_mem_vals3(data)
 
 
 

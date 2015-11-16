@@ -364,22 +364,30 @@ spell_intan:
     [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
     call wait_samples;  // call 0
 
-    r0 = CONVERT0 (z);
-    r0 = r0 << SHIFT_BITS;
+// r4 keeps track of the current channel, r0 is the command
+    r4 = 0;
+    r0 = r4 << 8;
+    r0 = r0 << SHIFT_BITS;  
     [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
     [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
     [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
     [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
     call wait_samples; // call 1
 
-    r0 = NEXT_CHANNEL (z);
+    r4 += 1;
+    r0 = r4 << 8;
     r0 = r0 << SHIFT_BITS;
+    //bittgl(r0, 9);  // alternate between channel 0 and channel 1
     [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
     [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
     [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
     [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
     call wait_samples;  // call 2 
 
+    r4 += 1;
+    r0 = r4 << 8;
+    r0 = r0 << SHIFT_BITS;
+    //bittgl(r0, 9);
     [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
     [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
     [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
@@ -389,11 +397,14 @@ spell_intan:
 get_period_samples:
     // At this point we have 1 convert command, we need a total of
     // 234*32-3=7485 CONVERTs
-    r0 = NEXT_CHANNEL (z);
-    r0 = r0 << SHIFT_BITS;
     p5 = 7485;
     lsetup(push_top, push_bot) lc0 = p5;
 push_top:
+    r4 += 1;
+    bitclr(r4, 5);
+    r0 = r4 << 8;
+    r0 = r0 << SHIFT_BITS;
+    //bittgl(r0, 9);
     [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
     [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
     [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
