@@ -122,16 +122,63 @@ def plot_mem_vals1(data):
     ax2.plot(xx, amp2, color='red')
     ax3.plot(xx, amp3, color='green')
     ax4.plot(xx, amp4, color='black')
-    ax1.set_ylabel('Signal (mV)')
+    ax1.set_ylabel('Amp1 ch5 (mV)')
+    ax2.set_ylabel('Amp2 ch5 (mV)')
+    ax3.set_ylabel('Amp3 ch5 (mV)')
+    ax4.set_ylabel('Amp4 ch5 (mV)')
     ax4.set_xlabel('Time (uS)')
     plt.show()
 
     return (amp1, amp2, amp3, amp4)
 
+def plot_mem_vals2(data):
+    '''
+    Similar to plot_mem_vals1, except we are plotting all 32 channels within the same amp!
+    Might be slow with lots of samples because I'm not allocating memory, but I don't plan to
+    get too many samples!
+    '''
+    f = 6.4*10**3   # freq of signal
+    f_s = 10**6     # 1MHz sampling freq
+    sample_per_period = int(f_s/f)  # 156 for 6.4kHz
+    n_periods = 1.5
+    n_channels = 32
+
+    channels = [list() for i in xrange(n_channels)]
+    for ch in xrange(n_channels):
+        channels[ch] = [data[i] for i in range(int(sample_per_period*n_channels*n_periods)) if i%32==ch]
+
+    # convert to mV
+    VH = 3.37
+    gain = 196
+    scaler = VH/0xffff/196*1000
+    channels = [ [i*scaler for i in ch] for ch in channels]
+
+    # plot all these...6 rows of 6
+    xx = range(len(channels[0]))
+    for ch in xrange(n_channels):
+        plt.subplot(6, 6, ch+1)
+        plt.plot(xx, channels[ch], color='blue')
+        if ch % 6 == 0:
+            t = 'Channel%d (mV)' % (ch+1)
+            plt.ylabel(t)
+
+    plt.show()
+    return channels
+
+
+#Code for analyzing between amps
+'''
 data = load_mem_values('memdump2.txt')
 data = convert_mem_values(data)
 data = check_setup_values(data)
 amp1,amp2,amp3,amp4 = plot_mem_vals1(data)
+'''
+
+#Code for analyzing channels within an amp
+data = load_mem_values('gdb.txt')
+data = convert_mem_values(data)
+data = check_setup_values(data)
+data = plot_mem_vals2(data)
 
 
 
