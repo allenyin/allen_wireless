@@ -139,18 +139,21 @@ def plot_mem_vals2(data, n_channels):
     get too many samples!
     '''
     f = 6.4*10**3   # freq of signal
-    f_s = 10**6     # 1MHz sampling freq
-    sample_per_period = int(f_s/f)  # 156 for 6.4kHz
-    n_periods = 1.5
+    f_max = 10.0**6     # 1MHz sampling freq
+    f_s = f_max/n_channels
+    sample_per_period = int(np.ceil(f_s/f))
+    n_periods = 2
     #n_channels = 32
-    n_samples = 7488
+    n_samples = n_periods*sample_per_period*n_channels
 
     channels = [list() for i in xrange(n_channels)]
     for ch in xrange(n_channels):
-        #channels[ch] = [data[i] for i in range(int(sample_per_period*n_channels*n_periods)) if i%n_channels==ch]
-        channels[ch] = [data[i] for i in range(7488) if i%n_channels==ch]
+        channels[ch] = [data[i] for i in range(int(sample_per_period*n_channels*n_periods)) if i%n_channels==ch]
+        #channels[ch] = [data[i] for i in range(7488) if i%n_channels==ch]
 
     channels = [ [i*scaler for i in ch] for ch in channels]
+    maxes = [max(i) for i in channels]
+    mins = [min(i) for i in channels]
 
     # plot all these...6 rows of 6
     xx = range(len(channels[0]))
@@ -160,6 +163,7 @@ def plot_mem_vals2(data, n_channels):
     for ch in xrange(n_channels):
         plt.subplot(nrows, ncols, ch+1)
         plt.plot(xx, channels[ch], color='blue')
+        plt.ylim(min(mins)-1, max(maxes)+1)
         if ch % 6 == 0:
             t = 'Channel%d (mV)' % (ch+1)
             plt.ylabel(t)
@@ -182,6 +186,33 @@ def plot_mem_vals3(data):
     plt.show(block=False)
     return samples
 
+def plot_mem_val4(data, n_channels):
+    '''
+    This case, it's 234 samples for ch0, 234 samples for ch1, etc
+    '''
+    nsamples = int(1.5*156*32)
+    ch_samples = int(1.5*136)
+    samples = [i*scaler for i in data]
+    pk2pk = []
+
+    plt.figure()
+    ncols = np.ceil(np.sqrt(n_channels))
+    nrows = np.ceil(n_channels/ncols)
+    xx = range(ch_samples)
+    i = 0
+    for ch in xrange(n_channels):
+        plt.subplot(nrows, ncols, ch+1)
+        cur_samples = samples[ch*ch_samples:(ch+1)*ch_samples]
+        plt.plot(xx, cur_samples, color='blue')
+        plt.ylim(min(samples)-1, max(samples)+1)
+        if ch % 6 == 0:
+            t = 'Channel%d (mV)' % (ch+1)
+            plt.ylabel(t)
+        pk2pk.append(max(cur_samples)-min(cur_samples))
+        
+    plt.show(block=False)
+    return (samples, pk2pk)
+
 #Code for analyzing between amps
 def between_amps(fname):
     data = load_mem_values(fname)
@@ -201,6 +232,12 @@ def within_amp_as_one_ch(fname):
     data = convert_mem_values(data)
     data = check_setup_values(data)
     return plot_mem_vals3(data)
+
+def within_amp_1after1(fname, n_channels):
+    data = load_mem_values(fname)
+    data = convert_mem_values(data)
+    data = check_setup_values(data)
+    return plot_mem_val4(data, n_channels)
 
 
 

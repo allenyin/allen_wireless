@@ -32,8 +32,19 @@
 #define REG17 0x91ff    // get back 0xffff
 #define CALIB 0x5500    // get back 0x8000
 
-#define CONVERT5 0x0800 // get back value to channel 5
-#define CONVERT0 0x0000
+#define CONVERT4    0x0400
+#define CONVERT5    0x0500 // get back value to channel 8
+#define CONVERT6    0x0600
+#define CONVERT7    0x0700
+#define CONVERT8    0x0800
+#define CONVERT10   0x0A00
+#define CONVERT11   0x0B00
+#define CONVERT12   0x0C00
+#define CONVERT13   0x0D00
+#define CONVERT16   0x1000
+#define CONVERT17   0x1100
+#define CONVERT24   0x1800
+#define CONVERT0    0x0000
  
 /* Total space needed to hold responses (in 16-bit words) for each amp:
    2 for empty pipeline
@@ -371,7 +382,7 @@ spell_intan:
     [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
     call wait_samples;  // call 1
 
-    r0 = CONVERT0 (z);
+    r0 = CONVERT11 (z);
     r0 = r0 << SHIFT_BITS;
     [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
     [p0 + (SPORT0_TX - SPORT0_RX)] = r0;

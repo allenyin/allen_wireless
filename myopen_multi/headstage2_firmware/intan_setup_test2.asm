@@ -17,6 +17,7 @@
 #define REG2  0x8204    // get back 0xff04
 #define REG3  0x8300    // get back 0xff00
 #define REG4  0x8480    // get back 0xff80
+#define REG4_DSP 0x8494 // get back 0xff94
 #define REG5  0x8500    // get back 0xff00
 #define REG6  0x8600    // get back 0xff00
 #define REG7  0x8700    // get back 0xff00
@@ -47,11 +48,22 @@
 
   ------------------------------
   This test only saves the 32 channels of a fixed amplifier.
-  Using 6.4kHz, saving 1.5 periods, this requires:
+  Using 6.4kHz, saving 2 periods, this requires:
 
-  156 samples/period * 1.5 periods * 32 channels * 0.5 word/sample = 3744 words
+  fs = 1MHz/32 = 31.25kHz
+  samples/period = 31.25kHz / 6.4kHz = 4.88 -> 5
+
+  5 samples/period * 2 periods * 32 channels * 0.5 word/sample = 160 words
+  
+  Total = 160 + 72 = 232 ---> round to 240 words
   ------------------------------
-  Total = 3744 + 72 = 3816 ---> round to 3820 words
+  For 4.2kHz, saving 2 periods, this requires:
+  samples/period = 31.25kHz / 4.2kHz = 7.44 -> 8
+
+  8 samples/period * 2 periods * 32 channels * 0.5 word/sample = 256 words
+  
+  Total = 256 + 72 = 328 ---> round to 330 words
+
 */
 
 .global _radio_bidi_asm
@@ -61,7 +73,7 @@ _radio_bidi_asm:
     p1.l = LO(A1); // A1 at 0xFF904000
     p1.h = HI(A1);
     r0 = 0 (z);
-    p5 = 3820;
+    p5 = 330;
     lsetup(lt_top, lt_bot) lc0 = p5; // write zeros to 80 locations
 lt_top:
     [p1++] = r0;
@@ -138,7 +150,8 @@ intan_setup:
     [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
     call wait_samples;
     
-    r0 = REG4 (z);
+    //r0 = REG4 (z);
+    r0 = REG4_DSP (z);  // this with DSP filter enabled
     r0 = r0 << SHIFT_BITS;
     [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
     [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
@@ -377,7 +390,6 @@ spell_intan:
     r4 += 1;
     r0 = r4 << 8;
     r0 = r0 << SHIFT_BITS;
-    //bittgl(r0, 9);  // alternate between channel 0 and channel 1
     [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
     [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
     [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
@@ -387,24 +399,61 @@ spell_intan:
     r4 += 1;
     r0 = r4 << 8;
     r0 = r0 << SHIFT_BITS;
-    //bittgl(r0, 9);
     [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
     [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
     [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
     [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
     call wait_samples; // call 3, now all setup stuff is out of pipeline
 
+    jump get_period_samples;
+
+get_period_samples2:
+    // get two period from one channel, then switch...
+    // MATH HERE: each channel wants 16 samples. Ch0 already got 3, so 13 more
+    p4 = 13;
+    lsetup(ch0_top, ch0_bot) lc0 = p4;
+    ch0_top:
+        [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+        [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+        [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+        [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+        call save_one_amp;
+    ch0_bot: nop;
+
+    // MATH HERE: now get 16 samples each for the other 31 channels
+    p5 = 31;
+    lsetup(forChTop, forChBot) lc0 = p5;
+    forChTop:
+        r4 += 1;
+        bitclr(r4, 5);
+        r0 = r4 << 8;
+        r0 = r0 << SHIFT_BITS;
+        p4 = 16;
+        lsetup(forSampTop, forSampBot) lc1 = p4;
+        forSampTop:
+            [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+            [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+            [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+            [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+            call save_one_amp;
+        forSampBot: nop;
+    forChBot: nop;
+    // empty pipeline
+    call save_one_amp;
+    call save_one_amp;
+    call save_one_amp;
+    jump we_finished; 
+
 get_period_samples:
-    // At this point we have 1 convert command, we need a total of
-    // 234*32-3=7485 CONVERTs
-    p5 = 7485;
+    // At this point we have 3 convert command, we need a total of
+    // MATH HERE!!: 16*32-3=509 CONVERTS
+    p5 = 509;
     lsetup(push_top, push_bot) lc0 = p5;
 push_top:
     r4 += 1;
     bitclr(r4, 5);
     r0 = r4 << 8;
     r0 = r0 << SHIFT_BITS;
-    //bittgl(r0, 9);
     [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
     [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
     [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
@@ -450,14 +499,14 @@ save_one_amp:
     r3 = [p0 + (SPORT1_RX - SPORT0_RX)];    // SPORT1 sec - 1st amp
     r2 >>= SHIFT_BITS;
     r3 >>= SHIFT_BITS;
-    w[p1++] = r3;                           // save 1st amp
+    //w[p1++] = r3;                           // save 1st amp
     //w[p1++] = r2;                           // save 2nd amp
 
     r2 = [p0];                              // SPORT0 pri - 4th amp
     r3 = [p0];                              // SPORT0 sec - 3rd amp
     r2 >>= SHIFT_BITS;                      
     r3 >>= SHIFT_BITS;
-    //w[p1++] = r3;                           // save 3rd amp
+    w[p1++] = r3;                           // save 3rd amp
     //w[p1++] = r2;                           // save 4th amp
     rts;
 
