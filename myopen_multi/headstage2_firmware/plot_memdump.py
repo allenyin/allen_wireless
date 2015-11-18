@@ -132,13 +132,12 @@ def plot_mem_vals1(data):
 
     return (amp1, amp2, amp3, amp4)
 
-def plot_mem_vals2(data, n_channels):
+def plot_mem_vals2(data, n_channels, f):
     '''
     Similar to plot_mem_vals1, except we are plotting all 32 channels within the same amp!
     Might be slow with lots of samples because I'm not allocating memory, but I don't plan to
     get too many samples!
     '''
-    f = 6.4*10**3   # freq of signal
     f_max = 10.0**6     # 1MHz sampling freq
     f_s = f_max/n_channels
     sample_per_period = int(np.ceil(f_s/f))
@@ -162,10 +161,10 @@ def plot_mem_vals2(data, n_channels):
     nrows = np.ceil(n_channels/ncols)
     for ch in xrange(n_channels):
         plt.subplot(nrows, ncols, ch+1)
-        plt.plot(xx, channels[ch], color='blue')
+        plt.plot(xx, channels[ch], 'b-*')
         plt.ylim(min(mins)-1, max(maxes)+1)
         if ch % 6 == 0:
-            t = 'Channel%d (mV)' % (ch+1)
+            t = 'Channel%d (mV)' % (ch)
             plt.ylabel(t)
 
     plt.show(block=False)
@@ -221,11 +220,20 @@ def between_amps(fname):
     return plot_mem_vals1(data)
     
 #Code for analyzing channels within an amp
-def within_amp(fname, n_channels):
+def within_amp(fname, n_channels, f):
     data = load_mem_values(fname)
     data = convert_mem_values(data)
     data = check_setup_values(data)
-    return plot_mem_vals2(data, n_channels)
+    data = plot_mem_vals2(data, n_channels, f)
+    # plot ch0 and ch31 together for comparison
+    plt.figure()
+    xx = range(len(data[0]))
+    plt.plot(xx, data[0], 'b-*')
+    plt.plot(xx, data[-1], 'r-*')
+    plt.ylim(min(min(data[0]),min(data[-1]))-1, max(max(data[0]),max(data[-1]))+1)
+    plt.legend(['Ch0','Ch31'])
+    plt.show(block=False)
+    return data
 
 def within_amp_as_one_ch(fname):
     data = load_mem_values(fname)

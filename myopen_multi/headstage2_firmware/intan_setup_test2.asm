@@ -63,8 +63,20 @@
   8 samples/period * 2 periods * 32 channels * 0.5 word/sample = 256 words
   
   Total = 256 + 72 = 328 ---> round to 330 words
+  -------------------------------
+  For 2kHz, saving 2 periods, this requires:
+  samples/period = 31.25kHz / 2kHz = 15.625 -> 16
+
+  16 samples/period * 2 periods * 32 channels * 0.5 word/sample = 512 words
+
+  Total = 512 + 72 = 584 ---> round to 590 words
 
 */
+#define STORAGE                 240
+#define SAMPLE_PER_CH           10
+#define SAMPLE_PER_CH_MINUS_3   7
+#define TOTAL_CONVERT           320   // 32*SAMPLE_PER_CH
+#define TOTAL_CONVERT_MINUS_3   317
 
 .global _radio_bidi_asm
 _radio_bidi_asm:
@@ -73,7 +85,7 @@ _radio_bidi_asm:
     p1.l = LO(A1); // A1 at 0xFF904000
     p1.h = HI(A1);
     r0 = 0 (z);
-    p5 = 330;
+    p5 = STORAGE;
     lsetup(lt_top, lt_bot) lc0 = p5; // write zeros to 80 locations
 lt_top:
     [p1++] = r0;
@@ -410,7 +422,7 @@ spell_intan:
 get_period_samples2:
     // get two period from one channel, then switch...
     // MATH HERE: each channel wants 16 samples. Ch0 already got 3, so 13 more
-    p4 = 13;
+    p4 = SAMPLE_PER_CH_MINUS_3;
     lsetup(ch0_top, ch0_bot) lc0 = p4;
     ch0_top:
         [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
@@ -428,7 +440,7 @@ get_period_samples2:
         bitclr(r4, 5);
         r0 = r4 << 8;
         r0 = r0 << SHIFT_BITS;
-        p4 = 16;
+        p4 = SAMPLE_PER_CH;
         lsetup(forSampTop, forSampBot) lc1 = p4;
         forSampTop:
             [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
@@ -446,8 +458,8 @@ get_period_samples2:
 
 get_period_samples:
     // At this point we have 3 convert command, we need a total of
-    // MATH HERE!!: 16*32-3=509 CONVERTS
-    p5 = 509;
+    // MATH HERE!!: SAMPLE_PER_CH*32-3 CONVERTS
+    p5 = TOTAL_CONVERT_MINUS_3;
     lsetup(push_top, push_bot) lc0 = p5;
 push_top:
     r4 += 1;
@@ -500,13 +512,13 @@ save_one_amp:
     r2 >>= SHIFT_BITS;
     r3 >>= SHIFT_BITS;
     //w[p1++] = r3;                           // save 1st amp
-    //w[p1++] = r2;                           // save 2nd amp
+    w[p1++] = r2;                           // save 2nd amp
 
     r2 = [p0];                              // SPORT0 pri - 4th amp
     r3 = [p0];                              // SPORT0 sec - 3rd amp
     r2 >>= SHIFT_BITS;                      
     r3 >>= SHIFT_BITS;
-    w[p1++] = r3;                           // save 3rd amp
+    //w[p1++] = r3;                           // save 3rd amp
     //w[p1++] = r2;                           // save 4th amp
     rts;
 
