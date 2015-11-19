@@ -132,7 +132,7 @@ def plot_mem_vals1(data):
 
     return (amp1, amp2, amp3, amp4)
 
-def plot_mem_vals2(data, n_channels, f):
+def plot_mem_vals2(data, n_channels, f, truncation=False):
     '''
     Similar to plot_mem_vals1, except we are plotting all 32 channels within the same amp!
     Might be slow with lots of samples because I'm not allocating memory, but I don't plan to
@@ -146,11 +146,15 @@ def plot_mem_vals2(data, n_channels, f):
     n_samples = n_periods*sample_per_period*n_channels
 
     channels = [list() for i in xrange(n_channels)]
-    for ch in xrange(n_channels):
-        channels[ch] = [data[i] for i in range(int(sample_per_period*n_channels*n_periods)) if i%n_channels==ch]
-        #channels[ch] = [data[i] for i in range(7488) if i%n_channels==ch]
-
-    channels = [ [i*scaler for i in ch] for ch in channels]
+    if not truncation:
+        for ch in xrange(n_channels):
+            channels[ch] = [data[i]*scaler for i in range(int(sample_per_period*n_channels*n_periods)) if i%n_channels==ch]
+    else:
+        # we are taking only the most significant byte out of 16bits as samples
+        # no scaler, offset binary is enough
+        for ch in xrange(n_channels):
+            channels[ch] = [data[i]>>8 for i in range(int(sample_per_period*n_channels*n_periods)) if i%n_channels==ch]
+        
     maxes = [max(i) for i in channels]
     mins = [min(i) for i in channels]
 
@@ -220,11 +224,11 @@ def between_amps(fname):
     return plot_mem_vals1(data)
     
 #Code for analyzing channels within an amp
-def within_amp(fname, n_channels, f):
+def within_amp(fname, n_channels, f, truncation=False):
     data = load_mem_values(fname)
     data = convert_mem_values(data)
     data = check_setup_values(data)
-    data = plot_mem_vals2(data, n_channels, f)
+    data = plot_mem_vals2(data, n_channels, f, truncation)
     # plot ch0 and ch31 together for comparison
     plt.figure()
     xx = range(len(data[0]))
