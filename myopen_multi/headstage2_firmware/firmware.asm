@@ -3,6 +3,38 @@
 
 #define LED_BLINK 0x0010    // blink LED
 #define NEXT_CHANNEL 0x3f00 // Intan command CONVERT(63) -- convert next channel
+#define SHIFT_BITS 1        // SPORT may configure for more than 16-bit read/write...compensate
+#define SAMPLE_SHIFT 5      // =SHIFT_BITS+4, to get sample down to 12-bits. 
+
+#define READ_40 0xe800  // sending 11_101000_00000000, get 00000000_01001001 (0x0049)
+#define READ_41 0xe900  // sending 11_101001_00000000, get 00000000_01001110 (0x004e)
+#define READ_42 0xea00  // sending 11_101010_00000000, get 00000000_01010100 (0x0054)
+#define READ_43 0xeb00  // sending 11_101011_00000000, get 00000000_01000001 (0x0041)
+#define READ_44 0xec00  // sending 11_101100_00000000, get 00000000_01001110 (0x004e)
+
+// Intan register setup values
+#define REG0  0x80de    // get back 0xffde
+#define REG1  0x8102    // get back 0xff02
+#define REG2  0x8204    // get back 0xff04
+#define REG3  0x8300    // get back 0xff00
+#define REG4  0x8480    // get back 0xff80
+#define REG4_DSP 0x8494 // get back 0xff94
+#define REG5  0x8500    // get back 0xff00
+#define REG6  0x8600    // get back 0xff00
+#define REG7  0x8700    // get back 0xff00
+#define REG8  0x8816    // get back 0xff16
+#define REG9  0x8900    // get back 0xff00
+#define REG10 0x8a17    // get back 0xff17
+#define REG11 0x8b00    // get back 0xff00
+#define REG12 0x8c15    // get back 0xff15
+#define REG13 0x8d00    // get back 0xff00
+#define REG14 0x8eff    // get back 0xffff
+#define REG15 0x8fff    // get back 0xffff
+#define REG16 0x90ff    // get back 0xffff
+#define REG17 0x91ff    // get back 0xffff
+#define CALIB 0x5500    // get back 0x8000
+
+#define CONVERT0 0x0000
 
 .align 8    // call is a 5-cycle latency if target is aligned.
 _get_asm:
@@ -14,29 +46,26 @@ _get_asm:
     // Reset p0 to point to SPORT0_RX.
     p0 = [FP - FP_SPORT0_RX];
     
-    /* When this thread first starts running, [FP_CHAN] = 30. This reg holds the
+    /* When this thread first starts running, [FP_CHAN] = 31. This reg holds the
        current channel and is incremented before actually reading the samples.
+       Therefore, after incrementing, this value will be the channel number corresponding
+       to that being read out on MOSI.
 
-       Also when this thread is first started, Intan chip is executing "CONVERT(0)".
-       And the command "CONVERT(1)" is in the transmit FIFO.
-       
-       During "wait_samples", [FP_CHAN] is incremented to 31. The MISO we read from Intan is 
-       undefined, as the calibration sequence has just finished. We save this signal chain 
-       result to that for Ch31.
+       The SPORT pipeline is setup such that, when _get_asm is first executed, we have:
+            FIFO: CONVERT(3)
+            MOSI: CONVERT(2)
+            ADC:  CONVERT(1)
+            MISO: CONVERT(0) result.
 
-       In the main time, the command "CONVERT(1)" is transmitted on MOSI. And CONVERT(63),
-       which increment the amplifier channel is loaded into the transmit FIFO. This command
-       is the only thing we load into the FIFO in this thread.
+       Thus the initial [FP_CHAN]=31 value is incremented to 0, corresponding with MISO result.
 
-       In the next call to _get_asm, [FP_CHAN] increments to 0. The MISO result we get is that
-       from CONVERT(0). Thus everything matches from this point on.
-
-       Note: [FP_CHAN] = 30 means the content of the memory address pointed by FP_CHAN contains 30.
+       After reading MISO, CONVERT(4) will need to be loaded, thus the channel to be loaded is
+       FP_CHAN+4 (after FP_CHAN is already incremented).
     */
-wait_samples:
-    r3 = w[p0 + (SPORT0_STAT - SPORT0_RX)];
+wait_samples_main:
+    r3 = w[p0 + (SPORT1_STAT - SPORT0_RX)];
     cc = bittst(r3, 0);
-    if !cc jump wait_samples;
+    if !cc jump wait_samples_main;
 
     // we got samples back from MISO, new CONVERT command transmitted!
     // now increment the channel, and queue up new command
@@ -65,41 +94,58 @@ wait_samples:
        The electrode to channel configurations between the two boards are not the same. So sorted templates
        are not interchangeable.
     */
-    r1 = w[p0 + (SPORT1_RX - SPORT0_RX)] (z);   // SPORT1-primary: Ch32-63
-    r0 = w[p0 + (SPORT1_RX - SPORT0_RX)] (z);   // SPORT1-sec:     Ch0-31
-    r2.l = 0xffff;  // word read is 16-bits, no longer 12-bits.
+    r1 = [p0 + (SPORT1_RX - SPORT0_RX)];   // SPORT1-primary: Ch32-63
+    r0 = [p0 + (SPORT1_RX - SPORT0_RX)];   // SPORT1-sec:     Ch0-31
+    //r1 = [p0];
+    //r0 = [p0];
+    r1 >>= SAMPLE_SHIFT;                          // SPORT configured to read 17-bits, so
+    r0 >>= SAMPLE_SHIFT;                          // need to shift out the empty LSB
+    r2.l = 0xffff;  // mask
     r0 = r0 & r2;
     r1 = r1 & r2;
     r1 <<= 16;      // Ch32-63 in the upper word
     r2 = r0 + r1;   // r2 = Ch32, Ch0 (lo, hi). 16-bits samples
 
-    // queue CONVERT63 in transmit FIFO. This step is a lot easier than the RHA version's code.
-    r7 = NEXT_CHANNEL;
-    w[p0 + (SPORT0_TX - SPORT0_RX)] = r7;   // SPORT0 primary TX
-    w[p0 + (SPORT0_TX - SPORT0_RX)] = r7;   // SPORT0 sec TX
-    w[p0 + (SPORT1_TX - SPORT0_RX)] = r7;   // SPORT1 primary TX
-    w[p0 + (SPORT1_TX - SPORT0_RX)] = r7;   // SPORT1 sec TX
+    // load in new convert command
+    r6 += 4;
+    bitclr(r6, 5);
+    r7 = r6 << 8;
+    r7 = r7 << SHIFT_BITS;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r7;   // SPORT0 primary TX
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r7;   // SPORT0 sec TX
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r7;   // SPORT1 primary TX
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r7;   // SPORT1 sec TX
     
-    // integrator (offset removal), highpass, and gain stage
-    r5 = [i0++]; // r5 = 32000(pre-gain=0.9765), -32768(-1) (lo, hi)
-.align 8
     // In comments, r6.h = 1600(mu=0.0488) means r6.h contains 1600, which is 0.0488 in Q15 format
     // Multiply-accumulate default option is Q15 (signed frac) with saturation.
     
-    a0 = r2.l * r5.l, a1 = r2.h * r5.l || r1 = [i1++];  // a0 = gain scaled sample; r1 = prev integrated mean
-    r6 = [i0++];                                        // r6.l = 16384 (0.5), r6.h = 1600 (mu=0.0488)
-    r0.l = (a0 += r1.l * r5.h), r0.h = (a1 += r1.h * r5.h); // r0=output of stage=y=gx-(previous integr mean)
-    a0 = r0.l * r6.h, a1 = r0.h * r6.h;                     // a0,a1=mu*y
-    r2.l = (a0 -= r1.l * r5.h), r2.h = (a1 -= r1.h * r5.h) || r5 = [i1++] || r7 = [i0++];
-    
-    /* r2 = new integr mean = mu*y+prev integr mean;
-       r5 = AGC gain (lo, hi are diff), r7 = sqrt of AGC target (lo, hi are the same)
-       We now start AGC
+    // pre-gain, integrator (offset removal), high-pass
+    r5 = [i0++]; // r5.l = 32000(pre-gain=0.9765), r5.h=-32768(-1)
+.align 8
+    a0 = r2.l * r5.l, a1 = r2.h * r5.l || r1 = [i1++];   // a0 = gain scaled sample. r1 = prev integ mean
+    a0 += r2.l * r5.l, a1 += r2.h * r5.l || r6 = [i0++]; // r6.l = 16384 (0.5), r6.h = 800 (mu)
+    r0.l = (a0 += r1.l * r5.h), r0.h = (a1 += r1.h * r5.h) (s2rnd); // r0=output of stage=y=g*x-prev_mean
+    a0 = r1.l * r6.l, a1 = r1.h * r6.l;                             // a0,a1=mu*y
+    r2.l = (a0 += r0.l * r6.h), r2.h = (a1 += r0.h * r6.h) (s2rnd)  // r2=new integ mean=prev_mean+mu*y
+        || r5 = [i1++] || r7 = [i0++];                              // r5=AGC_gain, r7=sqrt(AGC_target)
+    a0 = r0.l * r5.l, a1 = r0.h * r5.h || [i2++] = r2;              // a0,a1=y*agc_gain. Save new mean in r2
+
+    a0 = a0 << 8;           // Tim says "14 bits in SRC (note *r above), amp to 16 bits, which leaves 2 more
+    a1 = a1 << 8;           // bits for amplification. AGC_gain is [0,128]. Makes no sense to me..
+    r0.l = a0, r0.h = a1;
+
+    /* For not having another high-pass stage...remember to change the first two 32-bit words in A1-frames.
+    r3.l = r2.l * r5.l, r3.h = r2.h * r5.l || r1 = [i1++];  // r3=gain scaled sample; r1=prev sample
+    r6 = [i0++];                                            // r6.l, r6.h = 16384, placeholders
+    r2.l = r2.l * r5.l, r2.h = r2.h * r5.l || r5 = [i1++] || r7 = [i0++]; // r2=r3=scaled samples. 
+                                                                          // r5=AGC gain
+                                                                          // r7=sqrt(AGC_gain)
+    // AGC
+    a0 = r3.l * r5.l, a1 = r3.h * r5.h || [i2++] = r2; // a0,a1=scaled_sample*agc_gain. Save scaled sample r2
+    a0 = a0 << 6;
+    a1 = a1 << 6;
+    r0.l = a0, r0.h = a1;                              // r0=output of AGC stage
     */
-    a0 = r0.l * r5.l, a1 = r0.h * r5.h || [i2++] = r2;  // a0,a1  = y * agc_gain. Save new mean in r2.
-    a0 = a0 << 6;           // In Tim's firmware, a0 is shifted by 8, given a0 here starts out being 14-bits.
-    a1 = a1 << 6;           // Here a0 starts out being 16-bits, so we shift 2 bits less to the left.
-    r0.l = a0, r0.h = a1;   // r0 contains the 16-bits output of AGC stage, let it be y.
     
     /* Now we update AGC-gain.
        AGC-gain is in Q7.8 format - max is 128.
@@ -249,28 +295,42 @@ r5.l = (a0 += r1.l * r6.l), r5.h = (a1 += r1.h * r6.h) || r1 = [i1++m3] || r2 = 
 	[--sp] = r0; // store IIR result (current y4(n)) on the stack.
 
     // Process the other two channels in this group. Pretty much identical as before.
-    r1 = w[p0] (z);   // SPORT0-primary: Ch96-127
-    r0 = w[p0] (z);   // SPORT0-sec:     Ch64-95
-    r2.l = 0xffff;  // word read is 16-bits, no longer 12-bits.
+    r1 = [p0];   // SPORT0-primary: Ch96-127
+    r0 = [p0];   // SPORT0-sec:     Ch64-95
+    r1 >>= SAMPLE_SHIFT;
+    r0 >>= SAMPLE_SHIFT;
+    r2.l = 0xffff;  // 12-bit mask 
     r0 = r0 & r2;
     r1 = r1 & r2;
     r1 <<= 16;      // Ch96-127 in the upper word
     r2 = r0 + r1;   // r2 = Ch32, Ch0 (lo, hi). 16-bits samples
   
-    // integrator (offset removal), highpass, and gain stage
-    r5 = [i0++]; // r5 = 32000 (pre-gain=0.9765), -16384 (lo, hi)
+    // pregain, integrator + highpass
+    r5 = [i0++]; // r5.l=32000, r5.h=-16384 
 .align 8
-    a0 = r2.l * r5.l, a1 = r2.h * r5.l || r1 = [i1++];  
-    r6 = [i0++];                                        
-    r0.l = (a0 += r1.l * r5.h), r0.h = (a1 += r1.h * r5.h); 
-    a0 = r0.l * r6.h, a1 = r0.h * r6.h;
-    r2.l = (a0 -= r1.l * r5.h), r2.h = (a1 -= r1.h * r5.h) || r5 = [i1++] || r7 = [i0++];
+    a0 = r2.l * r5.l, a1 = r2.h * r5.l || r1 = [i1++];   // a0 = gain scaled sample. r1 = prev integ mean
+    a0 += r2.l * r5.l, a1 += r2.h * r5.l || r6 = [i0++]; // r6.l = 16384 (0.5), r6.h = 800 (mu)
+    r0.l = (a0 += r1.l * r5.h), r0.h = (a1 += r1.h * r5.h) (s2rnd); // r0=output of stage=y=g*x-prev_mean
+    a0 = r1.l * r6.l, a1 = r1.h * r6.l;                             // a0,a1=mu*y
+    r2.l = (a0 += r0.l * r6.h), r2.h = (a1 += r0.h * r6.h) (s2rnd)  // r2=new integ mean=prev_mean+mu*y
+        || r5 = [i1++] || r7 = [i0++];                              // r5=AGC_gain, r7=sqrt(AGC_target)
+    a0 = r0.l * r5.l, a1 = r0.h * r5.h || [i2++] = r2;              // a0,a1=y*agc_gain. Save new mean in r2
+
+    a0 = a0 << 8;           // Tim says "14 bits in SRC (note *r above), amp to 16 bits, which leaves 2 more
+    a1 = a1 << 8;           // bits for amplification. AGC_gain is [0,128]. Makes no sense to me..
+    r0.l = a0, r0.h = a1;
+
+    /*  Code for not using integrator/highpass stage
+    r3.l = r2.l * r5.l, r3.h = r2.h * r5.l || r1 = [i1++];
+    r6 = [i0++];
+    r2.l = r2.l * r5.l, r2.h = r2.h * r5.l || r5 = [i1++] || r7 = [i0++];
 
     // start AGC
-    a0 = r0.l * r5.l, a1 = r0.h * r5.h || [i2++] = r2;  
-    a0 = a0 << 6;           
-    a1 = a1 << 6;           
-    r0.l = a0, r0.h = a1;   // r0 contains the 16-bits output of AGC stage.
+    a0 = r3.l * r5.l, a1 = r3.h * r5.h || [i2++] = r2;
+    a0 = a0 << 6; 
+    a1 = a1 << 6;
+    r0.l = a0, r0.h = a1;
+    */
 
     // Update AGC-gain
     a0 = abs a0, a1 = abs a1;
@@ -675,7 +735,7 @@ _radio_bidi_asm:
     p4.h = HI(WFBUF);
     
     // FP_CHAN: points to the CURRENT channel we are working on - pre-incremented.
-    r0 = 30(z); // need to account for the pipeline stuff...
+    r0 = 31(z); // need to account for the pipeline stuff...
     [FP - FP_CHAN] = r0;
     
     /* FP_QS: points to how many samples we have currently written to a packet -- 6 samples
@@ -835,11 +895,10 @@ _radio_bidi_asm:
        Integ coefs (2 32-bit words)  ---    <--- low address
 
        There are a total of 32 groups of 4-channels. Each each loop of lt_top, we populate 1 A1-stride.
-       Our counter is however 63. This makes the circular buffer pointer starts at the last A1-stride,
-       This is to compensate for the two-cycle delays between sending convert-command to getting the
-       specified sample back from ADC. This corresponds to FP_CHAN starting at 30 = 31-1.
-    */
-    p5 = 32+31 (x);
+       Our counter will be at 33, this makes our pointers start at the first block, corresponding to
+       starting sample acquisition at ch[0,32,64,96]
+   */
+    p5 = 32+1 (x);
     lsetup(lt_top, lt_bot) lc0 = p5;    // each loop of lt_top is one A1_stride
 lt_top:
     p5 = 2;
@@ -848,11 +907,10 @@ lt2_top:
     /* Gain and integrator coefs for first stage:
        All coefficients here are in Q15 format. 16-bits, hence w[i0++] increment (16-bit word increment)
     */
-    r0.l = 32000;   w[i0++] = r0.l; // 32000 = (Q15) 0.9765
-    r0.l = -32768;  w[i0++] = r0.l; // -32768 = (Q15) -1
+    r0.l = 32000;   w[i0++] = r0.l; // 32000 = (Q15) 0.9765 -- pre-gain
+    r0.l = -16384;  w[i0++] = r0.l; // -16384 = (Q15) 0.5
     r0.l = 16384;   w[i0++] = r0.l; // 16384 = (Q15) 0.5
-    r0.l = 1600;    w[i0++] = r0.l; // mu changed from 800 to 1600, because we no longer do s2rnd
-                                    // in integrator stage.
+    r0.l = 800;   w[i0++] = r0.l;   // mu = 0.0244
     
     /* AGC: 
         Target is 6000*16384, which in Q15 is ~0.09155. We store just the target's square
@@ -864,7 +922,7 @@ lt2_top:
     r0.l = 1;       w[i0++] = r0.l;     // Set this to zero to disable AGC. Q7.8
 
     // LMS coefs - 7 total.
-    r0 = 0(x);
+    r0 = 0 (x);
     [i0++] = r0;
     [i0++] = r0;
     [i0++] = r0;
@@ -1000,10 +1058,10 @@ lt_bot: nop;
        This includes IIR values (y4(n-2), y4(n-1), y3(n-2), y3(n-1), etc), integrator outputs,
        updated-AGC gain, integrator mean.
 
-       Also ran 32+31=63 times so we leave the pointer i1 and i2 at beggining of the last
+       Also ran 32+1=33 times so we leave the pointer i1 and i2 at beggining of the last
        W1_STRIDE, to compensate for Intan's pipeline delay.
     */
-    p5 = (32+31)*W1_STRIDE*2;
+    p5 = (32+1)*W1_STRIDE*2;
     r0 = 0;
     lsetup(zer_top, zer_bot) lc0 = p5;
 zer_top:
@@ -1045,14 +1103,56 @@ zer_bot: nop;
     [p5--] = r0;    // by writing anything to WDOG_STAT.
     r0 = 0x0;       // generate reset event, enable watchdog.
     w[p5] = r0;
-
     ssync;
+
+comm_setup:
+    /* Setup up the communication between SPORT ports and Intan.
+       
+       Will send the configuration settings to all Intan chips, the
+       response include, in 16-bit words:
+       
+         2 for emptying pipeline
+         1 for repeat command 1
+         18 for each write register command
+         10 for (calibration + 9 dummy commands)
+         5  for each READ intan commands
+       
+       This results in 36 16-bit words per chip -> 18 32-bit words per amplifier 
+       -> 18*4 = 72 32-bit words total --> round this to 80 words for storage.
+
+       These words will be stored in space >= FP_BASE
+    */
+    p1.l = LO(FP_BASE); // Need to restore p1 to FIO_FLAG_D later
+    p1.h = HI(FP_BASE);
+    r0 = 0 (z);
+    p5 = 80;
+    lsetup(storage_top, storage_bot) lc0 = p5;
+    storage_top:
+        [p1++] = r0;
+    storage_bot: nop;
+
+    p1.l = LO(FP_BASE);
+    p1.h = HI(FP_BASE);
+   
+intan_setup:
+    /* First load a command in first before turning on SPORT
+       to prevent leftover in the TX_buffer from screwing things up
+       in the pipeline.
+    */
+    r0 = REG0(z);
+    r0 = r0 << SHIFT_BITS;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+
+sport_configs:
     p5.l = LO(SPORT0_TCR1); // SPORT0-TCR1
     p5.h = HI(SPORT0_TCR1);
-    r0.l = TCKFE | LATFS | LTFS | TFSR | ITFS | ITCLK | TSPEN;
+    r0.l = TCKFE | LATFS | LTFS | TFSR | ITFS | ITCLK | TSPEN | DITFS;
     w[p5] = r0;
 
-    p5.l = LO(SPORT1_TCR1); // SPORT1-TCR1
+    p5.l = LO(SPORT1_TCR1);
     p5.h = HI(SPORT1_TCR1);
     w[p5] = r0;
 
@@ -1061,171 +1161,331 @@ zer_bot: nop;
     r0.l = RCKFE | LARFS | LRFS | RFSR | RSPEN;
     w[p5] = r0;
 
-    p5.l = LO(SPORT1_RCR1); // SPORT1-RCR1
+    p5.l = LO(SPORT1_RCR1);
     p5.h = HI(SPORT1_RCR1);
     w[p5] = r0;
-
     ssync;
-intan_setup:    // clock cycle and FIFO contents for this process in intan_setup spreadsheet.
-    r0 = 0x80fe (z);    // Write 0xFE to Intan reg 0
-    p0 = [FP - FP_SPORT0_RX];
-    w[p0 + (SPORT0_TX - SPORT0_RX)] = r0;   // SPORT0 primary TX
-    w[p0 + (SPORT0_TX - SPORT0_RX)] = r0;   // SPORT0 sec TX
-    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;   // SPORT1 primary TX
-    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;   // SPORT1 sec TX
 
-    r0 = 0x8102 (z);    // Write 0x02 to Intan reg 1
-    w[p0 + (SPORT0_TX - SPORT0_RX)] = r0;   // SPORT0 primary TX
-    w[p0 + (SPORT0_TX - SPORT0_RX)] = r0;   // SPORT0 sec TX
-    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;   // SPORT1 primary TX
-    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;   // SPORT1 sec TX
-
-    r0 = 0x8204 (z);    // Write 0x04 to Intan reg 2
-    w[p0 + (SPORT0_TX - SPORT0_RX)] = r0;   // SPORT0 primary TX
-    w[p0 + (SPORT0_TX - SPORT0_RX)] = r0;   // SPORT0 sec TX
-    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;   // SPORT1 primary TX
-    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;   // SPORT1 sec TX
-
-    r0 = 0x8300 (z);    // Write 0x00 to Intan reg 3
-    w[p0 + (SPORT0_TX - SPORT0_RX)] = r0;   // SPORT0 primary TX
-    w[p0 + (SPORT0_TX - SPORT0_RX)] = r0;   // SPORT0 sec TX
-    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;   // SPORT1 primary TX
-    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;   // SPORT1 sec TX
-
-    /* Transmit FIFO is now completely full, two will be transmitted every frame-sync cycle.
-       Refill two words (same command to both pri and sec) every cycle
-    */
-    r0 = 0x8480 (z);    // Write 0x80 to Intan reg 4
-    call _config_wait_asm;
-
-    r0 = 0x8500 (z);    // Write 0x00 to Intan reg 5
-    call _config_wait_asm;
-
-    r0 = 0x8600 (z);    // Write 0x00 to Intan reg 6
-    call _config_wait_asm;
-
-    r0 = 0x8700 (z);    // Write 0x00 to Intan reg 7
-    call _config_wait_asm;
+    // Ready to setup Intan registers. First repeat the first command in case
+    // of pipeline troubles...
+    r0 = REG0 (z);
+    r0 = r0 << SHIFT_BITS;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call wait_samples;
     
-    r0 = 0x8816 (z);    // Write 0x16 to Intan reg 8
-    call _config_wait_asm;
-
-    r0 = 0x8900 (z);    // Write 0x00 to Intan reg 9
-    call _config_wait_asm;
-
-    r0 = 0x8a17 (z);    // Write 0x17 to Intan reg 10
-    call _config_wait_asm;
-
-    r0 = 0x8b00 (z);    // Write 0x00 to Intan reg 11
-    call _config_wait_asm;
-
-    r0 = 0x8c15 (z);    // Write 0x15 to Intan reg 12
-    call _config_wait_asm;
-
-    r0 = 0x8d00 (z);    // Write 0x00 to Intan reg 13
-    call _config_wait_asm;
+    r0 = REG1 (z);
+    r0 = r0 << SHIFT_BITS;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call wait_samples;
     
-    r0 = 0x8eff (z);    // Write 0xff to Intan reg 14
-    call _config_wait_asm;
-
-    r0 = 0x8fff (z);    // Write 0xff to Intan reg 15
-    call _config_wait_asm;
-
-    r0 = 0x90ff (z);    // Write 0xff to Intan reg 16
-    call _config_wait_asm;
-
-    r0 = 0x91ff (z);    // Write 0xff to Intan reg 17
-    call _config_wait_asm;
+    r0 = REG2 (z);
+    r0 = r0 << SHIFT_BITS;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call wait_samples;
     
-    // Finished all writes to Intan regs. Wait for all commands to finish.
-    r0 = 0xfe00 (z);    // Read Intan reg 62 -- dummy command so Intan doesn't run anything
-    call _config_wait_asm;
-    call _config_wait_asm;
-
-    /* Intan reg 0 sets fast-settle. Amplifier f_H set to 7.5kHz through Intan reg8-11 values.
-       This means we have to wait 2.5/7.5k = 333us, before turning fast-settle off.
-       At this point we are 18 frame-syncs after fast-settle is set, this is about 18us.
-       Need to wait 295us more. Do this by calling 295 _config_wait_asm times...
-    */
-    r2 = 295;
-    r3 = 0;
-fast_settle_loop:
-    call _config_wait_asm;
-    r2 += -1;
-    cc = r2 == r3
-    if !cc jump fast_settle_loop;
-
-    // finished settling, turn fast-settle off
-    r0 = 0x80de (z);    // Write 0xde to Intan reg 0
-    call _config_wait_asm;
-
-    /* Initiate ADC self-calibration routine.
-       Intan datasheet: 9 "dummy" commands must be sent after a CALIBRATE command to generate 
-                        necessary SCLK cycles. The nine commands following a CALIBRATE
-                        command are not executed by the RHD2000; the chip ignores other operations
-                        until calibration is complete.
-    */
-    r0 = 0x5500 (z);    // CALIBRATE command
-    call _config_wait_asm;
-
-    // start the 9 dummy cycles
-    r2 = 9;
-    r0 = 0xfe00 (z);    // dummy command...anything other than 0x5500 is ok
-ADC_calibrate_loop:
-    call _config_wait_asm;
-    r2 += -1;
-    cc = r2 == r3;
-    if !cc jump ADC_calibrate_loop;
-
-    // queue up CONVERT0. At this point, the transmit FIFO is full.
-    // channel0 result will be read out on MISO in 6 frame-syncs.
-    r0 = 0x0000 (z);    // CONVERT(0)
-    call _config_wait_asm;
-
-    call _nofill_wait_asm;
-    call _nofill_wait_asm;
-    call _nofill_wait_asm;  // end of this call, transmit FIFO contains only CONVERT(0)
-
-    r0 = 1 (z);
-    r0 <<= 8;   // CONVERT (1) command
-    call _config_wait_asm;  // end of this call, transmit FIFO contains only CONVERT(1)
+    r0 = REG3 (z);
+    r0 = r0 << SHIFT_BITS;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call wait_samples;
     
-    // finish all setup
-    p1.l = LO(FIO_FLAG_D);  // restore p1 value,
-    p1.h = HI(FIO_FLAG_D);  // expected by radio_loop and _get_asm
+    //r0 = REG4 (z);
+    r0 = REG4_DSP (z);  // this with DSP filter enabled
+    r0 = r0 << SHIFT_BITS;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call wait_samples;
+
+    r0 = REG5 (z);
+    r0 = r0 << SHIFT_BITS;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call wait_samples;
+
+    r0 = REG6 (z);
+    r0 = r0 << SHIFT_BITS;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call wait_samples;
+
+    r0 = REG7 (z);
+    r0 = r0 << SHIFT_BITS;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call wait_samples;
+    
+    r0 = REG8 (z);
+    r0 = r0 << SHIFT_BITS;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call wait_samples;
+    
+    r0 = REG9 (z);
+    r0 = r0 << SHIFT_BITS;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call wait_samples;
+    
+    r0 = REG10 (z);
+    r0 = r0 << SHIFT_BITS;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call wait_samples;
+
+    r0 = REG11 (z);
+    r0 = r0 << SHIFT_BITS;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call wait_samples;
+
+    r0 = REG12 (z);
+    r0 = r0 << SHIFT_BITS;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call wait_samples;
+    
+    r0 = REG13 (z);
+    r0 = r0 << SHIFT_BITS;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call wait_samples;
+    
+    r0 = REG14 (z);
+    r0 = r0 << SHIFT_BITS;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call wait_samples;
+    
+    r0 = REG15 (z);
+    r0 = r0 << SHIFT_BITS;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call wait_samples;
+    
+    r0 = REG16 (z);
+    r0 = r0 << SHIFT_BITS;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call wait_samples;
+
+    r0 = REG17 (z);
+    r0 = r0 << SHIFT_BITS;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call wait_samples;
+
+adc_calibration:    
+    // send CALIB, then 9 dummy commands. Expect 10 words back
+    r0 = CALIB (z);
+    r0 = r0 << SHIFT_BITS;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call wait_samples;
+
+    r0 = READ_42 (z);
+    r0 = r0 << SHIFT_BITS;  // dummy1
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call wait_samples;
+
+    // dummy2
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call wait_samples;
+
+    // dummy3
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call wait_samples;
+
+    // dummy4
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call wait_samples;
+
+    // dummy 5
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call wait_samples;
+
+    // dummy 6
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call wait_samples;
+
+    // dummy 7
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call wait_samples;
+
+    // dummy 8
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call wait_samples;
+
+    // dummy 9
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call wait_samples;
+
+spell_intan:
+    r0 = READ_40 (z);
+    r0 = r0 << SHIFT_BITS;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call wait_samples;
+
+    r0 = READ_41 (z);
+    r0 = r0 << SHIFT_BITS;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call wait_samples;
+    
+    r0 = READ_42 (z);
+    r0 = r0 << SHIFT_BITS;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call wait_samples;
+
+    r0 = READ_43 (z);
+    r0 = r0 << SHIFT_BITS;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call wait_samples;
+    
+    r0 = READ_44 (z);
+    r0 = r0 << SHIFT_BITS;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call wait_samples;  // call 0
+
+    // Setup the pipeline for data acquisition..
+    // r4 keeps track of the current channel, r0 is the command
+    r4 = 0;
+    r0 = r4 << 8;
+    r0 = r0 << SHIFT_BITS;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call wait_samples; // call 1
+
+    r4 += 1;
+    r0 = r4 << 8;
+    r0 = r0 << SHIFT_BITS;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call wait_samples;  // call 2 
+
+    r4 += 1;
+    r0 = r4 << 8;
+    r0 = r0 << SHIFT_BITS;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    call wait_samples; // call 3, now all setup stuff is out of pipeline and saved.
+                       // next one will be the result of CONVERT0
+
+    p1.l = LO(FIO_FLAG_D);
+    p1.h = HI(FIO_FLAG_D);
 
     jump radio_loop;
-    
-_config_wait_asm:    // Wait for the read/write to Intan to complete 
-    r1 = w[p0 + (SPORT0_STAT - SPORT0_RX)];
-    cc = ! bittst(r1, 0);
-    if cc jump _config_wait_asm;
-    
-    // Read the samples out of both receive FIFOs to clear space
-    r1 = w[p0] (z); // SPORT0_RX pri
-    r1 = w[p0] (z); // SPORT0_RX sec
-    r1 = w[p0 + (SPORT1_RX - SPORT0_RX)] (z); // SPORT1_RX pri
-    r1 = w[p0 + (SPORT1_RX - SPORT0_RX)] (z); // SPORT1_RX sec 
 
-    // Queue up the new command word in r0 prior to calling this routine.
-    // This command will be transmitted in 4 frame sync cycles.
-    w[p0 + (SPORT0_TX - SPORT0_RX)] = r0;   // SPORT0 primary TX
-    w[p0 + (SPORT0_TX - SPORT0_RX)] = r0;   // SPORT0 sec TX
-    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;   // SPORT1 primary TX
-    w[p0 + (SPORT1_TX - SPORT0_RX)] = r0;   // SPORT1 sec TX
-    rts;
-
-_nofill_wait_asm:   
-    // Wait for the read/write to Intan to complete, no write to transmit FIFO
-    r1 = w[p0 + (SPORT0_STAT - SPORT0_RX)];
-    cc = ! bittst(r1, 0);
-    if cc jump _nofill_wait_asm;
+wait_samples:
+    /* Used during Intan setup. Wait for word in MOSI then save them
+       to buffer starting (and increase from) FP_BASE, addressed in
+       p1.
+    */
+    r1 = w[p0 + (SPORT1_STAT - SPORT0_RX)];
+    cc = bittst(r1, 0);
+    if !cc jump wait_samples;
     
-    // Read the samples out of both receive FIFOs to clear space
-    r1 = w[p0] (z); // SPORT0_RX pri
-    r1 = w[p0] (z); // SPORT0_RX sec
-    r1 = w[p0 + (SPORT1_RX - SPORT0_RX)] (z); // SPORT1_RX pri
-    r1 = w[p0 + (SPORT1_RX - SPORT0_RX)] (z); // SPORT1_RX sec 
+    // save new samples, in order from amp1 to amp4
+    r2 = [p0 + (SPORT1_RX - SPORT0_RX)];    // SPORT1 pri - 2nd amp
+    r3 = [p0 + (SPORT1_RX - SPORT0_RX)];    // SPORT1 sec - 1st amp
+    r2 >>= SHIFT_BITS;
+    r3 >>= SHIFT_BITS;
+    w[p1++] = r3;                           // 1st amp at lower word
+    w[p1++] = r2;                           // 2nd amp at higher word
+
+    r2 = [p0];                              // SPORT0 pri - 4th amp
+    r3 = [p0];                              // SPORT0 sec - 3rd amp
+    r2 >>= SHIFT_BITS;                      
+    r3 >>= SHIFT_BITS;
+    w[p1++] = r3;                           // 3rd amp at lower word
+    w[p1++] = r2;                           // 4th amp at higher word
     rts;
 
 radio_loop: // main thread, interleaved with _get_asm to process samples

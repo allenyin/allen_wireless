@@ -1,7 +1,7 @@
 # Makefile for  program running in L1 memory
 .SUFFIXES: .o .c .asm .bo .asm
 
-ASMSRCS = crt0.o intan_setup_test2.o enc.o divsi3.o
+ASMSRCS = crt0.o firmware.o enc.o divsi3.o
 COMMON = print.o util.o spi.o
 CSRCS = main.o
 # note: the order of objects in the .ldr mirrors the order in this list!
@@ -72,6 +72,10 @@ clean:
 
 flash:
 	python ../flasher/flash.py stage.ldr
+# If error claiming cannot find parallel port appears and you have a
+# parallel port, execute:
+# 	sudo rmmod lp
+# 	sudo modprobe ppdev
 
 reset:
 	python ../flasher/flash.py --reset
@@ -80,4 +84,4 @@ reset:
 #     bfin-gdbrpoxy -q bfin
 # Then in a separate command prompt,
 #	  bfin-elf-insight or bfin-elf-gdb stage.dxe
-# Inside, connect to "target remote :2000"
+# For the latter, connect to "target remote :2000" 

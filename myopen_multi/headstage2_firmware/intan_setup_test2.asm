@@ -34,7 +34,6 @@
 #define CALIB 0x5500    // get back 0x8000
 
 #define CONVERT0 0x0000
-#define NEXT_CHANNEL 0x3f00 
 
 /* Total space needed to hold response (in 16-bit words) for each amp:
    2 for empty pipeline

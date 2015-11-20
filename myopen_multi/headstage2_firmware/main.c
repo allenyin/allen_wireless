@@ -229,14 +229,15 @@ int main()
     *pSPORT1_RCR1 = RCKFE | LARFS | LRFS | RFSR;
     
     asm volatile("ssync;");
-  /* 
+    /* 
     *pSPORT0_TCR1 = TCKFE | LATFS | LTFS | TFSR | ITFS | ITCLK | TSPEN;// | DITFS;
     *pSPORT1_TCR1 = TCKFE | LATFS | LTFS | TFSR | ITFS | ITCLK | TSPEN;// | DITFS;
     *pSPORT0_RCR1 = RCKFE | LARFS | LRFS | RFSR | RSPEN;
     *pSPORT1_RCR1 = RCKFE | LARFS | LRFS | RFSR | RSPEN;
 
     asm volatile("ssync;");
-	*/
+    */
+    
     radio_bidi_asm(); //infinite loop! ends here!
     
     /*
