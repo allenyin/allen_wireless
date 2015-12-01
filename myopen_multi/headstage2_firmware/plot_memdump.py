@@ -153,7 +153,7 @@ def plot_mem_vals2(data, n_channels, f, truncation=False):
         # we are taking only the most significant byte out of 16bits as samples
         # no scaler, offset binary is enough
         for ch in xrange(n_channels):
-            channels[ch] = [data[i]>>8 for i in range(int(sample_per_period*n_channels*n_periods)) if i%n_channels==ch]
+            channels[ch] = [(((data[i]>>8)+128)/255.0-0.5)*2 for i in range(int(sample_per_period*n_channels*n_periods)) if i%n_channels==ch]
         
     maxes = [max(i) for i in channels]
     mins = [min(i) for i in channels]

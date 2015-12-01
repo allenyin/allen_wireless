@@ -96,11 +96,9 @@ wait_samples_main:
     */
     r1 = [p0 + (SPORT1_RX - SPORT0_RX)];   // SPORT1-primary: Ch32-63
     r0 = [p0 + (SPORT1_RX - SPORT0_RX)];   // SPORT1-sec:     Ch0-31
-    //r1 = [p0];
-    //r0 = [p0];
-    r1 >>= SAMPLE_SHIFT;                          // SPORT configured to read 17-bits, so
-    r0 >>= SAMPLE_SHIFT;                          // need to shift out the empty LSB
-    r2.l = 0xffff;  // mask
+    r1 >>= SHIFT_BITS;                          // SPORT configured to read 17-bits, so
+    r0 >>= SHIFT_BITS;                         // need to shift out the empty LSB
+    r2 = 0xffff (z);  // mask
     r0 = r0 & r2;
     r1 = r1 & r2;
     r1 <<= 16;      // Ch32-63 in the upper word
@@ -126,8 +124,8 @@ wait_samples_main:
     a0 += r2.l * r5.l, a1 += r2.h * r5.l || r6 = [i0++]; // r6.l = 16384 (0.5), r6.h = 800 (mu)
     r0.l = (a0 += r1.l * r5.h), r0.h = (a1 += r1.h * r5.h) (s2rnd); // r0=output of stage=y=g*x-prev_mean
     a0 = r1.l * r6.l, a1 = r1.h * r6.l;                             // a0,a1=mu*y
-    r2.l = (a0 += r0.l * r6.h), r2.h = (a1 += r0.h * r6.h) (s2rnd)  // r2=new integ mean=prev_mean+mu*y
-        || r5 = [i1++] || r7 = [i0++];                              // r5=AGC_gain, r7=sqrt(AGC_target)
+    //r2.l = (a0 += r0.l * r6.h), r2.h = (a1 += r0.h * r6.h) (s2rnd)  // r2=new integ mean=prev_mean+mu*y
+         r5 = [i1++] || r7 = [i0++];                              // r5=AGC_gain, r7=sqrt(AGC_target)
     a0 = r0.l * r5.l, a1 = r0.h * r5.h || [i2++] = r2;              // a0,a1=y*agc_gain. Save new mean in r2
 
     a0 = a0 << 8;           // Tim says "14 bits in SRC (note *r above), amp to 16 bits, which leaves 2 more
@@ -297,9 +295,9 @@ r5.l = (a0 += r1.l * r6.l), r5.h = (a1 += r1.h * r6.h) || r1 = [i1++m3] || r2 = 
     // Process the other two channels in this group. Pretty much identical as before.
     r1 = [p0];   // SPORT0-primary: Ch96-127
     r0 = [p0];   // SPORT0-sec:     Ch64-95
-    r1 >>= SAMPLE_SHIFT;
-    r0 >>= SAMPLE_SHIFT;
-    r2.l = 0xffff;  // 12-bit mask 
+    r1 >>= SHIFT_BITS;
+    r0 >>= SHIFT_BITS;
+    r2 = 0xffff (z);  // 12-bit mask 
     r0 = r0 & r2;
     r1 = r1 & r2;
     r1 <<= 16;      // Ch96-127 in the upper word
@@ -312,8 +310,8 @@ r5.l = (a0 += r1.l * r6.l), r5.h = (a1 += r1.h * r6.h) || r1 = [i1++m3] || r2 = 
     a0 += r2.l * r5.l, a1 += r2.h * r5.l || r6 = [i0++]; // r6.l = 16384 (0.5), r6.h = 800 (mu)
     r0.l = (a0 += r1.l * r5.h), r0.h = (a1 += r1.h * r5.h) (s2rnd); // r0=output of stage=y=g*x-prev_mean
     a0 = r1.l * r6.l, a1 = r1.h * r6.l;                             // a0,a1=mu*y
-    r2.l = (a0 += r0.l * r6.h), r2.h = (a1 += r0.h * r6.h) (s2rnd)  // r2=new integ mean=prev_mean+mu*y
-        || r5 = [i1++] || r7 = [i0++];                              // r5=AGC_gain, r7=sqrt(AGC_target)
+    //r2.l = (a0 += r0.l * r6.h), r2.h = (a1 += r0.h * r6.h) (s2rnd)  // r2=new integ mean=prev_mean+mu*y
+    r5 = [i1++] || r7 = [i0++];                              // r5=AGC_gain, r7=sqrt(AGC_target)
     a0 = r0.l * r5.l, a1 = r0.h * r5.h || [i2++] = r2;              // a0,a1=y*agc_gain. Save new mean in r2
 
     a0 = a0 << 8;           // Tim says "14 bits in SRC (note *r above), amp to 16 bits, which leaves 2 more
@@ -794,20 +792,20 @@ _radio_bidi_asm:
         address values in W1 (each group of 4 channels occupy 28 32-bit words)
     */
     // channel 0 
-    r0.l = LO(W1 + 12*4 + 0 + 1);   // select value of IIR filter y4(n-1) -- result of signal chain
-    r0.h = HI(W1 + 12*4 + 0 + 1);
+    r0.l = LO(W1 + 1);   // ch0 amp or integrator output 
+    r0.h = HI(W1 + 1);
     [FP - FP_TXCHAN0] = r0;
     // channel 32
-    r0.l = LO(W1 + 12*4 + 2 + 1);   // select value of IIR filter y4(n-1)
-    r0.h = HI(W1 + 12*4 + 2 + 1);
+    r0.l = LO(W1 + 2 + 1);   // ch32 amp or integrator output 
+    r0.h = HI(W1 + 2 + 1);
     [FP - FP_TXCHAN1] = r0;
     // channel 64
-    r0.l = LO(W1 + 26*4 + 0 + 1);   // select value of IIR filter y4(n-1)
-    r0.h = HI(W1 + 26*4 + 0 + 1);
+    r0.l = LO(W1 + 14*4 + 0 + 1);   
+    r0.h = HI(W1 + 14*4 + 0 + 1);
     [FP - FP_TXCHAN2] = r0;
     // channel 96
-    r0.l = LO(W1 + 26*4 + 2 + 1);
-    r0.h = HI(W1 + 26*4 + 2 + 1);
+    r0.l = LO(W1 + 14*4 + 2 + 1);
+    r0.h = HI(W1 + 14*4 + 2 + 1);
     [FP - FP_TXCHAN3] = r0;
 
     /* PF pin setup:

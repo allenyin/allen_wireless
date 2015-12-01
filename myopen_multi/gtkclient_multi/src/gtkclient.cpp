@@ -70,7 +70,7 @@ float		g_viewportSize[2] = {640, 480}; //width, height.
 
 char g_bridgeIP[NSCALE][256];
 pthread_mutex_t mutex_bridge_IP = PTHREAD_MUTEX_INITIALIZER;
-unsigned int  g_radioChannel[NSCALE] = {124};
+unsigned int  g_radioChannel[NSCALE] = {84};
 
 static float	g_fbuf[NFBUF][NSAMP*3]; //continuous waveform. range [-1 .. 1]
 i64				g_fbufW[NFBUF]; //where to write to (always increment), might not be thread safe

@@ -71,11 +71,11 @@
   Total = 512 + 72 = 584 ---> round to 590 words
 
 */
-#define STORAGE                 240
-#define SAMPLE_PER_CH           10
-#define SAMPLE_PER_CH_MINUS_3   7
-#define TOTAL_CONVERT           320   // 32*SAMPLE_PER_CH
-#define TOTAL_CONVERT_MINUS_3   317
+#define STORAGE                 330
+#define SAMPLE_PER_CH           16
+#define SAMPLE_PER_CH_MINUS_3   13
+#define TOTAL_CONVERT           512   // 32*SAMPLE_PER_CH
+#define TOTAL_CONVERT_MINUS_3   509
 
 .global _radio_bidi_asm
 _radio_bidi_asm:
@@ -510,8 +510,8 @@ save_one_amp:
     r3 = [p0 + (SPORT1_RX - SPORT0_RX)];    // SPORT1 sec - 1st amp
     r2 >>= SHIFT_BITS;
     r3 >>= SHIFT_BITS;
-    //w[p1++] = r3;                           // save 1st amp
-    w[p1++] = r2;                           // save 2nd amp
+    w[p1++] = r3;                           // save 1st amp
+    //w[p1++] = r2;                           // save 2nd amp
 
     r2 = [p0];                              // SPORT0 pri - 4th amp
     r3 = [p0];                              // SPORT0 sec - 3rd amp
