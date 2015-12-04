@@ -1,6 +1,22 @@
 '''
 Memory files obtained from copying gdb output, after executing firmware
 and dumping one frame of 16-packet data.
+
+Usage 12/4/2015:
+    Used after running firmware1.asm or firmware2.asm, and run
+        set logging redirect on
+        set logging on
+        x/256xw $p2     (or whatever memory address WF_BUF is)
+        set logging off
+    Then, move gdb.txt to somefile.txt
+
+        plot_packet(fname, nbits=8, nchannels=4)
+    will plot all of nchannels.
+    
+    nbits is 8 or 16, depending on how many bits each channel's saved as.
+    nchannels determines how many channels were saved in the memory. firmware1 and firmware2
+    uses 32 so far.
+
 '''
 
 import numpy as np

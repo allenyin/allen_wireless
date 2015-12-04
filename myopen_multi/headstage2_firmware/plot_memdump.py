@@ -5,6 +5,9 @@ In vim, use regex command "%s/.\+:\s\+//g" to delete the address/pointer field.
 
 Edit 11/15/2015: No longer need the regex command, just save gdb.txt to whatever and run.
                  The regex is taken care of in load_mem_values
+
+Usage 12/4/2015:
+
 """
 import numpy as np
 import matplotlib.pyplot as plt
@@ -225,6 +228,12 @@ def between_amps(fname):
     
 #Code for analyzing channels within an amp
 def within_amp(fname, n_channels, f, truncation=False):
+    '''
+    fname = saved memory dump.
+    n_channels = number of channels we are plotting/saving.
+    f = frequency of the signal applied.
+    truncation: True if we are plotting the MSByte of the results.
+    '''
     data = load_mem_values(fname)
     data = convert_mem_values(data)
     data = check_setup_values(data)
@@ -240,12 +249,22 @@ def within_amp(fname, n_channels, f, truncation=False):
     return data
 
 def within_amp_as_one_ch(fname):
+    '''
+    Use this when all data saved is supposed to be from the same channel
+    in a particular amplifier. In this case, sampling frequency is assumed
+    to be 1MHz. Be careful!
+    '''
     data = load_mem_values(fname)
     data = convert_mem_values(data)
     data = check_setup_values(data)
     return plot_mem_vals3(data)
 
 def within_amp_1after1(fname, n_channels):
+    '''
+    Use this when a bunch of data is acquired from 1 channel, then a different
+    channel, and so on. Again, samplifing frequency is assumed to be
+    1MHz as well, be careful!
+    '''
     data = load_mem_values(fname)
     data = convert_mem_values(data)
     data = check_setup_values(data)
