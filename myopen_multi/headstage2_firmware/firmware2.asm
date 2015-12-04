@@ -130,8 +130,8 @@ nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
     // Process the other two channels in this group. Pretty much identical as before.
     r1 = [p0];   // SPORT0-primary: Ch96-127
     r0 = [p0];   // SPORT0-sec:     Ch64-95
-    //r1 >>= SHIFT_BITS;
     r0 >>= SHIFT_BITS;
+    //w[p4++] = r0;   // Save channel on 3rd amplifier
     r1 <<= 15;      // Ch96-127 in the upper word
     r2 = r0 + r1;   // r2 = Ch32, Ch0 (lo, hi). 16-bits samples
 nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
@@ -927,6 +927,12 @@ spell_intan:
     [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
     //call wait_samples; // call 36, now all setup stuff is out of pipeline and saved.
                        // next one will be the result of CONVERT0
+
+    r0 = NEXT_CHANNEL_SHIFTED;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
+    [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
 
     p1.l = LO(FIO_FLAG_D);
     p1.h = HI(FIO_FLAG_D);
