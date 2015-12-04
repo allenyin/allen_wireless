@@ -114,96 +114,18 @@ wait_samples_main:
     [p0 + (SPORT1_TX - SPORT0_RX)] = r7;   // SPORT1 primary TX
     [p0 + (SPORT1_TX - SPORT0_RX)] = r7;   // SPORT1 sec TX
 
-    // pre-gain, integrator (offset removal), high-pass memory spots
-    r3 = r0 + r1 (ns) || r5 = [i0++] || nop;    // r5.l=32000(pre-gain=0.9765), r5.h=-32768(-1)
-                                    // r2, r3 has sample
-.align 8
-    r0 = [i1++] || r6 = [i0++];              // both r1 and r2 have samples
-    r5 = [i1++] || r7 = [i0++];                         // r5=AGC-gain, r7=sqrt(AGC_target)
-    a0 = r3.l * r5.l, a1 = r3.h * r5.h || [i2++] = r2;  // a0,a1=sample*agc_gain. Save samples in "mean" slot
-    
-    a0 = a0 << 6;        // Originally a0<<8, assuming a0 has 14-bit results.
-    a1 = a1 << 6;        // Now it's 16, so shift by 8-2=6
-    r0.l = a0, r0.h = a1;
+nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
 
-    /* Now we update AGC-gain.
-       AGC-gain is in Q7.8 format - max is 128.
-       
-       We take the difference of agc_gain*integrator_output and the AGC-target. If this difference is
-       positive or negative, we subtract or add 2^-8 to the original gain and save the abs-value as the
-       new gain.
-
-       Adding 2^-8 at a time because r6.h=1, which is 2^-8 in Q7.8 format.
-    */
-    a0 = abs a0, a1 = abs a1;
-    r4.l = (a0 -= r7.l * r7.l), r4.h = (a1 -= r7.h * r7.h) (is) // subtract target from value, saturate diff
-        || r6 = [i0++];                                         // r6.l = 16384 (0.5), r6.h = 1
-    a0 = r5.l * r6.l, a1 = r5.h * r6.l || nop;
-    r3.l = (a0 -= r4.l * r6.h), r3.h = (a1 -= r4.h * r6.h) (s2rnd) || nop;  // inc or dec gain
-.align 8
-    r3 = abs r3 (v);    // take abs of gain. 
-    
-    [i2++] = r3;
-    
-   /* Start 4 back-to-back direct-form 1 biquads. Operates on the two samples in
-       parallel (both in 1 32-bit reg). See Tim thesis for block diagrams.
-
-       At this point,
-         r0: contains the output of LMS.
-         i0: @LPF1's b0. For reading/writing A1.
-         i1: @x1(n-1) of current channel. For reading existing values in W1.
-         i2: @x1(n-1) of current channel. For updating those values afterwards, also in W1.
-
-       If i1 and i2 are dereferenced in the same cycle, the processor will stall -- each of the
-       1k SRAM memory banks has only one port.
-
-       Format of existing values/delayed samples in memory (W1 buffer), each line = 32-bit word, 
-       each 32-bit word contains value for both channels, 16-bits each:
-       
-       [x1(n-1) ,               <-- lo addr
-        x1(n-2) ,
-        x2(n-1) aka y1(n-1) ,
-        x2(n-2) aka y1(n-2) ,
-        x3(n-1) aka y2(n-1) ,
-        x3(n-2) aka y2(n-2) ,
-        x4(n-1) aka y3(n-1) ,
-        x4(n-2) aka y3(n-2) ,
-        y4(n-1) ,
-        y4(n-2) ]               <-- hi addr
-    */
-    mnop || r5 = [i0++] || r1 = [i1++];                                   // r0=samp; r1=x1(n-1); r5=b0.0
-	a0  = r0.l * r5.l, a1  = r0.h * r5.h || r6 = [i0++] || r2 = [i1++] ;           // r6=b0.1; r2=x1(n-2)
-	a0 += r1.l * r6.l, a1 += r1.h * r6.h || r7 = [i0++] || r3 = [i1++];            // r7=a0.0; r3=y1(n-1)
-	a0 += r2.l * r5.l, a1 += r2.h * r5.h || r5 = [i0++] || r4 = [i1++] ;           // r5=a0.1; r4= 1(n-2)
-	a0 += r3.l * r7.l, a1 += r3.h * r7.h || [i2++] = r0 ;                          // save x1(n-1)
-	r0.l = (a0 += r4.l * r5.l), r0.h = (a1 += r4.h * r5.h) (s2rnd) || [i2++] = r1; // r0=y1(n); save x1(n-2)
-
-	r5 = [i0++] || [i2++] = r0;                                            // r5=b1.0; save y1(n-1)
-	a0  = r0.l * r5.l, a1  = r0.h * r5.h || r6 = [i0++] || [i2++] = r3;    // r6=b1.1; save y1(n-2)
-	a0 += r3.l * r6.l, a1 += r3.h * r6.h || r7 = [i0++] || r1 = [i1++];    // r7=a1.0; r1 = y2(n-1)
-	a0 += r4.l * r5.l, a1 += r4.h * r5.h || r2 = [i1++];                   // r2=y2(n-2)
-	a0 += r1.l * r7.l, a1 += r1.h * r7.h || r5 = [i0++];                   // r5=a1.1
-	r0.l = (a0 += r2.l * r5.l), r0.h = (a1 += r2.h * r5.h) (s2rnd) || NOP; // r0=y2(n)
-
-/*
-	r5 = [i0++] || [i2++] = r0;                                            // r5=b2.0; save y2(n-1)
-	a0  = r0.l * r5.l, a1  = r0.h * r5.h || r6 = [i0++] || [i2++] = r1;    // r6=b2.1; save y2(n-2)
-	a0 += r1.l * r6.l, a1 += r1.h * r6.h || r7 = [i0++] || r3 = [i1++];    // r7=a2.0; r3=y3(n-1)
-	a0 += r2.l * r5.l, a1 += r2.h * r5.h || r4 = [i1++];                   // r4=y3(n-2)
-	a0 += r3.l * r7.l, a1 += r3.h * r7.h || r5 = [i0++];                   // r5=a2.1
-	r0.l = (a0 += r4.l * r5.l), r0.h = (a1 += r4.h * r5.h) (s2rnd) || NOP; // r0=y3(n)
-
-	r5 = [i0++] || [i2++] = r0;                                            // r5=b3.0; save y3(n-1)
-	a0  = r0.l * r5.l, a1  = r0.h * r5.h || r6 = [i0++] || [i2++] = r3;    // r6=b3.1; save y3(n-2)
-	a0 += r3.l * r6.l, a1 += r3.h * r6.h || r7 = [i0++] || r1 = [i1++];    // r7=a3.0; r1= y4(n-1)
-	a0 += r4.l * r5.l, a1 += r4.h * r5.h || r2 = [i1++];                   // r2=y4(n-2)
-	a0 += r1.l * r7.l, a1 += r1.h * r7.h || r5 = [i0++];                   // r5=a3.1
-	r0.l = (a0 += r2.l * r5.l), r0.h = (a1 += r2.h * r5.h) (s2rnd);        // r0=y4(n)
-*/
-	[i2++] = r0; // save current y4(n) in y4(n-1)'s spot.
-	[i2++] = r1; // save current y4(n-1) in y4(n-2)'s spot. (normally pipelined)
-	[--sp] = r0; // store IIR result (current y4(n)) on the stack.
-
+   
 //---------------------------------------------------------------------------------------
     // Process the other two channels in this group. Pretty much identical as before.
     r1 = [p0];   // SPORT0-primary: Ch96-127
@@ -212,172 +134,13 @@ wait_samples_main:
     r0 >>= SHIFT_BITS;
     r1 <<= 15;      // Ch96-127 in the upper word
     r2 = r0 + r1;   // r2 = Ch32, Ch0 (lo, hi). 16-bits samples
+nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
 
-    // pre-gain, integrator (offset removal), high-pass memory spots
-    r3 = r0 + r1 (ns) || r5 = [i0++] || nop;    // r5.l=32000(pre-gain=0.9765), r5.h=-32768(-1)
-                                           // r2 and r3 has sample
-.align 8
-    r0 = [i1++] || r6 = [i0++];              // both r1 and r2 have samples
-    r5 = [i1++] || r7 = [i0++];                         // r5=AGC-gain, r7=sqrt(AGC_target)
-    a0 = r1.l * r5.l, a1 = r1.h * r5.h || [i2++] = r2;  // a0,a1=sample*agc_gain. Save samples in "mean" slot
-    
-    a0 = a0 << 6;       // Originally a0<<8, assuming a0 has 14-bit results.
-    a1 = a1 << 6;       // Now it's 16, so shift by 8-2=6
-    r0.l = a0, r0.h = a1;
-
-    /* Now we update AGC-gain.
-       AGC-gain is in Q7.8 format - max is 128.
-       
-       We take the difference of agc_gain*integrator_output and the AGC-target. If this difference is
-       positive or negative, we subtract or add 2^-8 to the original gain and save the abs-value as the
-       new gain.
-
-       Adding 2^-8 at a time because r6.h=1, which is 2^-8 in Q7.8 format.
-    */
-    a0 = abs a0, a1 = abs a1;
-    r4.l = (a0 -= r7.l * r7.l), r4.h = (a1 -= r7.h * r7.h) (is) // subtract target from value, saturate diff
-        || r6 = [i0++];                                         // r6.l = 16384 (0.5), r6.h = 1
-    a0 = r5.l * r6.l, a1 = r5.h * r6.l || nop;
-    r3.l = (a0 -= r4.l * r6.h), r3.h = (a1 -= r4.h * r6.h) (s2rnd) || nop;  // inc or dec gain
-.align 8
-    r3 = abs r3 (v);    // take abs of gain.
-    [i2++] = r3; 
-    
-    // Start 4 back-to-back IIR filters
-    mnop || r5 = [i0++] || r1 = [i1++];                                   // r0=samp; r1=x1(n-1); r5=b0.0
-	a0  = r0.l * r5.l, a1  = r0.h * r5.h || r6 = [i0++] || r2 = [i1++] ;           // r6=b0.1; r2=x1(n-2)
-	a0 += r1.l * r6.l, a1 += r1.h * r6.h || r7 = [i0++] || r3 = [i1++];            // r7=a0.0; r3=y1(n-1)
-	a0 += r2.l * r5.l, a1 += r2.h * r5.h || r5 = [i0++] || r4 = [i1++] ;           // r5=a0.1; r4= 1(n-2)
-	a0 += r3.l * r7.l, a1 += r3.h * r7.h || [i2++] = r0 ;                          // save x1(n-1)
-	r0.l = (a0 += r4.l * r5.l), r0.h = (a1 += r4.h * r5.h) (s2rnd) || [i2++] = r1; // r0=y1(n); save x1(n-2)
-
-	r5 = [i0++] || [i2++] = r0;                                            // r5=b1.0; save y1(n-1)
-	a0  = r0.l * r5.l, a1  = r0.h * r5.h || r6 = [i0++] || [i2++] = r3;    // r6=b1.1; save y1(n-2)
-	a0 += r3.l * r6.l, a1 += r3.h * r6.h || r7 = [i0++] || r1 = [i1++];    // r7=a1.0; r1 = y2(n-1)
-	a0 += r4.l * r5.l, a1 += r4.h * r5.h || r2 = [i1++];                   // r2=y2(n-2)
-	a0 += r1.l * r7.l, a1 += r1.h * r7.h || r5 = [i0++];                   // r5=a1.1
-	r0.l = (a0 += r2.l * r5.l), r0.h = (a1 += r2.h * r5.h) (s2rnd) || NOP; // r0=y2(n)
-
-/*
-	r5 = [i0++] || [i2++] = r0;                                            // r5=b2.0; save y2(n-1)
-	a0  = r0.l * r5.l, a1  = r0.h * r5.h || r6 = [i0++] || [i2++] = r1;    // r6=b2.1; save y2(n-2)
-	a0 += r1.l * r6.l, a1 += r1.h * r6.h || r7 = [i0++] || r3 = [i1++];    // r7=a2.0; r3=y3(n-1)
-	a0 += r2.l * r5.l, a1 += r2.h * r5.h || r4 = [i1++];                   // r4=y3(n-2)
-	a0 += r3.l * r7.l, a1 += r3.h * r7.h || r5 = [i0++];                   // r5=a2.1
-	r0.l = (a0 += r4.l * r5.l), r0.h = (a1 += r4.h * r5.h) (s2rnd) || NOP; // r0=y3(n)
-
-	r5 = [i0++] || [i2++] = r0;                                            // r5=b3.0; save y3(n-1)
-	a0  = r0.l * r5.l, a1  = r0.h * r5.h || r6 = [i0++] || [i2++] = r3;    // r6=b3.1; save y3(n-2)
-	a0 += r3.l * r6.l, a1 += r3.h * r6.h || r7 = [i0++] || r1 = [i1++];    // r7=a3.0; r1= y4(n-1)
-	a0 += r4.l * r5.l, a1 += r4.h * r5.h || r2 = [i1++];                   // r2=y4(n-2)
-	a0 += r1.l * r7.l, a1 += r1.h * r7.h || r5 = [i0++];                   // r5=a3.1
-	r3.l = (a0 += r2.l * r5.l), r3.h = (a1 += r2.h * r5.h) (s2rnd);        // r3=y4(n)
-*/
-    nop || [i2++] = r3; // save current y4(n) in y4(n-1)'s spot
-    r2 = [sp++] || [i2++] = r1; // r2=IIR results of ch0-31 and ch32-63. Save y4(n-1) in y4(n-2)'s spot.
-
-    /* Template Comparison starts here, ala Plexon - no threshold.
-       Currently, r2 = filtered samples from [Ch32-63 | Ch0-31] (hi, lo).
-                  r3 = filterd samples from  [Ch96-127 | Ch64-95] (hi, lo).
-       All samples are 16-bits, we right-shift them to 8-bits and byte pack all of them
-       into one register (r4) so that it contains the samples for chs[96,64,32,0] (hi to lo).
-       The bytes are then converted from signed to unsigned binary offset by XOR with 0x80808080
-
-       Sorting in gtkclient results in 16 template points per channel, 8 bits per point. These templates,
-       and the "aperture" for each sorted channels are sent to the headstage, and stored in the 
-       corresponding memory location in A1.
-
-       16 previous byte-packed samples (group of 4) are saved in T1. Template matching/spike detection
-       consists of using SAA instruction to subtract each of the template point value from the corresponding
-       delayed samples. These differences are summed together and compared to the aperture value.
-
-       If the summed differences for a channel is smaller than that channel's aperture, then we detect
-       a spike for that channel.
-
-       We do this set of procedures twice, once for template A, then template B, for each channel. At the
-       end of the first pass, the current samples are written into T1.
-       
-       Note that in template comparison comments, all notations in the from ch[96,64,32,0] show data
-       from hi-addr to lo-addr.
-    */     
-    r2 = r2 >>> 8 (v);      // vector-shift samples to 8-bits, preserve sign.
-    r3 = r3 >>> 8 (v);
-    r4 = bytepack(r2, r3);  // newest sample chs[96,64,32,0] (hi to lo)
-    r0 = [FP - FP_8080];    // r0 = 0x80808080
-    r4 = r4 ^ r0;           // convert to unsigned offset binary.
-    r0 = r4;                // r0 = r4 = new unsigned samples.
-.align 8; // Template A   
-    a0 = a1 = 0 || r2 = [i0++]; // reset accumulators. r2 = TempA(t).
-    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //1: Samp(t)-TempA(t). r0=sample(t-15). r2=TempA(t-15)
-    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //2: Samp(t-15)-TempA(t-15). r0=samp(t-14). r2=TempA(t-14)
-    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //3: Samp(t-14)-TempA(t-14). r0=samp(t-13). r2=TempA(t-13)
-    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //4
-    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //5
-    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //6
-    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //7
-    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //8
-    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //9
-    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //10
-    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //11
-    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //12
-    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //13
-    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //14
-    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //15: Samp(t-2)-TempA(t-2). r0=samp(t-1). r2=TempA(t-1)
-    saa(r1:0, r3:2) || [i3++] = r4;                //16: Samp(t-1)-TempA(t-1). Write new Samp(t)
-
-    
-    /* Now results for ch[96,64,32,0] are in [a1.H, a1.L, ao.H, ao.L]. 
-       Compare to aperture, as unsigned frac.
-    */
-    r0 = a0, r1 = a1 (fu) || r2 = [i0++] || i3 += m0; // r2=apertureA[32,0]. i3@Samp(t-6)
-    // subtract aperture from results (with saturation)
-    r0 = r0 -|- r2 (s) || r3 = [i0++] || i3 -= m3;    // r0=chs[32,0] diff. r3=apertureA[96,64]. i3@Samp(t-8)
-    r1 = r1 -|- r3 (s) || i3 += m0;                   // r1=chs[96,64] diff. i3@Samp(t-15)
-    r0 = r0 >>> 15 (v); // shift to bit 0, the results of the shifts
-    r1 = r1 >>> 15 (v); // will be either -1 or 0.
-    r0 = -r0 (v);       // now result will be either 1 or 0.
-    r1 = -r1 (v);       // representing either a spike or miss
-    r1 <<= 1;
-    r6 = r0 + r1;       // r6 in form of: [..14bits..][96A,32A][..14bits..][64A,0A]
-.align 8; // Template B
-    a0 = a1 = 0 || r0 = [i3++] || r2 = [i0++]; //r0=Samp(t-15). r2=TempB(t-15)
-    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //1: Samp(t-15)-TempB(t-15). r0=Samp(t-14). r2=TempB(t-14)
-    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //2: Samp(t-14)-TempB(t-14). r0=Samp(t-13). r2=TempB(t-13)
-    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //3: Samp(t-13)-TempB(t-13). r0=Samp(t-12). r2=TempB(t-12)
-    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //4
-    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //5
-    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //6
-    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //7
-    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //8
-    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //9
-    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //10
-    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //11
-    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //12
-    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //13
-    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //14
-    saa(r1:0, r3:2) || r0 = [i3++] || r2 = [i0++]; //15: Samp(t-1)-TempB(t-1). r0=Samp(t). r2=TempB(t)
-    saa(r1:0, r3:2) || nop;                        //16: Samp(t)-TempB(t). i3@Samp(t-15) of next group.
-    // Compare to aperture
-    r0 = a0, r1 = a1 (fu) || r2 = [i0++];   // r2=apertureB[32,0].
-    r0 = r0 -|- r2 (s) || r3 = [i0++];      // r0=ch[32,0] diff. r3=apertureB[96,64]
-    r1 = r1 -|- r3 (s);                     // r1=ch[96,64] diff.
-    r0 = r0 >>> 15 (v);
-    r1 = r1 >>> 15 (v);
-    r0 = -r0 (v);
-    r1 = -r1 (v);
-    r0 = r0 + r1;
-    r0 = r0 + r6;   // r0 in form of: [..12bits..][96B,32B,96A,32A][..12bits..][64B,0B,64A,0A]
-
-nop; nop; nop; nop; nop; nop;
-
-nop; nop; nop; nop; nop; nop;
-nop; nop; nop; nop; nop; nop;
-nop; nop; nop; nop; nop; nop;
-nop; nop; nop; nop; nop; nop;
-nop; nop; nop; nop; nop; nop;
-nop; 
-
-
+nop;nop;nop;nop;nop;nop;
 //----------------------------------------------------------------------------------------  
     p0 = [FP - FP_CHAN];
     r6 = p0;            // r6 = current group of channels
