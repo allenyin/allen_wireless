@@ -8,4 +8,4 @@ intan_test_setup.asm: Polls the same channel from all amps, and save periods to 
 
 intan_test_setup2.asm: Tests the intra-amp performance. Records a set number of periods from all 32 channels of a fixed amp, save to memory in A1 (0xFF904000). Results include Intan-setup responses. Plot the result using plot_memdump.py.
 
-firmwware3.asm: Built off firmware2.asm, but integrate in radio communication with gtkclient.
+radio_basic.asm: Built off firmware2.asm, but integrate in radio communication with gtkclient.

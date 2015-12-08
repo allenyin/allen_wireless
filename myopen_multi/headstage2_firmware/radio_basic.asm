@@ -38,10 +38,6 @@
 #define CALIB 0x5500    // get back 0x8000
 
 #define CONVERT0 0x0000
-
-// Change the radio packet formation to make sure the samples are saved correctly!
-// Validate with JTAG/GDB debugger.
-
 .align 8    // call is a 5-cycle latency if target is aligned.
 _get_asm:
     /* Sampling thread:
@@ -114,16 +110,17 @@ wait_samples_main:
     [p0 + (SPORT1_TX - SPORT0_RX)] = r7;   // SPORT1 primary TX
     [p0 + (SPORT1_TX - SPORT0_RX)] = r7;   // SPORT1 sec TX
 
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+
+//nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+//nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+//nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+//nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+//nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+//nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+//nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+//nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+//nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+//nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
 
    
 //---------------------------------------------------------------------------------------
@@ -134,13 +131,13 @@ nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
     //w[p4++] = r0;   // Save channel on 3rd amplifier
     r1 <<= 15;      // Ch96-127 in the upper word
     r2 = r0 + r1;   // r2 = Ch32, Ch0 (lo, hi). 16-bits samples
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+//nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+//nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+//nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+//nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+//nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
 
-nop;nop;nop;nop;nop;nop;
+//nop;nop;nop;nop;nop;nop;
 //----------------------------------------------------------------------------------------  
     p0 = [FP - FP_CHAN];
     r6 = p0;            // r6 = current group of channels
@@ -260,24 +257,25 @@ _radio_bidi_asm:
        Note that only 8-bits of the selected sample can be transmitted in a radio-sample. Thus
        the pointer should point to the higher byte of 16-bits word holding that sample.
 
-        To select values for [channel 1, 33, 65, 97], for example, use W1+W1_STRIDE*2*4 instead of W1 to 
-        address values in W1 (each group of 4 channels occupy 28 32-bit words)
+        To select values for [channel 1, 33, 65, 97], for example, use W1+W1_STRIDE*2*4*1 instead of W1 to 
+        address values in W1 (each group of 4 channels occupy 2 32-bit words), where 1~[0,31] is the which
+        4-channel group we want.
     */
     // channel 0 
-    r0.l = LO(W1);   // ch0 amp or integrator output 
-    r0.h = HI(W1);
+    r0.l = LO(W1 + 1);   // ch0 amp or integrator output 
+    r0.h = HI(W1 + 1);
     [FP - FP_TXCHAN0] = r0;
     // channel 31
-    r0.l = LO(W1 + 28*4*31);   
-    r0.h = HI(W1 + 28*4*31);
+    r0.l = LO(W1 + W1_STRIDE*2*4*31 + 1);   
+    r0.h = HI(W1 + W1_STRIDE*2*4*31 + 1);
     [FP - FP_TXCHAN1] = r0;
     // channel 32
-    r0.l = LO(W1 + 2)    
-    r0.h = HI(W1 + 2);
+    r0.l = LO(W1 + 2 + 1)    
+    r0.h = HI(W1 + 2 + 1);
     [FP - FP_TXCHAN2] = r0;
     // channel 63
-    r0.l = LO(W1 + 14*4);   
-    r0.h = HI(W1 + 14*4);
+    r0.l = LO(W1 + W1_STRIDE*2*4*31 + 2 + 1);   
+    r0.h = HI(W1 + W1_STRIDE*2*4*31 + 2 + 1);
     [FP - FP_TXCHAN3] = r0;
 
     /* PF pin setup:
@@ -308,7 +306,7 @@ _radio_bidi_asm:
     m0 = -7*4;              // for moving back to start of LMS weights in each group.
     b0 = i0;
 
-    // i1 is for reading the W1 circular buffer -- contains the value of the signal chain at each stage.
+    // i1 is for reading the W1 circular buffer -- contains the value of the samples
     i1.l = LO(W1);
     i1.h = HI(W1);
     l1 = W1_STRIDE*2*32*4;  // 28 32-bit words/channel, 32 channels total. This is number of bytes
@@ -927,7 +925,7 @@ spell_intan:
     [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
     //call wait_samples; // call 36, now all setup stuff is out of pipeline and saved.
                        // next one will be the result of CONVERT0
-    
+
     p1.l = LO(FIO_FLAG_D);
     p1.h = HI(FIO_FLAG_D);
 
