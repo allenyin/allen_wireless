@@ -35,6 +35,15 @@
 #include "sock.h"
 #include "headstage.h"
 //#include "../firmware_stage9_tmpl/memory.h"
+
+#ifdef RADIO_BASIC
+    #include "../headstage2_firmware/memory_radio_basic.h"
+#elif HEADSTAGE2
+    #include "../headstage2_firmware/memory.h"
+#else
+    #include "../headstage_firmware/memory.h"
+#endif
+
 #include "../headstage_firmware/memory.h"
 
 Headstage::Headstage(){
@@ -256,12 +265,19 @@ void Headstage::setChans(int signalChain){
 		ptr += (m_sendW[tid] % m_sendL[tid]) * 8; //8 because we send 8 32-bit ints /pkt.
 		//scope these here (could also make a thread safe ptr array?)
 		ptr[i*2+0] = htonl(echoHeadstage(m_echo[tid], (FP_BASE - FP_TXCHAN0 + 4*i)));
-		//ok, for the taps: have 4 offsets.
-		//printf("fuck");
+        
+        /* Calculate headstage memory address corresponding to signal-chain value
+           
+           The calculation is the same regardless what the signal chain is in the
+           firmware, as long as W1_STRIDE is set correctly.The signalNames need
+           to be editted in gtkclient.cpp according to what signal-chain stages are
+           actually present.
+        */
 		int o1 = (c & 31) * W1_STRIDE * 2 * 4; //which MUX line.
 		int o2 = ((c & 64)>>6) * W1_STRIDE * 4; // primary/secondary SPORT
 		int o3 = ((c & 32)>>5) * 2; // primary/secondary RX chan.
-		/* 4th offset is to get to the correct written delay.
+		
+        /* 4th offset is to get to the correct written delay.
 		0	mean from integrator
 		1	gain
 		2	saturated sample
@@ -277,6 +293,7 @@ void Headstage::setChans(int signalChain){
 		12	y4(n-1)
 		13	y4(n-2)
 		 */
+
 		int o4 = signalChain * 4;
 		ptr[i*2+1] = htonl(W1 + o1 + o2 + o3 + o4 + 1); //1 is for little-endian.
 	}

@@ -28,7 +28,7 @@ int decodePacket(packet* p, int* channel, char* match, unsigned int &echo){
 			int chan = (exch * 8)%32 + k*4 + j; 
 			unsigned char encoded = ((p->tmpl[k]) >> (8*j)) & 0x7f; 
 			unsigned short decoded = decoder[encoded]; 
-			if(decoded & 0x100) printf("error caught in template match!\n"); 
+			//if(decoded & 0x100) printf("error caught in template match!\n"); 
 			int bitoff[4] = {0,4,1,5}; //0,32,64,96.
 			for(int m = 0; m < 4; m++){
 				int adr = chan + m*32;

@@ -602,8 +602,8 @@ _radio_bidi_asm:
        Integ coefs (2 32-bit words)  ---    <--- low address
 
        There are a total of 32 groups of 4-channels. Each each loop of lt_top, we populate 1 A1-stride.
-       Our counter will be at 33, this makes our pointers start at the first block, corresponding to
-       starting sample acquisition at ch[0,32,64,96]
+       Our counter will be at 63, this makes our pointers start at the last block, corresponding to
+       starting sample acquisition at ch[31,63,95,127]
    */
     p5 = 32+31 (x);
     lsetup(lt_top, lt_bot) lc0 = p5;    // each loop of lt_top is one A1_stride
@@ -765,7 +765,7 @@ lt_bot: nop;
        This includes IIR values (y4(n-2), y4(n-1), y3(n-2), y3(n-1), etc), integrator outputs,
        updated-AGC gain, integrator mean.
 
-       Also ran 32+1=33 times so we leave the pointer i1 and i2 at beggining of the last
+       Also ran 32+31=63 times so we leave the pointer i1 and i2 at beggining of the first 
        W1_STRIDE, to compensate for Intan's pipeline delay.
     */
     p5 = (32+31)*W1_STRIDE*2;

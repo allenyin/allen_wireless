@@ -41,7 +41,13 @@
 #include <libgen.h>
 
 //#include "../firmware_stage9_tmpl/memory.h"
-#include "../headstage_firmware/memory.h"
+#ifdef RADIO_BASIC
+    #include "../headstage2_firmware/memory_radio_basic.h"
+#elif HEADSTAGE2
+    #include "../headstage2_firmware/memory.h"
+#else
+    #include "../headstage_firmware/memory.h"
+#endif
 
 #include "gettime.h"
 #include "sock.h"
@@ -93,7 +99,12 @@ bool   g_rtMouseBtn = false;
 int    g_polyChan = 0;
 bool   g_addPoly = false;
 int    g_channel[4] = {0, 32*NSCALE, 64*NSCALE, 96*NSCALE};
+
+#ifdef RADIO_BASIC
+int g_signalChain = 0;
+#else
 int    g_signalChain = 10; //what to sample in the headstage signal chain.
+#endif
 
 bool g_out = false;
 bool g_templMatch[NSCALE][128][2];//should this be a global?
@@ -377,6 +388,7 @@ static gint button_press_event( GtkWidget      *,
 static gboolean
 expose1 (GtkWidget *da, GdkEventExpose*, gpointer )
 {
+    printf("---- Calling expose1 ------\n");
 
 	GdkGLContext *glcontext = gtk_widget_get_gl_context (da);
 	GdkGLDrawable *gldrawable = gtk_widget_get_gl_drawable (da);
@@ -1105,13 +1117,16 @@ packet format in the file, as saved here:
 						int ch = g_channel[k];
 						if(ch > (tid+1)*128 || ch < (tid*128)){ continue;}//channel not in bridge, don't update
 						
-						char samp = p->data[j*4+k]; //-128 -> 127.
+						unsigned char samp = p->data[j*4+k]; //-128 -> 127.
+                        //printf("k=%d, samp = 0x%x:\n ", k, samp & 0xff);
 						z = 0.f;
 						//>128 -> 0-127
 						if(g_templMatch[tid][ch&127][0]) z = 1.f;
 						if(g_templMatch[tid][ch&127][1]) z = 2.f;
-						g_fbuf[k][(g_fbufW[k] % g_nsamp)*3 + 1] =
-							(((samp+128.f)/255.f)-0.5f)*2.f; //range +-1.
+						//g_fbuf[k][(g_fbufW[k] % g_nsamp)*3 + 1] =
+						//	(((samp+128.f)/255.f)-0.5f)*2.f; //range +-1.
+                        g_fbuf[k][(g_fbufW[k] % g_nsamp)*3 + 1] =
+                            (samp*2.f/255.f-1.f);
 						g_fbuf[k][(g_fbufW[k] % g_nsamp)*3 + 2] = z;
 						
 						g_fbufW[k]++;
@@ -1446,12 +1461,15 @@ void updateChannelUI(int k){
 	//called when a channel changes -- update the UI elements accordingly.
 	g_uiRecursion++;
 	int ch = g_channel[k];
+#ifdef RADIO_BASIC
+#else
 	gtk_adjustment_set_value(g_gainSpin[k], g_c[ch]->getGain());
 	gtk_adjustment_set_value(g_agcSpin[k], g_c[ch]->getAGC());
 	gtk_adjustment_set_value(g_apertureSpin[k*2+0], g_c[ch]->getAperture(0));
 	gtk_adjustment_set_value(g_apertureSpin[k*2+1], g_c[ch]->getAperture(1));
 	gtk_adjustment_set_value(g_thresholdSpin[k], g_c[ch]->getThreshold());
 	gtk_adjustment_set_value(g_centeringSpin[k], g_c[ch]->getCentering());
+#endif
 	g_uiRecursion--;
 }
 static void channelSpinCB( GtkWidget*, gpointer p){
@@ -1616,7 +1634,7 @@ static void filterRadioCB(GtkWidget *button, gpointer p){
 }
 static void signalChainCB( GtkComboBox *combo, gpointer){
     gchar *string = gtk_combo_box_get_active_text( combo );
-    //printf( "signalChain: >> %s <<\n", ( string ? string : "NULL" ) );
+    printf( "signalChain: >> %s <<\n", ( string ? string : "NULL" ) );
  	int i = atoi((char*)string);
 	if(i >=0 && i < W1_STRIDE && !g_uiRecursion){
 		g_signalChain = i;
@@ -2011,7 +2029,6 @@ int main(int argn, char **argc)
 		char buf[128];
 		snprintf(buf, 128, "%c", 'A'+i);
 		frame = gtk_frame_new (buf);
-		//gtk_frame_set_shadow_type(GTK_FRAME(frame),  GTK_SHADOW_ETCHED_IN);
 		gtk_box_pack_start (GTK_BOX (v1), frame, FALSE, FALSE, 0);
 
 		GtkWidget* bx2 = gtk_vbox_new (FALSE, 1);
@@ -2023,6 +2040,8 @@ int main(int argn, char **argc)
 									  g_channel[i], 0, ((128*NSCALE)-1), 1,
 									  channelSpinCB, i);
 		//right of that, a gain spinner. (need to update depending on ch)
+#ifdef RADIO_BASIC
+#else
 		g_gainSpin[i] = mk_spinner("gain", bx3,
 								 	g_c[g_channel[i]]->getGain(),
 									-30.0, 30.0, 0.1,
@@ -2032,6 +2051,7 @@ int main(int argn, char **argc)
 								  	g_c[g_channel[i]]->getAGC(),
 									0, 32000, 1000,
 								  	agcSpinCB, i);
+#endif
 
 		gtk_box_pack_start (GTK_BOX (frame), bx2, FALSE, FALSE, 1);
 	}
@@ -2040,15 +2060,20 @@ int main(int argn, char **argc)
 	gtk_notebook_set_tab_pos (GTK_NOTEBOOK (notebook), GTK_POS_LEFT);
 	g_signal_connect(notebook, "switch-page",
 					 G_CALLBACK(notebookPageChangedCB), 0);
-	//g_signal_connect(notebook, "select-page",
-	//				 G_CALLBACK(notebookPageChangedCB), 0);
 	gtk_box_pack_start(GTK_BOX(v1), notebook, TRUE, TRUE, 1);
     	gtk_widget_show(notebook);
 
 	box1 = gtk_vbox_new(FALSE, 2);
-	//add signal chain combo box.
+	
+    //add signal chain combo box.
+    printf("----Adding Signal Chain Box----\n");
 	frame = gtk_frame_new ("signal chain");
 	gtk_box_pack_start (GTK_BOX (box1), frame, TRUE, TRUE, 0);
+#ifdef RADIO_BASIC
+    const char* signalNames[W1_STRIDE] = {
+        "0 Samples from Intan"
+    };
+#else
 	const char* signalNames[W1_STRIDE] = {
 		"0	mean from integrator",
 		"1	AGC gain",
@@ -2064,11 +2089,13 @@ int main(int argn, char **argc)
 		"11	x2(n-2) / y3(n-2)",
 		"12	y4(n-1) (hi2 out, final)",
 		"13	y4(n-2)" };
+#endif
 	button = 0;
 	combo = gtk_combo_box_new_text();
    gtk_container_add( GTK_CONTAINER( frame ), combo );
 
 	for(int k=0; k<W1_STRIDE; k++){
+        printf("Attached signal: %s\n", signalNames[k]);
 		gtk_combo_box_append_text( GTK_COMBO_BOX( combo ), signalNames[k]);
 	}
 	
@@ -2076,6 +2103,8 @@ int main(int argn, char **argc)
                       G_CALLBACK( signalChainCB ), NULL );
 	
 	//add a gain set-all button.
+#ifdef RADIO_BASIC
+#else
 	button = gtk_button_new_with_label ("Set all gains from A");
 	g_signal_connect(button, "clicked", G_CALLBACK (gainSetAll),0);
 	gtk_box_pack_start (GTK_BOX (box1), button, TRUE, TRUE, 0);
@@ -2091,6 +2120,7 @@ int main(int argn, char **argc)
 	//add osc / reset radio buttons
 	mk_radio("500-6.7k,150-10k,osc,flat", 4,
 			 box1, true, "filter", filterRadioCB);
+#endif
 
 	//add in a zoom spinner.
 	g_zoomSpin = mk_spinner("zoom", box1,
@@ -2112,6 +2142,9 @@ int main(int argn, char **argc)
 	gtk_label_set_angle(GTK_LABEL(label), 90);
 	gtk_notebook_insert_page(GTK_NOTEBOOK(notebook), box1, label, 0);
 
+#ifdef RADIO_BASIC
+
+#else
 //add page for spikes.
 	box1 = gtk_vbox_new (FALSE, 0);
 		//4-channel control blocks.
@@ -2191,6 +2224,7 @@ int main(int argn, char **argc)
 	label = gtk_label_new("sort");
 	gtk_label_set_angle(GTK_LABEL(label), 90);
 	gtk_notebook_insert_page(GTK_NOTEBOOK(notebook), box1, label, 2);
+#endif
 
 //misc functions page
 	box1 = gtk_vbox_new (FALSE, 0);
@@ -2231,12 +2265,15 @@ int main(int argn, char **argc)
 	gtk_box_pack_start (GTK_BOX (bx), button, TRUE, TRUE, 0);
 	gtk_widget_show(button);
 
+#ifdef RADIO_BASIC
+#else
 	//add a sync headstage button (useful in the case of a reset).
 	button = gtk_button_new_with_label ("sync headstage");
 	g_signal_connect(button, "clicked", G_CALLBACK (syncHeadstageCB),
 					 (gpointer*)window);
 	gtk_box_pack_start (GTK_BOX (bx), button, FALSE, FALSE, 0);
 	gtk_box_pack_start (GTK_BOX (box1), bx, TRUE, TRUE, 0);
+#endif
 
 	//and save / stop saving button
 	bx = gtk_hbox_new (FALSE, 3);
@@ -2330,7 +2367,11 @@ int main(int argn, char **argc)
 		usleep(10000); //wait for the other threads to come up.
 	//}
 	//set the initial sampling stage.
+#ifdef RADIO_BASIC
+    gtk_combo_box_set_active(GTK_COMBO_BOX(combo), 0);
+#else
 	gtk_combo_box_set_active(GTK_COMBO_BOX(combo), 12);
+#endif
 	gtk_widget_show_all (window);
 
 	g_timeout_add (1000 / 30, rotate, da1);

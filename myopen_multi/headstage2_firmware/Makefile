@@ -1,18 +1,45 @@
 # Makefile for  program running in L1 memory
 .SUFFIXES: .o .c .asm .bo .asm
 
-ASMSRCS = crt0.o firmware2.o enc.o divsi3.o
+#FIRMWARE_VERSION = firmware1
+#FIRMWARE_VERSION = firmware2
+#FIRMWARE_VERSION = intan_test_setup
+#FIRMWARE_VERSION = intan_test_setup2
+FIRMWARE_VERSION = radio_basic
+
+ASMSRCS = crt0.o 
 COMMON = print.o util.o spi.o
 CSRCS = main.o
-# note: the order of objects in the .ldr mirrors the order in this list!
+# note: the order of objects in the .ldr mirrors the order in this list! (the object files)
 
 OPT = -O2
 CPUDEFINES = -D__ADSPBF532__ -D__BLACKFIN__
 INCLUDES = -I. -I/opt/uClinux/bfin-elf/bfin-elf/include/ -I../common_bfin/
 ASMFLAGS = -x assembler-with-cpp $(INCLUDES) $(CPUDEFINES) -Wall
-ASMFLAGS += -mcpu=bf532 -include memory.h -include defBF532.h -D__ASM__ -g
 CFLAGS = $(INCLUDES) $(CPUDEFINES) -mcpu=bf532 $(OPT) -include memory.h -Wall
 # note: -O means debug symbols are not loaded.
+
+ifeq ($(FIRMWARE_VERSION), firmware2)
+	ASMSRCS += firmware2.o
+	ASMFLAGS += -mcpu=bf532 -include memory.h -include defBF532.h -D__ASM__ -g
+else ifeq ($(FIRMWARE_VERSION), firmware1)
+	ASMSRCS += firmware1.o
+	ASMFLAGS += -mcpu=bf532 -include memory.h -include defBF532.h -D__ASM__ -g
+else ifeq ($(FIRMWARE_VERSION), intan_test_setup)
+	ASMSRCS += intan_test_setup.o
+	ASMFLAGS += -mcpu=bf532 -include memory.h -include defBF532.h -D__ASM__ -g
+else ifeq ($(FIRMWARE_VERSION), intan_test_setup2)
+	ASMSRCS += intan_test_setup2.o
+	ASMFLAGS += -mcpu=bf532 -include memory.h -include defBF532.h -D__ASM__ -g
+else ifeq ($(FIRMWARE_VERSION), radio_basic)
+	ASMSRCS += radio_basic.o
+	ASMFLAGS += -mcpu=bf532 -include memory_radio_basic.h -include defBF532.h -D__ASM__ -g
+else
+	ASMSRCS += firmware1.o
+	ASMFLAGS += -mcpu=bf532 -include memory.h -include defBF532.h -D__ASM__ -g
+endif
+	
+ASMSRCS += enc.o divsi3.o
 
 LDFLAGS = -T bftiny.x
 
@@ -45,7 +72,7 @@ BIN = $(BFINROOT)/bfin-elf-objcopy
 
 #note: delete spi.o each time, as it compiles different for the headstage.
 # -- and we don't want to screw anything up.
-all: $(OBJS) stage.ldr stage.elf # radio_control.asm
+all: $(OBJS) stage.ldr stage.elf 
 	rm -f ../common/spi.o
 
 stage.elf: $(OBJS)
