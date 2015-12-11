@@ -388,7 +388,7 @@ static gint button_press_event( GtkWidget      *,
 static gboolean
 expose1 (GtkWidget *da, GdkEventExpose*, gpointer )
 {
-    printf("---- Calling expose1 ------\n");
+    //printf("---- Calling expose1 ------\n");
 
 	GdkGLContext *glcontext = gtk_widget_get_gl_context (da);
 	GdkGLDrawable *gldrawable = gtk_widget_get_gl_drawable (da);

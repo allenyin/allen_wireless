@@ -96,53 +96,66 @@ wait_samples_main:
        The electrode to channel configurations between the two boards are not the same. So sorted templates
        are not interchangeable.
     */
+    
+    
+    r3.h = 0x0001;
+    r3.l = 0xFFFE;
     r1 = [p0 + (SPORT1_RX - SPORT0_RX)];   // SPORT1-primary: Ch32-63
     r0 = [p0 + (SPORT1_RX - SPORT0_RX)];   // SPORT1-sec:     Ch0-31
-    r0 >>= SHIFT_BITS;                     // need to shift out the empty LSB
-    r1 <<= 15;      // Ch32-63 in the upper word...15=16-SHIFT_BITS
-    r2 = r0 + r1;   // r2 = Ch32, Ch0 (lo, hi). 16-bits samples
     
+    //r1 = [p0];
+    //r0 = [p0];
+
+    r1 = r1 & r3;
+    r0 = r0 & r3;
+    r1 <<= 15;                             // Ch32-63 in the upper word...15=16-SHIFT_BITS
+    r0 >>= SHIFT_BITS;                     // need to shift out the empty LSB
+    r2 = r0 + r1;                          // r2 = Ch32, Ch0 (lo, hi). 16-bits samples
 
     // load in new convert command
     r7 = NEXT_CHANNEL_SHIFTED;
-    [p0 + (SPORT0_TX - SPORT0_RX)] = r7;   // SPORT0 primary TX
-    [p0 + (SPORT0_TX - SPORT0_RX)] = r7;   // SPORT0 sec TX
     [p0 + (SPORT1_TX - SPORT0_RX)] = r7;   // SPORT1 primary TX
     [p0 + (SPORT1_TX - SPORT0_RX)] = r7;   // SPORT1 sec TX
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r7;   // SPORT0 primary TX
+    [p0 + (SPORT0_TX - SPORT0_RX)] = r7;   // SPORT0 sec TX
 
-    //[i2++] = r2;    // save new sample
-        
+    [i1++] = r2;    // save new sample
 
+nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
 
-//nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-//nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-//nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-//nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-//nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-//nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-//nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-//nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-//nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-//nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
 
-   
 //---------------------------------------------------------------------------------------
     // Process the other two channels in this group. Pretty much identical as before.
-    r1 = [p0];   // SPORT0-primary: Ch96-127
-    r0 = [p0];   // SPORT0-sec:     Ch64-95
-    r0 >>= SHIFT_BITS;
-    r1 <<= 15;      // Ch96-127 in the upper word
-    r2 = r0 + r1;   // r2 = Ch64, Ch96 (lo, hi). 16-bits samples
-    //[i2++] = r2;    // save new sample
+    r1 = [p0];      // SPORT0-primary: Ch96-127
+    r0 = [p0];      // SPORT0-sec:     Ch64-95
     
+    //r1 = [p0 + (SPORT1_RX - SPORT0_RX)];
+    //r0 = [p0 + (SPORT1_RX - SPORT0_RX)];
 
-//nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-//nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-//nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-//nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-//nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+    r1 = r1 & r3;
+    r0 = r0 & r3;
+    r1 <<= 15;      // Ch96-127 in the upper word
+    r0 >>= SHIFT_BITS;
+    r2 = r0 + r1;   // r2 = Ch64, Ch96 (lo, hi). 16-bits samples
+    
+    [i1++] = r2;    // save new sample
 
-//nop;nop;nop;nop;nop;nop;
+nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+
+nop;nop;nop;nop;nop;nop;
+
+
 //----------------------------------------------------------------------------------------  
     r0 = 0; // not doing templat match, so this is the dummy match
 
@@ -183,7 +196,7 @@ wait_samples_main:
     p5 = [FP - FP_TXCHAN3];
     r0 = b[p0];
     r1 = b[p1];
-    r2 = b[p2];
+    r2 = b[p3];
     r3 = b[p5];
     b[p4++] = r0;
     b[p4++] = r1;
@@ -452,7 +465,7 @@ _radio_bidi_asm:
     // i1 is for reading the W1 circular buffer -- contains the value of the samples
     i1.l = LO(W1);
     i1.h = HI(W1);
-    l1 = W1_STRIDE*2*32*4;  // 28 32-bit words/channel, 32 channels total. This is number of bytes
+    l1 = W1_STRIDE*2*32*4;  // 2 32-bit words/group, 32 group total. This is number of bytes
     m1 = -7*W1_STRIDE*2*4;  // For moving back 7 channels -- used for LMS weight update.
     b1 = i1;
 
@@ -670,9 +683,9 @@ lt_bot: nop;
        Also run 32+31 times so we leave the pointer i1 and i2 at beginning of the last
        W1_STRIDE, to compensate for Intan's pipeline delay.
     */
-    p5 = (32+31)*W1_STRIDE*2;
-    r0.l = 0xb400;  // ch0-31, ch64-95
-    r0.h = 0x4b00;  // ch32-63, ch96-127
+    p5 = (32+31)*W1_STRIDE;
+    r0.l = 0x1234;  // ch0-31, ch64-95
+    r0.h = 0xfedc;  // ch32-63, ch96-127
     lsetup(zer_top, zer_bot) lc0 = p5;
 zer_top:
     [i1++] = r0;    // zero delays.

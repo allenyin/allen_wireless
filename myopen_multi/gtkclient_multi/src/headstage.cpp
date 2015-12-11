@@ -296,6 +296,7 @@ void Headstage::setChans(int signalChain){
 
 		int o4 = signalChain * 4;
 		ptr[i*2+1] = htonl(W1 + o1 + o2 + o3 + o4 + 1); //1 is for little-endian.
+        printf("setChans: new value is 0x%x\n", W1+o1+o2+o3+o4+1);
 	}
 	for(i=0; i<4; i++){
 		saveMessage("chan %c %d", 'A'+i, m_channel[i]);
