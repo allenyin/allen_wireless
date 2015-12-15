@@ -98,19 +98,22 @@ wait_samples_main:
     */
     
     
-    r3.h = 0x0001;
-    r3.l = 0xFFFE;
+    //r3.h = 0x0001;
+    //r3.l = 0xFFFE;
+
+    r2.h = 0xFFFF;
+    r2.l = 0x0000;
     r1 = [p0 + (SPORT1_RX - SPORT0_RX)];   // SPORT1-primary: Ch32-63
     r0 = [p0 + (SPORT1_RX - SPORT0_RX)];   // SPORT1-sec:     Ch0-31
     
     //r1 = [p0];
     //r0 = [p0];
 
-    r1 = r1 & r3;
-    r0 = r0 & r3;
-    r1 <<= 15;                             // Ch32-63 in the upper word...15=16-SHIFT_BITS
-    r0 >>= SHIFT_BITS;                     // need to shift out the empty LSB
+    r1 <<= 15;
+    r0 >>= SHIFT_BITS;
+    r1 = r1 & r2;
     r2 = r0 + r1;                          // r2 = Ch32, Ch0 (lo, hi). 16-bits samples
+    [i1++] = r2;    // save new sample
 
     // load in new convert command
     r7 = NEXT_CHANNEL_SHIFTED;
@@ -119,7 +122,6 @@ wait_samples_main:
     [p0 + (SPORT0_TX - SPORT0_RX)] = r7;   // SPORT0 primary TX
     [p0 + (SPORT0_TX - SPORT0_RX)] = r7;   // SPORT0 sec TX
 
-    [i1++] = r2;    // save new sample
 
 nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
 nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
@@ -132,19 +134,21 @@ nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
 nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
 
 //---------------------------------------------------------------------------------------
+    r2.h = 0XFFFF;
+    r2.l = 0x0000;
+
     // Process the other two channels in this group. Pretty much identical as before.
     r1 = [p0];      // SPORT0-primary: Ch96-127
     r0 = [p0];      // SPORT0-sec:     Ch64-95
     
     //r1 = [p0 + (SPORT1_RX - SPORT0_RX)];
     //r0 = [p0 + (SPORT1_RX - SPORT0_RX)];
-
-    r1 = r1 & r3;
-    r0 = r0 & r3;
-    r1 <<= 15;      // Ch96-127 in the upper word
-    r0 >>= SHIFT_BITS;
-    r2 = r0 + r1;   // r2 = Ch64, Ch96 (lo, hi). 16-bits samples
     
+    r1 <<= 15;
+    r0 >>= SHIFT_BITS;
+    r1 = r1 & r2;
+    r2 = r0 + r1;
+        
     [i1++] = r2;    // save new sample
 
 nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
@@ -153,7 +157,7 @@ nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
 nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
 nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
 
-nop;nop;nop;nop;nop;nop;
+nop;nop;nop;nop;nop;nop;nop;
 
 
 //----------------------------------------------------------------------------------------  
@@ -683,9 +687,9 @@ lt_bot: nop;
        Also run 32+31 times so we leave the pointer i1 and i2 at beginning of the last
        W1_STRIDE, to compensate for Intan's pipeline delay.
     */
-    p5 = (32+31)*W1_STRIDE;
-    r0.l = 0x1234;  // ch0-31, ch64-95
-    r0.h = 0xfedc;  // ch32-63, ch96-127
+    p5 = (32+31)*W1_STRIDE*2;
+    r0.l = 0x0000;  // ch0-31, ch64-95
+    r0.h = 0x0000;  // ch32-63, ch96-127
     lsetup(zer_top, zer_bot) lc0 = p5;
 zer_top:
     [i1++] = r0;    // zero delays.

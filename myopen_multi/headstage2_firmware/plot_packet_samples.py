@@ -11,12 +11,25 @@ Usage 12/4/2015:
     Then, move gdb.txt to somefile.txt
 
         plot_packet(fname, nbits=8, nchannels=4)
-    will plot all of nchannels.
+    will plot all of nchannels, with a single amplifier (32 max), in the order of
+    ch31, ch0, ch1, ch2,...
     
     nbits is 8 or 16, depending on how many bits each channel's saved as.
     nchannels determines how many channels were saved in the memory. firmware1 and firmware2
     uses 32 so far.
 
+Usage 12/11/2015 (updated):
+    Use after running firmware2.asm, and run
+        set logging redirect on
+        set logging on
+        x/1024xw 0xff804000
+        set logging off
+    Then, move gdb.txt to somefile.txt..
+        
+        plot_packet_allChannels(fname)
+
+    Assumes the given file contains samples from all 128 channels, in the order of:
+    Ch[31,63,95,127], Ch[0,32,64,96], Ch[1,33,65,97], ...
 '''
 
 import numpy as np
@@ -111,7 +124,7 @@ def extract_samples(packets, nbits=8, nchannels=4):
                 ch = (ch+1)%32
     return channels
 
-def plot_samples(channels, nbits=8, nchannels=4):
+def plot_samples(channels, nbits=8, nchannels=4, title=None):
     '''
     Plot all 6*16=96 samples for each channel (8-bits)
 
@@ -145,6 +158,7 @@ def plot_samples(channels, nbits=8, nchannels=4):
             plt.subplot(nrows, ncols, ch+1)
             plt.plot(xx, channels[ch], 'b-*')
             plt.ylim(min(mins)-overset, max(maxes)+overset)
+        plt.suptitle(title)
         plt.show(block=False)
 
     return channels
@@ -153,11 +167,43 @@ def plot_packet(fname, nbits=8, nchannels=4):
     data = load_mem_values(fname)
     data = convert_mem_values(data, nbits)
     if nchannels==4:
+        # this is used when we are processing actual radio-transmission packet.
+        # only 4 channels of raw channel included.
         packets = extract_packets(data, nbits)
         channels = extract_samples(packets, nbits, nchannels)
     else:
         channels = extract_samples([data], nbits, nchannels)
     return plot_samples(channels, nbits, nchannels)
+
+#----------------- For looking at 128 channels at the same time -----------------
+def extract_128ch_samples(data):
+    '''
+    Each value is a sample for channel [31,63,95,127,0,32,64,96,1,33,65,97...]
+    '''
+    channels = [list() for i in xrange(128)]
+    ch = 31
+    for i in range(0,len(data),4):
+        channels[ch].append(data[i])
+        channels[ch+32].append(data[i+1])
+        channels[ch+64].append(data[i+2])
+        channels[ch+96].append(data[i+3])
+        ch = (ch+1)%32
+    return channels
+
+def plot_128channels(channels):
+    plot_samples(channels[0:32], 16, 32, 'Amp1')
+    plot_samples(channels[32:64], 16, 32, 'Amp2')
+    plot_samples(channels[64:96], 16, 32, 'Amp3')
+    plot_samples(channels[96:128], 16, 32, 'Amp4')
+    return channels
+
+def plot_packet_allChannels(fname):
+    data = load_mem_values(fname)
+    data = convert_mem_values(data, 16)
+    channels = extract_128ch_samples(data)
+    return plot_128channels(channels)
+
+
 
 
 

@@ -100,10 +100,15 @@ wait_samples_main:
        The electrode to channel configurations between the two boards are not the same. So sorted templates
        are not interchangeable.
     */
+
+    // In firmware2, p4 points to W1, set in radio_bidi_asm
+    
     r1 = [p0 + (SPORT1_RX - SPORT0_RX)];   // SPORT1-primary: Ch32-63
     r0 = [p0 + (SPORT1_RX - SPORT0_RX)];   // SPORT1-sec:     Ch0-31
     r0 >>= SHIFT_BITS;                     // need to shift out the empty LSB
-    r1 >>= SHIFT_BITS;       // Ch32-63 in the upper word...15=16-SHIFT_BITS
+    w[p4++] = r0;           // save ch0-31 
+    r1 >>= SHIFT_BITS;       
+    w[p4++] = r1;           // save ch32-63
 
     // load in new convert command
     r7 = NEXT_CHANNEL_SHIFTED;
@@ -129,15 +134,17 @@ nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
     r1 = [p0];   // SPORT0-primary: Ch96-127
     r0 = [p0];   // SPORT0-sec:     Ch64-95
     r0 >>= SHIFT_BITS;
-    w[p4++] = r0;
+    w[p4++] = r0;           // save ch64-95
     r1 >>= SHIFT_BITS;      
+    w[p4++] = r1;           // save ch96-127
+
 nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
 nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
 nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
 nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
 nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
 
-nop;nop;nop;nop;nop;nop;
+//nop;nop;nop;nop;nop;nop;
 //----------------------------------------------------------------------------------------  
     p0 = [FP - FP_CHAN];
     r6 = p0;            // r6 = current group of channels
@@ -160,7 +167,6 @@ end_txchan_qs:
     //bitclr(r7, 10);     // two 512-byte frames. loop back after going through 1024 bytes.
     //p4 = r7;
 end_txchan:
-    p1 = [FP - FP_FIO_FLAG_D];  // reset the pointers.
     p3 = [FP - FP_SPI_TDBR];
     rts;
     
@@ -198,8 +204,10 @@ _radio_bidi_asm:
     [FP - FP_SPI_TDBR] = p3;
 
     // P4: point for WRITING to WFBUF sampels and template matches when signal chain finishes.
-    p4.l = LO(WFBUF);
-    p4.h = HI(WFBUF);
+    //p4.l = LO(WFBUF);
+    //p4.h = HI(WFBUF);
+    p4.l = LO(W1);
+    p4.h = HI(W1);
     
     // FP_CHAN: points to the CURRENT channel we are working on - pre-incremented.
     r0 = 30(z); // need to account for the pipeline stuff...
@@ -956,10 +964,13 @@ wait_samples:
     rts;
 
 radio_loop: // main thread, interleaved with _get_asm to process samples
+    p1.l = LO(T1);
+    p1.h = HI(T1);
 wait_buffer:
     call _get_asm;
-    r7 = p4;
-    cc = bittst(r7, 10);
+    cc = p4 == p1;
+    //r7 = p4;
+    //cc = bittst(r7, 10);
     if !cc jump wait_buffer;
 we_done:
     jump we_done;
