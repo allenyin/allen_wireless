@@ -6,8 +6,9 @@ DBG = true
 JACK = false
 MUDFLAP = false
 STACKPROTECTOR = false
-RADIO_BASIC = true
-HEADSTAGE2 = false
+HEADSTAGE_TIM = false
+RADIO_BASIC = false
+RADIO_AGC = true
 
 CC  = gcc
 CPP = g++
@@ -68,14 +69,20 @@ ifeq ($(strip $(STACKPROTECTOR)),true)
 	CFLAGS   += -fstack-protector-all
 endif
 
-ifeq ($(strip $(HEADSTAGE2)), true)
-	CPPFLAGS += -DHEADSTAGE2
+ifeq ($(strip $(HEADSTAGE_TIM)), true)
+	CPPFLAGS += -DHEADSTAGE_TIM
 endif
 
 ifeq ($(strip $(RADIO_BASIC)),true)
 	CPPFLAGS += -DRADIO_BASIC
 	CPPFLAGS := $(filter-out -Wall, $(CPPFLAGS))
 endif
+
+ifeq ($(strip $(RADIO_AGC)),true)
+	CPPFLAGS += -DRADIO_AGC
+	CPPFLAGS := $(filter-out -Wall, $(CPPFLAGS))
+endif
+
 
 all: spikes.pb.cc parameters.pb.cc gtkclient wf_plot convert
 

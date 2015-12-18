@@ -97,38 +97,54 @@ wait_samples_main:
        are not interchangeable.
     */
     
-    
-    //r3.h = 0x0001;
-    //r3.l = 0xFFFE;
-
     r2.h = 0xFFFF;
     r2.l = 0x0000;
     r1 = [p0 + (SPORT1_RX - SPORT0_RX)];   // SPORT1-primary: Ch32-63
     r0 = [p0 + (SPORT1_RX - SPORT0_RX)];   // SPORT1-sec:     Ch0-31
-    
-    //r1 = [p0];
-    //r0 = [p0];
 
-    r1 <<= 15;
+    r1 <<= 15;              
     r0 >>= SHIFT_BITS;
-    r1 = r1 & r2;
+    r1 = r1 & r2;           
     r2 = r0 + r1;                          // r2 = Ch32, Ch0 (lo, hi). 16-bits samples
-    [i1++] = r2;    // save new sample
+
+.align 8
+    [i2++] = r2 || r0 = [i1++]; // save new sample. i1,i2 @ AGC gain after.
 
     // load in new convert command
-    r7 = NEXT_CHANNEL_SHIFTED;
+    r7 = NEXT_CHANNEL_SHIFTED; 
     [p0 + (SPORT1_TX - SPORT0_RX)] = r7;   // SPORT1 primary TX
     [p0 + (SPORT1_TX - SPORT0_RX)] = r7;   // SPORT1 sec TX
     [p0 + (SPORT0_TX - SPORT0_RX)] = r7;   // SPORT0 primary TX
     [p0 + (SPORT0_TX - SPORT0_RX)] = r7;   // SPORT0 sec TX
 
+    // AGC-stage, gain is Q7.8
+    r0 = [i1++] || r1 = [i0++];         // r0=AGC gain, r1=AGC target sqrt; i1@final-samp after.
+    a0 = r2.l * r0.l, a1 = r2.h * r0.h; // multiply samples by AGC-gain
+    
+    /* Result in accumulator is Q1.31. Multiplication treated as (Q1.13)*(Q7.8). Q7.8 has
+       8 bits before the decimal point. The result should have 9 bits before the decimal point.
+       Therefore, we need to left shift the accumulator 8 more bits to position the actual decimal
+       point at accumulator's decimal point position.
+
+       This is because when we move the accumulator result to half dreg, we only take the highest
+       16-bits (A0.H, A1.H) in default mode.
+   */
+    a0 = a0 << 8;   
+    a1 = a1 << 8;
+    r2.l = a0, r2.h = a1;       // r2 contains gained-samples.
+    a0 = abs a0, a1 = abs a1;   // Start AGC-update.
+    
+    // subtract AGC-target from abs, saturate diff. Load gain scaler: r4.l=16384, r4.h=1
+    r3.l = (a0 -= r1.l*r1.l), r3.h = (a1 -= r1.h*r1.h) (is) || r4 = [i0++]; 
+
+    a0 = r0.l * r4.l, a1 = r0.h * r4.l;                             // load AGC-gain again and scale.
+    r5.l = (a0 -= r3.l * r4.h), r5.h = (a1 -= r3.h * r4.h); // update AGC gain
+    r5 = abs r5 (v) || [i1++] = r2;                                 // save gained-sample. i1@next ch-samp
+    [i2++] = r5;                                                    // save AGC-gain. i2 @ final-samp after.
+
 
 nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
 nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-
 nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
 nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
 nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
@@ -140,25 +156,36 @@ nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
     // Process the other two channels in this group. Pretty much identical as before.
     r1 = [p0];      // SPORT0-primary: Ch96-127
     r0 = [p0];      // SPORT0-sec:     Ch64-95
-    
-    //r1 = [p0 + (SPORT1_RX - SPORT0_RX)];
-    //r0 = [p0 + (SPORT1_RX - SPORT0_RX)];
-    
-    r1 <<= 15;
+    r3 = [i2++];    // inc i2, i2@cur ch samp
+
+    r1 <<= 15; 
     r0 >>= SHIFT_BITS;
     r1 = r1 & r2;
     r2 = r0 + r1;
-        
-    [i1++] = r2;    // save new sample
+.align 8    
+    [i2++] = r2 || r0 = [i1++]; // save Intan samp. i2@gain, i1@gain.
+
+    // START AGC
+    r0 = [i1++] || r1 = [i0++];         // r0=AGC-gain, r1=AGC target sqrt; i1@final-samp, i0@AGC scaler
+    a0 = r2.l * r0.l, a1 = r2.h * r0.h;
+    a0 = a0 << 8;
+    a1 = a1 << 8;
+    r2.l = a0, r2.h = a1;               // r2 has gained-samples
+    a0 = abs a0, a1 = abs a1;
+
+    r3.l = (a0 -= r1.l*r1.l), r3.h = (a1 -= r1.h*r1.h) (is) || r4 = [i0++]; // r4=AGC scaler. i0@next targsqrt
+    a0 = r0.l * r4.l, a1 = r0.h * r4.l;
+    r5.l = (a0 -= r3.l * r4.h), r5.h = (a1 -= r3.h * r4.h);
+
+    r5 = abs r5 (v) || [i1++] = r2; // save gained-sample. i1@next ch-samp
+    [i2++] = r5;                    // save AGC-gain. i2@final-samp after
+    r0 = [i2++];                    // inc i2. i2@next ch-samp
+
 
 nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
 nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
 nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
 nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-
-nop;nop;nop;nop;nop;nop;
-
 
 //----------------------------------------------------------------------------------------  
     r0 = 0; // not doing templat match, so this is the dummy match
@@ -463,66 +490,33 @@ _radio_bidi_asm:
     i0.l = LO(A1);
     i0.h = HI(A1);
     l0 = A1_STRIDE*32*4;    // A1_STRIDE: number of 32-bit words * 4 bytes/word * 32 four-channel groups
-    m0 = -7*4;              // for moving back to start of LMS weights in each group.
     b0 = i0;
 
     // i1 is for reading the W1 circular buffer -- contains the value of the samples
     i1.l = LO(W1);
     i1.h = HI(W1);
     l1 = W1_STRIDE*2*32*4;  // 2 32-bit words/group, 32 group total. This is number of bytes
-    m1 = -7*W1_STRIDE*2*4;  // For moving back 7 channels -- used for LMS weight update.
     b1 = i1;
 
     // i2 is for writing delays in the W1 circular buffer. i2 usually lags i1 (i.e. update values).
     i2 = i1;
     l2 = l1;
-    m2 = W1_STRIDE*2*4;     // for moving forward one group of channel's delay in LMS.
     b2 = b1;
 
-    /* i3 is for reading/writing template delays (post-filter). In circular buffer T1.
-       contains the delayed past 16 filterd samples, used to convolve with template values.
-    */
-    i3.l = LO(T1);
-    i3.h = HI(T1);
-    l3 = T1_LENGTH;
-    m3 = 4*2;   // 2 32-bit words -- used to jump to the read point for LMS, has nothing to do with templs.
-    b3 = i3;
+    /* Next, we go through circular buffer A1, and set up the coefficients needed for the 
+       signal chain. 
 
-    /* Next, we go through circular buffer A1, and set up pthe coefficients and templates needed for the 
-       signal chain and spike-matching. The number of 32-bit words required for coefficients is, as in
-       memory.h: (A1_AGC + A1_LMS + A1_IIR)*2 = 27*2 = 54.  
-       these include: LPF-integrator, AGC, LMS-weights, IIR-filter coefficients.
-
-       For templates, we require: (A1_template + A1_aperture)*2 = 36. 
-
-       For each group of 4-channels, we need two groups of coefficients (hence the 2x multiplier in
-       calculating space needed for coefficeints above) in memory. Two channels are
-       processed at a time. Each coefficient is 16-bit. So in 27 32-bits words, we can hold the coefs 
-       needed to process two channels. 
-
-       For spike-sorting, each channel can match to two templates. Each template has an associated
-       aperture. When template-matching, we compare the past 16 filtered samples (stored in T1, indexed
-       with i3) with the corresponding template time-step values (effectively convolution between 16 sample
-       values with 16 template values, in time). The accumulated differences are then compared to
-       the corresponding aperture value, a match results if the difference is less than aperture.          
+       Each group of 4 channels require 4 32-bit words for AGC.
+       (see memory_AGC.h and radio_AGC_memoryMap.ods).
        
        The memory structure of A1 is then made up of 32 A1_strides(also see memory_map spreadsheet), 
        each A1 stride contains the following:
 
-       Aperture B  (2 32-bit words)         <--- high address
-       Templates B (16 32-bit words)
-       Aperture A  (2 32-bit words)
-       Templates A (16 32-bit words)
-       IIR coefs   (16 32-bit words) --- 
-       LMS coefs   (7 32-bit words)    | coefs set one
-       AGC coefs   (2 32-bit words)    |
-       Integ coefs (2 32-bit words)  ---
-       IIR coefs   (16 32-bit words) ---
-       LMS coefs   (7 32-bit words)    | coefs set two
-       AGC coefs   (2 32-bit words)    |
-       Integ coefs (2 32-bit words)  ---    <--- low address
+       AGC ceofs
 
        There are a total of 32 groups of 4-channels. Each each loop of lt_top, we populate 1 A1-stride.
+       Each lt2_top loop populates the 2 of the 4-channels in a particular group.
+
        Our counter will be at 63, this makes our pointers start at the first block, corresponding to
        starting sample acquisition at ch[31,63,95,127]
    */
@@ -532,152 +526,15 @@ lt_top:
     p5 = 2;
     lsetup(lt2_top, lt2_bot) lc1 = p5;  // each lt2_top is one set of coefs
 lt2_top:
-    /* Gain and integrator coefs for first stage:
-       All coefficients here are in Q15 format. 16-bits, hence w[i0++] increment (16-bit word increment)
-    */
-    r0.l = 32000;   w[i0++] = r0.l; // 32000 = (Q15) 0.9765 -- pre-gain
-    r0.l = -16384;  w[i0++] = r0.l; // -16384 = (Q15) 0.5
-    r0.l = 16384;   w[i0++] = r0.l; // 16384 = (Q15) 0.5
-    r0.l = 800;   w[i0++] = r0.l;   // mu = 0.0244
-    
     /* AGC: 
         Target is 6000*16384, which in Q15 is ~0.09155. We store just the target's square
-        root (in Q15). This is so we can later accomodate big target values.
+        root (in Q15). This is so we can later accomodate big target values (32 bits).
     */
     r0.l = 9915;    w[i0++] = r0.l;     // AGC target sqrt = sqrt(6000*16384), Q15.
     r0.l = 9915;    w[i0++] = r0.l;     // AGC target sqrt = sqrt(6000*16384), Q15.
-    r0.l = 16384;   w[i0++] = r0.l;     // Q15, =0.5
+    r0.l = 32768;   w[i0++] = r0.l;     // Q15, =0.5
     r0.l = 1;       w[i0++] = r0.l;     // Set this to zero to disable AGC. Q7.8
-
-    // LMS coefs - 7 total.
-    r0 = 0 (x);
-    [i0++] = r0;
-    [i0++] = r0;
-    [i0++] = r0;
-    [i0++] = r0;
-    [i0++] = r0;
-    [i0++] = r0;
-    [i0++] = r0;
-
-    /* Butterworth (minimum ripple) filters - implemented as 4 back-to-back Direct Form I IIR filters.
-       Coefficients below results in bandpass in [479.7Hz, 6432Hz] 3dB point -- see Tim's thesis for pic.
-        - b0 = coefficient for x[n] and x[n-2]
-        - b1 = coefficient for x[n-1]
-        - a0 = coefficient for y[n-1]
-        - a1 = coefficient for y[n-2]
-
-        lowpass: b0, b1, a0, a1
-                 7892, 15785, 5293, -7479
-                 7892, 15782, 3824, -854
-
-        highpass: b0, b1, a0, a1
-                  15342, -30687, 31397, -15172
-                  15342, -30681, 29836, -13603
-
-        Coefficients in Q15 value. To calculate transfer function, divide each by 2^15.
-    */
-    //lowpass biquad - stage 1
-	r0 = 7892 (x);	w[i0++] = r0.l; w[i0++] = r0.l;
-	r0 = 15785 (x); w[i0++] = r0.l; w[i0++] = r0.l;
-	r0 = 5293 (x);	w[i0++] = r0.l; w[i0++] = r0.l;
-	r0 = -7479 (x); w[i0++] = r0.l; w[i0++] = r0.l;
-
-	//highpass biquad - stage 2
-	r0 = 15342 (x);	w[i0++] = r0.l; w[i0++] = r0.l;
-	r0 = -30687 (x);w[i0++] = r0.l; w[i0++] = r0.l;
-	r0 = 31397 (x);	w[i0++] = r0.l; w[i0++] = r0.l;
-	r0 = -15172 (x);w[i0++] = r0.l; w[i0++] = r0.l;
-
-	//lowpass biquad - stage 3
-	r0 = 7892 (x);	w[i0++] = r0.l; w[i0++] = r0.l;
-	r0 = 15782 (x);	w[i0++] = r0.l; w[i0++] = r0.l;
-	r0 = 3824 (x);	w[i0++] = r0.l; w[i0++] = r0.l;
-	r0 = -854 (x);	w[i0++] = r0.l; w[i0++] = r0.l;
-
-	//highpass biquad - stage 4
-	r0 = 15342 (x);	w[i0++] = r0.l; w[i0++] = r0.l;
-	r0 = -30681 (x);w[i0++] = r0.l; w[i0++] = r0.l;
-	r0 = 29836 (x);	w[i0++] = r0.l; w[i0++] = r0.l;
-	r0 = -13603 (x);w[i0++] = r0.l; w[i0++] = r0.l;
 lt2_bot: nop;
-
-    /* Populate templates with default values.
-       Each 32-bit word contains template values for 4-channels - 1-byte/channel/time-step.
-    */
-    
-    // Template A first -- not in order. From low addr to high: template(t), (t-15), (t-14)...(t-1)
-    r0 = 127; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8; //this is the 'new' sample, time t
-	            r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0;  //t 
-	r0 = 113; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8; 
-				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0;  //t-15
-	r0 = 102; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
-				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0;  //t-14
-	r0 = 111; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
-				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0;  //t-13
-	r0 = 132; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
-				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0;  //t-12
-	r0 = 155; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
-				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0;  //t-11
-	r0 = 195; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
-				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0;  //t-10
-	r0 = 235; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
-				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0;  //t-9
-	r0 = 250; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
-				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0;  //t-8
-	r0 = 224; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
-				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0;  //t-7
-	r0 = 187; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
-				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0;  //t-6
-	r0 = 160; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
-				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0;  //t-5
-	r0 = 142; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
-				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0;  //t-4
-	r0 = 126; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
-				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0;  //t-3
-	r0 = 120; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
-				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0;  //t-2
-	r0 = 110; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
-				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0;  //t-1
-
-    // Aperture for template A
-    r0.l = 56; r0.h = 56; [i0++] = r0; [i0++] = r0;
-
-    // Template B. In order this time. From low addr to high: template(t), (t-1), ... (t-15).
-    r0 = 127; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8; 
-				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0;  //t
-	r0 = 113; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
-				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0;  //t-1
-	r0 = 102; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
-				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0;  //t-2
-	r0 = 111; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
-				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0;  //t-3 
-	r0 = 132; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
-				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0;  //t-4 
-	r0 = 155; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
-				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0;  //t-5 
-	r0 = 195; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
-				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0;  //t-6 
-	r0 = 235; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
-				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0;  //t-7 
-	r0 = 250; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
-				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0;  //t-8 
-	r0 = 224; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
-				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0;  //t-9 
-	r0 = 187; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
-				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0;  //t-10 
-	r0 = 160; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
-				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0;  //t-11 
-	r0 = 142; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
-				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0;  //t-12 
-	r0 = 127; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
-				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0;  //t-13 
-	r0 = 110; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
-				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0;  //t-14 
-	r0 = 95; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
-				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0;  //t-15 
-
-	//aperture: default small.
-	r0.l = 56; r0.h = 56; [i0++] = r0; [i0++] = r0;
 
 lt_bot: nop;
 
@@ -688,11 +545,13 @@ lt_bot: nop;
        W1_STRIDE, to compensate for Intan's pipeline delay.
     */
     p5 = (32+31)*W1_STRIDE*2;
+
+    // r0 holds initial values for original and final samples
     r0.l = 0x0000;  // ch0-31, ch64-95
     r0.h = 0x0000;  // ch32-63, ch96-127
     lsetup(zer_top, zer_bot) lc0 = p5;
 zer_top:
-    [i1++] = r0;    // zero delays.
+    [i1++] = r0;    // initial sample values
     r1 = [i2++];    // no effect other than keeping pointers in sync. i1 read, i2 writes/follows.
 zer_bot: nop;
 
@@ -1395,17 +1254,3 @@ no_rxpacket:
 	call _get_asm;
 
 	jump radio_loop;
-
-
-
-
-/*
-radio_loop: // main thread, interleaved with _get_asm to process samples
-wait_buffer:
-    call _get_asm;
-    r7 = p4;
-    cc = bittst(r7, 10);
-    if !cc jump wait_buffer;
-we_done:
-    jump we_done;
-*/

@@ -65,7 +65,7 @@ public:
 			m_template[1][j] = ((float)tmplB[j] / 255.f)-0.5f; 
 		}
 		//default values
-		m_gain = 2.f;
+		m_gain = 1.f;
 		m_threshold = 1.f;
 		m_agc = 6000.f;
 		m_centering = 25.f;

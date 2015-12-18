@@ -42,10 +42,10 @@
 
 //#include "../firmware_stage9_tmpl/memory.h"
 #ifdef RADIO_BASIC
-    #include "../headstage2_firmware/memory_radio_basic.h"
-#elif HEADSTAGE2
     #include "../headstage2_firmware/memory.h"
-#else
+#elif RADIO_AGC
+    #include "../headstage2_firmware/memory_AGC.h"
+#elif HEADSTAGE_TIM
     #include "../headstage_firmware/memory.h"
 #endif
 
@@ -102,8 +102,10 @@ int    g_channel[4] = {0, 32*NSCALE, 64*NSCALE, 96*NSCALE};
 
 #ifdef RADIO_BASIC
 int g_signalChain = 0;
+#elif RADIO_AGC
+int g_signalChain = 2;
 #else
-int    g_signalChain = 10; //what to sample in the headstage signal chain.
+int g_signalChain = 10; //what to sample in the headstage signal chain.
 #endif
 
 bool g_out = false;
@@ -1462,9 +1464,10 @@ void updateChannelUI(int k){
 	g_uiRecursion++;
 	int ch = g_channel[k];
 #ifdef RADIO_BASIC
+#elif RADIO_AGC
+	gtk_adjustment_set_value(g_agcSpin[k], g_c[ch]->getAGC());
 #else
 	gtk_adjustment_set_value(g_gainSpin[k], g_c[ch]->getGain());
-	gtk_adjustment_set_value(g_agcSpin[k], g_c[ch]->getAGC());
 	gtk_adjustment_set_value(g_apertureSpin[k*2+0], g_c[ch]->getAperture(0));
 	gtk_adjustment_set_value(g_apertureSpin[k*2+1], g_c[ch]->getAperture(1));
 	gtk_adjustment_set_value(g_thresholdSpin[k], g_c[ch]->getThreshold());
@@ -1500,6 +1503,7 @@ static void channelSpinCB( GtkWidget*, gpointer p){
 			g_headstage->setChans(g_signalChain);
 	}
 }
+
 static void gainSpinCB( GtkWidget*, gpointer p){
 	int h = (int)((long long)p & 0xf);
 	if(h >= 0 && h < 4 && !g_uiRecursion){
@@ -1510,19 +1514,23 @@ static void gainSpinCB( GtkWidget*, gpointer p){
 		g_c[g_channel[h]]->resetPca();
 	}
 }
+
 static void gainSetAll(gpointer ){
 	float gain = gtk_adjustment_get_value(g_gainSpin[0]);
 	for(int i=0; i<128*NSCALE; i++){
 		g_c[i]->setGain(gain);
 		g_headstage->updateGain(i);
 	}
+    for(int i=0; i<4; i++) {
+		gtk_adjustment_set_value(g_gainSpin[i], gain);
+    }
+    for(int i=0; i<128*NSCALE; i++) {
+        g_c[i]->resetPca();
+    }
+
 	for(int i=0; i<32; i++){
 		g_headstage->resetBiquads(i);
 	}
-	for(int i=0; i<4; i++)
-		gtk_adjustment_set_value(g_gainSpin[i], gain);
-	for(int i=0; i<128*NSCALE; i++)
-		g_c[i]->resetPca();
 }
 static void thresholdSpinCB( GtkWidget* , gpointer p){
 	int h = (int)((long long)p & 0xf);
@@ -2041,16 +2049,18 @@ int main(int argn, char **argc)
 									  channelSpinCB, i);
 		//right of that, a gain spinner. (need to update depending on ch)
 #ifdef RADIO_BASIC
-#else
-		g_gainSpin[i] = mk_spinner("gain", bx3,
-								 	g_c[g_channel[i]]->getGain(),
-									-30.0, 30.0, 0.1,
-								  	gainSpinCB, i);
-		//below that, the AGC target.
+#elif RADIO_AGC
+        // The AGC target.
 		g_agcSpin[i] = mk_spinner("AGC target", bx2,
 								  	g_c[g_channel[i]]->getAGC(),
 									0, 32000, 1000,
 								  	agcSpinCB, i);
+
+#else
+		g_gainSpin[i] = mk_spinner("gain", bx3,
+                                g_c[g_channel[i]]->getGain(),
+                                -30.0, 30.0, 0.1,
+                                gainSpinCB, i);
 #endif
 
 		gtk_box_pack_start (GTK_BOX (frame), bx2, FALSE, FALSE, 1);
@@ -2072,6 +2082,12 @@ int main(int argn, char **argc)
 #ifdef RADIO_BASIC
     const char* signalNames[W1_STRIDE] = {
         "0 Samples from Intan"
+    };
+#elif RADIO_AGC
+    const char* signalNames[W1_STRIDE] = {
+        "0 Samples from Intan",
+        "1 AGC gain",
+        "2 AGC out"
     };
 #else
 	const char* signalNames[W1_STRIDE] = {
@@ -2104,15 +2120,16 @@ int main(int argn, char **argc)
 	
 	//add a gain set-all button.
 #ifdef RADIO_BASIC
-#else
-	button = gtk_button_new_with_label ("Set all gains from A");
-	g_signal_connect(button, "clicked", G_CALLBACK (gainSetAll),0);
-	gtk_box_pack_start (GTK_BOX (box1), button, TRUE, TRUE, 0);
-	//and a AGC set-all button.
+#elif RADIO_AGC
+    //and a AGC set-all button.
 	button = gtk_button_new_with_label ("Set all AGC targets from A");
 	g_signal_connect(button, "clicked", G_CALLBACK (agcSetAll),0);
 	gtk_box_pack_start (GTK_BOX (box1), button, TRUE, TRUE, 0);
-
+#else
+    button = gtk_button_new_with_label ("Set all gains from A");
+	g_signal_connect(button, "clicked", G_CALLBACK (gainSetAll),0);
+	gtk_box_pack_start (GTK_BOX (box1), button, TRUE, TRUE, 0);
+    
 	//add LMS on/off.. (global .. for now)
 	mk_radio("on,off", 2,
 			 box1, false, "LMS", lmsRadioCB);
@@ -2369,6 +2386,8 @@ int main(int argn, char **argc)
 	//set the initial sampling stage.
 #ifdef RADIO_BASIC
     gtk_combo_box_set_active(GTK_COMBO_BOX(combo), 0);
+#elif RADIO_AGC
+    gtk_combo_box_set_active(GTK_COMBO_BOX(combo), 2);
 #else
 	gtk_combo_box_set_active(GTK_COMBO_BOX(combo), 12);
 #endif

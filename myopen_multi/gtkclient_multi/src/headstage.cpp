@@ -38,13 +38,12 @@
 
 #ifdef RADIO_BASIC
     #include "../headstage2_firmware/memory_radio_basic.h"
-#elif HEADSTAGE2
-    #include "../headstage2_firmware/memory.h"
-#else
+#elif RADIO_AGC
+    #include "../headstage2_firmware/memory_AGC.h"
+#elif HEADSTAGE_TIM
     #include "../headstage_firmware/memory.h"
 #endif
 
-#include "../headstage_firmware/memory.h"
 
 Headstage::Headstage(){
   
@@ -219,6 +218,7 @@ void Headstage::updateGain(int chan){
 	saveMessage(tid, "gain %d %3.2f %d %3.2f thread %d", chan, again1, chan+32, again2, tid);
 	m_echo[tid]++;
 }
+
 void Headstage::setOsc(int chan){
 	//turn two channels e.g. 0 and 32 into oscillators.
 	float b[4];
@@ -256,6 +256,7 @@ void Headstage::setOsc(int chan){
 	m_echo[tid]++;
 }
 void Headstage::setChans(int signalChain){
+    // Tell headstage to transmit the specified stage of the signalChain.
 	int i;
 
 	for(i=0; i<4;i++){
@@ -278,9 +279,10 @@ void Headstage::setChans(int signalChain){
 		int o3 = ((c & 32)>>5) * 2; // primary/secondary RX chan.
 		
         /* 4th offset is to get to the correct written delay.
-		0	mean from integrator
-		1	gain
-		2	saturated sample
+            Tim's signal chain   | Allen's signal chain
+		0	mean from integrator |  original sample
+		1	gain                 |  AGC-gain
+		2	saturated sample     |  AGC-out
 		3	AGC out / LMS save
 		4	x1(n-1) / LMS out
 		5	x1(n-2)
@@ -327,17 +329,21 @@ void Headstage::setAGC(int ch1, int ch2, int ch3, int ch4){
 		unsigned int* ptr = m_sendbuf[tid];
 		ptr += (m_sendW[tid] % m_sendL[tid]) * 8; //8 because we send 8 32-bit ints /pkt.
 		
-		//m_c[chan]->getAGC() = target; set ACG elsewhere.
-		//chan = chan & (0xff ^ 32); //map to the lower channels (0-31,64-95)
 		chan = chan & ( (128*(tid+1)-1) ^ 32); //the above mapping was not working for anything > 256
 		unsigned int p = 0;
 		
 		int kchan = chan &127; //(to send, needs to keep correct channel name)
 		
 		if(kchan >= 64) p += 1; //chs 64-127 pocessed following 0-63.
+#ifdef RADIO_AGC
+        ptr[i*2+0] = htonl(echoHeadstage(m_echo[tid], A1 +
+			 (A1_STRIDE*(kchan & 31) +
+			 p*(A1_IIRSTARTA+A1_IIR))*4 )); // no offset to AGC target
+#else
 		ptr[i*2+0] = htonl(echoHeadstage(m_echo[tid], A1 +
 			(A1_STRIDE*(kchan & 31) +
 			p*(A1_IIRSTARTA+A1_IIR) + 2)*4)); // 2 is the offset to the AGC target.
+#endif
 		
 		int j = (int)(sqrt(32768 * m_c[chan]->getAGC()));
 		int k = (int)(sqrt(32768 * m_c[chan+32]->getAGC()));

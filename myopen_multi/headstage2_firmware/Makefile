@@ -5,7 +5,10 @@
 #FIRMWARE_VERSION = firmware2
 #FIRMWARE_VERSION = intan_test_setup
 #FIRMWARE_VERSION = intan_test_setup2
-FIRMWARE_VERSION = radio_basic
+#FIRMWARE_VERSION = radio_basic
+FIRMWARE_VERSION = radio_AGC
+
+$(info FIRMWARE_VERSION is $(FIRMWARE_VERSION))
 
 ASMSRCS = crt0.o 
 COMMON = print.o util.o spi.o
@@ -16,27 +19,42 @@ OPT = -O2
 CPUDEFINES = -D__ADSPBF532__ -D__BLACKFIN__
 INCLUDES = -I. -I/opt/uClinux/bfin-elf/bfin-elf/include/ -I../common_bfin/
 ASMFLAGS = -x assembler-with-cpp $(INCLUDES) $(CPUDEFINES) -Wall
-CFLAGS = $(INCLUDES) $(CPUDEFINES) -mcpu=bf532 $(OPT) -include memory.h -Wall
 # note: -O means debug symbols are not loaded.
 
 ifeq ($(FIRMWARE_VERSION), firmware2)
 	ASMSRCS += firmware2.o
 	ASMFLAGS += -mcpu=bf532 -include memory.h -include defBF532.h -D__ASM__ -g
+	CFLAGS = $(INCLUDES) $(CPUDEFINES) -mcpu=bf532 $(OPT) -include memory.h -Wall
+
 else ifeq ($(FIRMWARE_VERSION), firmware1)
 	ASMSRCS += firmware1.o
 	ASMFLAGS += -mcpu=bf532 -include memory.h -include defBF532.h -D__ASM__ -g
+	CFLAGS = $(INCLUDES) $(CPUDEFINES) -mcpu=bf532 $(OPT) -include memory.h -Wall
+
 else ifeq ($(FIRMWARE_VERSION), intan_test_setup)
 	ASMSRCS += intan_test_setup.o
 	ASMFLAGS += -mcpu=bf532 -include memory.h -include defBF532.h -D__ASM__ -g
+	CFLAGS = $(INCLUDES) $(CPUDEFINES) -mcpu=bf532 $(OPT) -include memory.h -Wall
+
 else ifeq ($(FIRMWARE_VERSION), intan_test_setup2)
 	ASMSRCS += intan_test_setup2.o
 	ASMFLAGS += -mcpu=bf532 -include memory.h -include defBF532.h -D__ASM__ -g
+	CFLAGS = $(INCLUDES) $(CPUDEFINES) -mcpu=bf532 $(OPT) -include memory.h -Wall
+
 else ifeq ($(FIRMWARE_VERSION), radio_basic)
 	ASMSRCS += radio_basic.o
 	ASMFLAGS += -mcpu=bf532 -include memory_radio_basic.h -include defBF532.h -D__ASM__ -g
+	CFLAGS = $(INCLUDES) $(CPUDEFINES) -mcpu=bf532 $(OPT) -include memory_radio_basic.h -Wall
+
+else ifeq ($(FIRMWARE_VERSION), radio_AGC)
+	ASMSRCS += radio_AGC.o
+	ASMFLAGS += -mcpu=bf532 -include memory_AGC.h -include defBF532.h -D__ASM__ -g
+	CFLAGS = $(INCLUDES) $(CPUDEFINES) -mcpu=bf532 $(OPT) -include memory_AGC.h -Wall
+
 else
 	ASMSRCS += firmware1.o
 	ASMFLAGS += -mcpu=bf532 -include memory.h -include defBF532.h -D__ASM__ -g
+	CFLAGS = $(INCLUDES) $(CPUDEFINES) -mcpu=bf532 $(OPT) -include memory.h -Wall
 endif
 	
 ASMSRCS += enc.o divsi3.o
