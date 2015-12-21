@@ -1,0 +1,140 @@
+In [27]: run_AGC(0x7ff8, 0x6, 9915)
+(is) new_val is: 0x239367
+(is) lower_16bits is: 0x9367
+(s2rnd) new_val is: 0x20002
+(s2rnd) upper_16bits is: 0x4
+Out[27]: 
+{'1. output_Q31': '0x5ffa0',
+ '2. output_Q31_shifted': '0x5ffa000',
+ '3. output_Q15': '0x600',
+ '4. output_Q31_shifted_abs': '0x5ffa000',
+ '5. diff_Q15': '0x7fff',
+ '6. scaled_gain': '0x30000',
+ '7. new_gain_Q15': '0x4'}
+
+In [28]: run_AGC(0x7411, 0x7, 9915)
+(is) new_val is: 0x7ce167
+(is) lower_16bits is: 0xe167
+(s2rnd) new_val is: 0x28002
+(s2rnd) upper_16bits is: 0x5
+Out[28]: 
+{'1. output_Q31': '0x658ee',
+ '2. output_Q31_shifted': '0x658ee00',
+ '3. output_Q15': '0x659',
+ '4. output_Q31_shifted_abs': '0x658ee00',
+ '5. diff_Q15': '0x7fff',
+ '6. scaled_gain': '0x38000',
+ '7. new_gain_Q15': '0x5'}
+
+In [29]: run_AGC(0x7f49, 0x4, 9915)
+(is) new_val is: 0xfffe1e3b67
+(is) lower_16bits is: 0x3b67
+(s2rnd) new_val is: 0x30000
+(s2rnd) upper_16bits is: 0x6
+Out[29]: 
+{'1. output_Q31': '0x3fa48',
+ '2. output_Q31_shifted': '0x3fa4800',
+ '3. output_Q15': '0x3fa',
+ '4. output_Q31_shifted_abs': '0x3fa4800',
+ '5. diff_Q15': '0x8000',
+ '6. scaled_gain': '0x20000',
+ '7. new_gain_Q15': '0x6'}
+
+In [30]: run_AGC(0x8ec6, 0x5, 9915)
+(is) new_val is: 0xfffe903767
+(is) lower_16bits is: 0x3767
+(s2rnd) new_val is: 0x38000
+(s2rnd) upper_16bits is: 0x7
+Out[30]: 
+{'1. output_Q31': '0xfffb93bc',
+ '2. output_Q31_shifted': '0xfb93bc00',
+ '3. output_Q15': '0xfb94',
+ '4. output_Q31_shifted_abs': '0x46c4400',
+ '5. diff_Q15': '0x8000',
+ '6. scaled_gain': '0x28000',
+ '7. new_gain_Q15': '0x7'}
+
+In [31]: run_AGC(0x1898, 0x4, 9915)
+(is) new_val is: 0xfffae8b367
+(is) lower_16bits is: 0xb367
+(s2rnd) new_val is: 0x30000
+(s2rnd) upper_16bits is: 0x6
+Out[31]: 
+{'1. output_Q31': '0xc4c0',
+ '2. output_Q31_shifted': '0xc4c000',
+ '3. output_Q15': '0xc5',
+ '4. output_Q31_shifted_abs': '0xc4c000',
+ '5. diff_Q15': '0x8000',
+ '6. scaled_gain': '0x20000',
+ '7. new_gain_Q15': '0x6'}
+
+In [32]: run_AGC(0x846b, 0x5, 9915)
+(is) new_val is: 0xfffef7c567
+(is) lower_16bits is: 0xc567
+(s2rnd) new_val is: 0x38000
+(s2rnd) upper_16bits is: 0x7
+Out[32]: 
+{'1. output_Q31': '0xfffb2c2e',
+ '2. output_Q31_shifted': '0xfb2c2e00',
+ '3. output_Q15': '0xfb2c',
+ '4. output_Q31_shifted_abs': '0x4d3d200',
+ '5. diff_Q15': '0x8000',
+ '6. scaled_gain': '0x28000',
+ '7. new_gain_Q15': '0x7'}
+
+In [33]: run_AGC(0x8014, 0x4, 9915)
+(is) new_val is: 0xfffe235367
+(is) lower_16bits is: 0x5367
+(s2rnd) new_val is: 0x30000
+(s2rnd) upper_16bits is: 0x6
+Out[33]: 
+{'1. output_Q31': '0xfffc00a0',
+ '2. output_Q31_shifted': '0xfc00a000',
+ '3. output_Q15': '0xfc01',
+ '4. output_Q31_shifted_abs': '0x3ff6000',
+ '5. diff_Q15': '0x8000',
+ '6. scaled_gain': '0x20000',
+ '7. new_gain_Q15': '0x6'}
+
+In [34]: run_AGC(0x943c, 0x7, 9915)
+(is) new_val is: 0x8ab67
+(is) lower_16bits is: 0xab67
+(s2rnd) new_val is: 0x28002
+(s2rnd) upper_16bits is: 0x5
+Out[34]: 
+{'1. output_Q31': '0xfffa1b48',
+ '2. output_Q31_shifted': '0xfa1b4800',
+ '3. output_Q15': '0xfa1b',
+ '4. output_Q31_shifted_abs': '0x5e4b800',
+ '5. diff_Q15': '0x7fff',
+ '6. scaled_gain': '0x38000',
+ '7. new_gain_Q15': '0x5'}
+
+In [35]: run_AGC(0x8006, 0x4, 9915)
+(is) new_val is: 0xfffe23c367
+(is) lower_16bits is: 0xc367
+(s2rnd) new_val is: 0x30000
+(s2rnd) upper_16bits is: 0x6
+Out[35]: 
+{'1. output_Q31': '0xfffc0030',
+ '2. output_Q31_shifted': '0xfc003000',
+ '3. output_Q15': '0xfc00',
+ '4. output_Q31_shifted_abs': '0x3ffd000',
+ '5. diff_Q15': '0x8000',
+ '6. scaled_gain': '0x20000',
+ '7. new_gain_Q15': '0x6'}
+
+In [36]: run_AGC(0x8741, 0x5, 9915)
+(is) new_val is: 0xfffedb6967
+(is) lower_16bits is: 0x6967
+(s2rnd) new_val is: 0x38000
+(s2rnd) upper_16bits is: 0x7
+Out[36]: 
+{'1. output_Q31': '0xfffb488a',
+ '2. output_Q31_shifted': '0xfb488a00',
+ '3. output_Q15': '0xfb49',
+ '4. output_Q31_shifted_abs': '0x4b77600',
+ '5. diff_Q15': '0x8000',
+ '6. scaled_gain': '0x28000',
+ '7. new_gain_Q15': '0x7'}
+

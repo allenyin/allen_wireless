@@ -1,7 +1,11 @@
 
 '''
+Update 12/21/2015:
+    See AGC_sim_examples.txt for tests used.
+    All values in that document have been checked against actual register values.
+----------------------------------------------------
 Code to emulate what's going on inside the blackfin.
-
+----------------------------------------------------
 // AGC-stage, gain is Q7.8
     r0 = [i1++] || r1 = [i0++];         // r0=AGC gain, r1=AGC target sqrt; i1@final-samp after.
     a0 = r2.l * r0.l, a1 = r2.h * r0.h; // multiply samples by AGC-gain
