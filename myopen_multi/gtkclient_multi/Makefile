@@ -8,7 +8,7 @@ MUDFLAP = false
 STACKPROTECTOR = false
 HEADSTAGE_TIM = false
 RADIO_BASIC = false
-RADIO_AGC = true
+RADIO_AGC = true 
 
 CC  = gcc
 CPP = g++

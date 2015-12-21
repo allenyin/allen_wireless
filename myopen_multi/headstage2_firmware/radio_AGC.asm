@@ -127,23 +127,21 @@ wait_samples_main:
        point at accumulator's decimal point position.
 
        This is because when we move the accumulator result to half dreg, we only take the highest
-       16-bits (A0.H, A1.H) in default mode.
+       16-bits (A0.H, A1.H) in default mode (treat as signed fraction).
    */
     a0 = a0 << 8;   
     a1 = a1 << 8;
     r2.l = a0, r2.h = a1;       // r2 contains gained-samples.
     a0 = abs a0, a1 = abs a1;   // Start AGC-update.
     
-    // subtract AGC-target from abs, saturate diff. Load gain scaler: r4.l=16384, r4.h=1
+    // subtract AGC-target (signed ints) from abs, saturate diff. Load gain scaler: r4.l=16384, r4.h=1
     r3.l = (a0 -= r1.l*r1.l), r3.h = (a1 -= r1.h*r1.h) (is) || r4 = [i0++]; 
-
     a0 = r0.l * r4.l, a1 = r0.h * r4.l;                             // load AGC-gain again and scale.
-    r5.l = (a0 -= r3.l * r4.h), r5.h = (a1 -= r3.h * r4.h); // update AGC gain
+    r5.l = (a0 -= r3.l * r4.h), r5.h = (a1 -= r3.h * r4.h) (s2rnd); // update AGC gain
     r5 = abs r5 (v) || [i1++] = r2;                                 // save gained-sample. i1@next ch-samp
     [i2++] = r5;                                                    // save AGC-gain. i2 @ final-samp after.
 
 
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
 nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
 nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
 nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
@@ -175,14 +173,13 @@ nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
 
     r3.l = (a0 -= r1.l*r1.l), r3.h = (a1 -= r1.h*r1.h) (is) || r4 = [i0++]; // r4=AGC scaler. i0@next targsqrt
     a0 = r0.l * r4.l, a1 = r0.h * r4.l;
-    r5.l = (a0 -= r3.l * r4.h), r5.h = (a1 -= r3.h * r4.h);
+    r5.l = (a0 -= r3.l * r4.h), r5.h = (a1 -= r3.h * r4.h) (s2rnd);
 
     r5 = abs r5 (v) || [i1++] = r2; // save gained-sample. i1@next ch-samp
     [i2++] = r5;                    // save AGC-gain. i2@final-samp after
     r0 = [i2++];                    // inc i2. i2@next ch-samp
 
 
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
 nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
 nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
 nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
@@ -532,7 +529,7 @@ lt2_top:
     */
     r0.l = 9915;    w[i0++] = r0.l;     // AGC target sqrt = sqrt(6000*16384), Q15.
     r0.l = 9915;    w[i0++] = r0.l;     // AGC target sqrt = sqrt(6000*16384), Q15.
-    r0.l = 32768;   w[i0++] = r0.l;     // Q15, =0.5
+    r0.l = 16384;   w[i0++] = r0.l;     // Q15, =0.5
     r0.l = 1;       w[i0++] = r0.l;     // Set this to zero to disable AGC. Q7.8
 lt2_bot: nop;
 

@@ -71,6 +71,7 @@ wait_samples:
 	r0.l = (a0 += r1.l * r5.h), r0.h = (a1 += r1.h * r5.h) (s2rnd);
 	a0 = r1.l * r6.l , a1 = r1.h * r6.l; //integrator
 	r2.l = (a0 += r0.l * r6.h), r2.h = (a1 += r0.h * r6.h) (s2rnd)
+
 	/*AGC*/	|| r5 = [i1++] || r7 = [i0++]; //r5 = gain, r7 AGC targets (sqrt)
 	a0 = r0.l * r5.l, a1 = r0.h * r5.h || [i2++] = r2; //save mean, above
  	a0 = a0 << 8 ; // 14 bits in SRC (note *4 above), amp to 16 bits, which leaves 2 more bits for amplification (*4)
@@ -83,6 +84,8 @@ wait_samples:
 	r3.l = (a0 -= r4.l * r6.h), r3.h = (a1 -= r4.h * r6.h) (s2rnd) || nop; //r6.h = 1 (mu); within a certain range gain will not change.
 .align 8
 	r3 = abs r3 (v) || r7 = [FP - FP_WEIGHTDECAY]; //set weightdecay to zero to disable LMS.
+
+
 	r4.l = (a0 = r0.l * r7.l), r4.h = (a1 = r0.h * r7.l) (is) || i1 += m1 || [i2++] = r3;
 				//saturate the sample (r4), save the gain (r3).
 // LMS! woo

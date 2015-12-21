@@ -347,6 +347,7 @@ void Headstage::setAGC(int ch1, int ch2, int ch3, int ch4){
 		
 		int j = (int)(sqrt(32768 * m_c[chan]->getAGC()));
 		int k = (int)(sqrt(32768 * m_c[chan+32]->getAGC()));
+        //printf("j=%u, k=%u\n", (unsigned int)j, (unsigned int)k);
 		unsigned int u = (unsigned int)((j&0xffff) | ((k&0xffff)<<16));
 		ptr[i*2+1] = htonl(u);
 	}

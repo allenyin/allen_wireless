@@ -1118,17 +1118,31 @@ packet format in the file, as saved here:
 					for(int j=0; j<6; j++){
 						int ch = g_channel[k];
 						if(ch > (tid+1)*128 || ch < (tid*128)){ continue;}//channel not in bridge, don't update
-						
+#ifndef HEADSTAGE_TIM
 						unsigned char samp = p->data[j*4+k]; //-128 -> 127.
-                        //printf("k=%d, samp = 0x%x:\n ", k, samp & 0xff);
-						z = 0.f;
+                        if(k==0) {
+                            printf("k=%d, samp = 0x%x:\n ", k, samp & 0xff);
+                        }
+
+#else
+                        char samp = p->data[j*4+k];
+                        if(k==0) {
+                            printf("k=%d, samp = 0x%x:\n ", k, samp & 0xff);
+                        }
+
+#endif
+                        z = 0.f;
 						//>128 -> 0-127
 						if(g_templMatch[tid][ch&127][0]) z = 1.f;
 						if(g_templMatch[tid][ch&127][1]) z = 2.f;
-						//g_fbuf[k][(g_fbufW[k] % g_nsamp)*3 + 1] =
-						//	(((samp+128.f)/255.f)-0.5f)*2.f; //range +-1.
+
+#ifndef HEADSTAGE_TIM
                         g_fbuf[k][(g_fbufW[k] % g_nsamp)*3 + 1] =
                             (samp*2.f/255.f-1.f);
+#else
+						g_fbuf[k][(g_fbufW[k] % g_nsamp)*3 + 1] =
+							(((samp+128.f)/255.f)-0.5f)*2.f; //range +-1.
+#endif
 						g_fbuf[k][(g_fbufW[k] % g_nsamp)*3 + 2] = z;
 						
 						g_fbufW[k]++;
@@ -1467,6 +1481,7 @@ void updateChannelUI(int k){
 #elif RADIO_AGC
 	gtk_adjustment_set_value(g_agcSpin[k], g_c[ch]->getAGC());
 #else
+	gtk_adjustment_set_value(g_agcSpin[k], g_c[ch]->getAGC());
 	gtk_adjustment_set_value(g_gainSpin[k], g_c[ch]->getGain());
 	gtk_adjustment_set_value(g_apertureSpin[k*2+0], g_c[ch]->getAperture(0));
 	gtk_adjustment_set_value(g_apertureSpin[k*2+1], g_c[ch]->getAperture(1));
@@ -2061,6 +2076,12 @@ int main(int argn, char **argc)
                                 g_c[g_channel[i]]->getGain(),
                                 -30.0, 30.0, 0.1,
                                 gainSpinCB, i);
+        // The AGC target.
+		g_agcSpin[i] = mk_spinner("AGC target", bx2,
+								  	g_c[g_channel[i]]->getAGC(),
+									0, 32000, 1000,
+								  	agcSpinCB, i);
+
 #endif
 
 		gtk_box_pack_start (GTK_BOX (frame), bx2, FALSE, FALSE, 1);
@@ -2129,6 +2150,12 @@ int main(int argn, char **argc)
     button = gtk_button_new_with_label ("Set all gains from A");
 	g_signal_connect(button, "clicked", G_CALLBACK (gainSetAll),0);
 	gtk_box_pack_start (GTK_BOX (box1), button, TRUE, TRUE, 0);
+    
+    //and a AGC set-all button.
+	button = gtk_button_new_with_label ("Set all AGC targets from A");
+	g_signal_connect(button, "clicked", G_CALLBACK (agcSetAll),0);
+	gtk_box_pack_start (GTK_BOX (box1), button, TRUE, TRUE, 0);
+
     
 	//add LMS on/off.. (global .. for now)
 	mk_radio("on,off", 2,
