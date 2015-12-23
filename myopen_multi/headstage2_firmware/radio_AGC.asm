@@ -21,7 +21,7 @@
 #define REG2  0x8204    // get back 0xff04
 #define REG3  0x8300    // get back 0xff00
 #define REG4  0x8480    // get back 0xff80
-#define REG4_DSP 0x8494 // get back 0xff94
+#define REG4_DSP 0x8484 // get back 0xff94
 #define REG5  0x8500    // get back 0xff00
 #define REG6  0x8600    // get back 0xff00
 #define REG7  0x8700    // get back 0xff00
@@ -107,9 +107,6 @@ wait_samples_main:
     r1 = r1 & r2;           
     r2 = r0 + r1;                          // r2 = Ch32, Ch0 (lo, hi). 16-bits samples
 
-.align 8
-    [i2++] = r2 || r0 = [i1++]; // save new sample. i1,i2 @ AGC gain after.
-
     // load in new convert command
     r7 = NEXT_CHANNEL_SHIFTED; 
     [p0 + (SPORT1_TX - SPORT0_RX)] = r7;   // SPORT1 primary TX
@@ -117,11 +114,26 @@ wait_samples_main:
     [p0 + (SPORT0_TX - SPORT0_RX)] = r7;   // SPORT0 primary TX
     [p0 + (SPORT0_TX - SPORT0_RX)] = r7;   // SPORT0 sec TX
 
-    // AGC-stage, gain is Q7.8
-    r0 = [i1++] || r1 = [i0++];         // r0=AGC gain, r1=AGC target sqrt; i1@final-samp after.
-    a0 = r2.l * r0.l, a1 = r2.h * r0.h; // multiply samples by AGC-gain
+    r5 = [i0++];    // r5.l=0x7fff, r5.h=-16384 (0xc000). i0 @2nd inte coefs after.
+.align 8
+    // integrator stage
+
+    [i2++] = r2 || r0 = [i1++]; // save new sample. i1,i2 @ integrator mean after
+    a0 = r2.l * r5.l, a1 = r2.h * r5.l || r1 = [i1++];  // a0=(Q31)sample. r1=integrated mean. i1@AGCgain
+
+    // r0=how much sample deviates from integrated mean. r6.l=16384 (0.5), r6.h=800 (0.0244)
+    r0.l = (a0 += r1.l * r5.h), r0.h = (a1 += r1.h * r5.h) (s2rnd) || r6=[i0++]; // i0@AGC_target after
     
-    /* Result in accumulator is Q1.31. Multiplication treated as (Q1.13)*(Q7.8). Q7.8 has
+    a0 = r1.l * r6.l, a1 = r1.h * r6.l; // a0=0.5*mean
+
+    // r2=updated mean. r5=AGC-gain, r7=AGC-target. i1@final-sample, i0@AGC-scaler/enable. 
+    r2.l = (a0 += r0.l * r6.h), r2.h = (a1 += r0.h * r6.h) (s2rnd) || r5=[i1++] || r7=[i0++];
+
+    // AGC-stage
+
+    a0 = r0.l * r5.l, a1 = r0.h * r5.h || [i2++] = r2; //a0,a1=AGCgain*devFromMean. Save new mean. i2@AGCgain
+    
+    /* Result in accumulator is Q1.31. Multiplication treated as (Q1.31)*(Q7.8). Q7.8 has
        8 bits before the decimal point. The result should have 9 bits before the decimal point.
        Therefore, we need to left shift the accumulator 8 more bits to position the actual decimal
        point at accumulator's decimal point position.
@@ -131,21 +143,29 @@ wait_samples_main:
    */
     a0 = a0 << 8;   
     a1 = a1 << 8;
-    r2.l = a0, r2.h = a1;       // r2 contains gained-samples.
-    a0 = abs a0, a1 = abs a1;   // Start AGC-update.
+    r0.l = a0, r0.h = a1;     // Move half reg, treat result as signe frac. Round to bit 16 and extract.
+    a0 = abs a0, a1 = abs a1; // Need to compare abs-scaled deviation to target.
     
-    // subtract AGC-target (signed ints) from abs, saturate diff. Load gain scaler: r4.l=16384, r4.h=1
-    r3.l = (a0 -= r1.l*r1.l), r3.h = (a1 -= r1.h*r1.h) (is) || r4 = [i0++]; 
-    a0 = r0.l * r4.l, a1 = r0.h * r4.l;                             // load AGC-gain again and scale.
-    r5.l = (a0 -= r3.l * r4.h), r5.h = (a1 -= r3.h * r4.h) (s2rnd); // update AGC gain
-    r5 = abs r5 (v) || [i1++] = r2;                                 // save gained-sample. i1@next ch-samp
-    [i2++] = r5;                                                    // save AGC-gain. i2 @ final-samp after.
+    // Signed-int mode for MAC. Result should be 0x7fff or 0x8000, tell us if target is smaller or not.
+    // r6.l = 16384 (0.5), r6.h = 1 (AGC-enable). i0@integ_coef1
+    r4.l = (a0 -= r7.l * r7.l), r4.h = (a1 -= r7.h * r7.h) (is) || r6 = [i0++];
 
+    /* Update AGC-gain (trick math here):
+       r5 = AGC-gain, which is in Q8.8 format. r6.l=0x4000=0.5 in Q1.15 format.
+       Turns out if we do 
+            a0=r5.l*r6.l, r3.l=(a0-=0*0) (s2rnd)
+       Then the result in r3.l is the same value in Q8.8 format.
 
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+       In the second line below, r4.l/h is either 0x7fff or 0x8000. So it acts as 
+       either subtracting 2^-8 from the original Q8.8 gain's value; Or as adding
+       2^-7 to the original Q8.8 gain's value after extraction.
+   */
+    a0 = r5.l * r6.l, a1 = r5.h * r6.l;     // load a0 with scaled AGC-gain
+    r3.l = (a0 -= r4.l * r6.h), r3.h = (a1 -= r4.h * r6.h) (s2rnd); // within certain range gain doesnt change
+    r3 = abs r3 (v);
+    [i2++] = r3 || r2 = [i1++];    // Save AGC-gain, i2@final sample. i1@next sample
+    [i2++] = r0;                   // Save final sample, i2@next sample
+
 
 //---------------------------------------------------------------------------------------
     r2.h = 0XFFFF;
@@ -154,35 +174,43 @@ nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
     // Process the other two channels in this group. Pretty much identical as before.
     r1 = [p0];      // SPORT0-primary: Ch96-127
     r0 = [p0];      // SPORT0-sec:     Ch64-95
-    r3 = [i2++];    // inc i2, i2@cur ch samp
 
     r1 <<= 15; 
     r0 >>= SHIFT_BITS;
     r1 = r1 & r2;
     r2 = r0 + r1;
-.align 8    
-    [i2++] = r2 || r0 = [i1++]; // save Intan samp. i2@gain, i1@gain.
 
-    // START AGC
-    r0 = [i1++] || r1 = [i0++];         // r0=AGC-gain, r1=AGC target sqrt; i1@final-samp, i0@AGC scaler
-    a0 = r2.l * r0.l, a1 = r2.h * r0.h;
+    r5 = [i0++];
+.align 8    
+    // integrator stage
+    [i2++] = r2 || r0 = [i1++]; // save new sample. i1,i2 @ integrator mean after.
+    a0 = r2.l * r5.l, a1 = r2.h * r5.l || r1 = [i1++];  // a0=(Q15)sample. r1=integrated mean. i1@AGCgain
+    
+    // r0=how much sample deviates from mean. r6.l=16384(0.5), r6.h=800(0.0244)
+    r0.l = (a0 += r1.l * r5.h), r0.h = (a1 += r1.h * r5.h) (s2rnd) || r6=[i0++]; // i0@AGCTargert after
+
+    a0 = r1.l * r6.l, a1 = r1.h * r6.l; // a0=0.5*mean
+
+    // r2=updated mean. r5=AGCgain, r7=AGCTarget. i1@final-sample, i0@AGC-scaler/enable.
+    r2.l = (a0 += r0.l * r6.h), r2.h = (a1 += r0.h * r6.h) (s2rnd) || r5=[i1++] || r7=[i0++];
+
+    // AGC-stage
+    a0 = r0.l * r5.l, a1 = r0.h * r5.h || [i2++] = r2; //a0,a1=AGCgain*devFromMean. Save new mean. i2@AGCgain
     a0 = a0 << 8;
     a1 = a1 << 8;
-    r2.l = a0, r2.h = a1;               // r2 has gained-samples
-    a0 = abs a0, a1 = abs a1;
+    r0.l = a0, r0.h = a1;     // Move half reg, treat result as signed frac. Round to bit 16 and extract.
+    a0 = abs a0, a1 = abs a1; // Compare abs-scaled deviation to target.
 
-    r3.l = (a0 -= r1.l*r1.l), r3.h = (a1 -= r1.h*r1.h) (is) || r4 = [i0++]; // r4=AGC scaler. i0@next targsqrt
-    a0 = r0.l * r4.l, a1 = r0.h * r4.l;
-    r5.l = (a0 -= r3.l * r4.h), r5.h = (a1 -= r3.h * r4.h) (s2rnd);
+    // signed-int mode MAC. Result should be 0x7fff or 0x8000 - tells if target is smaller or not.
+    // r6.l = 0x4000, r6.h=1 (AGC-enable). i0@integ_coef1
+    r4.l = (a0 -= r7.l * r7.l), r4.h = (a1 -= r7.h * r7.h) (is) || r6 = [i0++];
 
-    r5 = abs r5 (v) || [i1++] = r2; // save gained-sample. i1@next ch-samp
-    [i2++] = r5;                    // save AGC-gain. i2@final-samp after
-    r0 = [i2++];                    // inc i2. i2@next ch-samp
-
-
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+    // update AGCgain
+    a0 = r5.l * r6.l, a1 = r5.h * r6.l; // convert AGCgain to Q1.15
+    r3.l = (a0 -= r4.l * r6.h), r3.h = (a1 -= r4.h * r6.h) (s2rnd);
+    r3 = abs r3 (v);
+    [i2++] = r3 || r2 = [i1++]; // Save AGCgain. i2@final sample. i1@next sample
+    [i2++] = r0;                // Save final sample, i2@next sample.
 
 //----------------------------------------------------------------------------------------  
     r0 = 0; // not doing templat match, so this is the dummy match
@@ -523,6 +551,12 @@ lt_top:
     p5 = 2;
     lsetup(lt2_top, lt2_bot) lc1 = p5;  // each lt2_top is one set of coefs
 lt2_top:
+    // gain and integrator
+    r0.l = 32767;   w[i0++] = r0.l;
+    r0.l = -16384;  w[i0++] = r0.l;
+    r0.l = 16384;   w[i0++] = r0.l;
+    r0.l = 800;     w[i0++] = r0.l;
+
     /* AGC: 
         Target is 6000*16384, which in Q15 is ~0.09155. We store just the target's square
         root (in Q15). This is so we can later accomodate big target values (32 bits).

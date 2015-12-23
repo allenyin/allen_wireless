@@ -281,9 +281,9 @@ void Headstage::setChans(int signalChain){
         /* 4th offset is to get to the correct written delay.
             Tim's signal chain   | Allen's signal chain
 		0	mean from integrator |  original sample
-		1	gain                 |  AGC-gain
-		2	saturated sample     |  AGC-out
-		3	AGC out / LMS save
+		1	gain                 |  integrated mean
+		2	saturated sample     |  AGC-gain
+		3	AGC out / LMS save   |  AGC-output
 		4	x1(n-1) / LMS out
 		5	x1(n-2)
 		6	x2(n-1) / y1(n-1)
@@ -335,15 +335,10 @@ void Headstage::setAGC(int ch1, int ch2, int ch3, int ch4){
 		int kchan = chan &127; //(to send, needs to keep correct channel name)
 		
 		if(kchan >= 64) p += 1; //chs 64-127 pocessed following 0-63.
-#ifdef RADIO_AGC
+		
         ptr[i*2+0] = htonl(echoHeadstage(m_echo[tid], A1 +
-			 (A1_STRIDE*(kchan & 31) +
-			 p*(A1_IIRSTARTA+A1_IIR))*4 )); // no offset to AGC target
-#else
-		ptr[i*2+0] = htonl(echoHeadstage(m_echo[tid], A1 +
 			(A1_STRIDE*(kchan & 31) +
 			p*(A1_IIRSTARTA+A1_IIR) + 2)*4)); // 2 is the offset to the AGC target.
-#endif
 		
 		int j = (int)(sqrt(32768 * m_c[chan]->getAGC()));
 		int k = (int)(sqrt(32768 * m_c[chan+32]->getAGC()));

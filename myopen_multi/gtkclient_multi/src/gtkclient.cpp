@@ -177,6 +177,11 @@ GtkWidget*     g_stbpsLabel; //strobe per second label, todo: put in raster
 GtkWidget*     g_fileSizeLabel;
 GtkWidget*     g_confFileLabel;
 
+#ifndef HEADSTAGE_TIM
+// variable to what the current active signal is displayed
+int g_currentSignal = 0;
+#endif
+
 std::string g_configFile = "configuration.bin";
 std::string g_stateFile  = "state.bin";
 
@@ -1114,35 +1119,39 @@ packet format in the file, as saved here:
 					g_c[j+(128*tid)]->isiIncr();
 				}
 				//color the rasters. really should color differently.
+#ifndef HEADSTAGE_TIM
+                printf("g_currentSignal is: %d\n", g_currentSignal);
+#endif
 				for(int k=0; k<NFBUF; k++){
 					for(int j=0; j<6; j++){
 						int ch = g_channel[k];
 						if(ch > (tid+1)*128 || ch < (tid*128)){ continue;}//channel not in bridge, don't update
-#ifndef HEADSTAGE_TIM
-						unsigned char samp = p->data[j*4+k]; //-128 -> 127.
-                        if(k==0) {
-                            printf("k=%d, samp = 0x%x:\n ", k, samp & 0xff);
-                        }
-
-#else
+#ifdef HEADSTAGE_TIM
                         char samp = p->data[j*4+k];
                         if(k==0) {
-                            printf("k=%d, samp = 0x%x:\n ", k, samp & 0xff);
+                            printf("k=%d, samp = 0x%x\n", k, samp & 0xff);
                         }
+                        g_fbuf[k][(g_fbufW[k] % g_nsamp)*3 + 1]=(((samp+128.f)/255.f)-0.5f)*2.f; //range +-1.
 
+#else
+                        if (g_currentSignal == 0) {
+                            // Intan sample is unsigned.
+                            unsigned char samp = p->data[j*4+k];
+                            if(k==0) printf("k=%d, unsigned samp = 0x%x\n", k, samp & 0xff); 
+                            g_fbuf[k][(g_fbufW[k] % g_nsamp)*3 + 1] = (samp*2.f/255.f-1.f);
+                        }
+                        else {
+                            // Mean, AGC-gain, and AGC-out are signed.
+                            char samp = p->data[j*4+k];
+                            if(k==0) printf("k=%d, signed samp = 0x%x\n", k, samp & 0xff);
+                            g_fbuf[k][(g_fbufW[k] % g_nsamp)*3 + 1]=(((samp+128.f)/255.f)-0.5f)*2.f; 
+                        }
 #endif
                         z = 0.f;
 						//>128 -> 0-127
 						if(g_templMatch[tid][ch&127][0]) z = 1.f;
 						if(g_templMatch[tid][ch&127][1]) z = 2.f;
 
-#ifndef HEADSTAGE_TIM
-                        g_fbuf[k][(g_fbufW[k] % g_nsamp)*3 + 1] =
-                            (samp*2.f/255.f-1.f);
-#else
-						g_fbuf[k][(g_fbufW[k] % g_nsamp)*3 + 1] =
-							(((samp+128.f)/255.f)-0.5f)*2.f; //range +-1.
-#endif
 						g_fbuf[k][(g_fbufW[k] % g_nsamp)*3 + 2] = z;
 						
 						g_fbufW[k]++;
@@ -1659,6 +1668,10 @@ static void signalChainCB( GtkComboBox *combo, gpointer){
     gchar *string = gtk_combo_box_get_active_text( combo );
     printf( "signalChain: >> %s <<\n", ( string ? string : "NULL" ) );
  	int i = atoi((char*)string);
+#ifndef HEADSTAGE_TIM
+    g_currentSignal = i;
+    printf("g_currentSignal changed to %d\n",i);
+#endif
 	if(i >=0 && i < W1_STRIDE && !g_uiRecursion){
 		g_signalChain = i;
 		printf("g_signalChain = %d\n", i);
@@ -2106,9 +2119,10 @@ int main(int argn, char **argc)
     };
 #elif RADIO_AGC
     const char* signalNames[W1_STRIDE] = {
-        "0 Samples from Intan",
-        "1 AGC gain",
-        "2 AGC out"
+        "0 Samples from Intan",   // value in unsigned, binary offset format
+        "1 Integrated mean",      // value in signed.
+        "2 AGC gain",             // value is always positive, between 0-127.
+        "3 AGC out"               // value is AGCgain*(sample-mean), signed.
     };
 #else
 	const char* signalNames[W1_STRIDE] = {

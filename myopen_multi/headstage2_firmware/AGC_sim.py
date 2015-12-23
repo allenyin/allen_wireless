@@ -32,6 +32,11 @@ def run_AGC(sample, AGC_gain, target, scaler=16384):
     The sample and AGC_gain should be given in hex, as well as the target.
     '''
     results = {}
+
+    baseline = 0x7fff
+    amplitude = sample - 0x7fff
+    amplitude_twosComplement = signedInt_to_hex(amplitude, 16)
+    results['0. amplitude_signedInt'] = hex(int(amplitude_twosComplement,2))
     
     '''
     a0 = r2.l * r0.l. Multiply sample by AGC-gain.
@@ -98,7 +103,8 @@ def mult_acc_to_halfReg(acc_val, a, b, op='sub', mode='default'):
 
     Modes:
     - Default: Signed fraction format. Multiply 1.15 * 1.15 to produce 1.31.
-                0x8000 * 0x8000 -> 0x7FFF FFFF.
+                0x8000 * 0x8000 -> 0x7FFF FFFF. To extract, round 9.31 format at bit 16,
+                saturate at 1.15 precision and copy top word.
     
     - is:      Signed integer format. Multiply 16.0*16.0 to produce 32.0 result. No shift
                correction. Saturate to 40.0 format, extract the lower 16 bits of accumulator,
@@ -107,6 +113,7 @@ def mult_acc_to_halfReg(acc_val, a, b, op='sub', mode='default'):
     - s2rnd:   Signed fraction with scaling and rounding. Multiply 1.15 * 1.15 to produce 1.31.
                0x8000 * 0x8000 yields 0x8000000, but will saturate to 0x7fff in the destination
                half. Sign-extend 1.31 to 9.31 before copying to accumulator. Then saturate to 9.31.
+               Extract high 16bits after rounding, saturate to 1.15.
     '''
     if mode is 'is':
         prod = a*b
@@ -170,6 +177,30 @@ def mult_acc_to_halfReg(acc_val, a, b, op='sub', mode='default'):
             print "(s2rnd) upper_16bits is: " + hex(upper_16bits)
             return upper_16bits
 
+    if mode is 'default':
+        if a == 0x8000 and b == 0x8000:
+            return 0x7FFF
+        else:
+            prod = int(decimal_to_Q1_31(hex_to_Q15(a) * hex_to_Q15(b)),16)
+            prod = sign_extend(prod, 32, 40)
+            acc_val = int(sign_extend(acc_val, 32, 40),2)
+            if op is 'add':
+                new_val = acc_val + int(prod, 2)
+            if op is 'sub':
+                new_val = acc_val + int(invert_bstr(prod),2)+1
+            # take care of saturation...if requires more than 40 bits, then the extra bits are lost
+            bitLen = len(bin(new_val)[2:])
+            if bitLen > 40:
+                bstr = bin(new_val)[2:][bitLen-40:]
+                new_val = int(bstr,2)
+            new_val = new_val & 0xFFFFFFFFFF
+            print "(default) new_val is: " + hex(new_val)
+
+            # extraction - rounding first
+            new_val = new_val + 2**15
+            upper_16bits = (new_val & 0x00FFFF0000) >> 16
+            print "(default) upper_16bits is: " + hex(upper_16bits)
+            return upper_16bits
 
 def acc_to_halfReg(num, mode='default'):
     '''

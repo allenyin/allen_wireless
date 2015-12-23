@@ -7,19 +7,19 @@
 */
 
 #define A1 				0xFF904000  /** BANK B **/ //i0 accesses.
-#define A1_AGC			2			//units: 32bit words.
+#define A1_AGC			4			//units: 32bit words.
 #define A1_LMS			0           // No LMS
 #define A1_IIR		    0			// No IIR
 #define A1_TEMPLATE	    0	
 #define A1_APERTURE		0			// 4 16-bit words
-#define A1_IIRSTARTA	(A1_AGC + A1_LMS)            //2 
-#define A1_AGCB		(A1_IIRSTARTA + A1_IIR)          //2 
-#define A1_IIRSTARTB	(A1_AGCB + A1_AGC + A1_LMS)  //4
-#define A1_TEMPA		(A1_IIRSTARTB + A1_IIR)      //4
-#define A1_APERTUREA	(A1_TEMPA + A1_TEMPLATE)     //4
-#define A1_TEMPB		(A1_APERTUREA + A1_APERTURE) //4
-#define A1_APERTUREB	(A1_TEMPB + A1_TEMPLATE)     //4
-#define A1_STRIDE		(A1_APERTUREB + A1_APERTURE) //4; 
+#define A1_IIRSTARTA	(A1_AGC + A1_LMS)            //4 
+#define A1_AGCB		(A1_IIRSTARTA + A1_IIR)          //4 
+#define A1_IIRSTARTB	(A1_AGCB + A1_AGC + A1_LMS)  //8
+#define A1_TEMPA		(A1_IIRSTARTB + A1_IIR)      //8
+#define A1_APERTUREA	(A1_TEMPA + A1_TEMPLATE)     //8
+#define A1_TEMPB		(A1_APERTUREA + A1_APERTURE) //8
+#define A1_APERTUREB	(A1_TEMPB + A1_TEMPLATE)     //8
+#define A1_STRIDE		(A1_APERTUREB + A1_APERTURE) //8; 
 
 
 #define FP_BASE			0xFF906F00 //length: 0x200, 512 bytes.
@@ -31,8 +31,10 @@
 #define GCC_RESERVED 	0xFF907000 //above this GCC stomps around on.
 
 #define W1 				0xFF804000  /** BANK A **/
-#define	W1_STRIDE		3           // (1 sample + 1 AGC gain + 1 gained-sample)=3 16-bit words per channel
-                                    //  3 32-bits word per 2 channels --> 6 per group of 4
+
+// (1 sample + 1 integrator mean + 1 AGC gain + 1 gained-sample)=4 16-bit words per channel
+//  4 32-bits word per 2 channels --> 8 per group of 4
+#define	W1_STRIDE		4           
 
 // T1, dont really care. Initiate as 0's and leave them
 #define T1				0xFF805000  //accessed by i3, read/write delayed filtered signal

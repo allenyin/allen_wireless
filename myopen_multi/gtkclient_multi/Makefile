@@ -6,7 +6,7 @@ DBG = true
 JACK = false
 MUDFLAP = false
 STACKPROTECTOR = false
-HEADSTAGE_TIM = false
+HEADSTAGE_TIM = false 
 RADIO_BASIC = false
 RADIO_AGC = true 
 
@@ -134,3 +134,5 @@ install:
 	install cg/fade.cg -t $(TARGET)/cg
 	install cg/fadeColor.cg -t $(TARGET)/cg
 	install cg/threshold.cg -t $(TARGET)/cg
+
+#Debugging: valgrind --leak-check=full --log-file="logfile.out" -v ./gtkclient

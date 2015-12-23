@@ -61,6 +61,34 @@ def hex_to_Q8_8(num):
         int_mag = int(invert_bin(int_part),2)+1
         return -int_mag + (num & 0x00ff)/(2**8 * 1.0)
 
+def hex_to_Q0_16(num):
+    """
+    Num is 16-bit hex,
+    Give its decimal value in Q0.16 -- unsigned frac
+    """
+    if num > 0xffff:
+        print "Input cannot be represented in Q0.16"
+        return
+    return num / (2**16 * 1.0)
+
+def hex_to_Q0_32(num):
+    if num > 0xffffffff:
+        print "Input cannot be represented in Q0.32"
+        return
+    return num / (2**32 * 1.0)
+
+def decimal_to_Q0_16(num):
+    if num > 1.0-2**-16 or num < 0:
+        print "Input cannot be represented in Q0.16"
+        return
+    return hex(int(frac2bin(num,16),2))
+
+def decimal_to_Q0_32(num):
+    if num > 1.0-2**-32 or num < 0:
+        print "Input cannot be represented in Q0.32"
+        return
+    return hex(int(frac2bin(num,32),2))
+
 def decimal_to_Q1_15(num):
     """
     Num is a decimal, convert its value to Q1.15
