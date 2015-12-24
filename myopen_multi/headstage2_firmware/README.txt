@@ -4,8 +4,8 @@ firmware1.asm: Integrated intan_test_setup2 into the firmware structure...after 
 
 firmware2.asm: Same as firmware1.asm, except the extra signal path code is replaced with nops to investiage code-length issues.
 
-intan_test_setup.asm: Polls the same channel from all amps, and save periods to memory starting at FP_BASE (0xFF906F00). Plot the result using plot_memdump.py. \
+intan_setup_test.asm: Polls the same channel from all amps, and save periods to memory starting at FP_BASE (0xFF906F00). Plot the result using plot_memdump.py. \
 
-intan_test_setup2.asm: Tests the intra-amp performance. Records a set number of periods from all 32 channels of a fixed amp, save to memory in A1 (0xFF904000). Results include Intan-setup responses. Plot the result using plot_memdump.py.
+intan_setup_test2.asm: Tests the intra-amp performance. Records a set number of periods from all 32 channels of a fixed amp, save to memory in A1 (0xFF904000). Results include Intan-setup responses. Plot the result using plot_memdump.py.
 
 radio_basic.asm: Built off firmware2.asm, but integrate in radio communication with gtkclient.

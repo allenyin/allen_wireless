@@ -1126,27 +1126,13 @@ packet format in the file, as saved here:
 					for(int j=0; j<6; j++){
 						int ch = g_channel[k];
 						if(ch > (tid+1)*128 || ch < (tid*128)){ continue;}//channel not in bridge, don't update
-#ifdef HEADSTAGE_TIM
+                        // sampple is signed, hence the (samp+128)/255 conversion below
                         char samp = p->data[j*4+k];
                         if(k==0) {
                             printf("k=%d, samp = 0x%x\n", k, samp & 0xff);
                         }
                         g_fbuf[k][(g_fbufW[k] % g_nsamp)*3 + 1]=(((samp+128.f)/255.f)-0.5f)*2.f; //range +-1.
 
-#else
-                        if (g_currentSignal == 0) {
-                            // Intan sample is unsigned.
-                            unsigned char samp = p->data[j*4+k];
-                            if(k==0) printf("k=%d, unsigned samp = 0x%x\n", k, samp & 0xff); 
-                            g_fbuf[k][(g_fbufW[k] % g_nsamp)*3 + 1] = (samp*2.f/255.f-1.f);
-                        }
-                        else {
-                            // Mean, AGC-gain, and AGC-out are signed.
-                            char samp = p->data[j*4+k];
-                            if(k==0) printf("k=%d, signed samp = 0x%x\n", k, samp & 0xff);
-                            g_fbuf[k][(g_fbufW[k] % g_nsamp)*3 + 1]=(((samp+128.f)/255.f)-0.5f)*2.f; 
-                        }
-#endif
                         z = 0.f;
 						//>128 -> 0-127
 						if(g_templMatch[tid][ch&127][0]) z = 1.f;

@@ -3,8 +3,8 @@
 
 #FIRMWARE_VERSION = firmware1
 #FIRMWARE_VERSION = firmware2
-#FIRMWARE_VERSION = intan_test_setup
-#FIRMWARE_VERSION = intan_test_setup2
+#FIRMWARE_VERSION = intan_setup_test
+#FIRMWARE_VERSION = intan_setup_test2
 #FIRMWARE_VERSION = radio_basic
 FIRMWARE_VERSION = radio_AGC
 
@@ -31,13 +31,13 @@ else ifeq ($(FIRMWARE_VERSION), firmware1)
 	ASMFLAGS += -mcpu=bf532 -include memory.h -include defBF532.h -D__ASM__ -g
 	CFLAGS = $(INCLUDES) $(CPUDEFINES) -mcpu=bf532 $(OPT) -include memory.h -Wall
 
-else ifeq ($(FIRMWARE_VERSION), intan_test_setup)
-	ASMSRCS += intan_test_setup.o
+else ifeq ($(FIRMWARE_VERSION), intan_setup_test)
+	ASMSRCS += intan_setup_test.o
 	ASMFLAGS += -mcpu=bf532 -include memory.h -include defBF532.h -D__ASM__ -g
 	CFLAGS = $(INCLUDES) $(CPUDEFINES) -mcpu=bf532 $(OPT) -include memory.h -Wall
 
-else ifeq ($(FIRMWARE_VERSION), intan_test_setup2)
-	ASMSRCS += intan_test_setup2.o
+else ifeq ($(FIRMWARE_VERSION), intan_setup_test2)
+	ASMSRCS += intan_setup_test2.o
 	ASMFLAGS += -mcpu=bf532 -include memory.h -include defBF532.h -D__ASM__ -g
 	CFLAGS = $(INCLUDES) $(CPUDEFINES) -mcpu=bf532 $(OPT) -include memory.h -Wall
 

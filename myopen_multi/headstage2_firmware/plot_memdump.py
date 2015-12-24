@@ -6,8 +6,6 @@ In vim, use regex command "%s/.\+:\s\+//g" to delete the address/pointer field.
 Edit 11/15/2015: No longer need the regex command, just save gdb.txt to whatever and run.
                  The regex is taken care of in load_mem_values
 
-Usage 12/4/2015:
-
 """
 import numpy as np
 import matplotlib.pyplot as plt
@@ -135,7 +133,7 @@ def plot_mem_vals1(data):
 
     return (amp1, amp2, amp3, amp4)
 
-def plot_mem_vals2(data, n_channels, f, truncation=False):
+def plot_mem_vals2(data, n_channels, f, n_periods=2, truncation=False):
     '''
     Similar to plot_mem_vals1, except we are plotting all 32 channels within the same amp!
     Might be slow with lots of samples because I'm not allocating memory, but I don't plan to
@@ -144,8 +142,6 @@ def plot_mem_vals2(data, n_channels, f, truncation=False):
     f_max = 10.0**6     # 1MHz sampling freq
     f_s = f_max/n_channels
     sample_per_period = int(np.ceil(f_s/f))
-    n_periods = 2
-    #n_channels = 32
     n_samples = n_periods*sample_per_period*n_channels
 
     channels = [list() for i in xrange(n_channels)]
@@ -227,7 +223,7 @@ def between_amps(fname):
     return plot_mem_vals1(data)
     
 #Code for analyzing channels within an amp
-def within_amp(fname, n_channels, f, truncation=False):
+def within_amp(fname, n_channels, f, n_periods=2, truncation=False):
     '''
     fname = saved memory dump.
     n_channels = number of channels we are plotting/saving.
@@ -237,7 +233,7 @@ def within_amp(fname, n_channels, f, truncation=False):
     data = load_mem_values(fname)
     data = convert_mem_values(data)
     data = check_setup_values(data)
-    data = plot_mem_vals2(data, n_channels, f, truncation)
+    data = plot_mem_vals2(data, n_channels, f, n_periods, truncation)
     # plot ch0 and ch31 together for comparison
     plt.figure()
     xx = range(len(data[0]))

@@ -20,8 +20,12 @@
 #define REG1  0x8102    // get back 0xff02
 #define REG2  0x8204    // get back 0xff04
 #define REG3  0x8300    // get back 0xff00
-#define REG4  0x8480    // get back 0xff80
-#define REG4_DSP 0x8484 // get back 0xff94
+
+#define REG4              0x8480 // get back 0xff80
+#define REG4_DSP_UNSIGNED 0x8484 // get back 0xff94
+#define REG4_DSP_SIGNED   0x84D4 // get back 0xffD4
+#define REG4_SIGNED       0x84C4 // get back 0xffC4
+
 #define REG5  0x8500    // get back 0xff00
 #define REG6  0x8600    // get back 0xff00
 #define REG7  0x8700    // get back 0xff00
@@ -116,18 +120,18 @@ wait_samples_main:
 
     r5 = [i0++];    // r5.l=0x7fff, r5.h=-16384 (0xc000). i0 @2nd inte coefs after.
 .align 8
-    // integrator stage
+    // integrator stage - the incoming samples are alreayd in Q1.15 format.
 
     [i2++] = r2 || r0 = [i1++]; // save new sample. i1,i2 @ integrator mean after
     a0 = r2.l * r5.l, a1 = r2.h * r5.l || r1 = [i1++];  // a0=(Q31)sample. r1=integrated mean. i1@AGCgain
 
-    // r0=how much sample deviates from integrated mean. r6.l=16384 (0.5), r6.h=800 (0.0244)
-    r0.l = (a0 += r1.l * r5.h), r0.h = (a1 += r1.h * r5.h) (s2rnd) || r6=[i0++]; // i0@AGC_target after
+    // r0=how much sample deviates from integrated mean. r6.l=0x7fff, r6.h=0x0640
+    r0.l = (a0 += r1.l * r5.h), r0.h = (a1 += r1.h * r5.h) || r6=[i0++]; // i0@AGC_target after
     
-    a0 = r1.l * r6.l, a1 = r1.h * r6.l; // a0=0.5*mean
+    a0 = r1.l * r6.l, a1 = r1.h * r6.l; // a0=mean in Q31
 
     // r2=updated mean. r5=AGC-gain, r7=AGC-target. i1@final-sample, i0@AGC-scaler/enable. 
-    r2.l = (a0 += r0.l * r6.h), r2.h = (a1 += r0.h * r6.h) (s2rnd) || r5=[i1++] || r7=[i0++];
+    r2.l = (a0 += r0.l * r6.h), r2.h = (a1 += r0.h * r6.h) || r5=[i1++] || r7=[i0++];
 
     // AGC-stage
 
@@ -186,13 +190,13 @@ wait_samples_main:
     [i2++] = r2 || r0 = [i1++]; // save new sample. i1,i2 @ integrator mean after.
     a0 = r2.l * r5.l, a1 = r2.h * r5.l || r1 = [i1++];  // a0=(Q15)sample. r1=integrated mean. i1@AGCgain
     
-    // r0=how much sample deviates from mean. r6.l=16384(0.5), r6.h=800(0.0244)
-    r0.l = (a0 += r1.l * r5.h), r0.h = (a1 += r1.h * r5.h) (s2rnd) || r6=[i0++]; // i0@AGCTargert after
+    // r0=how much sample deviates from mean. r6.l=0x7fff, r6.h=0x0640
+    r0.l = (a0 += r1.l * r5.h), r0.h = (a1 += r1.h * r5.h) || r6=[i0++]; // i0@AGCTargert after
 
-    a0 = r1.l * r6.l, a1 = r1.h * r6.l; // a0=0.5*mean
+    a0 = r1.l * r6.l, a1 = r1.h * r6.l; // a0=mean
 
     // r2=updated mean. r5=AGCgain, r7=AGCTarget. i1@final-sample, i0@AGC-scaler/enable.
-    r2.l = (a0 += r0.l * r6.h), r2.h = (a1 += r0.h * r6.h) (s2rnd) || r5=[i1++] || r7=[i0++];
+    r2.l = (a0 += r0.l * r6.h), r2.h = (a1 += r0.h * r6.h) || r5=[i1++] || r7=[i0++];
 
     // AGC-stage
     a0 = r0.l * r5.l, a1 = r0.h * r5.h || [i2++] = r2; //a0,a1=AGCgain*devFromMean. Save new mean. i2@AGCgain
@@ -552,10 +556,20 @@ lt_top:
     lsetup(lt2_top, lt2_bot) lc1 = p5;  // each lt2_top is one set of coefs
 lt2_top:
     // gain and integrator
+    
+    // Assuming input samples are 12-bits unsigned.
+    /*
     r0.l = 32767;   w[i0++] = r0.l;
     r0.l = -16384;  w[i0++] = r0.l;
     r0.l = 16384;   w[i0++] = r0.l;
     r0.l = 800;     w[i0++] = r0.l;
+    */
+
+    // Assuming input samples are 16-bits signed
+    r0.l = 0x7fff;  w[i0++] = r0.l;
+    r0.l = 0x8000;  w[i0++] = r0.l;
+    r0.l = 0x7fff;  w[i0++] = r0.l;
+    r0.l = 1600;    w[i0++] = r0.l;
 
     /* AGC: 
         Target is 6000*16384, which in Q15 is ~0.09155. We store just the target's square
@@ -718,7 +732,7 @@ sport_configs:
     call wait_samples;                     // call 4
     
     //r0 = REG4 (z);
-    r0 = REG4_DSP (z);  // this with DSP filter enabled
+    r0 = REG4_SIGNED (z);  // this with DSP filter enabled, signed samples
     r0 = r0 << SHIFT_BITS;
     [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
     [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
