@@ -20,8 +20,12 @@
 #define REG1  0x8102    // get back 0xff02
 #define REG2  0x8204    // get back 0xff04
 #define REG3  0x8300    // get back 0xff00
-#define REG4  0x8480    // get back 0xff80
-#define REG4_DSP 0x8494 // get back 0xff94
+
+#define REG4              0x8480 // get back 0xff80
+#define REG4_DSP_UNSIGNED 0x8484 // get back 0xff94
+#define REG4_DSP_SIGNED   0x84D4 // get back 0xffD4
+#define REG4_SIGNED       0x84C4 // get back 0xffC4
+
 #define REG5  0x8500    // get back 0xff00
 #define REG6  0x8600    // get back 0xff00
 #define REG7  0x8700    // get back 0xff00
@@ -97,18 +101,19 @@ wait_samples_main:
        are not interchangeable.
     */
     
-    
-    //r3.h = 0x0001;
-    //r3.l = 0xFFFE;
-
     r2.h = 0xFFFF;
     r2.l = 0x0000;
     r1 = [p0 + (SPORT1_RX - SPORT0_RX)];   // SPORT1-primary: Ch32-63
     r0 = [p0 + (SPORT1_RX - SPORT0_RX)];   // SPORT1-sec:     Ch0-31
-    
-    //r1 = [p0];
-    //r0 = [p0];
 
+/* This next block can be uncommented to generate a ramp, to check for radio corruption.
+    r2.l = 8;
+    r2.h = 8;
+    r1 = [i1++];
+    r2 = r1 + r2;
+    [i2++] = r2;   // save sample, should be ramp.
+*/ 
+    
     r1 <<= 15;
     r0 >>= SHIFT_BITS;
     r1 = r1 & r2;
@@ -140,9 +145,14 @@ nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
     // Process the other two channels in this group. Pretty much identical as before.
     r1 = [p0];      // SPORT0-primary: Ch96-127
     r0 = [p0];      // SPORT0-sec:     Ch64-95
-    
-    //r1 = [p0 + (SPORT1_RX - SPORT0_RX)];
-    //r0 = [p0 + (SPORT1_RX - SPORT0_RX)];
+
+/* Code to generate a ramp.
+    r2.l = 8;
+    r2.h = 8;
+    r1 = [i1++];
+    r2 = r1 + r2;
+    [i2++] = r2;
+*/
     
     r1 <<= 15;
     r0 >>= SHIFT_BITS;
@@ -827,8 +837,7 @@ sport_configs:
     [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
     call wait_samples;                     // call 4
     
-    //r0 = REG4 (z);
-    r0 = REG4_DSP (z);  // this with DSP filter enabled
+    r0 = REG4_SIGNED (z);  // this with DSP filter enabled
     r0 = r0 << SHIFT_BITS;
     [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
     [p0 + (SPORT0_TX - SPORT0_RX)] = r0;

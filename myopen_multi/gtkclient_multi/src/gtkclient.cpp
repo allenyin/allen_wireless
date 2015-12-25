@@ -1120,7 +1120,7 @@ packet format in the file, as saved here:
 				}
 				//color the rasters. really should color differently.
 #ifndef HEADSTAGE_TIM
-                printf("g_currentSignal is: %d\n", g_currentSignal);
+                //printf("g_currentSignal is: %d\n", g_currentSignal);
 #endif
 				for(int k=0; k<NFBUF; k++){
 					for(int j=0; j<6; j++){
@@ -1128,9 +1128,9 @@ packet format in the file, as saved here:
 						if(ch > (tid+1)*128 || ch < (tid*128)){ continue;}//channel not in bridge, don't update
                         // sampple is signed, hence the (samp+128)/255 conversion below
                         char samp = p->data[j*4+k];
-                        if(k==0) {
-                            printf("k=%d, samp = 0x%x\n", k, samp & 0xff);
-                        }
+                        //if(k==0) {
+                        //    printf("k=%d, samp = 0x%x\n", k, samp & 0xff);
+                        //}
                         g_fbuf[k][(g_fbufW[k] % g_nsamp)*3 + 1]=(((samp+128.f)/255.f)-0.5f)*2.f; //range +-1.
 
                         z = 0.f;

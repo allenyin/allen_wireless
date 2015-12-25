@@ -118,7 +118,7 @@ wait_samples_main:
     [p0 + (SPORT0_TX - SPORT0_RX)] = r7;   // SPORT0 primary TX
     [p0 + (SPORT0_TX - SPORT0_RX)] = r7;   // SPORT0 sec TX
 
-    r5 = [i0++];    // r5.l=0x7fff, r5.h=-16384 (0xc000). i0 @2nd inte coefs after.
+    r5 = [i0++];    // r5.l=0x7fff, r5.h=0x8000. i0 @2nd inte coefs after.
 .align 8
     // integrator stage - the incoming samples are alreayd in Q1.15 format.
 
@@ -170,6 +170,13 @@ wait_samples_main:
     [i2++] = r3 || r2 = [i1++];    // Save AGC-gain, i2@final sample. i1@next sample
     [i2++] = r0;                   // Save final sample, i2@next sample
 
+nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+
+
 
 //---------------------------------------------------------------------------------------
     r2.h = 0XFFFF;
@@ -215,6 +222,12 @@ wait_samples_main:
     r3 = abs r3 (v);
     [i2++] = r3 || r2 = [i1++]; // Save AGCgain. i2@final sample. i1@next sample
     [i2++] = r0;                // Save final sample, i2@next sample.
+
+nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+nop;nop;nop;nop;nop;nop;nop;nop;nop;
 
 //----------------------------------------------------------------------------------------  
     r0 = 0; // not doing templat match, so this is the dummy match
