@@ -6,7 +6,9 @@
 #FIRMWARE_VERSION = intan_setup_test
 #FIRMWARE_VERSION = intan_setup_test2
 #FIRMWARE_VERSION = radio_basic
-FIRMWARE_VERSION = radio_AGC
+#FIRMWARE_VERSION = radio_AGC
+FIRMWARE_VERSION = radio_AGC_IIR
+#FIRMWARE_VERSION = IIR_oscillator_test
 
 $(info FIRMWARE_VERSION is $(FIRMWARE_VERSION))
 
@@ -50,6 +52,16 @@ else ifeq ($(FIRMWARE_VERSION), radio_AGC)
 	ASMSRCS += radio_AGC.o
 	ASMFLAGS += -mcpu=bf532 -include memory_AGC.h -include defBF532.h -D__ASM__ -g
 	CFLAGS = $(INCLUDES) $(CPUDEFINES) -mcpu=bf532 $(OPT) -include memory_AGC.h -Wall
+
+else ifeq ($(FIRMWARE_VERSION), radio_AGC_IIR)
+	ASMSRCS += radio_AGC_IIR.o
+	ASMFLAGS += -mcpu=bf532 -include memory_AGC_IIR.h -include defBF532.h -D__ASM__ -g
+	CFLAGS = $(INCLUDES) $(CPUDEFINES) -mcpu=bf532 $(OPT) -include memory_AGC_IIR.h -Wall
+
+else ifeq ($(FIRMWARE_VERSION), IIR_oscillator_test)
+	ASMSRCS += IIR_oscillator_test.o
+	ASMFLAGS += -mcpu=bf532 -include memory_AGC_IIR.h -include defBF532.h -D__ASM__ -g
+	CFLAGS = $(INCLUDES) $(CPUDEFINES) -mcpu=bf532 $(OPT) -include memory_AGC_IIR.h -Wall
 
 else
 	ASMSRCS += firmware1.o

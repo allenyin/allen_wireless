@@ -6,9 +6,12 @@ In vim, use regex command "%s/.\+:\s\+//g" to delete the address/pointer field.
 Edit 11/15/2015: No longer need the regex command, just save gdb.txt to whatever and run.
                  The regex is taken care of in load_mem_values
 
+Edit 1/6/2015: Note that the amplitude of the signal needs to be a bit higher to see values clearly.
+
 """
 import numpy as np
 import matplotlib.pyplot as plt
+import scipy.io
 
 '''
 Convert the ADC output to voltage values:
@@ -24,6 +27,16 @@ where 65535=0xffff.
 VH = 3.37
 gain = 196
 scaler = VH/0xffff/196*1000 # convert to mV
+
+def convert_to_signed(val, nbits):
+    '''
+    Convert an integer to it's two's complement value:
+    e.g. 255 is 0xff, which is two's complement is 128
+    '''
+    if val > 2**(nbits-1)-1:
+        return (2**nbits-val)*-1
+    else:
+        return val
 
 def load_mem_values(fname):
     # Read in the hex values, save in array data
@@ -133,7 +146,7 @@ def plot_mem_vals1(data):
 
     return (amp1, amp2, amp3, amp4)
 
-def plot_mem_vals2(data, n_channels, f, n_periods=2, truncation=False):
+def plot_mem_vals2(data, n_channels, f, n_periods=2, truncation=False, signed=False):
     '''
     Similar to plot_mem_vals1, except we are plotting all 32 channels within the same amp!
     Might be slow with lots of samples because I'm not allocating memory, but I don't plan to
@@ -147,16 +160,24 @@ def plot_mem_vals2(data, n_channels, f, n_periods=2, truncation=False):
     channels = [list() for i in xrange(n_channels)]
     if not truncation:
         for ch in xrange(n_channels):
-            channels[ch] = [data[i]*scaler for i in range(int(sample_per_period*n_channels*n_periods)) if i%n_channels==ch]
+            channels[ch] = [data[i] for i in range(int(sample_per_period*n_channels*n_periods)) if i%n_channels==ch]
     else:
         # we are taking only the most significant byte out of 16bits as samples
         # no scaler, offset binary is enough
         for ch in xrange(n_channels):
-            channels[ch] = [(((data[i]>>8)+128)/255.0-0.5)*2 for i in range(int(sample_per_period*n_channels*n_periods)) if i%n_channels==ch]
+            channels[ch] = [(data[i]>>8) for i in range(int(sample_per_period*n_channels*n_periods)) if i%n_channels==ch]
+    
+    if truncation:
+        nbits = 8
+    else:
+        nbits = 16
+    if signed:
+        channels = [ [convert_to_signed(i, nbits) for i in ch] for ch in channels]
         
     maxes = [max(i) for i in channels]
     mins = [min(i) for i in channels]
 
+    
     # plot all these...6 rows of 6
     xx = range(len(channels[0]))
     plt.figure()
@@ -167,7 +188,50 @@ def plot_mem_vals2(data, n_channels, f, n_periods=2, truncation=False):
         plt.plot(xx, channels[ch], 'b-*')
         plt.ylim(min(mins)-1, max(maxes)+1)
         if ch % 6 == 0:
-            t = 'Channel%d (mV)' % (ch)
+            t = 'Channel%d hex' % (ch)
+            plt.ylabel(t)
+
+    plt.show(block=False)
+    return channels
+
+def plot_mem_32ch(data, truncation=False, signed=False):
+    '''
+    Similar to plot_mem_vals2, but we dont care how many periods are there,
+    Assume data comes from 32 channels. The first sample is from ch0, based on intan_setup_test2 firmware setup.
+    assign samples to channels round-robin style.
+
+    Sample is offset binary
+    '''
+    channels = [list() for i in xrange(32)]
+    ch = 0
+    for i in xrange(len(data)):
+        if not truncation:
+            channels[ch].append(data[i])
+        else:
+            channels[ch].append( (data[i]>>8) )
+        ch = (ch+1)%32
+    
+    if truncation:
+        nbits = 8
+    else:
+        nbits = 16
+    if signed:
+        channels = [ [convert_to_signed(i, nbits) for i in ch] for ch in channels]
+
+    maxes = [max(i) for i in channels]
+    mins = [min(i) for i in channels]
+    lens = [len(ch) for ch in channels]
+    
+    plt.figure()
+    ncols = 6
+    nrows = 6
+    for ch in xrange(32):
+        plt.subplot(nrows, ncols, ch+1)
+        xx = range(len(channels[ch]))
+        plt.plot(xx, channels[ch], 'b-*')
+        plt.ylim(min(mins)-1, max(maxes)+1)
+        if ch % 6 == 0:
+            t = 'Channel%d hex' % (ch)
             plt.ylabel(t)
 
     plt.show(block=False)
@@ -188,32 +252,18 @@ def plot_mem_vals3(data):
     plt.show(block=False)
     return samples
 
-def plot_mem_val4(data, n_channels):
+def saveCh_to_mat(data, fname):
     '''
-    This case, it's 234 samples for ch0, 234 samples for ch1, etc
-    '''
-    nsamples = int(1.5*156*32)
-    ch_samples = int(1.5*136)
-    samples = [i*scaler for i in data]
-    pk2pk = []
+    data is of the structure [ch1, ch2, ch3,...]
+    where ch1, ch2, etc is a list of values.
 
-    plt.figure()
-    ncols = np.ceil(np.sqrt(n_channels))
-    nrows = np.ceil(n_channels/ncols)
-    xx = range(ch_samples)
-    i = 0
-    for ch in xrange(n_channels):
-        plt.subplot(nrows, ncols, ch+1)
-        cur_samples = samples[ch*ch_samples:(ch+1)*ch_samples]
-        plt.plot(xx, cur_samples, color='blue')
-        plt.ylim(min(samples)-1, max(samples)+1)
-        if ch % 6 == 0:
-            t = 'Channel%d (mV)' % (ch+1)
-            plt.ylabel(t)
-        pk2pk.append(max(cur_samples)-min(cur_samples))
-        
-    plt.show(block=False)
-    return (samples, pk2pk)
+    Convert each list into a matlab array and save all into a mat file
+    '''
+    mat = {}
+    for i in xrange(len(data)):
+        name = 'ch%d' % i
+        mat[name] = np.array(data[i])
+    scipy.io.savemat(fname, mdict=mat)
 
 #Code for analyzing between amps
 def between_amps(fname):
@@ -223,7 +273,7 @@ def between_amps(fname):
     return plot_mem_vals1(data)
     
 #Code for analyzing channels within an amp
-def within_amp(fname, n_channels, f, n_periods=2, truncation=False):
+def within_amp(fname, n_channels, f, n_periods=2, truncation=False, signed=False):
     '''
     fname = saved memory dump.
     n_channels = number of channels we are plotting/saving.
@@ -233,7 +283,7 @@ def within_amp(fname, n_channels, f, n_periods=2, truncation=False):
     data = load_mem_values(fname)
     data = convert_mem_values(data)
     data = check_setup_values(data)
-    data = plot_mem_vals2(data, n_channels, f, n_periods, truncation)
+    data = plot_mem_vals2(data, n_channels, f, n_periods, truncation, signed)
     # plot ch0 and ch31 together for comparison
     plt.figure()
     xx = range(len(data[0]))
@@ -242,6 +292,17 @@ def within_amp(fname, n_channels, f, n_periods=2, truncation=False):
     plt.ylim(min(min(data[0]),min(data[-1]))-1, max(max(data[0]),max(data[-1]))+1)
     plt.legend(['Ch0','Ch31'])
     plt.show(block=False)
+    return data
+
+def within_amp_32ch(fname, truncation=False, signed=False):
+    '''
+    Same as within_amp, assumes 32 channels, and doesn't care about number
+    of periods.
+    '''
+    data = load_mem_values(fname)
+    data = convert_mem_values(data)
+    #data = check_setup_values(data)
+    data = plot_mem_32ch(data, truncation, signed)
     return data
 
 def within_amp_as_one_ch(fname):

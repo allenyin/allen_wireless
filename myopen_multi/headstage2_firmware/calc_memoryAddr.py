@@ -4,7 +4,7 @@ Script to check gtkclient is calculating variable address correctly.
 A1 = 0xFF904000     # may change
 A1_AGC = 4          # may change
 A1_LMS = 0          # may change
-A1_IIR = 0          # may change
+A1_IIR = 8          # may change
 A1_TEMPLATE = 0     # may change
 A1_APERTURE = 0     # may change
 A1_IIRSTARTA = A1_AGC + A1_LMS
@@ -17,7 +17,7 @@ A1_APERTUREB = (A1_TEMPB + A1_TEMPLATE)
 A1_STRIDE = (A1_APERTUREB + A1_APERTURE)
 
 W1 = 0xFF804000
-W1_STRIDE = 4       # may change
+W1_STRIDE = 10       # may change
 
 FP_CHAN = 4
 FP_QS =	8 
@@ -48,12 +48,18 @@ def setAGC(chan):
     Gives what address setAGC will return
     """
     tid = chan/128
+    group = chan/32
     chan = chan & ( (128*(tid+1)-1)^32)
     p = 0
     kchan = chan & 127
+    
+    print "group=", group
+    g = 0
+    if group == 1 or group == 3:
+        g = 2
     if kchan >= 64:
         p = p+1
-    addr = A1 + (A1_STRIDE*(kchan & 31) + p*(A1_IIRSTARTA+A1_IIR) +2)*4
+    addr = A1 + (A1_STRIDE*(kchan & 31) + p*(A1_IIRSTARTA+A1_IIR) +2)*4 + g
     return hex(addr)
 
 def setChans(c, signalChain):
@@ -68,12 +74,12 @@ def setChans(c, signalChain):
         1	gain                 |  integrated mean
         2	saturated sample     |  AGC-gain
         3	AGC out / LMS save   |  AGC-output
-        4	x1(n-1) / LMS out
-        5	x1(n-2)
-        6	x2(n-1) / y1(n-1)
-        7	x2(n-2) / y1(n-2)
-        8	x3(n-1) / y2(n-1)
-        9	x3(n-2) / y2(n-2)
+        4	x1(n-1) / LMS out    |  x0(n-1)/AGC-out
+        5	x1(n-2)              |  x0(n-2)
+        6	x2(n-1) / y1(n-1)    |  y1(n-1)
+        7	x2(n-2) / y1(n-2)    |  y1(n-2)
+        8	x3(n-1) / y2(n-1)    |  y2(n-1)/final out
+        9	x3(n-2) / y2(n-2)    |  y2(n-2)           <--- radio_agc_iir end
         10	x2(n-1) / y3(n-1)
         11	x2(n-2) / y3(n-2)
         12	y4(n-1)
@@ -87,5 +93,15 @@ def setChans(c, signalChain):
     o3 = ((c & 32)>>5) * 2
     o4 = signalChain * 4
     return hex(W1 + o1 + o2 + o3 + o4 + 1)
-    
 
+def setOsc(chan):
+    tid = chan/128
+    chan = chan & ( (128*(tid+1)-1)^32)
+    kchan = chan & 127
+    coefs = ['b0','b1','a0','a1']
+    for i in range(4):
+        p = 0
+        if kchan >= 64:
+            p = 1
+        new_addr = A1 + (A1_STRIDE*(kchan & 31) + A1_IIRSTARTA + p*(A1_IIRSTARTB-A1_IIRSTARTA) + i)*4
+        print "Ch%d %s: %s" % (chan, coefs[i], hex(new_addr))

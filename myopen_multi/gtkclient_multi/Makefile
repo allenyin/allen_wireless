@@ -7,8 +7,9 @@ JACK = false
 MUDFLAP = false
 STACKPROTECTOR = false
 HEADSTAGE_TIM = false 
-RADIO_BASIC = false 
-RADIO_AGC = true 
+RADIO_BASIC = false
+RADIO_AGC = false
+RADIO_AGC_IIR = true 
 
 CC  = gcc
 CPP = g++
@@ -32,8 +33,7 @@ GLIBS := gtk+-2.0 gtkglext-1.0 gtkglext-x11-1.0 protobuf
 GTKFLAGS = `pkg-config --cflags $(GLIBS) `
 GTKLD = `pkg-config --libs $(GLIBS) `
 
-GOBJS = src/gtkclient.o src/headstage.o src/decodePacket.o src/gettime.o src/glInfo.o \
-proto/parameters.pb.o proto/spikes.pb.o src/sock.o
+GOBJS = proto/parameters.pb.o proto/spikes.pb.o src/gtkclient.o src/headstage.o src/decodePacket.o src/gettime.o src/glInfo.o src/sock.o
 
 COBJS = src/convert.o src/decodePacket.o
 
@@ -43,6 +43,9 @@ COM_HDR = include/channel.h include/headstage.h include/spkwriter.h \
 ../common_host/firingrate.h \
 ../common_host/jacksnd.h \
 proto/parameters.pb.h proto/spikes.pb.h
+
+PARAM_SRC = proto/parameters.pb.h proto/parameters.pb.cc
+SPIKE_SRC = proto/spikes.pb.h proto/spikes.pb.cc
 
 ifeq ($(strip $(DBG)),true)
 	CPPFLAGS += -g -rdynamic -DDEBUG
@@ -83,36 +86,41 @@ ifeq ($(strip $(RADIO_AGC)),true)
 	CPPFLAGS := $(filter-out -Wall, $(CPPFLAGS))
 endif
 
+ifeq ($(strip $(RADIO_AGC_IIR)), true)
+	CPPFLAGS += -DRADIO_AGC_IIR
+	CPPFLAGS := $(filter-out -Wall, $(CPPFLAGS))
+endif
 
-all: spikes.pb.cc parameters.pb.cc gtkclient wf_plot convert
 
-spikes.pb.cc : proto/spikes.proto
-	protoc $< --cpp_out=proto/
+all: gtkclient wf_plot convert
 
-parameters.pb.cc : proto/parameters.proto
-	protoc $< --cpp_out=proto/
+$(PARAM_SRC): proto/parameters.proto
+	protoc -I=./proto --cpp_out=./proto $<
 
-src/%.o: src/%.cpp $(COM_HDR)
-	$(CPP) -c $(CPPFLAGS) $(GTKFLAGS) $< -o $@
+$(SPIKE_SRC): proto/spikes.proto
+	protoc -I=./proto --cpp_out=./proto $<
 
 src/%.o: ../common_host/%.cpp $(COM_HDR)
 	$(CPP) -c $(CPPFLAGS) $(GTKFLAGS) $< -o $@
 
-src/%.o: src/%.c
-	$(CC) -c $(CFLAGS) $< -o $@
+src/%.o: src/%.cpp $(COM_HDR)
+	$(CPP) -c $(CPPFLAGS) $(GTKFLAGS) $< -o $@
 
 gtkclient: $(GOBJS)
 	$(CPP) -o $@ $(GTKFLAGS) $^ $(GTKLD) $(LDFLAGS)
 
+src/%.o: src/%.c
+	$(CC) -c $(CFLAGS) $< -o $@
+
 convert: $(COBJS)
 	$(CPP) -o $@ $^ -lmatio -lhdf5 -lz
-
 
 wf_plot: src/wf_plot.o
 	$(CC) -o $@ $^ -lGL -lGLU -lglut -lpthread -lmatio -lhdf5 -lpng
 
 clean:
-	rm -rf gtkclient convert wf_plot src/*.o proto/*.o proto/proto/*.pb.cc proto/proto/*.pb.h
+	rm -rf gtkclient convert wf_plot src/*.o
+	rm proto/*.o proto/*.pb.h proto/*.pb.cc
 
 deps:
 	sudo apt-get install libgtk2.0-dev \

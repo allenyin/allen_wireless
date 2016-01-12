@@ -21,16 +21,16 @@
 #define REG2  0x8204    // get back 0xff04
 #define REG3  0x8300    // get back 0xff00
 
-#define REG4              0x8480 // get back 0xff80
-#define REG4_DSP_UNSIGNED 0x8484 // get back 0xff94
-#define REG4_DSP_SIGNED   0x84D4 // get back 0xffD4
-#define REG4_SIGNED       0x84C4 // get back 0xffC4
+#define REG4              0x8480 // get back 0xff80 - no DSP, offset binary
+#define REG4_DSP_UNSIGNED 0x8494 // get back 0xff94 - DSP, offset binary
+#define REG4_DSP_SIGNED   0x84D4 // get back 0xffD4 - DSP, signed output
+#define REG4_SIGNED       0x84C4 // get back 0xffC4 - no DSP, signed output
 
 #define REG5  0x8500    // get back 0xff00
 #define REG6  0x8600    // get back 0xff00
 #define REG7  0x8700    // get back 0xff00
 
-// Intan REG8-13, configured from [250Hz, 10kHz]
+// Intan REG8-13, configured for [250Hz, 10kHz]
 #define REG8  0x8811    // get back 0xff11. Changed from 0x8816 on 12/28/2015
 #define REG9  0x8900    // get back 0xff00
 #define REG10 0x8a10    // get back 0xff10. Changed from 0x8817 on 12/28/2015
@@ -45,6 +45,24 @@
 #define CALIB 0x5500    // get back 0x8000
 
 #define CONVERT0 0x0000
+
+/*  Oscillator test: save the results from all samples due to oscillator at location
+                     MEMBUFF=0xff806300, read out via JTAG
+    MEMBUFF start from 0xff806300, end at 0xff807400.
+    This allows for 2176 16-bit words, or 1088 32-bit words.
+
+    One iteration saving from 1 amp = 32 16-bit words -> we have enough for 68 iterations.
+
+    So 68 samples each, sampling freq=31250. This gives 2 periods if osc freq ~ 919Hz.
+    This means the IIR coefficients are:
+
+    b0=0, b1=0, a0=32768-573=32195, a1=-16384 (should give 935.6Hz).
+
+    Also need to give the IIR memory slots: y2(n-2), y2(n-1),...etc nonzero values to start with.
+ */
+#define MEMBUFF 0xff806300
+#define TOTAL_CALL_ASM 2176 // 68*32
+
 .align 8    // call is a 5-cycle latency if target is aligned.
 _get_asm:
     /* Sampling thread:
@@ -154,7 +172,7 @@ wait_samples_main:
     a0 = abs a0, a1 = abs a1; // Need to compare abs-scaled deviation to target.
     
     // Signed-int mode for MAC. Result should be 0x7fff or 0x8000, tell us if target is smaller or not.
-    // r6.l = 16384 (0.5), r6.h = 1 (AGC-enable). i0@integ_coef1
+    // r6.l = 16384 (0.5), r6.h = 1 (AGC-enable). i0@LPF1 b0
     r4.l = (a0 -= r7.l * r7.l), r4.h = (a1 -= r7.h * r7.h) (is) || r6 = [i0++];
 
     /* Update AGC-gain (trick math here):
@@ -170,16 +188,42 @@ wait_samples_main:
     a0 = r5.l * r6.l, a1 = r5.h * r6.l;     // load a0 with scaled AGC-gain
     r3.l = (a0 -= r4.l * r6.h), r3.h = (a1 -= r4.h * r6.h) (s2rnd); // within certain range gain doesnt change
     r3 = abs r3 (v);
-    [i2++] = r3 || r2 = [i1++];    // Save AGC-gain, i2@final sample. i1@next sample
-    [i2++] = r0;                   // Save final sample, i2@next sample
+    [i2++] = r3 || r2 = [i1++];    // Save AGC-gain, i2@final sample. i1@ x0(n-1)
+    [i2++] = r0;                   // Save final sample, i2@ x0(n-1)
 
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+.align 8
+    /* Start 2 back-to-back direct-form 1 biquads. At this point,
+        r0 = final AGC sample
+        i0 @ LPF1 b0
+        i1 @ x0(n-1) of current channel.
+        i2 @ x0(n-1) of current channel.
 
+       If i1 and i2 are dereferenced (read out) in the same cycle, the processor will stall -- each of the
+       1k SRAM memory banks has only one port.
+   */
+   r5 = [i0++] || r1 = [i1++];  // r5=b0(LPF), r1=x0(n-1); i0@b1(LPF), i1@x0(n-2)
+   a0 = r0.l * r5.l, a1 = r0.h * r5.h || r6 = [i0++] || r2 = [i1++];    // r6=b1(LPF), r2=x0(n-2)
+   a0 += r1.l * r6.l, a1 += r1.h * r6.h || r7 = [i0++] || r3 = [i1++];  // r7=a0(LPF), r3=y1(n-1)
+   a0 += r2.l * r5.l, a1 += r2.h * r5.h || r5 = [i0++] || r4 = [i1++];  // r5=a1(LPF), r4=y1(n-2)
+   a0 += r3.l * r7.l, a1 += r3.h * r7.h || [i2++] = r0;                 // update x0(n-1), i2@x0(n-2)
+   r0.l = (a0 += r4.l * r5.l), r0.h = (a1 += r4.h * r5.h) (s2rnd) || [i2++] = r1; // r0=y1(n), update x0(n-2)
 
+   // now i0@b0(HPF1), i1@y2(n-1). i2@y1(n-1)
+   r5 = [i0++] || [i2++] = r0;  // r5=b0(HPF1), update y1(n-1); i0@b1(HPF1), i2@y1(n-2)
+   a0 = r0.l * r5.l, a1 = r0.h * r5.h || r6 = [i0++] || [i2++] = r3;    // r6=b1(HPF1). update y1(n-2)
+   a0 += r3.l * r6.l, a1 += r3.h * r6.h || r7 = [i0++] || r1 = [i1++];  // r7=a0(HPF1). r1=y2(n-1)
+   a0 += r4.l * r5.l, a1 += r4.h * r5.h || r2 = [i1++];                 // r2=y2(n-2)
+   a0 += r1.l * r7.l, a1 += r1.h * r7.h || r5 = [i0++];                 // r5=a1(HPF1)
+   r0.l = (a0 += r2.l * r5.l), r0.h = (a1 += r2.h * r5.h) (s2rnd);      // r0=y2(n)
+
+   // now i0@next ch integ1; i1@next sample; i2@y2(n-1)
+   [i2++] = r0; // save current y2(n) in y2(n-1)'s spot. i2 @ y2(n-2)
+   [i2++] = r1; // save current y2(n-1) in y2(n-2)'s spot. i2 @ next sample
+
+   w[p2++] = r0; // save amp1's oscillator results (r0.l)
+
+   // all pointers are ready for next two channels of this group.
+   // i0 @ next ch integ1; i1,i2 @ next sample.
 
 //---------------------------------------------------------------------------------------
     r2.h = 0XFFFF;
@@ -224,177 +268,37 @@ nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
     r3.l = (a0 -= r4.l * r6.h), r3.h = (a1 -= r4.h * r6.h) (s2rnd);
     r3 = abs r3 (v);
     [i2++] = r3 || r2 = [i1++]; // Save AGCgain. i2@final sample. i1@next sample
-    [i2++] = r0;                // Save final sample, i2@next sample.
+    [i2++] = r0;                // Save final sample, i2@x0(n-1)
 
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-nop;nop;nop;nop;nop;nop;nop;nop;nop;
+.align 8
+    /* Start 2 back-to-back direct-form 1 biquads. At this point,
+        r0 = final AGC sample
+        i0 @ LPF1 b0
+        i1 @ x0(n-1) of current channel.
+        i2 @ x0(n-1) of current channel.
 
-//----------------------------------------------------------------------------------------  
-    r0 = 0; // not doing templat match, so this is the dummy match
+       If i1 and i2 are dereferenced (read out) in the same cycle, the processor will stall -- each of the
+       1k SRAM memory banks has only one port.
+   */
+   r5 = [i0++] || r1 = [i1++];  // r5=b0(LPF), r1=x0(n-1); i0@b1(LPF), i1@x0(n-2)
+   a0 = r0.l * r5.l, a1 = r0.h * r5.h || r6 = [i0++] || r2 = [i1++];    // r6=b1(LPF), r2=x0(n-2)
+   a0 += r1.l * r6.l, a1 += r1.h * r6.h || r7 = [i0++] || r3 = [i1++];  // r7=a0(LPF), r3=y1(n-1)
+   a0 += r2.l * r5.l, a1 += r2.h * r5.h || r5 = [i0++] || r4 = [i1++];  // r5=a1(LPF), r4=y1(n-2)
+   a0 += r3.l * r7.l, a1 += r3.h * r7.h || [i2++] = r0;                 // update x0(n-1), i2@x0(n-2)
+   r0.l = (a0 += r4.l * r5.l), r0.h = (a1 += r4.h * r5.h) (s2rnd) || [i2++] = r1; // r0=y1(n), update x0(n-2)
 
-    p0 = [FP - FP_CHAN];
-    p1 = [FP - FP_ENC_LUT_BASE];
-    p5 = [FP - FP_MATCH_BASE];
+   // now i0@b0(HPF1), i1@y2(n-1). i2@y1(n-1)
+   r5 = [i0++] || [i2++] = r0;  // r5=b0(HPF1), update y1(n-1); i0@b1(HPF1), i2@y1(n-2)
+   a0 = r0.l * r5.l, a1 = r0.h * r5.h || r6 = [i0++] || [i2++] = r3;    // r6=b1(HPF1). update y1(n-2)
+   a0 += r3.l * r6.l, a1 += r3.h * r6.h || r7 = [i0++] || r1 = [i1++];  // r7=a0(HPF1). r1=y2(n-1)
+   a0 += r4.l * r5.l, a1 += r4.h * r5.h || r2 = [i1++];                 // r2=y2(n-2)
+   a0 += r1.l * r7.l, a1 += r1.h * r7.h || r5 = [i0++];                 // r5=a1(HPF1)
+   r0.l = (a0 += r2.l * r5.l), r0.h = (a1 += r2.h * r5.h) (s2rnd);      // r0=y2(n)
 
-	//[ch 96 B][ch 32 B][ch 96 A][ch 32 A][ch 64 B][ch 0 B][ch 64 A][ch 0 A]
-    r0 = r0.b (z);
-    r6 = p0;            // r6 = current group of channels
-    p5 = p5 + p0;
-    r1 = b[p5];
-    r1 = r1 | r0;
-    p0 = r1;            // p0 not channel, is now offset to LUT
-    b[p5] = r1;         // save the ORed template match area, 8b area.
-    // also update encoding, which the radio will write out
-    p3 = 32;
-    p5 = p5 + p3;       // move to 7b encoding region
-    p1 = p1 + p0;       // offset to LUT, 0-255.
-    r2 = b[p1];         // read LUT value
-    b[p5] = r2;         // write to 7b area
-
-    /*
-        r4 = packet byte count (qs)
-        r5 = number of queued packets, 0-15
-        r6 = group number (0-31), [FP_CHAN]
-    */
-    r0 = 31; 
-    cc = r6 == r0;
-    if !cc jump end_txchan (bp);    // finish if not group31.
-    // p0 and p5 are free; p1 and p3 are static and reset below.
-    // p4 points to WFBUF - location in a pkt we are writing the new samples.
-
-    // Below we write new samples to current packet.
-    p0 = [FP - FP_TXCHAN0];
-    p1 = [FP - FP_TXCHAN1];
-    p3 = [FP - FP_TXCHAN2];
-    p5 = [FP - FP_TXCHAN3];
-    r0 = b[p0];
-    r1 = b[p1];
-    r2 = b[p3];
-    r3 = b[p5];
-    b[p4++] = r0;
-    b[p4++] = r1;
-    b[p4++] = r2;
-    b[p4++] = r3;
-    
-    r4 = [FP - FP_QS];
-    r7 = 6;
-    r4 += 1;
-    cc = r4 == r7;
-    // if we don't have 6 samples for each TXCHANx yet, then continue;
-    // otherwise add the template matches and finish constructing the pkt
-    
-    if !cc jump end_txchan_qs (bp);
-    r5 = [FP - FP_QPACKETS];
-    p1 = r5;                        // used to index to state_lut; hide 4 cycle latency
-    p0 = [FP - FP_STATE_LUT_BASE];
-    p5 = [FP - FP_MATCH_PTR7];      // must cycle through 256 bytes.
-    r5 += 1;                        // one more packet on the queue.
-    [FP - FP_QPACKETS] = r5;        // write-back num-pkt
-    p0 = (p0 + p1) << 2;            // 4 byte align
-    r5 = [FP - FP_ECHO];            // echo flag in bits 31, 23, 15, 7.
-    r7 = [p0];
-    
-    // read in template match.
-    r0 = [p5++];
-    r1 = [p5++];
-    // flag upper bit in each byte with QS & echo
-    r0 = r0 | r7;
-    r1 = r1 | r5;
-    r7 = p5;        // make p5 -- FP_MATCH_PTR7 loop
-    p0 = -36;       // because both increment and decrement are post!
-                    // 32 8-bit words every 4 chans = 128 chan + 4 post-dec offset.
-    p5 = p5 + p0;   // move to 8b encoding region; clear..
-    bitclr(r7,6);   // loop within 64 bytes.
-    bitset(r7,5);   // stay in 7b region.
-    [FP - FP_MATCH_PTR7] = r7;  // write back ptr
-
-    // write template match to pkt
-    [p4++] = r0;
-    [p4++] = r1;
-    r4 = 0;         // clear sample count in qs (also reset templat match in 8b region).
-    [p5--] = r4;
-    [p5--] = r4;
-
-end_txchan_qs:
-    [FP - FP_QS] = r4;  // if we just finished a pkt, QS=0, otherwise it was incremented already.
-    // make p4 loop in WFBUF region
-    r7 = p4;            
-    bitclr(r7, 10);     // two 512-byte frames. loop back after going through 1024 bytes.
-    p4 = r7;
-end_txchan:
-    p1 = [FP - FP_FIO_FLAG_D];  // reset the pointers.
-    p3 = [FP - FP_SPI_TDBR];
-    rts;
-
-_clearirq_asm: //just write the status register via spi to clear.
-	[--sp] = rets;
-	r7 = SPI_CSN;
-	w[p1 + (FIO_FLAG_C - FIO_FLAG_D)] = r7;
-	call _get_asm;
-	r6 = NOR_STATUS + 0x20; //write to status register
-	w[p3] = r6;
-	call _get_asm;
-	r6 = 0x70;
-	w[p3] = r6; //clear irq: set RX_DR to clear bit, set TX_DS to clear bit, set MAX_RT to clear bit 
-	call _get_asm;
-	r7 = SPI_CSN;
-	w[p1 + (FIO_FLAG_S - FIO_FLAG_D)] = r7;
-	call _get_asm;
-	rets = [sp++];
-	rts;
-
-_waitirq_asm:
-	[--sp] = rets;
-	r7 = 182; // should take max 360us = 178. min @ 1msps = 160
-	[fp - FP_TIMER] = r7;
-waitirq_loop:
-	r6 = w[p1];
-	cc = bittst(r6, 3); //irq pin.
-	if !cc jump waitirq_end;
-	call _get_asm;
-	r6 = 0;
-	r7 = [fp - FP_TIMER];
-	cc = r6 == r7;
-	if cc jump waitirq_end;
-	r7 += -1;
-	[fp - FP_TIMER] = r7;
-	call _get_asm;
-	jump waitirq_loop;
-waitirq_end:
-	call _get_asm;
-	rets = [sp++];
-	rts;
-
-_clearfifos_asm:
-    // p3 points to SPI_TBDR, restored from _get_asm
-    // sending to nordic thru SPI follows clearing CSN, preceeds setting CSN
-	[--sp] = rets;
-	// flush RX fifo (seems to improve reliability)
-	r7 = SPI_CSN;
-	w[p1 + (FIO_FLAG_C - FIO_FLAG_D)] = r7;
-	call _get_asm;
-	r6 = NOR_FLUSH_RX;
-	w[p3] = r6;     // option sent thru SPI when SPI_TBDR wrttien to.
-	call _get_asm;
-	r7 = SPI_CSN;
-	w[p1 + (FIO_FLAG_S - FIO_FLAG_D)] = r7;
-	call _get_asm;
-	// and flush TX fifo.
-	r7 = SPI_CSN;
-	w[p1 + (FIO_FLAG_C - FIO_FLAG_D)] = r7;
-	call _get_asm;
-	r6 = NOR_FLUSH_TX;
-	w[p3] = r6;
-	call _get_asm;
-	r7 = SPI_CSN;
-	w[p1 + (FIO_FLAG_S - FIO_FLAG_D)] = r7;
-	call _get_asm;
-	// return.
-	rets = [sp++];
-	rts;
+   // now i0@next ch integ1; i1@next sample; i2@y2(n-1)
+   [i2++] = r0; // save current y2(n) in y2(n-1)'s spot. i2 @ y2(n-2)
+   [i2++] = r1; // save current y2(n-1) in y2(n-2)'s spot. i2 @ next sample.
+rts;
     
 .global _radio_bidi_asm // start of firmware execution
 _radio_bidi_asm:
@@ -420,18 +324,18 @@ _radio_bidi_asm:
     p1.h = HI(FIO_FLAG_D);
     [FP - FP_FIO_FLAG_D] = p1;
 
-    // P2: pointer for READING through WFBUF when transfering packet data for radio to transmit
-    p2.l = LO(WFBUF);
-    p2.h = HI(WFBUF);
+    // P2: pointer for READING through MEMBUFF for JTAG reading. 
+    p2.l = LO(MEMBUFF);
+    p2.h = HI(MEMBUFF);
 
     // P3: SPI TDBR - writting SPI commands/data to radio
     p3.l = LO(SPI_TDBR);
     p3.h = HI(SPI_TDBR);
     [FP - FP_SPI_TDBR] = p3;
 
-    // P4: point for WRITING to WFBUF sampels and template matches when signal chain finishes.
-    p4.l = LO(WFBUF);
-    p4.h = HI(WFBUF);
+    // P4: point for WRITING to MEMBUFF for saving samples for JTAG reading
+    p4.l = LO(MEMBUFF);
+    p4.h = HI(MEMBUFF);
     
     // FP_CHAN: points to the CURRENT channel we are working on - pre-incremented.
     r0 = 30(z); // need to account for the pipeline stuff...
@@ -595,25 +499,48 @@ lt2_top:
     r0.l = 9915;    w[i0++] = r0.l;     // AGC target sqrt = sqrt(6000*16384), Q15.
     r0.l = 16384;   w[i0++] = r0.l;     // Q15, =0.5
     r0.l = 1;       w[i0++] = r0.l;     // Set this to zero to disable AGC. Q7.8
+
+    /* IIR filter, biquad implementation. */
+    // LPF1: induce ~900Hz oscillation, wont be filtered by next biquad. 
+    r0 = 0 (x); w[i0++] = r0.l; w[i0++] = r0.l;  // b0
+    r0 = 0 (x); w[i0++] = r0.l; w[i0++] = r0.l;  // b1
+    r0 = 32195(x); w[i0++] = r0.l; w[i0++] = r0.l;  // a0
+    r0 = -16384(x); w[i0++] = r0.l; w[i0++] = r0.l;  // a1
+
+    // HPF1: 500Hz cutoff
+	r0 = 15260 (x);	w[i0++] = r0.l; w[i0++] = r0.l; // b0
+	r0 = -30519(x);w[i0++] = r0.l; w[i0++] = r0.l; // b1
+	r0 = 30442 (x);	w[i0++] = r0.l; w[i0++] = r0.l; // a0
+	r0 = -14213(x);w[i0++] = r0.l; w[i0++] = r0.l; // a1
 lt2_bot: nop;
 
 lt_bot: nop;
 
-    /* Zero the samples in W1 circular buffer. Each loop goes through 1 W1_STRIDE - one sample
-       each for four channels.
-
-       Also run 32+31 times so we leave the pointer i1 and i2 at beginning of the last
-       W1_STRIDE, to compensate for Intan's pipeline delay.
-    */
-    p5 = (32+31)*W1_STRIDE*2;
+    p5 = (32+31)*2;
 
     // r0 holds initial values for original and final samples
     r0.l = 0x0000;  // ch0-31, ch64-95
     r0.h = 0x0000;  // ch32-63, ch96-127
+
+    // let y(n-1)=y(n-2)=0.5, in base 14
+    r2.l = 8192;
+    r2.h = 8192;
+
     lsetup(zer_top, zer_bot) lc0 = p5;
 zer_top:
-    [i1++] = r0;    // initial sample values
-    r1 = [i2++];    // no effect other than keeping pointers in sync. i1 read, i2 writes/follows.
+    // Write W1 values manually, 1 W1_STRIDE (10 values) at a time, according to memory_AGC_IIR
+    [i1++] = r0; r1 = [i2++]; // initial sample values
+    [i1++] = r0; r1 = [i2++]; // integrator mean
+    [i1++] = r0; r1 = [i2++]; // AGC gain
+    [i1++] = r0; r1 = [i2++]; // AGC-out
+    [i1++] = r0; r1 = [i2++]; // x0(n-1)
+    [i1++] = r0; r1 = [i2++]; // x0(n-2)
+
+    [i1++] = r2; r1 = [i2++]; // y1(n-1)
+    [i1++] = r2; r1 = [i2++]; // y1(n-2)
+
+    [i1++] = r0; r1 = [i2++]; // y2(n-1)
+    [i1++] = r0; r1 = [i2++]; // y2(n-2)
 zer_bot: nop;
 
     /* Setup the MATCH buffer.
@@ -748,7 +675,7 @@ sport_configs:
     call wait_samples;                     // call 4
     
     //r0 = REG4 (z);
-    r0 = REG4_SIGNED (z);  // this with DSP filter enabled, signed samples
+    r0 = REG4_DSP_SIGNED (z);  // this with DSP filter enabled, signed samples
     r0 = r0 << SHIFT_BITS;
     [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
     [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
@@ -1037,281 +964,12 @@ wait_samples:
     rts;
 
 radio_loop: // main thread, interleaved with _get_asm to process samples
-wait_16pkts:
-    // keep acquiring samples until we have 16 packets ready
+    p5 = TOTAL_CALL_ASM;
+    lsetup(push_top, push_bot) lc0 = p5;
+push_top:
     call _get_asm;
-    r5 = [FP - FP_QPACKETS];
-    cc = bittst(r5, 4);
-    if !cc jump wait_16pkts;
-    
-    // we have 16 pkts now.
-    call _get_asm;
-    r5 = 0;
-    [FP - FP_QPACKETS] = r5;    // start new frame, reset queued pkt number.
-    call _clearfifos_asm;       // both method...
-    call _clearirq_asm;         // include many _get_asm calls
+push_bot: nop;
 
-    // loop to send 16 pkts. Each wp_top iteration sends 1 pkt
-    p5 = 16;
-    LSETUP(wp_top, wp_bot) lc0 = p5;
+we_finished:
+    jump we_finished;
 
-    wp_top:
-        r7 = SPI_CSN;
-        w[p1 + (FIO_FLAG_C - FIO_FLAG_D)] = r7;
-        call _get_asm;
-        r6 = 0xa0;  // Nordic SPI command: W_TX_PAYLOAD     
-        w[p3] = r6; 
-        call _get_asm;
-    
-        // loop to send 32 bytes - equals 1 packet, 1 byte at a time.
-        p5 = 32;
-        LSETUP(pb_top, pb_bot) lc1 = p5;
-        pb_top:
-            r6 = b[p2++];   // p2 is set to the base of packet frames - WFBUF
-            w[p3] = r6;     // p2 goe from lo to hi addr. Sending samples first, then template matches.
-            call _get_asm;
-        pb_bot: nop;
-
-        /* WFBUF has two frames. Memory location for:
-             First frame is:  0xff807000 - 0xff8071ff
-             Second frame is: 0xff807200 - 0xff8073ff
-            
-           Make sure p2 does not go past these memory locations - 0xff807400 gets reset to 0xff807000
-        */
-        r7 = p2;
-        bitclr(r7, 10);
-        p2 = r7;
-        call _get_asm;
-
-        r7 = SPI_CSN | SPI_CE;                  // set the flags for nordic to
-        w[p1 + (FIO_FLAG_S - FIO_FLAG_D)] = r7; // transmit this packet!
-        call _get_asm;
-        r7 = 16;
-        r6 = lc0;
-        cc = r7 == r6;  // if we are transmitting first packet, don't wait for IRQ. pipeline!
-        if cc jump wp_bot;
-        // otherwise, wait for asserted IRQ.
-        call _waitirq_asm;
-        call _clearirq_asm;
-    wp_bot: nop;
-    // loop finished, still one packet in the radio fifo - wait.
-    call _waitirq_asm;
-    call _clearirq_asm;
-    r7 = SPI_CE;    // disable radio.
-    w[p1 + (FIO_FLAG_C - FIO_FLAG_D)] = r7;
-    call _get_asm;
-
-    // put the radio in RX mode now
-    //first clear the config register (put in standby mode)
-	r7 = SPI_CSN;
-	w[p1 + (FIO_FLAG_C - FIO_FLAG_D)] = r7;
-	call _get_asm;
-	r6 = NOR_FLUSH_RX;
-	w[p3] = r6;
-	call _get_asm;
-	r7 = SPI_CSN;
-	w[p1 + (FIO_FLAG_S - FIO_FLAG_D)] = r7;
-	call _get_asm;
-
-	//now write config register with valid values.
-	r7 = SPI_CSN;
-	w[p1 + (FIO_FLAG_C - FIO_FLAG_D)] = r7;
-	call _get_asm;
-	r6 = NOR_CONFIG + 0x20; // write to radio's status reg
-	w[p3] = r6;
-	call _get_asm;
-	/** enable CRC for RX of critical values **/
-	r6 = NOR_EN_CRC | NOR_CRC0 |
-		NOR_MASK_MAX_RT | NOR_PWR_UP | NOR_PRIM_RX;     // write this to the status reg.
-	w[p3] = r6;
-	call _get_asm;
-	r7 = SPI_CSN;
-	w[p1 + (FIO_FLAG_S - FIO_FLAG_D)] = r7;
-	call _get_asm;
-	r7 = SPI_CE; //enable the radio
-	w[p1 + (FIO_FLAG_S - FIO_FLAG_D)] = r7;
-	call _get_asm;
-
-    // now wait for the status pkt.
-    call _waitirq_asm;
-    // see if we got something (as opposed to timeout)
-    r7 = w[p1];         // p1 points to FIO_FLAG_D @end of _get_asm
-    cc = bittst(r7, 3); // check if IRQ is 0 - active-low IRQ interrupt
-    if cc jump no_rxpacket;
-    
-    // otherwise we got a packet. clear irq first though
-    call _clearirq_asm;
-    r7 = SPI_CE;        // disable the radio;
-    w[p1 + (FIO_FLAG_C - FIO_FLAG_D)] = r7;
-    call _get_asm;
-    r7 = SPI_CSN;
-    w[p1 + (FIO_FLAG_C - FIO_FLAG_D)] = r7;
-    call _get_asm;
-    r6 = 0x61;          // command to read radio fifo.
-    w[p3] = r6;
-    call _get_asm;
-
-    /* rp_top is loop to read the received packet.
-       Each packet is 32-bytes long. Response packet format is:
-        [4b echo | 28b address] [32b value]
-        [4b echo | 28b address] [32b value]
-        [4b echo | 28b address] [32b value]
-        [4b echo | 28b address] [32b value]
-       
-        "[]" represents one 32-bit word. Each of the 4 iterations of rp_top reads 8-bytes, and
-        extracts the echo value, and the address-value pair.
-
-       The packet is sent by gtkclient, the [4b echo | 28b address] is originally of the form:
-        
-        lo-addr to hi-addr:
-        a0 a1 a2 a3 a4 a5 a6 | a7 a8 a9 a10 a11 a12 a13 a14 | a15 a16 a17 a18 a19 a20 a21 a22 | a23 a24 a25 a26 e0 e1 e2 e3 |
-
-       This is sent to radio via big-endian network-byte-order: hi byte to the lo-addr side,
-       So the radio gets: (Note the radio treats lo-addr as LSBit)
-
-        lo-addr to hi-addr:
-        a23 a24 a25 a26 e0 e1 e2 e3 | a15 a16 a17 a18 a19 a20 a21 a22 | a7 a8 a9 a10 a11 a12 a13 a14 | a0 a1 a2 a3 a4 a5 a6 |
-
-       When transfering from radio to BFin, radio sends LSByte to MSByte. Within a byte, the MSbit is sent
-       first. BFin is configured to receive MSbit first. BFin is in little-endian, meaning MSByte and MSBit
-       to higher address. So in one iteration of rp_top, we receive:
-            
-        MSBit to LSBit
-        e3 e2 e1 e0 a26 a25 a24 a23 | a22 a21 a20 a19 a18 a17 a16 a15 | a14 a13 a12 a11 a10 a9 a8 a7 | a6 a5 a4 a3 a2 a1 a0
-
-       This means we can extract echo first, then address, then value, in order.
-    */
-    p5 = 4;
-    LSETUP(rp_top, rp_bot) lc0 = p5;
-    rp_top:
-        r7 = 0;
-        [FP - FP_ADDRESS] = r7;         // reset variable reg to 0
-        [FP - FP_VALUE] = r7;           // reset variable reg to 0
-        call _get_asm;
-
-        // first nested-loop reads [4b echo | 28b address} and save in FP_address
-        p5 = 4;
-        LSETUP(a32_top, a32_bot) lc1 = p5;
-        a32_top:
-            w[p3] = r7; // dummy write
-            call _get_asm;
-            r7 = w[p3 + (SPI_SHADOW - SPI_TDBR)];   // read byte
-            r6 = 0xff;
-            r7 = r7 & r6;
-            r6 = [FP - FP_ADDRESS];
-            r6 = r6 << 8;               // we receive MSByte and MSBit first,
-            r6 = r6 + r7;               // shift and add to existing value
-            [FP - FP_ADDRESS] = r6;
-        a32_bot: nop;
-
-        // now get the [32b value]
-        call _get_asm;
-        p5 = 4;
-        LSETUP(v32_top, v32_bot) lc1 = p5;
-        v32_top:
-            w[p3] = r7; // dummy write
-            call _get_asm;
-            r7 = w[p3 + (SPI_SHADOW - SPI_TDBR)];
-            r6 = 0xff;
-            r7 = r7 & r6;
-            r6 = [FP - FP_VALUE];
-            r6 = r6 << 8;               // we receive MSByte and MSBit first,
-            r6 = r6 + r7;               // shift and add to exiting value
-            [FP - FP_VALUE] = r6;
-        v32_bot: nop;
-        call _get_asm;
-        
-        // extract the echo flag from top 4 bits held in FP_ADDRESS.
-        r7 = [FP - FP_ADDRESS];
-        r6 = r7 >> 28;  // shift upper nibble
-        p0 = r6;
-        p5 = [FP - FP_STATE_LUT_BASE];  
-        
-        // real memory address always have upper nibble as 0xf. Restore this received address.
-        r6 = 0xf;
-        r6 = r6 << 28;
-        r7 = r7 | r6;           // restored legit memory address!
-        [FP - FP_ADDRESS] = r7; // and save it back to variable reg
-        
-        // go back to figuring out the echo value from the 4bit value
-        p5 = (p5 + p0) << 2;    // 4 byte align.
-        r7 = [p5];              // echo-flag serves as index into STATE_LUT
-        [FP - FP_ECHO] = r7;    // save echo
-        call _get_asm;
-
-        // verify address value to be within Bank B...pretty much
-        r7 = [FP - FP_ADDRESS];
-        r6.h = 0xffef;
-        r6.l = 0xc003;
-        r5 = r7 & r6;
-        r6.h = 0xff80;
-        r6.l = 0x4000;
-        cc = r5 == r6;
-        if !cc jump invalid;
-        // valid address - update that address with new value
-        p5 = r7;
-        r6 = [FP - FP_VALUE];
-        [p5] = r6;                // danger danger, value should be 4-bytes. gtkclient take care of this!
-        
-        invalid:
-            call _get_asm;
-    rp_bot: nop;
-    // pulse _CSN high so we can give radio SPI commands again
-    call _get_asm;
-    r7 = SPI_CSN;
-    w[p1 + (FIO_FLAG_S - FIO_FLAG_D)] = r7;
-    call _get_asm;
-
-no_rxpacket:
-    // put it back in TX mode.
-    r7 = SPI_CE;    // clear CE
-    w[p1 + (FIO_FLAG_C - FIO_FLAG_D)] = r7;
-	call _get_asm;
-	//flush the TX fifo.
-	r7 = SPI_CSN;
-	w[p1 + (FIO_FLAG_C - FIO_FLAG_D)] = r7;
-	call _get_asm;
-	r6 = NOR_FLUSH_TX;
-	w[p3] = r6;
-	call _get_asm;
-	r7 = SPI_CSN;
-	w[p1 + (FIO_FLAG_S - FIO_FLAG_D)] = r7;
-	call _get_asm;
-
-	//now write config register with valid values.
-	r7 = SPI_CSN;
-	w[p1 + (FIO_FLAG_C - FIO_FLAG_D)] = r7;
-	call _get_asm;
-	r6 = NOR_CONFIG + 0x20; // SPI command to write to status register.
-	w[p3] = r6;
-	call _get_asm;
-	r6 = NOR_MASK_MAX_RT | NOR_EN_CRC |
-			NOR_CRC0 | NOR_PWR_UP | NOR_PRIM_TX;    // set status reg to this
-	w[p3] = r6;
-	call _get_asm;
-	r7 = SPI_CSN;
-	w[p1 + (FIO_FLAG_S - FIO_FLAG_D)] = r7;
-	call _get_asm;
-
-	//reload the watchdog timer -- we are alive! -- happens every transmit/receive cycle
-	p5.h = HI(WDOG_STAT);
-	p5.l = LO(WDOG_STAT);
-	[p5] = r7; //value doesn't matter.
-	call _get_asm;
-
-	//blink. first clear LED.
-	r7 = LED_BLINK;
-	w[p1 + (FIO_FLAG_C - FIO_FLAG_D)] = r7;
-	call _get_asm;
-
-	r7 = [FP - FP_BLINK];
-	r6 = 1 (z);
-	r7 = r7 + r6;
-	//flash once every 256 packets. 1/256 duty cycle.
-	r6 = r7 >> 4;
-	w[p1 + (FIO_FLAG_S - FIO_FLAG_D)] = r6;
-	bitclr(r7, 8);
-	[FP - FP_BLINK] = r7;
-	call _get_asm;
-
-	jump radio_loop;

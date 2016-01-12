@@ -40,6 +40,8 @@
     #include "../headstage2_firmware/memory_radio_basic.h"
 #elif RADIO_AGC
     #include "../headstage2_firmware/memory_AGC.h"
+#elif RADIO_AGC_IIR
+    #include "../headstage2_firmware/memory_AGC_IIR.h"
 #elif HEADSTAGE_TIM
     #include "../headstage_firmware/memory.h"
 #endif
@@ -228,7 +230,12 @@ void Headstage::setOsc(int chan){
 	//(to send, needs to keep correct channel name)
 	b[0] = 0.f; //assume there is already energy in the
 	b[1] = 0.f; //delay line.
-	b[2] = 32768.f - 45; //10 -> should be about 250Hz @ fs = 62.5khz
+#ifdef RADIO_AGC_IIR
+	b[2] = 32768.f - 573; //10 -> should be about 919Hz @ fs = 31250Hz
+    printf("Here we have special coef\n");
+#else
+    b[2] = 32768.f - 45; // Should be about 250Hz @ fs = 31250Hz
+#endif
 	b[3] = -16384.f;
 	
 	unsigned int* ptr = m_sendbuf[tid];
@@ -255,6 +262,7 @@ void Headstage::setOsc(int chan){
 	saveMessage(tid, "osc %d and %d thread %d", chan, chan+32, tid);
 	m_echo[tid]++;
 }
+
 void Headstage::setChans(int signalChain){
     // Tell headstage to transmit the specified stage of the signalChain.
 	int i;
@@ -280,16 +288,16 @@ void Headstage::setChans(int signalChain){
 		
         /* 4th offset is to get to the correct written delay.
             Tim's signal chain   | Allen's signal chain
-		0	mean from integrator |  original sample
+		0	mean from integrator |  original sample   <--- radio_basic end
 		1	gain                 |  integrated mean
 		2	saturated sample     |  AGC-gain
-		3	AGC out / LMS save   |  AGC-output
-		4	x1(n-1) / LMS out
-		5	x1(n-2)
-		6	x2(n-1) / y1(n-1)
-		7	x2(n-2) / y1(n-2)
-		8	x3(n-1) / y2(n-1)
-		9	x3(n-2) / y2(n-2)
+		3	AGC out / LMS save   |  AGC-output        <--- radio_agc end
+		4	x1(n-1) / LMS out    |  x0(n-1)/AGC-out
+		5	x1(n-2)              |  x0(n-2)
+		6	x2(n-1) / y1(n-1)    |  y1(n-1)
+		7	x2(n-2) / y1(n-2)    |  y1(n-2)
+		8	x3(n-1) / y2(n-1)    |  y2(n-1)/final out
+		9	x3(n-2) / y2(n-2)    |  y2(n-2)           <--- radio_agc_iir end
 		10	x2(n-1) / y3(n-1)
 		11	x2(n-2) / y3(n-2)
 		12	y4(n-1)
@@ -328,20 +336,19 @@ void Headstage::setAGC(int ch1, int ch2, int ch3, int ch4){
 		//scope these variables here, otherwise it's a pain
 		unsigned int* ptr = m_sendbuf[tid];
 		ptr += (m_sendW[tid] % m_sendL[tid]) * 8; //8 because we send 8 32-bit ints /pkt.
-		
+	
 		chan = chan & ( (128*(tid+1)-1) ^ 32); //the above mapping was not working for anything > 256
 		unsigned int p = 0;
 		
 		int kchan = chan &127; //(to send, needs to keep correct channel name)
-		
 		if(kchan >= 64) p += 1; //chs 64-127 pocessed following 0-63.
 		
         ptr[i*2+0] = htonl(echoHeadstage(m_echo[tid], A1 +
 			(A1_STRIDE*(kchan & 31) +
 			p*(A1_IIRSTARTA+A1_IIR) + 2)*4)); // 2 is the offset to the AGC target.
 		
-		int j = (int)(sqrt(32768 * m_c[chan]->getAGC()));
-		int k = (int)(sqrt(32768 * m_c[chan+32]->getAGC()));
+		int j = (int)(sqrt(32768 * m_c[chan]->getAGC()));       // update our AGC target
+		int k = (int)(sqrt(32768 * m_c[chan+32]->getAGC()));    // also it's neighboring, b/c why not?
         //printf("j=%u, k=%u\n", (unsigned int)j, (unsigned int)k);
 		unsigned int u = (unsigned int)((j&0xffff) | ((k&0xffff)<<16));
 		ptr[i*2+1] = htonl(u);
@@ -526,12 +533,54 @@ void Headstage::setBiquad(int chan, float* biquad, int biquadNum){
 	m_echo[tid]++;
 }
 void Headstage::resetBiquads(int chan){
+#ifdef HEADSTAGE_TIM
 	//reset all coefs in two channels.
 	setBiquad(chan, &(m_lowpass_coefs[0]), 0);
 	setBiquad(chan, &(m_highpass_coefs[0]), 1);
 	setBiquad(chan, &(m_lowpass_coefs[4]), 2);
 	setBiquad(chan, &(m_highpass_coefs[4]), 3);
+
+#elif RADIO_AGC_IIR
+    /* The only change that would happen is turning it into an oscillator
+     * Thus resetting just change the coefficients of the first biquad back.
+     */
+    // reset all coefs in two channels.
+	float b[4];
+	unsigned int u;
+	int i,j;
+	int tid = chan/128;
+	//(to send, needs to keep correct channel name)
+	b[0] = 6004.f; //assume there is already energy in the
+	b[1] = 12008.f; //delay line.
+	b[2] = -4594.f; //10 -> should be about 919Hz @ fs = 31250Hz
+	b[3] = -3039.f;
+	
+	unsigned int* ptr = m_sendbuf[tid];
+	ptr += (m_sendW[tid] % m_sendL[tid]) * 8; //8 because we send 8 32-bit ints /pkt.
+	
+	//chan = chan & (0xff ^ 32); //map to the lower channels.
+		// e.g. 42 -> 10,42; 67 -> 67,99 ; 100 -> 68,100
+	chan = chan & ( (128*(tid+1)-1) ^ 32); //the above mapping was not working for anything > 256
+		
+	int kchan = chan & 127; 
+	
+	for(i=0; i<4; i++){
+		
+			unsigned int p = 0;
+			if(kchan >= 64) p += 1; //chs 64-127 pocessed following 0-63.
+			ptr[i*2+0] = htonl(echoHeadstage(m_echo[tid], A1 +
+				(A1_STRIDE*(kchan & 31) +
+				A1_IIRSTARTA + p*(A1_IIRSTARTB-A1_IIRSTARTA) + i)*4));
+			j = (int)(b[i]);
+			u = (unsigned int)((j&0xffff) | ((j&0xffff)<<16));
+			ptr[i*2+1] = htonl(u);
+	}
+	m_sendW[tid]++;
+	saveMessage(tid, "Reset biquads: %d and %d thread %d", chan, chan+32, tid);
+	m_echo[tid]++;
+#endif
 }
+
 void Headstage::setFilter2(int chan){
 	//reset all coefs in two channels.
 	setBiquad(chan, &(m_lowpass_coefs2[0]), 0);

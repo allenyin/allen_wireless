@@ -29,12 +29,15 @@
 #define REG5  0x8500    // get back 0xff00
 #define REG6  0x8600    // get back 0xff00
 #define REG7  0x8700    // get back 0xff00
+
+// Intan REG8-13, configured for [150Hz, 7.5kHz]
 #define REG8  0x8816    // get back 0xff16
 #define REG9  0x8900    // get back 0xff00
 #define REG10 0x8a17    // get back 0xff17
 #define REG11 0x8b00    // get back 0xff00
 #define REG12 0x8c15    // get back 0xff15
 #define REG13 0x8d00    // get back 0xff00
+
 #define REG14 0x8eff    // get back 0xffff
 #define REG15 0x8fff    // get back 0xffff
 #define REG16 0x90ff    // get back 0xffff
@@ -69,7 +72,7 @@ _get_asm:
        FP_CHAN+4 (after FP_CHAN is already incremented).
     */
 wait_samples_main:
-    r3 = w[p0 + (SPORT1_STAT - SPORT0_RX)];
+    r3 = w[p0 + (SPORT0_STAT - SPORT0_RX)];
     cc = bittst(r3, 0);
     if !cc jump wait_samples_main;
 
@@ -286,7 +289,7 @@ _clearirq_asm: //just write the status register via spi to clear.
 
 _waitirq_asm:
 	[--sp] = rets;
-	r7 = 182; // should take max 360us = 178. min @ 1msps = 160
+	r7 = 180; 
 	[fp - FP_TIMER] = r7;
 waitirq_loop:
 	r6 = w[p1];

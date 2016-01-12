@@ -45,6 +45,8 @@
     #include "../headstage2_firmware/memory.h"
 #elif RADIO_AGC
     #include "../headstage2_firmware/memory_AGC.h"
+#elif RADIO_AGC_IIR
+    #include "../headstage2_firmware/memory_AGC_IIR.h"
 #elif HEADSTAGE_TIM
     #include "../headstage_firmware/memory.h"
 #endif
@@ -103,7 +105,9 @@ int    g_channel[4] = {0, 32*NSCALE, 64*NSCALE, 96*NSCALE};
 #ifdef RADIO_BASIC
 int g_signalChain = 0;
 #elif RADIO_AGC
-int g_signalChain = 2;
+int g_signalChain = 3;
+#elif RADIO_AGC_IIR
+int g_signalChain = 8;
 #else
 int g_signalChain = 10; //what to sample in the headstage signal chain.
 #endif
@@ -1475,6 +1479,8 @@ void updateChannelUI(int k){
 #ifdef RADIO_BASIC
 #elif RADIO_AGC
 	gtk_adjustment_set_value(g_agcSpin[k], g_c[ch]->getAGC());
+#elif RADIO_AGC_IIR
+    gtk_adjustment_set_value(g_agcSpin[k], g_c[ch]->getAGC());
 #else
 	gtk_adjustment_set_value(g_agcSpin[k], g_c[ch]->getAGC());
 	gtk_adjustment_set_value(g_gainSpin[k], g_c[ch]->getGain());
@@ -1630,6 +1636,8 @@ static void lmsRadioCB(GtkWidget *button, gpointer p){
 		else g_headstage->setLMS(false);
 	}
 }
+
+#ifdef HEADSTAGE_TIM
 static void filterRadioCB(GtkWidget *button, gpointer p){
 	//only sets the currently viewed channels.
 	if(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(button))){
@@ -1650,6 +1658,28 @@ static void filterRadioCB(GtkWidget *button, gpointer p){
 		}
 	}
 }
+#elif RADIO_AGC_IIR
+static void filterRadioCB(GtkWidget *button, gpointer p) {
+    // only sets the currently viewed channels.
+    if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(button))) {
+        int i = (int)((long long)p & 0xf);
+        for (int j=0; j<4; j++) {
+            int c = g_channel[j];
+            bool same = false;
+            for (int k=j-1; k>=0; k--) {
+                if (c == (g_channel[k] & (0^32)))
+                    same = true;
+            }
+            if (!same) {
+                if (i == 0) g_headstage->resetBiquads(c);
+                else if (i == 1) g_headstage->setOsc(c);
+                else g_headstage->resetBiquads(c);
+            }
+        }
+    }
+}
+#endif
+
 static void signalChainCB( GtkComboBox *combo, gpointer){
     gchar *string = gtk_combo_box_get_active_text( combo );
     printf( "signalChain: >> %s <<\n", ( string ? string : "NULL" ) );
@@ -2069,7 +2099,12 @@ int main(int argn, char **argc)
 								  	g_c[g_channel[i]]->getAGC(),
 									0, 32000, 1000,
 								  	agcSpinCB, i);
-
+#elif RADIO_AGC_IIR
+        // The AGC target.
+		g_agcSpin[i] = mk_spinner("AGC target", bx2,
+								  	g_c[g_channel[i]]->getAGC(),
+									0, 32000, 1000,
+								  	agcSpinCB, i);
 #else
 		g_gainSpin[i] = mk_spinner("gain", bx3,
                                 g_c[g_channel[i]]->getGain(),
@@ -2105,10 +2140,23 @@ int main(int argn, char **argc)
     };
 #elif RADIO_AGC
     const char* signalNames[W1_STRIDE] = {
-        "0 Samples from Intan",   // value in unsigned, binary offset format
-        "1 Integrated mean",      // value in signed.
+        "0 Samples from Intan",   // value is signed.
+        "1 Integrated mean",      // value is signed.
         "2 AGC gain",             // value is always positive, between 0-127.
         "3 AGC out"               // value is AGCgain*(sample-mean), signed.
+    };
+#elif RADIO_AGC_IIR
+    const char* signalNames[W1_STRIDE] = {
+        "0 Samples from Intan", // value is signed
+        "1 Integrated mean",    // value is signed
+        "2 AGC gain",           // value is always positive, between 0-127
+        "3 AGC out",            // value is AGCgain*(sample-mean), signed.
+        "4 x0(n-1)/AGC out",        
+        "5 x0(n-2)",
+        "6 y1(n-1)",            // shared between LPF1 and HPF1
+        "7 y1(n-2)",            // shared between LPF1 and HPF1
+        "8 y2(n-1)/final output",
+        "9 y2(n-2)"
     };
 #else
 	const char* signalNames[W1_STRIDE] = {
@@ -2146,6 +2194,16 @@ int main(int argn, char **argc)
 	button = gtk_button_new_with_label ("Set all AGC targets from A");
 	g_signal_connect(button, "clicked", G_CALLBACK (agcSetAll),0);
 	gtk_box_pack_start (GTK_BOX (box1), button, TRUE, TRUE, 0);
+#elif RADIO_AGC_IIR
+    //and a AGC set-all button.
+	button = gtk_button_new_with_label ("Set all AGC targets from A");
+	g_signal_connect(button, "clicked", G_CALLBACK (agcSetAll),0);
+	gtk_box_pack_start (GTK_BOX (box1), button, TRUE, TRUE, 0);
+    
+    //add osc / reset radio buttons
+    mk_radio("500-9kHz,osc",2,
+            box1,true,"filter",filterRadioCB);
+
 #else
     button = gtk_button_new_with_label ("Set all gains from A");
 	g_signal_connect(button, "clicked", G_CALLBACK (gainSetAll),0);
@@ -2414,7 +2472,9 @@ int main(int argn, char **argc)
 #ifdef RADIO_BASIC
     gtk_combo_box_set_active(GTK_COMBO_BOX(combo), 0);
 #elif RADIO_AGC
-    gtk_combo_box_set_active(GTK_COMBO_BOX(combo), 2);
+    gtk_combo_box_set_active(GTK_COMBO_BOX(combo), 3);
+#elif RADIO_AGC_IIR
+    gtk_combo_box_set_active(GTK_COMBO_BOX(combo), 8);
 #else
 	gtk_combo_box_set_active(GTK_COMBO_BOX(combo), 12);
 #endif

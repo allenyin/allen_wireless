@@ -17,16 +17,19 @@
 #define REG2  0x8204    // get back 0xff04
 #define REG3  0x8300    // get back 0xff00
 #define REG4  0x8480    // get back 0xff80
-#define REG4_DSP 0x8494 // get back 0xff94
+#define REG4_DSP 0x8494 // get back 0xff94 -- cutoff at 375Hz
 #define REG5  0x8500    // get back 0xff00
 #define REG6  0x8600    // get back 0xff00
 #define REG7  0x8700    // get back 0xff00
+
+// Intan bandpass: [150Hz, 7.5kHz]
 #define REG8  0x8816    // get back 0xff16
 #define REG9  0x8900    // get back 0xff00
 #define REG10 0x8a17    // get back 0xff17
 #define REG11 0x8b00    // get back 0xff00
 #define REG12 0x8c15    // get back 0xff15
 #define REG13 0x8d00    // get back 0xff00
+
 #define REG14 0x8eff    // get back 0xffff
 #define REG15 0x8fff    // get back 0xffff
 #define REG16 0x90ff    // get back 0xffff
@@ -84,6 +87,8 @@
 #define SAMPLE_PER_CH_MINUS_3   147
 #define TOTAL_CONVERT           4800   // 32*SAMPLE_PER_CH
 #define TOTAL_CONVERT_MINUS_3   4797
+
+/* Note in here, the first Intan sample saved is ch0! No need for correction later */
 
 .global _radio_bidi_asm
 _radio_bidi_asm:

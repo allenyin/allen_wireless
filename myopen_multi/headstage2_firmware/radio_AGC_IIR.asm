@@ -21,16 +21,16 @@
 #define REG2  0x8204    // get back 0xff04
 #define REG3  0x8300    // get back 0xff00
 
-#define REG4              0x8480 // get back 0xff80
-#define REG4_DSP_UNSIGNED 0x8484 // get back 0xff94
-#define REG4_DSP_SIGNED   0x84D4 // get back 0xffD4
-#define REG4_SIGNED       0x84C4 // get back 0xffC4
+#define REG4              0x8480 // get back 0xff80 - no DSP, offset binary
+#define REG4_DSP_UNSIGNED 0x8494 // get back 0xff94 - DSP, offset binary
+#define REG4_DSP_SIGNED   0x84D4 // get back 0xffD4 - DSP, signed output
+#define REG4_SIGNED       0x84C4 // get back 0xffC4 - no DSP, signed output
 
 #define REG5  0x8500    // get back 0xff00
 #define REG6  0x8600    // get back 0xff00
 #define REG7  0x8700    // get back 0xff00
 
-// Intan REG8-13, configured from [250Hz, 10kHz]
+// Intan REG8-13, configured for [250Hz, 10kHz]
 #define REG8  0x8811    // get back 0xff11. Changed from 0x8816 on 12/28/2015
 #define REG9  0x8900    // get back 0xff00
 #define REG10 0x8a10    // get back 0xff10. Changed from 0x8817 on 12/28/2015
@@ -154,7 +154,7 @@ wait_samples_main:
     a0 = abs a0, a1 = abs a1; // Need to compare abs-scaled deviation to target.
     
     // Signed-int mode for MAC. Result should be 0x7fff or 0x8000, tell us if target is smaller or not.
-    // r6.l = 16384 (0.5), r6.h = 1 (AGC-enable). i0@integ_coef1
+    // r6.l = 16384 (0.5), r6.h = 1 (AGC-enable). i0@LPF1 b0
     r4.l = (a0 -= r7.l * r7.l), r4.h = (a1 -= r7.h * r7.h) (is) || r6 = [i0++];
 
     /* Update AGC-gain (trick math here):
@@ -170,16 +170,40 @@ wait_samples_main:
     a0 = r5.l * r6.l, a1 = r5.h * r6.l;     // load a0 with scaled AGC-gain
     r3.l = (a0 -= r4.l * r6.h), r3.h = (a1 -= r4.h * r6.h) (s2rnd); // within certain range gain doesnt change
     r3 = abs r3 (v);
-    [i2++] = r3 || r2 = [i1++];    // Save AGC-gain, i2@final sample. i1@next sample
-    [i2++] = r0;                   // Save final sample, i2@next sample
+    [i2++] = r3 || r2 = [i1++];    // Save AGC-gain, i2@final sample. i1@ x0(n-1)
+    [i2++] = r0;                   // Save final sample, i2@ x0(n-1)
 
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+.align 8
+    /* Start 2 back-to-back direct-form 1 biquads. At this point,
+        r0 = final AGC sample
+        i0 @ LPF1 b0
+        i1 @ x0(n-1) of current channel.
+        i2 @ x0(n-1) of current channel.
 
+       If i1 and i2 are dereferenced (read out) in the same cycle, the processor will stall -- each of the
+       1k SRAM memory banks has only one port.
+   */
+   r5 = [i0++] || r1 = [i1++];  // r5=b0(LPF), r1=x0(n-1); i0@b1(LPF), i1@x0(n-2)
+   a0 = r0.l * r5.l, a1 = r0.h * r5.h || r6 = [i0++] || r2 = [i1++];    // r6=b1(LPF), r2=x0(n-2)
+   a0 += r1.l * r6.l, a1 += r1.h * r6.h || r7 = [i0++] || r3 = [i1++];  // r7=a0(LPF), r3=y1(n-1)
+   a0 += r2.l * r5.l, a1 += r2.h * r5.h || r5 = [i0++] || r4 = [i1++];  // r5=a1(LPF), r4=y1(n-2)
+   a0 += r3.l * r7.l, a1 += r3.h * r7.h || [i2++] = r0;                 // update x0(n-1), i2@x0(n-2)
+   r0.l = (a0 += r4.l * r5.l), r0.h = (a1 += r4.h * r5.h) (s2rnd) || [i2++] = r1; // r0=y1(n), update x0(n-2)
 
+   // now i0@b0(HPF1), i1@y2(n-1). i2@y1(n-1)
+   r5 = [i0++] || [i2++] = r0;  // r5=b0(HPF1), update y1(n-1); i0@b1(HPF1), i2@y1(n-2)
+   a0 = r0.l * r5.l, a1 = r0.h * r5.h || r6 = [i0++] || [i2++] = r3;    // r6=b1(HPF1). update y1(n-2)
+   a0 += r3.l * r6.l, a1 += r3.h * r6.h || r7 = [i0++] || r1 = [i1++];  // r7=a0(HPF1). r1=y2(n-1)
+   a0 += r4.l * r5.l, a1 += r4.h * r5.h || r2 = [i1++];                 // r2=y2(n-2)
+   a0 += r1.l * r7.l, a1 += r1.h * r7.h || r5 = [i0++];                 // r5=a1(HPF1)
+   r0.l = (a0 += r2.l * r5.l), r0.h = (a1 += r2.h * r5.h) (s2rnd);      // r0=y2(n)
+
+   // now i0@next ch integ1; i1@next sample; i2@y2(n-1)
+   [i2++] = r0; // save current y2(n) in y2(n-1)'s spot. i2 @ y2(n-2)
+   [i2++] = r1; // save current y2(n-1) in y2(n-2)'s spot. i2 @ next sample
+
+   // all pointers are ready for next two channels of this group.
+   // i0 @ next ch integ1; i1,i2 @ next sample.
 
 //---------------------------------------------------------------------------------------
     r2.h = 0XFFFF;
@@ -224,13 +248,36 @@ nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
     r3.l = (a0 -= r4.l * r6.h), r3.h = (a1 -= r4.h * r6.h) (s2rnd);
     r3 = abs r3 (v);
     [i2++] = r3 || r2 = [i1++]; // Save AGCgain. i2@final sample. i1@next sample
-    [i2++] = r0;                // Save final sample, i2@next sample.
+    [i2++] = r0;                // Save final sample, i2@x0(n-1)
 
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-nop;nop;nop;nop;nop;nop;nop;nop;nop;
+.align 8
+    /* Start 2 back-to-back direct-form 1 biquads. At this point,
+        r0 = final AGC sample
+        i0 @ LPF1 b0
+        i1 @ x0(n-1) of current channel.
+        i2 @ x0(n-1) of current channel.
+
+       If i1 and i2 are dereferenced (read out) in the same cycle, the processor will stall -- each of the
+       1k SRAM memory banks has only one port.
+   */
+   r5 = [i0++] || r1 = [i1++];  // r5=b0(LPF), r1=x0(n-1); i0@b1(LPF), i1@x0(n-2)
+   a0 = r0.l * r5.l, a1 = r0.h * r5.h || r6 = [i0++] || r2 = [i1++];    // r6=b1(LPF), r2=x0(n-2)
+   a0 += r1.l * r6.l, a1 += r1.h * r6.h || r7 = [i0++] || r3 = [i1++];  // r7=a0(LPF), r3=y1(n-1)
+   a0 += r2.l * r5.l, a1 += r2.h * r5.h || r5 = [i0++] || r4 = [i1++];  // r5=a1(LPF), r4=y1(n-2)
+   a0 += r3.l * r7.l, a1 += r3.h * r7.h || [i2++] = r0;                 // update x0(n-1), i2@x0(n-2)
+   r0.l = (a0 += r4.l * r5.l), r0.h = (a1 += r4.h * r5.h) (s2rnd) || [i2++] = r1; // r0=y1(n), update x0(n-2)
+
+   // now i0@b0(HPF1), i1@y2(n-1). i2@y1(n-1)
+   r5 = [i0++] || [i2++] = r0;  // r5=b0(HPF1), update y1(n-1); i0@b1(HPF1), i2@y1(n-2)
+   a0 = r0.l * r5.l, a1 = r0.h * r5.h || r6 = [i0++] || [i2++] = r3;    // r6=b1(HPF1). update y1(n-2)
+   a0 += r3.l * r6.l, a1 += r3.h * r6.h || r7 = [i0++] || r1 = [i1++];  // r7=a0(HPF1). r1=y2(n-1)
+   a0 += r4.l * r5.l, a1 += r4.h * r5.h || r2 = [i1++];                 // r2=y2(n-2)
+   a0 += r1.l * r7.l, a1 += r1.h * r7.h || r5 = [i0++];                 // r5=a1(HPF1)
+   r0.l = (a0 += r2.l * r5.l), r0.h = (a1 += r2.h * r5.h) (s2rnd);      // r0=y2(n)
+
+   // now i0@next ch integ1; i1@next sample; i2@y2(n-1)
+   [i2++] = r0; // save current y2(n) in y2(n-1)'s spot. i2 @ y2(n-2)
+   [i2++] = r1; // save current y2(n-1) in y2(n-2)'s spot. i2 @ next sample.
 
 //----------------------------------------------------------------------------------------  
     r0 = 0; // not doing templat match, so this is the dummy match
@@ -595,6 +642,19 @@ lt2_top:
     r0.l = 9915;    w[i0++] = r0.l;     // AGC target sqrt = sqrt(6000*16384), Q15.
     r0.l = 16384;   w[i0++] = r0.l;     // Q15, =0.5
     r0.l = 1;       w[i0++] = r0.l;     // Set this to zero to disable AGC. Q7.8
+
+    /* IIR filter, biquad implementation. */
+    // LPF1: 9000Hz cutoff 
+    r0 = 6004 (x); w[i0++] = r0.l; w[i0++] = r0.l;  // b0
+    r0 = 12008(x); w[i0++] = r0.l; w[i0++] = r0.l;  // b1
+    r0 = -4594(x); w[i0++] = r0.l; w[i0++] = r0.l;  // a0
+    r0 = -3039(x); w[i0++] = r0.l; w[i0++] = r0.l;  // a1
+
+    // HPF1: 500Hz cutoff
+	r0 = 15260 (x);	w[i0++] = r0.l; w[i0++] = r0.l; // b0
+	r0 = -30519(x);w[i0++] = r0.l; w[i0++] = r0.l; // b1
+	r0 = 30442 (x);	w[i0++] = r0.l; w[i0++] = r0.l; // a0
+	r0 = -14213(x);w[i0++] = r0.l; w[i0++] = r0.l; // a1
 lt2_bot: nop;
 
 lt_bot: nop;
@@ -748,7 +808,7 @@ sport_configs:
     call wait_samples;                     // call 4
     
     //r0 = REG4 (z);
-    r0 = REG4_SIGNED (z);  // this with DSP filter enabled, signed samples
+    r0 = REG4_DSP_SIGNED (z);  // this with DSP filter enabled, signed samples
     r0 = r0 << SHIFT_BITS;
     [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
     [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
