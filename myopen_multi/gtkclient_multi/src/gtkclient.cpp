@@ -782,6 +782,7 @@ static gboolean rotate (gpointer user_data){
 void saveState(){
 	Configuration::parameters params;
 	Configuration::state state;
+    printf("Saving STATE!\n");
 	
 	for(int r=0; r<NSCALE; r++)
 	{
@@ -1943,7 +1944,6 @@ int main(int argn, char **argc)
 	GtkWidget *frame;
 	GtkWidget *notebook;
 	GtkWidget *button, *combo;
-	//GtkWidget *paned2;
 
 	char destIP[256];
 	for(int i=0;i<256;i++) destIP[i] = 0;
@@ -1960,6 +1960,7 @@ int main(int argn, char **argc)
 	std::fstream input(g_stateFile.c_str(), std::ios::in | std::ios::binary);
 	
 	if (!state.ParseFromIstream(&input)){
+        printf("Loading state.bin unsuccessful, creating state.bin file.\n");
 		state.set_default_configuration(g_configFile);
 		std::fstream output(g_stateFile.c_str(), std::ios::out | std::ios::trunc | std::ios::binary);
 		if (!state.SerializeToOstream(&output)) {
@@ -1967,13 +1968,14 @@ int main(int argn, char **argc)
 		}
 	}
 	else{
-		g_configFile = state.default_configuration();
+        printf("Loading state.bin successful.\n");
+		//g_configFile = state.default_configuration();
 	}
 	input.close();
 	input.open(g_configFile.c_str(), std::ios::in | std::ios::binary);
 	
 	if (!params.ParseFromIstream(&input)){
-		printf("Failed to load from file, intialize as default\n");
+		printf("Failed to load from configuration.bin, intialize as default\n");
 		for(int i=0; i<NSCALE; i++){
 		  for(int c=0; c<128; c++){
 			int id = c+(128*i); 
@@ -1983,6 +1985,7 @@ int main(int argn, char **argc)
 		//also initialize parameters completely, and save to file
 	}
 	else{
+        printf("Loading configs from configuration.bin...\n");
 		for(int i=0; i<4; i++){
 			int chan = params.selected(i);
 			if(chan > (128*NSCALE))
