@@ -2352,15 +2352,21 @@ int main(int argn, char **argc)
 	gtk_box_pack_start (GTK_BOX (box1), bx, TRUE, TRUE, 0);
 	gtk_widget_show(g_confFileLabel);
 	
+    /* Code for setting current configuration as a custom file name.
+     * I think this causes confusion for users, therefore configurations will
+     * be saved to and loaded from only "configuration.bin" in the current
+     * directory
+
 	bx = gtk_hbox_new (FALSE, 3);
 	button = gtk_button_new_with_label ("Set Configuration As");
 	g_signal_connect(button, "clicked", G_CALLBACK (setConfFile),
 					 (gpointer*)window);
 	gtk_box_pack_start (GTK_BOX (bx), button, FALSE, FALSE, 0);
-		//button = gtk_button_new_with_label ("Load Conf");
+    //button = gtk_button_new_with_label ("Load Conf");
 	//g_signal_connect(button, "clicked", G_CALLBACK (closeSaveFile),0);
 	//gtk_box_pack_start (GTK_BOX (bx), button, FALSE, FALSE, 0);
 	gtk_box_pack_start (GTK_BOX (box1), bx, TRUE, TRUE, 0);
+    */
 
 	bx = gtk_hbox_new (FALSE, 3);
 	//add a pause / go button (applicable to all)
