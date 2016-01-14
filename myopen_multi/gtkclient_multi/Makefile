@@ -7,8 +7,8 @@ JACK = false
 MUDFLAP = false
 STACKPROTECTOR = false
 HEADSTAGE_TIM = false 
-RADIO_BASIC = false
-RADIO_AGC = false
+RADIO_BASIC = false 
+RADIO_AGC = false 
 RADIO_AGC_IIR = true 
 
 CC  = gcc
