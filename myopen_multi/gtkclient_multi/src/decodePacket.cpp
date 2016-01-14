@@ -1,6 +1,10 @@
 #include <stdio.h>
 //#include "../firmware_stage9_tmpl/decoder.h"
-#include "../headstage_firmware/decoder.h"
+#ifdef HEADSTAGE_TIM
+    #include "../headstage_firmware/decoder.h"
+#else
+    #include "../headstage2_firmware/decoder.h"
+#endif
 #include "packet.h"
 
 //decode the template-match part of a packet

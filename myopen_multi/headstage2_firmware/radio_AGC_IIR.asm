@@ -280,14 +280,15 @@ wait_samples_main:
    [i2++] = r1; // save current y2(n-1) in y2(n-2)'s spot. i2 @ next sample.
 
 //----------------------------------------------------------------------------------------  
-    r0 = 0; // not doing templat match, so this is the dummy match
+    r0 = 0; // not doing template match, so this is the dummy match
 
     p0 = [FP - FP_CHAN];
     p1 = [FP - FP_ENC_LUT_BASE];
     p5 = [FP - FP_MATCH_BASE];
 
 	//[ch 96 B][ch 32 B][ch 96 A][ch 32 A][ch 64 B][ch 0 B][ch 64 A][ch 0 A]
-    r0 = r0.b (z);
+    //r0 = r0.b (z);
+    r0 = 0xaa (z);
     r6 = p0;            // r6 = current group of channels
     p5 = p5 + p0;
     r1 = b[p5];
@@ -337,7 +338,7 @@ wait_samples_main:
     r5 = [FP - FP_QPACKETS];
     p1 = r5;                        // used to index to state_lut; hide 4 cycle latency
     p0 = [FP - FP_STATE_LUT_BASE];
-    p5 = [FP - FP_MATCH_PTR7];      // must cycle through 256 bytes.
+    //p5 = [FP - FP_MATCH_PTR7];      // must cycle through 256 bytes.
     r5 += 1;                        // one more packet on the queue.
     [FP - FP_QPACKETS] = r5;        // write-back num-pkt
     p0 = (p0 + p1) << 2;            // 4 byte align
@@ -345,25 +346,31 @@ wait_samples_main:
     r7 = [p0];
     
     // read in template match.
-    r0 = [p5++];
-    r1 = [p5++];
+    //r0 = [p5++];
+    //r1 = [p5++];
+
+    // p5 and and anyting related to FP_MATCH_PTR7 is set to 0, if edited it fucks with the 
+    // echo bits in the template match bytes, and screws with the transmission.
+    r0 = 0;
+    r1 = 0;
+
     // flag upper bit in each byte with QS & echo
     r0 = r0 | r7;
     r1 = r1 | r5;
-    r7 = p5;        // make p5 -- FP_MATCH_PTR7 loop
+    //r7 = p5;        // make p5 -- FP_MATCH_PTR7 loop
     p0 = -36;       // because both increment and decrement are post!
                     // 32 8-bit words every 4 chans = 128 chan + 4 post-dec offset.
-    p5 = p5 + p0;   // move to 8b encoding region; clear..
-    bitclr(r7,6);   // loop within 64 bytes.
-    bitset(r7,5);   // stay in 7b region.
-    [FP - FP_MATCH_PTR7] = r7;  // write back ptr
+    //p5 = p5 + p0;   // move to 8b encoding region; clear..
+    //bitclr(r7,6);   // loop within 64 bytes.
+    //bitset(r7,5);   // stay in 7b region.
+    //[FP - FP_MATCH_PTR7] = r7;  // write back ptr
 
     // write template match to pkt
     [p4++] = r0;
     [p4++] = r1;
     r4 = 0;         // clear sample count in qs (also reset templat match in 8b region).
-    [p5--] = r4;
-    [p5--] = r4;
+    //[p5--] = r4;
+    //[p5--] = r4;
 
 end_txchan_qs:
     [FP - FP_QS] = r4;  // if we just finished a pkt, QS=0, otherwise it was incremented already.
