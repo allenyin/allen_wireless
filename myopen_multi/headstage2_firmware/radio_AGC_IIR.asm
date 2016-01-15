@@ -279,6 +279,15 @@ wait_samples_main:
    [i2++] = r0; // save current y2(n) in y2(n-1)'s spot. i2 @ y2(n-2)
    [i2++] = r1; // save current y2(n-1) in y2(n-2)'s spot. i2 @ next sample.
 
+   nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+   nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+   nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+   nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+   nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+   nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+   nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+   nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+
 //----------------------------------------------------------------------------------------  
     r0 = 0; // not doing template match, so this is the dummy match
 

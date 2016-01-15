@@ -572,6 +572,12 @@ _radio_bidi_asm:
     l2 = l1;
     b2 = b1;
 
+    // i3 is for reading/writing template delays (post-filter)
+    i3.l = LO(T1);
+    i3.h = HI(T1);
+    l3 = T1_LENGTH;
+    b3 = i3;
+
     /* Next, we go through circular buffer A1, and set up the coefficients needed for the 
        signal chain. 
 
@@ -581,7 +587,16 @@ _radio_bidi_asm:
        The memory structure of A1 is then made up of 32 A1_strides(also see memory_map spreadsheet), 
        each A1 stride contains the following:
 
-       AGC ceofs
+       Aperture B  (2 32-bit words)         <--- high address
+       Templates B (16 32-bit words)
+       Aperture A  (2 32-bit words)
+       Templates A (16 32-bit words)
+       IIR coefs   (8 32-bit words) --- 
+       AGC coefs   (2 32-bit words)    |
+       Integ coefs (2 32-bit words)  ---
+       IIR coefs   (8 32-bit words) ---
+       AGC coefs   (2 32-bit words)    |
+       Integ coefs (2 32-bit words)  ---    <--- low address
 
        There are a total of 32 groups of 4-channels. Each each loop of lt_top, we populate 1 A1-stride.
        Each lt2_top loop populates the 2 of the 4-channels in a particular group.
@@ -633,6 +648,79 @@ lt2_top:
 	r0 = 30442 (x);	w[i0++] = r0.l; w[i0++] = r0.l; // a0
 	r0 = -14213(x);w[i0++] = r0.l; w[i0++] = r0.l; // a1
 lt2_bot: nop;
+
+    // After all the filtering, templates for each channel/neuron
+    // 127 113 102 111 132 155 195 235 250 224 187 160 142 126
+	r0 = 127; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8; //this is the 'new' sample.
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //16 template b is in order.
+	r0 = 113; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8; //not efficient but whatever.
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //1
+	r0 = 102; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //2
+	r0 = 111; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //3
+	r0 = 132; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //4
+	r0 = 155; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //5
+	r0 = 195; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //6
+	r0 = 235; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //7
+	r0 = 250; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //8
+	r0 = 224; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //9
+	r0 = 187; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //10
+	r0 = 160; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //11
+	r0 = 142; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //12
+	r0 = 126; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //13
+	r0 = 120; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //14
+	r0 = 110; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //15
+	//aperture: default small.
+	r0.l = 56; r0.h = 56; [i0++] = r0; [i0++] = r0;
+
+	// 127 113 102 111 132 155 195 235 250 224 187 160 142 127
+	r0 = 127; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8; //not efficient but whatever.
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //1
+	r0 = 113; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //2
+	r0 = 102; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //3
+	r0 = 111; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //4
+	r0 = 132; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //5
+	r0 = 155; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //6
+	r0 = 195; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //7
+	r0 = 235; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //8
+	r0 = 250; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //9
+	r0 = 224; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //10
+	r0 = 187; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //11
+	r0 = 160; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //12
+	r0 = 142; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //13
+	r0 = 127; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //14
+	r0 = 110; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //15
+	r0 = 95; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //16
+	//aperture: default small.
+	r0.l = 56; r0.h = 56; [i0++] = r0; [i0++] = r0;
 
 lt_bot: nop;
 
