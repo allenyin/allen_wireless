@@ -386,7 +386,7 @@ _radio_bidi_asm:
     r0.h = HI(MATCH);
     [FP - FP_MATCH_BASE] = r0;  // FP_MATCH_BASE points to start of template-match buffer.
     r0.l = LO(MATCH + 32);
-    r0.h = LO(MATCH + 32);
+    r0.h = HI(MATCH + 32);
     [FP - FP_MATCH_PTR7] = r0;  // FP_MATCH_PTR7 points to the 7b-encoded version of temp-matches.
 
     // LED blinker state

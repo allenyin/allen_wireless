@@ -600,7 +600,7 @@ _radio_bidi_asm:
     r0.h = HI(MATCH);
     [FP - FP_MATCH_BASE] = r0;  // FP_MATCH_BASE points to start of template-match buffer.
     r0.l = LO(MATCH + 32);
-    r0.h = LO(MATCH + 32);
+    r0.h = HI(MATCH + 32);
     [FP - FP_MATCH_PTR7] = r0;  // FP_MATCH_PTR7 points to the 7b-encoded version of temp-matches.
 
     // LED blinker state
@@ -753,9 +753,9 @@ lt2_top:
 
     // HPF1: 500Hz cutoff
 	r0 = 15260 (x);	w[i0++] = r0.l; w[i0++] = r0.l; // b0
-	r0 = -30519(x);w[i0++] = r0.l; w[i0++] = r0.l; // b1
+	r0 = -30519(x); w[i0++] = r0.l; w[i0++] = r0.l; // b1
 	r0 = 30442 (x);	w[i0++] = r0.l; w[i0++] = r0.l; // a0
-	r0 = -14213(x);w[i0++] = r0.l; w[i0++] = r0.l; // a1
+	r0 = -14213(x); w[i0++] = r0.l; w[i0++] = r0.l; // a1
 lt2_bot: nop;
 
     // After all the filtering, templates for each channel/neuron
