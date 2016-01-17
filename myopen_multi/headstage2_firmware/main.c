@@ -1,10 +1,10 @@
 #include <cdefBF532.h>
-#include "memory.h"
 #include "headstage.h"
 #include "nordic_regs.h"
 #include "print.h"
 #include "spi.h"
 #include "usb.h"
+#include "memory.h"
 
 u32 g_excregs[8+6+16] ; //the regular data registers + pointer registers. 
 

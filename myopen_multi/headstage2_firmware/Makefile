@@ -7,10 +7,10 @@
 #FIRMWARE_VERSION = intan_setup_test2
 #FIRMWARE_VERSION = radio_basic
 #FIRMWARE_VERSION = radio_AGC
-FIRMWARE_VERSION = radio_AGC_IIR
+#FIRMWARE_VERSION = radio_AGC_IIR
 #FIRMWARE_VERSION = IIR_oscillator_test
+FIRMWARE_VERSION = radio_AGC_IIR_SAA
 
-$(info FIRMWARE_VERSION is $(FIRMWARE_VERSION))
 
 ASMSRCS = crt0.o 
 COMMON = print.o util.o spi.o
@@ -21,52 +21,41 @@ OPT = -O2
 CPUDEFINES = -D__ADSPBF532__ -D__BLACKFIN__
 INCLUDES = -I. -I/opt/uClinux/bfin-elf/bfin-elf/include/ -I../common_bfin/
 ASMFLAGS = -x assembler-with-cpp $(INCLUDES) $(CPUDEFINES) -Wall
+ASMFLAGS += -mcpu=bf532 -include memory.h -include defBF532.h -D__ASM__ -g
+CFLAGS = $(INCLUDES) $(CPUDEFINES) -mcpu=bf532 $(OPT) -include memory.h -Wall
 # note: -O means debug symbols are not loaded.
 
+# For the different firmware version, different memory.h header is used
 ifeq ($(FIRMWARE_VERSION), firmware2)
+$(info FIRMWARE_VERSION is FIRMWARE2)
 	ASMSRCS += firmware2.o
-	ASMFLAGS += -mcpu=bf532 -include memory.h -include defBF532.h -D__ASM__ -g
-	CFLAGS = $(INCLUDES) $(CPUDEFINES) -mcpu=bf532 $(OPT) -include memory.h -Wall
-
 else ifeq ($(FIRMWARE_VERSION), firmware1)
+$(info FIRMWARE_VERSION is FIRMWARE1)
 	ASMSRCS += firmware1.o
-	ASMFLAGS += -mcpu=bf532 -include memory.h -include defBF532.h -D__ASM__ -g
-	CFLAGS = $(INCLUDES) $(CPUDEFINES) -mcpu=bf532 $(OPT) -include memory.h -Wall
-
 else ifeq ($(FIRMWARE_VERSION), intan_setup_test)
+$(info FIRMWARE_VERSION is INTAN_SETUP_TEST)
 	ASMSRCS += intan_setup_test.o
-	ASMFLAGS += -mcpu=bf532 -include memory.h -include defBF532.h -D__ASM__ -g
-	CFLAGS = $(INCLUDES) $(CPUDEFINES) -mcpu=bf532 $(OPT) -include memory.h -Wall
-
 else ifeq ($(FIRMWARE_VERSION), intan_setup_test2)
+$(info FIRMWARE_VERSION is INTAN_SETUP_TEST2)
 	ASMSRCS += intan_setup_test2.o
-	ASMFLAGS += -mcpu=bf532 -include memory.h -include defBF532.h -D__ASM__ -g
-	CFLAGS = $(INCLUDES) $(CPUDEFINES) -mcpu=bf532 $(OPT) -include memory.h -Wall
-
 else ifeq ($(FIRMWARE_VERSION), radio_basic)
+$(info FIRMWARE_VERSION is RADIO_BASIC)
 	ASMSRCS += radio_basic.o
-	ASMFLAGS += -mcpu=bf532 -include memory_radio_basic.h -include defBF532.h -D__ASM__ -g
-	CFLAGS = $(INCLUDES) $(CPUDEFINES) -mcpu=bf532 $(OPT) -include memory_radio_basic.h -Wall
-
 else ifeq ($(FIRMWARE_VERSION), radio_AGC)
+$(info FIRMWARE_VERSION is RADIO_AGC)
 	ASMSRCS += radio_AGC.o
-	ASMFLAGS += -mcpu=bf532 -include memory_AGC.h -include defBF532.h -D__ASM__ -g
-	CFLAGS = $(INCLUDES) $(CPUDEFINES) -mcpu=bf532 $(OPT) -include memory_AGC.h -Wall
-
 else ifeq ($(FIRMWARE_VERSION), radio_AGC_IIR)
+$(info FIRMWARE_VERSION is RADIO_AGC_IIR)
 	ASMSRCS += radio_AGC_IIR.o
-	ASMFLAGS += -mcpu=bf532 -include memory_AGC_IIR.h -include defBF532.h -D__ASM__ -g
-	CFLAGS = $(INCLUDES) $(CPUDEFINES) -mcpu=bf532 $(OPT) -include memory_AGC_IIR.h -Wall
-
 else ifeq ($(FIRMWARE_VERSION), IIR_oscillator_test)
+$(info FIRMWARE_VERSION is IIR_OSCILLATOR_TEST)
 	ASMSRCS += IIR_oscillator_test.o
-	ASMFLAGS += -mcpu=bf532 -include memory_AGC_IIR.h -include defBF532.h -D__ASM__ -g
-	CFLAGS = $(INCLUDES) $(CPUDEFINES) -mcpu=bf532 $(OPT) -include memory_AGC_IIR.h -Wall
-
+else ifeq ($(FIRMWARE_VERSION), radio_AGC_IIR_SAA)
+$(info FIRMWARE_VERSION is RADIO_AGC_IIR_SAA)
+	ASMSRCS += radio_AGC_IIR_SAA.o
 else
+$(info FIRMWARE_VERSION is DEFAULT)
 	ASMSRCS += firmware1.o
-	ASMFLAGS += -mcpu=bf532 -include memory.h -include defBF532.h -D__ASM__ -g
-	CFLAGS = $(INCLUDES) $(CPUDEFINES) -mcpu=bf532 $(OPT) -include memory.h -Wall
 endif
 	
 ASMSRCS += enc.o divsi3.o
@@ -125,7 +114,30 @@ enc.asm: enc_create
 	perl register_check.pl
 
 clean:
-	rm -f *.o *.ldr *.dxe radio_control.asm enc.asm enc_create Linker.map
+	rm -f *.o *.ldr *.dxe radio_control.asm enc.asm enc_create Linker.map decompile.asm
+# For the different firmware version, different memory.h header is used
+ifeq ($(FIRMWARE_VERSION), firmware2)
+	cp memory_RHA.h memory.h
+else ifeq ($(FIRMWARE_VERSION), firmware1)
+	cp memory_RHA.h memory.h
+else ifeq ($(FIRMWARE_VERSION), intan_setup_test)
+	cp memory_RHA.h memory.h
+else ifeq ($(FIRMWARE_VERSION), intan_setup_test2)
+	cp memory_RHA.h memory.h
+else ifeq ($(FIRMWARE_VERSION), radio_basic)
+	cp memory_radio_basic.h memory.h
+else ifeq ($(FIRMWARE_VERSION), radio_AGC)
+	cp memroy_AGC.h memory.h
+else ifeq ($(FIRMWARE_VERSION), radio_AGC_IIR)
+	cp memory_AGC_IIR.h memory.h
+else ifeq ($(FIRMWARE_VERSION), IIR_oscillator_test)
+	cp memory_AGC_IIR.h memory.h
+else ifeq ($(FIRMWARE_VERSION), radio_AGC_IIR_SAA)
+	cp memory_AGC_IIR_SAA.h memory.h
+else
+	cp memory_RHA.h memory.h
+endif
+
 
 flash:
 	python ../flasher/flash.py stage.ldr

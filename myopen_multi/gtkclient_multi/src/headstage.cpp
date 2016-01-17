@@ -35,16 +35,12 @@
 #include "sock.h"
 #include "headstage.h"
 //#include "../firmware_stage9_tmpl/memory.h"
-
-#ifdef RADIO_BASIC
-    #include "../headstage2_firmware/memory_radio_basic.h"
-#elif RADIO_AGC
-    #include "../headstage2_firmware/memory_AGC.h"
-#elif RADIO_AGC_IIR
-    #include "../headstage2_firmware/memory_AGC_IIR.h"
-#elif HEADSTAGE_TIM
+#ifdef HEADSTAGE_TIME
     #include "../headstage_firmware/memory.h"
+#else
+    #include "../headstage2_firmware/memory.h"
 #endif
+
 
 
 Headstage::Headstage(){
@@ -59,9 +55,6 @@ Headstage::Headstage(){
 	m_sendR[t] = 0;
 	m_sendW[t] = 0;
 	}
-  
-  
-  
 }
 
 Headstage::Headstage(int *g_channel,  const std::vector<Channel*> &g_c){
@@ -230,7 +223,7 @@ void Headstage::setOsc(int chan){
 	//(to send, needs to keep correct channel name)
 	b[0] = 0.f; //assume there is already energy in the
 	b[1] = 0.f; //delay line.
-#ifdef RADIO_AGC_IIR
+#if defined(RADIO_AGC_IIR) || defined(RADIO_AGC_IIR_SAA)
 	b[2] = 32768.f - 573; //10 -> should be about 919Hz @ fs = 31250Hz
     printf("Here we have special coef\n");
 #else
@@ -297,7 +290,7 @@ void Headstage::setChans(int signalChain){
 		6	x2(n-1) / y1(n-1)    |  y1(n-1)
 		7	x2(n-2) / y1(n-2)    |  y1(n-2)
 		8	x3(n-1) / y2(n-1)    |  y2(n-1)/final out
-		9	x3(n-2) / y2(n-2)    |  y2(n-2)           <--- radio_agc_iir end
+		9	x3(n-2) / y2(n-2)    |  y2(n-2)           <--- radio_agc_iir/radio_agc_iir_saa end
 		10	x2(n-1) / y3(n-1)
 		11	x2(n-2) / y3(n-2)
 		12	y4(n-1)
@@ -540,7 +533,7 @@ void Headstage::resetBiquads(int chan){
 	setBiquad(chan, &(m_lowpass_coefs[4]), 2);
 	setBiquad(chan, &(m_highpass_coefs[4]), 3);
 
-#elif RADIO_AGC_IIR
+#elif defined(RADIO_AGC_IIR) || defined(RADIO_AGC_IIR_SAA)
     /* The only change that would happen is turning it into an oscillator
      * Thus resetting just change the coefficients of the first biquad back.
      */

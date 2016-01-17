@@ -122,13 +122,13 @@ while i<33:
     d = 32*2-i # 32
     f.write("Aperture %dB\tAperture %dB\n" % (a,b))
     f.write("Aperture %dB\tAperture %dB\n" % (c,d))
-    for j in range(15,0,-1):
-        f.write("Template %dB(t-%d)\tTemplate %dB(t-%d)\tTemplate %dB(t-%d)\tTemplate %dB(t-%d)\n" % (c,j,d,j,a,j,b,j))
     f.write("Template %dB(t)\tTemplate %dB(t)\tTemplate %dB(t)\tTemplate %dB(t)\n" % (c,d,a,b))
+    for j in range(1,16):
+        f.write("Template %dB(t-%d)\tTemplate %dB(t-%d)\tTemplate %dB(t-%d)\tTemplate %dB(t-%d)\n" % (c,j,d,j,a,j,b,j))
     
     f.write("Aperture %dA\tAperture %dA\n" % (a,b))
     f.write("Aperture %dA\tAperture %dA\n" % (c,d))
-    for j in range(15,0,-1):
+    for j in range(1,16):
         f.write("Template %dA(t-%d)\tTemplate %dA(t-%d)\tTemplate %dA(t-%d)\tTemplate %dA(t-%d)\n" % (c,j,d,j,a,j,b,j))
     f.write("Template %dA(t)\tTemplate %dA(t)\tTemplate %dA(t)\tTemplate %dA(t)\n" % (c,d,a,b))
 

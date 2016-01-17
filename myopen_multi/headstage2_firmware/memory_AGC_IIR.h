@@ -1,7 +1,7 @@
 #ifndef __MEMORY_H__
 #define __MEMORY_H__
 
-/* memory header file for radio_AGC+IIR.asm
+/* memory header file for radio_AGC_IIR.asm
    Signal-chain = integrator-highpass + AGC + IIR (2 biquads, LPF1 and HPF1)
    W1 stores original-samples, integrator mean, AGC gain, AGC-out, 3 pairs of delayed samples for biquads.
    A1 = the signal chain coef/param buffer, including integrator, AGC, and biquad coefficients.

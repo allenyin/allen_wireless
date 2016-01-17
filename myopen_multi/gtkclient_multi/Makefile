@@ -9,7 +9,8 @@ STACKPROTECTOR = false
 HEADSTAGE_TIM = false 
 RADIO_BASIC = false 
 RADIO_AGC = false 
-RADIO_AGC_IIR = true 
+RADIO_AGC_IIR = false
+RADIO_AGC_IIR_SAA = true
 
 CC  = gcc
 CPP = g++
@@ -89,6 +90,10 @@ endif
 ifeq ($(strip $(RADIO_AGC_IIR)), true)
 	CPPFLAGS += -DRADIO_AGC_IIR
 	CPPFLAGS := $(filter-out -Wall, $(CPPFLAGS))
+endif
+
+ifeq ($(strip $(RADIO_AGC_IIR_SAA)), true)
+	CPPFLAGS += -DRADIO_AGC_IIR_SAA
 endif
 
 

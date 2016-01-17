@@ -45,6 +45,7 @@
 #define CALIB 0x5500    // get back 0x8000
 
 #define CONVERT0 0x0000
+
 .align 8    // call is a 5-cycle latency if target is aligned.
 _get_asm:
     /* Sampling thread:
@@ -201,6 +202,7 @@ wait_samples_main:
    // now i0@next ch integ1; i1@next sample; i2@y2(n-1)
    [i2++] = r0; // save current y2(n) in y2(n-1)'s spot. i2 @ y2(n-2)
    [i2++] = r1; // save current y2(n-1) in y2(n-2)'s spot. i2 @ next sample
+   [--sp] = r0; // save current result on the stack
 
    // all pointers are ready for next two channels of this group.
    // i0 @ next ch integ1; i1,i2 @ next sample.
@@ -273,27 +275,122 @@ wait_samples_main:
    a0 += r3.l * r6.l, a1 += r3.h * r6.h || r7 = [i0++] || r1 = [i1++];  // r7=a0(HPF1). r1=y2(n-1)
    a0 += r4.l * r5.l, a1 += r4.h * r5.h || r2 = [i1++];                 // r2=y2(n-2)
    a0 += r1.l * r7.l, a1 += r1.h * r7.h || r5 = [i0++];                 // r5=a1(HPF1)
-   r0.l = (a0 += r2.l * r5.l), r0.h = (a1 += r2.h * r5.h) (s2rnd);      // r0=y2(n)
+   r3.l = (a0 += r2.l * r5.l), r3.h = (a1 += r2.h * r5.h) (s2rnd);      // r3=y2(n)
 
-   // now i0@next ch integ1; i1@next sample; i2@y2(n-1)
-   [i2++] = r0; // save current y2(n) in y2(n-1)'s spot. i2 @ y2(n-2)
-   [i2++] = r1; // save current y2(n-1) in y2(n-2)'s spot. i2 @ next sample.
+   // now i0@template_A(t); i1@next sample; i2@y2(n-1)
+   [i2++] = r3;                // save current y2(n) in y2(n-1)'s spot. i2 @ y2(n-2)
+   r2 = [sp++] || [i2++] = r1; // save current y2(n-1) in y2(n-2)'s spot. i2 @ next sample.
+                               // read back ch[0,32]'s results from stack to r2
 
-//----------------------------------------------------------------------------------------  
-    r0 = 0; // not doing template match, so this is the dummy match
+   // Template comparison, plexon style. Sliding window, no threshold.
+   // r2=samples from amp1 and amp2; r3=samples from amp3 and amp4. Pack them
+   r2 = r2 >>> 8 (v);   // vector shift 16-bit to 8 bits, preserve sign
+   r3 = r3 >>> 8 (v);
+   r4 = bytepack(r2, r3); // amp4,3,2,1 (hi to low byte)
+   r0 = [FP - FP_8080];   // r0=0x80808080;
+   r4 = r4 ^ r0;          // convert to unsigned offset binary. SAA works on unsigned numbers.
+   r0 = r4;               // save a copy for later
+
+.align 8;   // template A: load order is t, t-15, t-14,...t-1
+    a0 = a1 = 0 || r2 = [i0++]; //r2=template_A(t), r0 and r4 contains byte-packed samples just collected
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; //r2=template_A(t-15), r0=bytepack(t-15)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; //r2=template_A(t-14), r0=bytepack(t-14)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; //r2=template_A(t-13), r0=bytepack(t-13)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; //r2=template_A(t-12), r0=bytepack(t-12)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; //r2=template_A(t-11), r0=bytepack(t-11)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; //r2=template_A(t-10), r0=bytepack(t-10)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; //r2=template_A(t-9),  r0=bytepack(t-9)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; //r2=template_A(t-8),  r0=bytepack(t-8)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; //r2=template_A(t-7),  r0=bytepack(t-7)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; //r2=template_A(t-6),  r0=bytepack(t-6)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; //r2=template_A(t-5),  r0=bytepack(t-5)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; //r2=template_A(t-4),  r0=bytepack(t-4)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; //r2=template_A(t-3),  r0=bytepack(t-3)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; //r2=template_A(t-2),  r0=bytepack(t-2)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; //r2=template_A(t-2),  r0=bytepack(t-1)
+    saa( r1:0, r3:2 ) || [i3++] = r4; // write bytepack(t), inc i3
+
+    // saa results in a0.l, a0.h, a1.l, a1.h (amp4,3,2,1); compare to aperture
+    // i0 @ Aperture[amp1A, amp2A]
+    r0 = a0, r1 = a1 (fu) || r2 = [i0++] || i3 -= m3; // r2=aperture[amp1A,amp2A], i3@saved bytepack(t-15)
+    // subtract and saturate - if the answer is negative-->spike!
+    r0 = r0 -|- r2 (s) || r3 = [i0++]; // r0=[amp1A match, amp2A match], r3=aperture[amp3A,amp4A]
+    r1 = r1 -|- r3 (s);                // r1=[amp3A match, amp4A match]
+    // shift to bit 0, sign preserved
+    r0 = r0 >>> 15 (v); // r0.h and r0.l will be 0xffff or 0x0000 (match or not)
+    r1 = r1 >>> 15 (v);
+    r0 = -r0 (v);       // now 0x0001 or 0x0000 (match or not)
+    r1 = -r1 (v);       // save both for packing later
+    r1 << = 1;
+    r6 = r0 + r1;       // r6=[14 zeros][amp4A][amp2A][14 zeros][amp3A][amp1A]
+
+.align 8;   // template B: load order is t-15, t-14,...,t
+    a0 = a1 = 0 || r0 = [i3++] || r2 = [i0++];       // r2=template_B(t-15), r0=bytepack(t-15)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; // r2=template_B(t-14), r0=bytepack(t-14)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; // r2=template_B(t-13), r0=bytepack(t-13)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; // r2=template_B(t-12), r0=bytepack(t-12)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; // r2=template_B(t-11), r0=bytepack(t-11)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; // r2=template_B(t-10), r0=bytepack(t-10)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; // r2=template_B(t-9),  r0=bytepack(t-9)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; // r2=template_B(t-8),  r0=bytepack(t-8)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; // r2=template_B(t-7),  r0=bytepack(t-7)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; // r2=template_B(t-6),  r0=bytepack(t-6)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; // r2=template_B(t-5),  r0=bytepacK(t-5)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; // r2=template_B(t-4),  r0=bytepack(t-4)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; // r2=template_B(t-3),  r0=bytepack(t-3)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; // r2=template_B(t-2),  r0=bytepacK(t-2)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; // r2=template_B(t-1),  r0=bytepack(t-1)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; // r2=template_B(t),    r0=bytepack(t)
+    saa( r1:0, r3:2 );  // i0@Aperture[amp1B,amp2B], i3@nbytepack(t-15) for next set of channels
+
+    // saa result in a0.l, a0.h, a1.l, a1.h.
+    r0 = a0, r1 = a1 (fu) || r2 = [i0++];   // r2=aperture[amp1B,amp2B]
+    // subtract and saturate - if answer is negative-->spike!
+    r0 = r0 -|- r2 (s) || r3 = [i0++];      // r3=aperture[amp3B, amp4B], i0@integrator coeffs for next set
+    r1 = r1 -|- r3 (s);
+    // shift to bit 0, sign preserved
+    r0 = r0 >>> 15 (v);
+    r1 = r1 >>> 15 (v);
+    r0 = -r0 (v);
+    r1 = -r1 (v);
+    r1 <<= 3;
+    r0 <<= 2;
+    r0 = r0 + r1; // r0=[12 zeros][amp4B][amp2B][14 zeros][amp3B][amp1B][2 zeros]
+    r0 = r0 + r6; // add to tempA matches.
+
+    /* 
+    r0 currently is:
+    r0.h = [12 zeros][amp4B][amp2B][amp4A][amp2A]
+    r0.l = [12 zeros][amp3B][amp1B][amp3A][amp1A]
+    Need to merge the two nibbles into a byte. Then record down the match results.
+    */
+    r0.h = r0.h << 4;
+    r0.l = r0.l + r0.h; // r0.l is now [8 zeros][amp4B][amp2B][amp4A][amp2A][amp3B][amp1B][amp3A][amp1A]
+    r0 = r0.b (z);
 
     p0 = [FP - FP_CHAN];
-    r6 = p0;            // r6 = current group of channels
+    p1 = [FP - FP_ENC_LUT_BASE];    // 3 cycle latency before we can use p1 (??why?)
+    p5 = [FP - FP_MATCH_BASE];
+    r6 = p0;                        // r6 = current group of channels
+    p5 = p5 + p0;                   // p5 = address to write the template matching byte to
+    r1 = b[p5];
+    r1 = r1 | r0;                   // Need to OR in case both template get spikes within the time of a pkt
+    p0 = r1;                        // p0=match-byte, act as offset to 8bit-to-7bit LUT
+    b[p5] = r1;                     // Update the 8bit template matches.
+
+    // After updating the template matches for this group, need to update its corresponding 7bit encoding.
+    // This 7bit byte will be added into the radio packet.
+    p3 = 32;
+    p5 = p5+p3; // Corresponding location in 7bit region for this group of chans
+    p1 = p1+p0; // Get corresponding LUT address,
+    r2 = b[p1]; // read 7bit encoding from LUT,
+    b[p5] = r2; // write encoding to 7bit region
     
-    /*
-        r4 = packet byte count (qs)
-        r5 = number of queued packets, 0-15
-        r6 = group number (0-31), [FP_CHAN]
-    */
     r0 = 31; 
     cc = r6 == r0;
-    if !cc jump end_txchan (bp);    // finish if not group31.
+    if !cc jump end_txchan (bp);
     
+    // Add to radio packet if current group is 31
     // p0 and p5 are free; p1 and p3 are static and reset below.
     // p4 points to WFBUF - location in a pkt we are writing the new samples to
 
@@ -310,37 +407,48 @@ wait_samples_main:
     b[p4++] = r1;
     b[p4++] = r2;
     b[p4++] = r3;
-    
-    r4 = [FP - FP_QS];
+    r4 = [FP - FP_QS];  // r4 = Bytes of samples for each channel in pkt: 0-6
     r7 = 6;
     r4 += 1;
+    i3 += 4;            // End of an iteration, previous bytepack(t-14) becomes the next bytepack(t-15)
+
     cc = r4 == r7;
+    if !cc jump end_txchan_qs (bp);
+    
     // if we don't have 6 samples for each TXCHANx yet, then continue;
     // otherwise add the template matches and finish constructing the pkt
-    
-    if !cc jump end_txchan_qs (bp);
-    r5 = [FP - FP_QPACKETS];
-    p1 = r5;                        // used to index to state_lut; hide 4 cycle latency
+    r5 = [FP - FP_QPACKETS];        // r5 = Number of queued pkts, 0-15
+    p1 = r5;                        // Used to index to state_lut; hide 4 cycle latency
     p0 = [FP - FP_STATE_LUT_BASE];
-    r5 += 1;                        // one more packet on the queue.
-    [FP - FP_QPACKETS] = r5;        // write-back num-pkt
-    p0 = (p0 + p1) << 2;            // 4 byte align
-    r5 = [FP - FP_ECHO];            // echo flag in bits 31, 23, 15, 7.
-    r7 = [p0];
+    p5 = [FP - FP_MATCH_PTR7];      // p5=start of 7bit templ matches record
+    r5 += 1;                        // Add one more packet on the queue.
+    [FP - FP_QPACKETS] = r5;        // Update # of queued pkts
     
-    // p5 and and anyting related to FP_MATCH_PTR7 is set to 0, if edited it fucks with the 
-    // echo bits in the template match bytes, and screws with the transmission.
-    r0 = 0;
-    r1 = 0;
+    p0 = (p0 + p1) << 2;            // Address to find frame#-in-pkt (QS) mask. Table is 4 byte align
+    r5 = [FP - FP_ECHO];            // r5 = Echo from gtkclient - echo flag in bits 31, 23, 15, 7.
+    r7 = [p0];                      // r7 = QS mask
 
-    // flag upper bit in each byte with QS & echo
+    // read in the 7bit template matches (2 32-bit words per pkt)
+    r0 = [p5++];
+    r1 = [p5++];
+    // Flag upper bits in each byte with QS & echo bits
     r0 = r0 | r7;
     r1 = r1 | r5;
-    
-    // write template match to pkt
+
+    // Reset the area just read in 7bit and 8bit MATCH memory
+    r7 = p5;                   // r7 = Address in 7bit area right now
+    p0 = -36;
+    p5 = p5 + p0;              // p5 = corresponding address in 8bit (32+4 for post-inc)
+    bitclr(r7,6);              // Reset r7 pointer
+    bitset(r7,5);              // to keep it within 7b-encoding region
+    [FP - FP_MATCH_PTR7] = r7; // and write it back
+       
+    // Write masked template match to pkt
     [p4++] = r0;
     [p4++] = r1;
-    r4 = 0;         // clear sample count in qs (also reset templat match in 8b region).
+    r4 = 0;         // Clear sample count in qs (also reset templat match in 8b region).
+    [p5--] = r4;    // Reset template match,
+    [p5--] = r4;    // in 8bit region
 
 end_txchan_qs:
     [FP - FP_QS] = r4;  // if we just finished a pkt, QS=0, otherwise it was incremented already.
@@ -518,7 +626,7 @@ _radio_bidi_asm:
         4-channel group we want.
     */
     // channel 0 
-    r0.l = LO(W1 + 1);   // ch0 amp or integrator output 
+    r0.l = LO(W1 + 1);   // ch0 Intan sample output
     r0.h = HI(W1 + 1);
     [FP - FP_TXCHAN0] = r0;
     // channel 31
@@ -577,6 +685,7 @@ _radio_bidi_asm:
     i3.h = HI(T1);
     l3 = T1_LENGTH;
     b3 = i3;
+    m3 = 16*4;    // 16 32-bit words -- used to go back 16 saved samples in T1
 
     /* Next, we go through circular buffer A1, and set up the coefficients needed for the 
        signal chain. 

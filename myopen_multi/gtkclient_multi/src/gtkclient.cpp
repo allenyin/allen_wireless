@@ -41,14 +41,10 @@
 #include <libgen.h>
 
 //#include "../firmware_stage9_tmpl/memory.h"
-#ifdef RADIO_BASIC
-    #include "../headstage2_firmware/memory.h"
-#elif RADIO_AGC
-    #include "../headstage2_firmware/memory_AGC.h"
-#elif RADIO_AGC_IIR
-    #include "../headstage2_firmware/memory_AGC_IIR.h"
-#elif HEADSTAGE_TIM
+#ifdef HEADSTAGE_TIME
     #include "../headstage_firmware/memory.h"
+#else
+    #include "../headstage2_firmware/memory.h"
 #endif
 
 #include "gettime.h"
@@ -102,14 +98,15 @@ int    g_polyChan = 0;
 bool   g_addPoly = false;
 int    g_channel[4] = {0, 32*NSCALE, 64*NSCALE, 96*NSCALE};
 
-#ifdef RADIO_BASIC
+// default signal chain stage to display
+#ifdef HEADSTAGE_TIM
+int g_signalChain = 10;
+#elif RADIO_BASIC
 int g_signalChain = 0;
 #elif RADIO_AGC
 int g_signalChain = 3;
-#elif RADIO_AGC_IIR
+#else // RADIO_AGC_IIR or RADIO_AGC_IIR_SAA
 int g_signalChain = 8;
-#else
-int g_signalChain = 10; //what to sample in the headstage signal chain.
 #endif
 
 bool g_out = false;
@@ -180,11 +177,6 @@ GtkWidget*     g_pktpsLabel;
 GtkWidget*     g_stbpsLabel; //strobe per second label, todo: put in raster
 GtkWidget*     g_fileSizeLabel;
 GtkWidget*     g_confFileLabel;
-
-#ifndef HEADSTAGE_TIM
-// variable to what the current active signal is displayed
-int g_currentSignal = 0;
-#endif
 
 std::string g_configFile = "configuration.bin";
 std::string g_stateFile  = "state.bin";
@@ -1124,9 +1116,6 @@ packet format in the file, as saved here:
 					g_c[j+(128*tid)]->isiIncr();
 				}
 				//color the rasters. really should color differently.
-#ifndef HEADSTAGE_TIM
-                //printf("g_currentSignal is: %d\n", g_currentSignal);
-#endif
 				for(int k=0; k<NFBUF; k++){
 					for(int j=0; j<6; j++){
 						int ch = g_channel[k];
@@ -1479,9 +1468,16 @@ void updateChannelUI(int k){
 	int ch = g_channel[k];
 #ifdef RADIO_BASIC
 #elif RADIO_AGC
-	gtk_adjustment_set_value(g_agcSpin[k], g_c[ch]->getAGC());
+	gtk_adjustment_set_value(g_agcSpin[k], g_c[ch]->getAGC());  // include AGC settings
 #elif RADIO_AGC_IIR
+    gtk_adjustment_set_value(g_agcSpin[k], g_c[ch]->getAGC());  // include AGC settings
+#elif RADIO_AGC_IIR_SAA
+    // include everything except IIR based gain setting
     gtk_adjustment_set_value(g_agcSpin[k], g_c[ch]->getAGC());
+	gtk_adjustment_set_value(g_apertureSpin[k*2+0], g_c[ch]->getAperture(0));
+	gtk_adjustment_set_value(g_apertureSpin[k*2+1], g_c[ch]->getAperture(1));
+	gtk_adjustment_set_value(g_thresholdSpin[k], g_c[ch]->getThreshold());
+	gtk_adjustment_set_value(g_centeringSpin[k], g_c[ch]->getCentering());
 #else
 	gtk_adjustment_set_value(g_agcSpin[k], g_c[ch]->getAGC());
 	gtk_adjustment_set_value(g_gainSpin[k], g_c[ch]->getGain());
@@ -1659,7 +1655,7 @@ static void filterRadioCB(GtkWidget *button, gpointer p){
 		}
 	}
 }
-#elif RADIO_AGC_IIR
+#elif defined (RADIO_AGC_IIR) || defined(RADIO_AGC_IIR_SAA)
 static void filterRadioCB(GtkWidget *button, gpointer p) {
     // only sets the currently viewed channels.
     if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(button))) {
@@ -1685,10 +1681,6 @@ static void signalChainCB( GtkComboBox *combo, gpointer){
     gchar *string = gtk_combo_box_get_active_text( combo );
     printf( "signalChain: >> %s <<\n", ( string ? string : "NULL" ) );
  	int i = atoi((char*)string);
-#ifndef HEADSTAGE_TIM
-    g_currentSignal = i;
-    printf("g_currentSignal changed to %d\n",i);
-#endif
 	if(i >=0 && i < W1_STRIDE && !g_uiRecursion){
 		g_signalChain = i;
 		printf("g_signalChain = %d\n", i);
@@ -2096,13 +2088,7 @@ int main(int argn, char **argc)
 									  channelSpinCB, i);
 		//right of that, a gain spinner. (need to update depending on ch)
 #ifdef RADIO_BASIC
-#elif RADIO_AGC
-        // The AGC target.
-		g_agcSpin[i] = mk_spinner("AGC target", bx2,
-								  	g_c[g_channel[i]]->getAGC(),
-									0, 32000, 1000,
-								  	agcSpinCB, i);
-#elif RADIO_AGC_IIR
+#elif defined(RADIO_AGC) || defined(RADIO_AGC_IIR) || defined(RADIO_AGC_IIR_SAA)
         // The AGC target.
 		g_agcSpin[i] = mk_spinner("AGC target", bx2,
 								  	g_c[g_channel[i]]->getAGC(),
@@ -2118,7 +2104,6 @@ int main(int argn, char **argc)
 								  	g_c[g_channel[i]]->getAGC(),
 									0, 32000, 1000,
 								  	agcSpinCB, i);
-
 #endif
 
 		gtk_box_pack_start (GTK_BOX (frame), bx2, FALSE, FALSE, 1);
@@ -2148,7 +2133,7 @@ int main(int argn, char **argc)
         "2 AGC gain",             // value is always positive, between 0-127.
         "3 AGC out"               // value is AGCgain*(sample-mean), signed.
     };
-#elif RADIO_AGC_IIR
+#elif defined(RADIO_AGC_IIR) || defined(RADIO_AGC_IIR_SAA)
     const char* signalNames[W1_STRIDE] = {
         "0 Samples from Intan", // value is signed
         "1 Integrated mean",    // value is signed
@@ -2197,7 +2182,7 @@ int main(int argn, char **argc)
 	button = gtk_button_new_with_label ("Set all AGC targets from A");
 	g_signal_connect(button, "clicked", G_CALLBACK (agcSetAll),0);
 	gtk_box_pack_start (GTK_BOX (box1), button, TRUE, TRUE, 0);
-#elif RADIO_AGC_IIR
+#elif defined(RADIO_AGC_IIR) || defined(RADIO_AGC_IIR_SAA)
     //and a AGC set-all button.
 	button = gtk_button_new_with_label ("Set all AGC targets from A");
 	g_signal_connect(button, "clicked", G_CALLBACK (agcSetAll),0);
@@ -2248,7 +2233,6 @@ int main(int argn, char **argc)
 	gtk_notebook_insert_page(GTK_NOTEBOOK(notebook), box1, label, 0);
 
 #ifdef RADIO_BASIC
-
 #else
 //add page for spikes.
 	box1 = gtk_vbox_new (FALSE, 0);
@@ -2482,13 +2466,13 @@ int main(int argn, char **argc)
     gtk_combo_box_set_active(GTK_COMBO_BOX(combo), 0);
 #elif RADIO_AGC
     gtk_combo_box_set_active(GTK_COMBO_BOX(combo), 3);
-#elif RADIO_AGC_IIR
+#elif defined(RADIO_AGC_IIR) || defined(RADIO_AGC_IIR_SAA)
     gtk_combo_box_set_active(GTK_COMBO_BOX(combo), 8);
 #else
 	gtk_combo_box_set_active(GTK_COMBO_BOX(combo), 12);
 #endif
-	gtk_widget_show_all (window);
-
+	
+    gtk_widget_show_all (window);
 	g_timeout_add (1000 / 30, rotate, da1);
 	//change the channel every 2 seconds.
 	g_timeout_add(3000, chanscan, (gpointer)0);
