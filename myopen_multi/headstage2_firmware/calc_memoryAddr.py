@@ -5,8 +5,8 @@ A1 = 0xFF904000     # may change
 A1_AGC = 4          # may change
 A1_LMS = 0          # may change
 A1_IIR = 8          # may change
-A1_TEMPLATE = 0     # may change
-A1_APERTURE = 0     # may change
+A1_TEMPLATE = 16     # may change
+A1_APERTURE = 2     # may change
 A1_IIRSTARTA = A1_AGC + A1_LMS
 A1_AGCB = A1_IIRSTARTA + A1_IIR
 A1_IIRSTARTB = A1_AGCB + A1_AGC + A1_LMS
@@ -105,3 +105,9 @@ def setOsc(chan):
             p = 1
         new_addr = A1 + (A1_STRIDE*(kchan & 31) + A1_IIRSTARTA + p*(A1_IIRSTARTB-A1_IIRSTARTA) + i)*4
         print "Ch%d %s: %s" % (chan, coefs[i], hex(new_addr))
+
+def setAperture(ch):
+    tid = ch/128
+    ch = ch & 31
+    for i in range(4):
+        print hex(A1 + (A1_STRIDE*ch + (A1_TEMPLATE+A1_APERTURE)*(i/2) + A1_APERTUREA + (i&1))*4)

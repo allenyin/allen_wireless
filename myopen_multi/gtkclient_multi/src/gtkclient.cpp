@@ -518,7 +518,7 @@ expose1 (GtkWidget *da, GdkEventExpose*, gpointer )
 		//rasters
 #ifndef EMG
 		glShadeModel(GL_FLAT);
-		float vscale = 97.f;
+		float vscale = 128.f;
 		glPushMatrix();
 		glScalef(1.f/g_rasterSpan, -1.f/vscale, 1.f);
 		int lt = (int)time / (int)g_rasterSpan;

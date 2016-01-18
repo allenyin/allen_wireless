@@ -538,7 +538,7 @@ void Headstage::resetBiquads(int chan){
      * Thus resetting just change the coefficients of the first biquad back.
      */
     // reset all coefs in two channels.
-    printf("Resetting biquads...\n");
+    //printf("Resetting biquads...\n");
 	float b[4];
 	unsigned int u;
 	int i,j;
@@ -608,7 +608,6 @@ void Headstage::setAll(int signalChain){
 				resetBiquads(sh+i);
 				resetBiquads(sh+i+64);
 			}
-#ifdef HEADSTAGE_TIM
 			for(int i=0; i<16; i++){
 				//can transmit 8 AGCs at a time.
 				//will set i, i+32, i+16. i+48, i+64, i+96, i+80, i+112.
@@ -622,6 +621,5 @@ void Headstage::setAll(int signalChain){
 				setTemplate(sh+i,0);
 				setTemplate(sh+i,1);
 			}
-#endif
 	}
 }
