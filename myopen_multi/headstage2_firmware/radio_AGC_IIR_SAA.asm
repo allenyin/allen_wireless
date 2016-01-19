@@ -358,6 +358,7 @@ wait_samples_main:
     r0 = r0 + r1; // r0=[12 zeros][amp4B][amp2B][14 zeros][amp3B][amp1B][2 zeros]
     r0 = r0 + r6; // add to tempA matches.
 
+    // Extra nops the signal path can tolerate.
     nop;nop;nop;nop;nop;nop;
 
     /* 

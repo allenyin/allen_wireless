@@ -41,7 +41,7 @@
 #include <libgen.h>
 
 //#include "../firmware_stage9_tmpl/memory.h"
-#ifdef HEADSTAGE_TIME
+#ifdef HEADSTAGE_TIM
     #include "../headstage_firmware/memory.h"
 #else
     #include "../headstage2_firmware/memory.h"
