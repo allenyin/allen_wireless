@@ -120,8 +120,10 @@ src/%.o: src/%.c
 convert: $(COBJS)
 	$(CPP) -o $@ $^ -lmatio -lhdf5 -lz
 
-convert_config: 
-	$(CPP) convert_config.cpp proto/parameters.pb.cc -o convert_config `pkg-config --cflags --libs protobuf`
+convertConfig: convertConfig.cpp proto/parameters.pb.cc
+	@touch $@
+	rm convertConfig
+	$(CPP) $^ -o $@ `pkg-config --cflags --libs protobuf`
 
 wf_plot: src/wf_plot.o
 	$(CC) -o $@ $^ -lGL -lGLU -lglut -lpthread -lmatio -lhdf5 -lpng
@@ -129,7 +131,7 @@ wf_plot: src/wf_plot.o
 clean:
 	rm -rf gtkclient convert wf_plot src/*.o
 	rm proto/*.o proto/*.pb.h proto/*.pb.cc
-	rm convert_config *.o
+	rm convertConfig
 
 deps:
 	sudo apt-get install libgtk2.0-dev \

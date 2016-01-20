@@ -43,6 +43,7 @@ void convertFormat(const Configuration::parameters& in_params, string outName, A
 
     Configuration::parameters out_params;
     // initialize radio
+    cout << "Found " << in_params.radio_size() << " radios" << endl;
     for (int r=0; r<in_params.radio_size(); r++) {
         out_params.add_radio();
     }
@@ -55,26 +56,25 @@ void convertFormat(const Configuration::parameters& in_params, string outName, A
         // go throuogh in_radio's channels and set the corresponding out_radio's channels
         // odd thing: channels.ch doesn't actually determine what channel gtkclient treats it as,
         //            the order of adding channels does.
+        cout << "Converting channels for radio " << in_radio.id() << endl;
         for (int i=0; i<128; i++) {
+            // i is index for RHD headstage
             int amp = i/32;           // 0 to 3, which of the four amps the channel's at
             int newchan = 0;
             if (act == RHA2RHD)
-                newchan = RHA2RHD_tab[i&31];
+                newchan = amp*32 + RHD2RHA_tab[i&31];
             else if (act == RHD2RHA)
-                newchan = RHD2RHA_tab[i&31];
+                newchan = amp*32 + RHA2RHD_tab[i&31];
             else {
                 cout << "Invalid option!" << endl;
                 exit(0);
             }
-            
-            int ch = amp*32+newchan; // channel within current 128 channels of one headstage
-            int id = ch + 128*r;     // order within all headstages' channels
-           
-            const Configuration::channels& in_chan = in_radio.channel(i);     // Channel in RHA
+
+            const Configuration::channels& in_chan = in_radio.channel(newchan);     // Channel in RHA
             Configuration::channels* out_chan = out_radio->add_channel();
 
-            out_chan->set_id(id);
-            out_chan->set_ch(ch);
+            out_chan->set_id(r*127+i);
+            out_chan->set_ch(i);
             for(int u=0; u<2; u++) {
                 out_chan->add_unit();
             }
@@ -91,8 +91,8 @@ void convertFormat(const Configuration::parameters& in_params, string outName, A
             }
             out_chan->set_threshold(in_chan.threshold());
             out_chan->set_centering(in_chan.centering());
-            out_chan->set_agc(in_chan.gain());
-            out_chan->set_gain(in_chan.agc());
+            out_chan->set_agc(in_chan.agc());
+            out_chan->set_gain(in_chan.gain());
 
             for(int j=0; j<6; j++) {
                 out_chan->add_pca_mean(in_chan.pca_mean(j));
@@ -100,14 +100,17 @@ void convertFormat(const Configuration::parameters& in_params, string outName, A
             }
         }
     }
+
     // save selected channels
+    cout << "Setting selected channels" << endl;
     for (int i=0; i<4; i++) {
         out_params.add_selected(in_params.selected(i));
     }
     // save signal_chain
+    cout << "Setting sginal_chain" << endl;
     out_params.set_signal_chain(in_params.signal_chain());
-    cout << "Output params------------" << endl;
-    listChannels(out_params);
+    //cout << "--------Output params------------" << endl;
+    //listChannels(out_params);
 
     fstream output(outName.c_str(), ios::out | ios::trunc | ios::binary);
     if (!out_params.SerializeToOstream(&output)) {
@@ -117,11 +120,11 @@ void convertFormat(const Configuration::parameters& in_params, string outName, A
 } 
 
 int main(int argc, char* argv[]) {
-    if (argc != 4 && argc != 2) {
-        cout << "Usage: convert_config [option] infile.bin outfile.bin" << endl;
-        cout << "       or just: convert_config infile.bin" << endl;
+    if (argc != 4) {
+        cout << "Tool to convert configuration for RHA-based wireless headstages" << endl;
+        cout << "to be used with RHD-based wireless headstages\n" << endl;
+        cout << "Usage: convertConfig [option] infile.bin outfile.bin" << endl;
         cout << "       option is either RHA2RHD or RHD2RHA" << endl;
-        cout << "       The default option will look for configuration.bin and use RHA2RHD option" << endl;
         exit(0);
     }
     else {
@@ -130,13 +133,13 @@ int main(int argc, char* argv[]) {
         string outFile = argv[3];
 
         ACTION act = RHA2RHD;
-        cout << "Option entered is: " << option << endl;
+        //cout << "Option entered is: " << option << endl;
         if (option == "RHA2RHD") {
-            cout << "HERE" << endl;
+            //cout << "HERE" << endl;
             act = RHA2RHD;
         }
         else if (option == "RHD2RHA") {
-            cout << "THERE" << endl;
+            //cout << "THERE" << endl;
             act = RHD2RHA;
         }
         else {
@@ -157,7 +160,8 @@ int main(int argc, char* argv[]) {
         // convert RHA input_params to RHD format, and save to outFile
         convertFormat(input_params, outFile, act);
 
-        listChannels(input_params);
+        //cout << "---------- Input params-------" << endl;
+        //listChannels(input_params);
         //RewriteChannels(params);
 
         google::protobuf::ShutdownProtobufLibrary();
