@@ -97,7 +97,7 @@ ifeq ($(strip $(RADIO_AGC_IIR_SAA)), true)
 endif
 
 
-all: gtkclient wf_plot convert
+all: gtkclient wf_plot convert convert_config
 
 $(PARAM_SRC): proto/parameters.proto
 	protoc -I=./proto --cpp_out=./proto $<
@@ -120,12 +120,16 @@ src/%.o: src/%.c
 convert: $(COBJS)
 	$(CPP) -o $@ $^ -lmatio -lhdf5 -lz
 
+convert_config: 
+	$(CPP) convert_config.cpp proto/parameters.pb.cc -o convert_config `pkg-config --cflags --libs protobuf`
+
 wf_plot: src/wf_plot.o
 	$(CC) -o $@ $^ -lGL -lGLU -lglut -lpthread -lmatio -lhdf5 -lpng
 
 clean:
 	rm -rf gtkclient convert wf_plot src/*.o
 	rm proto/*.o proto/*.pb.h proto/*.pb.cc
+	rm convert_config *.o
 
 deps:
 	sudo apt-get install libgtk2.0-dev \
