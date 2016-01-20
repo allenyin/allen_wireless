@@ -144,7 +144,7 @@ void convertFormat(const Configuration::parameters& in_params, string outName, A
         out_params.add_selected(in_params.selected(i));
     }
     // save signal_chain
-    cout << "Setting sginal_chain" << endl;
+    cout << "Setting signal_chain" << endl;
     out_params.set_signal_chain(in_params.signal_chain());
     //cout << "--------Output params------------" << endl;
     //listChannels(out_params);

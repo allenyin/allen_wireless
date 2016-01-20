@@ -89,6 +89,10 @@ clean:
 flash:
 	#sudo ../flasher/flash stage.ldr
 	python ../flasher/flash.py stage.ldr
+# If error claiming cannot find parallel port appears and you have a
+# parallel port, execute:
+# 	sudo rmmod lp
+# 	sudo modprobe ppdev
 
 reset:
 	#sudo ../flasher/flash --reset
@@ -97,4 +101,8 @@ reset:
 debug: # also need bfin-gdbproxy bfin --reset
 	/opt/uClinux/bfin-elf/bin/bfin-elf-gdb
 
-
+# To debug using gnICE through jtag, launch
+#     bfin-gdbrpoxy -q bfin
+# Then in a separate command prompt,
+#	  bfin-elf-insight or bfin-elf-gdb stage.dxe
+# For the latter, connect to "target remote :2000" 

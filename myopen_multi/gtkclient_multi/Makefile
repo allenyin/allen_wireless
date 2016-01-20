@@ -6,11 +6,11 @@ DBG = true
 JACK = false
 MUDFLAP = false
 STACKPROTECTOR = false
-HEADSTAGE_TIM = false 
+HEADSTAGE_TIM = false
 RADIO_BASIC = false 
 RADIO_AGC = false 
 RADIO_AGC_IIR = false
-RADIO_AGC_IIR_SAA = true
+RADIO_AGC_IIR_SAA = true 
 
 CC  = gcc
 CPP = g++
@@ -97,7 +97,7 @@ ifeq ($(strip $(RADIO_AGC_IIR_SAA)), true)
 endif
 
 
-all: gtkclient wf_plot convert convert_config
+all: gtkclient wf_plot convert convertConfig
 
 $(PARAM_SRC): proto/parameters.proto
 	protoc -I=./proto --cpp_out=./proto $<
