@@ -9,13 +9,50 @@ using namespace std;
  * g++ convert_config.cpp proto/parameters.pb.cc -o convert_config `pkg-config --cflags --libs protobuf`
  */
 
+/* RHA and RHD amplifier electrode layout correspondence
+ * RHA | RHD
+ * 0   | 24
+ * 1   | 25
+ * 2   | 26
+ * 3   | 27
+ * 4   | 28
+ * 5   | 29
+ * 6   | 30
+ * 7   | 31
+ * 8   | 0
+ * 9   | 1
+ * 10  | 2
+ * 11  | 3
+ * 12  | 4
+ * 13  | 5
+ * 14  | 6
+ * 15  | 7
+ * 16  | 23
+ * 17  | 22
+ * 18  | 21
+ * 19  | 20
+ * 20  | 19
+ * 21  | 18
+ * 22  | 17
+ * 23  | 16
+ * 24  | 15
+ * 25  | 14
+ * 26  | 13
+ * 27  | 12
+ * 28  | 11
+ * 29  | 10
+ * 30  | 9
+ * 31  | 8
+ */
+
 // RHA to RHD channel conversion with an Intan amp
-const int RHA2RHD_tab[32] = {24,25,26,27,28,29,30,31,0,1,
+const int RHD2RHA_tab[32] = {24,25,26,27,28,29,30,31,0,1,
                          2,3,4,5,6,7,23,22,21,20,19,19,
                          17,16,15,14,13,12,11,10,9,8};
 
-// RHD to RHA channel conversion within an Intan amp
-const int RHD2RHA_tab[32] = {8,9,10,11,12,13,14,15,31,30,29,
+// RHD to RHA channel conversion within an Intan amp, 
+// i.e. ch0,1,2,3 of RHD should be equivalent to ch..on RHA
+const int RHA2RHD_tab[32] = {8,9,10,11,12,13,14,15,31,30,29,
                          28,27,26,25,24,23,22,21,20,19,18,17,16,
                          0,1,2,3,4,5,6,7};
 
@@ -62,9 +99,9 @@ void convertFormat(const Configuration::parameters& in_params, string outName, A
             int amp = i/32;           // 0 to 3, which of the four amps the channel's at
             int newchan = 0;
             if (act == RHA2RHD)
-                newchan = amp*32 + RHD2RHA_tab[i&31];
-            else if (act == RHD2RHA)
                 newchan = amp*32 + RHA2RHD_tab[i&31];
+            else if (act == RHD2RHA)
+                newchan = amp*32 + RHD2RHA_tab[i&31];
             else {
                 cout << "Invalid option!" << endl;
                 exit(0);
