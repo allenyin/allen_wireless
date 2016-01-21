@@ -3675,8 +3675,6 @@ Wire Wire Line
 Connection ~ 11125 3425
 Connection ~ 11125 3525
 Wire Wire Line
-	11125 3425 11125 3825
-Wire Wire Line
 	11075 3625 11775 3625
 Wire Wire Line
 	11075 3525 11150 3525
@@ -4032,4 +4030,6 @@ F 3 "" H 21525 4575 60  0000 C CNN
 	1    21525 4575
 	-1   0    0    -1  
 $EndComp
+Wire Wire Line
+	11125 3425 11125 3825
 $EndSCHEMATC

@@ -4032,4 +4032,8 @@ F 3 "" H 21525 4575 60  0000 C CNN
 $EndComp
 Wire Wire Line
 	11125 3425 11125 3825
+Text Notes 1075 3800 0    60   ~ 0
+left of connector
+Text Notes 1025 1925 0    60   ~ 0
+right of connector
 $EndSCHEMATC

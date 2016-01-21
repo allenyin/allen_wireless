@@ -38,38 +38,38 @@ The order sampled by the Intan amplifiers within each group of 32 channels diffe
 
 RHA channel | RHD channel
 ------------------|-------------------
-0   | 24
-1   | 25
-2   | 26
-3   | 27
-4   | 28
-5   | 29
-6   | 30
-7   | 31
-8   | 0
-9   | 1
-10 | 2
-11 | 3
-12 | 4
-13 | 5
-14 | 6
-15 | 7
-16 | 23
-17 | 22
-18 | 21
-19 | 20
-20 | 19
-21 | 18
-22 | 17
-23 | 16
-24 | 15
-25 | 14
-26 | 13
-27 | 12
-28 | 11
-29 | 10
-30 | 9
-31 | 8
+0   | 7
+1   | 6
+2   | 5
+3   | 4
+4   | 3
+5   | 2
+6   | 1
+7   | 0
+8   | 31
+9   | 30
+10 | 29
+11 | 28
+12 | 27
+13 | 26
+14 | 25
+15 | 24
+16 | 8
+17 | 9
+18 | 10
+19 | 11
+20 | 12
+21 | 13
+22 | 14
+23 | 15
+24 | 16
+25 | 17
+26 | 18
+27 | 19
+28 | 20
+29 | 21
+30 | 22
+31 | 23
 
 Therefore, a `configuration.bin` created by gtkclient (compiled with `HEADSTAGE_TIM` flag) talking to RHA-headstages will not work properly with RHD-headstages talking to `RADIO_AGC_IIR_SAA`-compiled gtkclient. For example, the sorted template corresponding to channel 0 on the RHA-headstage will also be read by the RHD-gtkclient to be the channel 0 template, even though it should have been the template for channel 24 since RHD-headstages is used.
 
@@ -82,5 +82,7 @@ Suppose a `configuration.bin` file is created by RHA-gtkclient talking to RHA-he
 2. Run `./convertConfig RHA2RHD configuration.bin configuration.bin.RHD` to convert `configuration.bin` to RHD format, and save as `configuration.bin.RHD`.
 
 The opposite could be done with `./convertConfig RHD2RHA configuration.bin.RHD configuration.bin.RHA`. 
+
+*Edit 1/21/2016* : The converted templates will not readily work with the other set of headstages. This is because the templates were created on the results of each headstage's signal chain, and the RHA signal chain has more stages than RHD signal chain. Therefore, some adjustment -- AGC target, threshold level and centering point would have to be adjusted.
 
 

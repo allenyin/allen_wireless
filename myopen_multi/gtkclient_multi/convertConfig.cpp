@@ -11,50 +11,53 @@ using namespace std;
 
 /* RHA and RHD amplifier electrode layout correspondence
  * RHA | RHD
- * 0   | 24
- * 1   | 25
- * 2   | 26
- * 3   | 27
- * 4   | 28
- * 5   | 29
- * 6   | 30
- * 7   | 31
- * 8   | 0
- * 9   | 1
- * 10  | 2
- * 11  | 3
- * 12  | 4
- * 13  | 5
- * 14  | 6
- * 15  | 7
- * 16  | 23
- * 17  | 22
- * 18  | 21
- * 19  | 20
- * 20  | 19
- * 21  | 18
- * 22  | 17
- * 23  | 16
- * 24  | 15
- * 25  | 14
- * 26  | 13
- * 27  | 12
- * 28  | 11
- * 29  | 10
- * 30  | 9
- * 31  | 8
+ * 0   | 7
+ * 1   | 6
+ * 2   | 5
+ * 3   | 4
+ * 4   | 3
+ * 5   | 2
+ * 6   | 1
+ * 7   | 0
+ * 8   | 31
+ * 9   | 30
+ * 10  | 29
+ * 11  | 28
+ * 12  | 27
+ * 13  | 26
+ * 14  | 25
+ * 15  | 24
+ * 16  | 8
+ * 17  | 9
+ * 18  | 10
+ * 19  | 11
+ * 20  | 12
+ * 21  | 13
+ * 22  | 14
+ * 23  | 15
+ * 24  | 16
+ * 25  | 17
+ * 26  | 18
+ * 27  | 19
+ * 28  | 20
+ * 29  | 21
+ * 30  | 22
+ * 31  | 23
  */
 
-// RHA to RHD channel conversion with an Intan amp
-const int RHD2RHA_tab[32] = {24,25,26,27,28,29,30,31,0,1,
-                         2,3,4,5,6,7,23,22,21,20,19,19,
-                         17,16,15,14,13,12,11,10,9,8};
+// RHD to RHA channel conversion with an Intan amp
+// i.e. ch0,1,2,3.. of RHA should be equivalent to ch.. on RHD
+const int RHD2RHA_tab[32] = {7,6,5,4,3,2,1,0,
+                             31,30,29,28,27,26,25,24,
+                             8,9,10,11,12,13,14,15,16,
+                             17,18,19,20,21,22,23};
 
-// RHD to RHA channel conversion within an Intan amp, 
+// RHA to RHD channel conversion within an Intan amp, 
 // i.e. ch0,1,2,3 of RHD should be equivalent to ch..on RHA
-const int RHA2RHD_tab[32] = {8,9,10,11,12,13,14,15,31,30,29,
-                         28,27,26,25,24,23,22,21,20,19,18,17,16,
-                         0,1,2,3,4,5,6,7};
+const int RHA2RHD_tab[32] = {7,6,5,4,3,2,1,0,
+                             16,17,18,19,20,21,22,23,
+                             24,25,26,27,28,29,30,31,
+                             15,14,13,12,11,10,9,8};
 
 enum ACTION {RHA2RHD, RHD2RHA};
 

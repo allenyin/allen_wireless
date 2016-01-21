@@ -9,7 +9,7 @@ EELAYER 25 0
 EELAYER END
 $Descr User 16000 12000
 encoding utf-8
-Sheet 5 5
+Sheet 3 5
 Title "Stage 4 / Copyright 2010 Timothy L Hanson "
 Date "2 apr 2013"
 Rev ""
@@ -1281,4 +1281,8 @@ F 3 "" H 5850 7000 60  0001 C CNN
 	1    5850 7000
 	1    0    0    -1  
 $EndComp
+Text Notes 2750 3950 0    60   ~ 0
+left of connector
+Text Notes 2650 5750 0    60   ~ 0
+right of connector
 $EndSCHEMATC

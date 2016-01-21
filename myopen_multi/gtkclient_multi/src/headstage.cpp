@@ -35,7 +35,7 @@
 #include "sock.h"
 #include "headstage.h"
 //#include "../firmware_stage9_tmpl/memory.h"
-#ifdef HEADSTAGE_TIME
+#ifdef HEADSTAGE_TIM
     #include "../headstage_firmware/memory.h"
 #else
     #include "../headstage2_firmware/memory.h"
@@ -227,6 +227,7 @@ void Headstage::setOsc(int chan){
 	b[2] = 32768.f - 573; //10 -> should be about 919Hz @ fs = 31250Hz
     printf("Here we have special coef\n");
 #else
+    printf("Setting 250Hz osc\n");
     b[2] = 32768.f - 45; // Should be about 250Hz @ fs = 31250Hz
 #endif
 	b[3] = -16384.f;
