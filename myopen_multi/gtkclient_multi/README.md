@@ -83,6 +83,6 @@ Suppose a `configuration.bin` file is created by RHA-gtkclient talking to RHA-he
 
 The opposite could be done with `./convertConfig RHD2RHA configuration.bin.RHD configuration.bin.RHA`. 
 
-*Edit 1/21/2016* : The converted templates will not readily work with the other set of headstages. This is because the templates were created on the results of each headstage's signal chain, and the RHA signal chain has more stages than RHD signal chain. Therefore, some adjustment -- AGC target, threshold level and centering point would have to be adjusted.
+*Edit 1/21/2016* : The converted templates will not readily work with the other set of headstages. This is because the templates were created on the results of each headstage's signal chain, and the RHA signal chain has more stages than RHD signal chain. Therefore, some adjustment -- AGC target, threshold level and centering point would have to be adjusted. Since these procedures would have to be done for all channels, one might as well just resort. Therefore using converted templates is not recommended. Instead, **Don't mix the usage of the different headstages** for experiments.
 
 
