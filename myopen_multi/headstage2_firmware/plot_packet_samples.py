@@ -1,6 +1,6 @@
 '''
 Memory files obtained from copying gdb output, after executing firmware
-and dumping one frame of 16-packet data.
+and dumping one frame of data, which include 16 packets.
 
 Usage 12/4/2015:
     Used after running firmware1.asm or firmware2.asm, and run
@@ -11,7 +11,7 @@ Usage 12/4/2015:
     Then, move gdb.txt to somefile.txt
 
         plot_packet(fname, nbits=8, nchannels=4)
-    will plot all of nchannels, with a single amplifier (32 max), in the order of
+    will plot all of nchannels, within a single amplifier (32 max), in the order of
     ch31, ch0, ch1, ch2,...
     
     nbits is 8 or 16, depending on how many bits each channel's saved as.
@@ -19,7 +19,7 @@ Usage 12/4/2015:
     uses 32 so far.
 
 Usage 12/11/2015 (updated):
-    Use after running firmware2.asm, and run
+    Use after running firmware2.asm or firmware2.asm, and run
         set logging redirect on
         set logging on
         x/1024xw 0xff804000
