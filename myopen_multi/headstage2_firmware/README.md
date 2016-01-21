@@ -1,6 +1,6 @@
-Firmware for RHD-based wireless headstages.
+#Firmware for RHD-based wireless headstages.
 
-The final version is radio_AGC_IIR_SAA.asm. 
+The final version is radio_AGC_IIR_SAA.asm. Usage example:
 
 1. Connect cables as the following ()...
 2. Uncomment the `FIMRWARE_VERSION=radio_AGC_IIR_SAA` line in Makefile.
@@ -11,21 +11,25 @@ The final version is radio_AGC_IIR_SAA.asm.
    all options among `HEADSTAGE_TIM`, `RADIO_BASIC`, `RADIO_AGC`, `RADIO_AGC_IIR` to false.
 6. Compile gtkclient with `make clean; make`.
 
-The RHD-headstage is ready to be used.
+The RHD-headstage is now ready to be used.
 
 ------------------------------------------------------------
+##Other firmwares
+
 There are other firmware version in this directory, many of them were used in the process and developing
 the final firmware.
-
-
 
 * intan_setup_test.asm:  
 
    Polls the same channel from all amps, and save periods to memory starting at FP_BASE (0xFF906F00). Plot the result using plot_memdump.py (see comments in file). Used to find optimal setup for the RHD amplifiers.
 
+   The blackfin cache memory organization can be visualized by the spreadsheet `Intan_setup.ods`
+
 * intan_setup_test2.asm: 
 
    Tests the intra-amp performance. Records a set number of periods from all 32 channels of a fixed amp, save to memory in A1 (0xFF904000). Results include Intan-setup responses. Plot the result using plot_memdump.py.
+
+   The blackfin cache memory organization can be visualized by the spreadsheet `Intan_setup.ods`
 
 *   firmware1.asm:
    
@@ -43,6 +47,8 @@ the final firmware.
                  
    Requires uncommenting the `FIRMWARE_VERSION=RADIO_BASIC` in makefile to compile, uses the "memory_radio_basic.h" file, which describes the memory layout. The memory header file is taken care of by the Makefile. The corresponding header will be moved to be "memory.h" when the FIMRWARE_VERSION option is set.
 
+   The blackfin cache memory organization can be visualized by the spreadsheet `radio_basic_memoryMap.ods`.
+
    To use with gtkclient, compile gtkclient with `RADIO_BASIC` set to true in the Makefile. 
 
    While running gtkclient, since no matches are actually made, in the spike-window, the waveforms may be colored blue and messages in stdin about false-positivies can happen. This is normal and safe to ignore.
@@ -51,11 +57,15 @@ the final firmware.
 
    Built off radio_basic.asm, but with added AGC functions. Same radio-communication protocol as in radio_basic. Compile with `FIMRWARE_VERSION=RADIO_AGC`, use "memory_AGC.h". 
 
+   The blackfin cache memory organization can be visualized by the spreadsheet `radio_AGC_memoryMap.ods`.
+
    To use with gtkclient, compile gtkclient with `RADIO_AGC` set to true in its Makefile. Same spike false-positives will occur.
 
 * radio_AGC_IIR.asm:
 
    Built off radio_AGC.asm, but added two IIR biquads to act as band-pass filter, set to [500, 9000Hz]. Compile with `FIMRWARE_VERSION=RADIO_AGC_IIR`, use "memory_AGC_IIR.h".
+
+   The blackfin cache memory organization can be visualized by the spreadsheet `radio_AGC_IIR_memoryMap.ods`.
 
    To use with gtkclient, compile gtkclient with `RADIO_AGC_IIR` set to true in its Makefile. Same spike false-positives will occur.
                    
@@ -75,7 +85,20 @@ the final firmware.
 
    Adding the spike-sorting using SAA instructions to radio_AGC_IIR.asm. This is the final firmware for RHD headstages. Compile with `FIRMWARE_VERSION=RADIO_AGC_IIR_SAA`, uses "memory_AGC_IIR_SAA.h". 
 
+   The blackfin cache memory organization can be visualized by the spreadsheet `radio_all_memoryMap.ods`.
+
    Compile gtkclient with `RADIO_AGC_IIR_SAA` set to true in its Makefile.
 
+##Utility Programs
 
+* fixedPointConvert.py
 
+* AGC_sim.py
+
+* calc_memoryAddr.py
+
+* plot_memdump.py
+
+* plot_packet_samples.py
+
+* writeMemoryMap.py
