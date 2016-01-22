@@ -2,6 +2,34 @@
 
 Modified from the wireless neural recording parts of the [myopen project](https://github.com/tlh24/myopen) by Tim Hanson.
 
+* [Overview](#Overview)
+* [Hardware](#Hardware)
+	* [Bridge](#Bridge-hw)
+	* [Headstages](#headstages)
+		Overview of everything
+		* [RHA-headstage](#RHA-hw)
+		* [RHD-headstage](#RHD-hw)
+* [Firmware](#Firmware)
+	Everything needs to be flashed! Flashing is writing new firmware to the flash memory, which is loaded when blackfin is powered on and booted up. See corresponding sections.
+	* [Dependency](#Firmware-dependency)
+	Pyparallel, blackfin baremetal toolchain, etc.
+	* [Overview](#Firmware-overview)
+	The different folders
+	* [Bridge](#Bridge-fw)
+	* [RHA-headstage](#RHA-fw)
+	* [RHD-headstage](#RHD-fw)
+		* [Flashing instructions](#RHA-flasing)
+		* [Firmware versions](#firmware-versions)
+		* [JTAG testing](#JTAG-testing)
+		* [Utility Programs](#Utility programs)
+* [Client Software](#gtkclient)
+	* [Dependency](#gtkclient-dependency)
+	* [Compilation](#gtkclient-compile)
+	Compilation of different versions, their options, screenshots, usage. 
+	* [Configuration files](#gtkclient-configuration)
+	* [How does it work?](#gtkclient-usage)
+	Threads, headstage.cpp, channels.h, etc
+
 Folders:
 
 * bridge_hardware: port from [stage10](https://github.com/tlh24/myopen/tree/master/emg_dsp/stage10). Components  stored in bridge_library/. Footprint archived to bridge_library.pretty/ to use with newer version of kicad (Version:0.201506030104+5696~23~ubuntu14.04.1-product,release build).
@@ -18,7 +46,7 @@ Folders:
     TODO: Sync the firmware with the ones in Rabbit, which are actually used to flash the hardware. Sync the gtkclient_multi with that in the wheelchair room, and write up instructions of limiting the number of threads to be the same as the number of headstages/bridges been used.
 
 ---
-##Steps to port old kicad projects
+##<a name="Hardware">Steps to port old kicad projects</a>
 
 The recent changes in KiCad's EESchema introduces some problems in using projects created with older version out of the box. Those impacting include:
 
