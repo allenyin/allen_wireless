@@ -26,6 +26,7 @@
 	* [Configuration files](#gtkclient-configuration)
 	* [TODO/possible improvements](#gtkclient-TODO)
 	Threads, headstage.cpp, channels.h, protobufs.
+* [Quick Start](#quickstart)
 
 ##<a name="Overview">Overview</a>
 This project is modified from the multi-branch of the wireless neural recording system of the [myopen project](https://github.com/tlh24/myopen/tree/multi) by Tim Hanson.
@@ -40,7 +41,10 @@ As summarized in Hanson's [thesis](http://m8ta.com/tim/dissertation.pdf), the or
 
 The bridge, which is based around [Blackfin DSP BF537](http://www.analog.com/en/products/processors-dsp/blackfin/adsp-bf537.html), collects the wirelessly transmitted data from the headstages and send them to the PC client through ethernet.
 
-This project modified the wireless headstage by replacing each of the 4 RHA2132 amplifiers, ADCs, and power converter chips with a single [32-channel RHD2132 digitizing amplifier](http://intantech.com/products_RHD2000.html). This is to reduce the power consumption and total area of the final PCB (by about 1/3). In the rest of this document, the original headstages will be refered to as **RHA-headstage**, while the new design will be referred to as **RHD-headstage**. The client software will be referred to as **gtkclient**.
+<a name="figure_overview">*System overview, from Hanson's [thesis](http://m8ta.com/tim/dissertation.pdf)*</a>
+![Hanson_Overview](/home/allenyin/allen_wireless/images/overview.png  "Hanson_Overview")
+
+This project modified the wireless headstage by replacing each of the 4 RHA2132 amplifiers, ADCs, and power converter chips with a single [32-channel RHD2132 digitizing amplifier](http://intantech.com/products_RHD2000.html). This is to reduce the power consumption and total area of the final PCB (by about 1/3). In terms of the figure above, this is equivalent of replacing the `G=200 and 32:1 multiplexer`, `ADC` and `LDO` components in the `Digitizing headstage` blocks by one component. In the rest of this document, the original headstages will be refered to as **RHA-headstage**, while the new design will be referred to as **RHD-headstage**. The client software will be referred to as **gtkclient**.
 
 This document will describe:
 
@@ -106,8 +110,11 @@ The following steps were used to convert the old project files (example using `h
 0. Open the schematic file and run Cvpcb to associate the components and the footprints in our own custom libraries. It's possible that a footprint is found in multiple libraries, chose to associate with the ones in *headstage*.
 
 ###<a name="Bridge-hw">Bridge</a>
+As illustrated by the [Receiver block in the system overview](#figure_overview), the bridge mainly consists of three antenna-2.4GHz radio pairs for wireless communication, Blackfin DSP for processing, Ethernet/MAC chip for communication with gtkclient, and DAC (typo of DAC in Tim's thesis) for outputting received neural signals as audio.
 
-Bridge is a bridge
+In addition, it is also needed to program and debug the headstages.
+
+<a name="bridge_labeled">*Bridge Board* ![labeled_bridge](/home/allenyin/allen_wireless/images/bridge_labeled.png  "labeled_bridge")</a>
 
 ###<a name="headstages">Headstages</a>
 All the same, except for some chips
@@ -161,3 +168,5 @@ What I changed...how does it work? Instructions on templates and why not to mix 
 
 ###<a name="gtkclient-TODO">TODO/possible improvements</a>
 More threadsafe? Redsicovery of bridges? Spatial bridge redundancy to improve range? Graphics improvements --opengl??
+
+##<a name="Quick Start">Quick Start</a>
