@@ -44,7 +44,9 @@ The bridge, which is based around [Blackfin DSP BF537](http://www.analog.com/en/
 <a name="figure_overview">*System overview, from Hanson's [thesis](http://m8ta.com/tim/dissertation.pdf)*</a>
 ![Hanson_Overview](https://github.com/allenyin/allen_wireless/raw/master/images/overview.png  "Hanson_Overview")
 
-This project modified the wireless headstage by replacing each of the 4 RHA2132 amplifiers, ADCs, and power converter chips with a single [32-channel RHD2132 digitizing amplifier](http://intantech.com/products_RHD2000.html). This is to reduce the power consumption and total area of the final PCB (by about 1/3). In terms of the figure above, this is equivalent of replacing the `G=200 and 32:1 multiplexer`, `ADC` and `LDO` components in the `Digitizing headstage` blocks by one component. In the rest of this document, the original headstages will be refered to as **RHA-headstage**, while the new design will be referred to as **RHD-headstage**. The client software will be referred to as **gtkclient**.
+This project modified the wireless headstage by replacing each of the 4 RHA2132 amplifiers, ADCs, and power converter chips with a single [32-channel RHD2132 digitizing amplifier](http://intantech.com/products_RHD2000.html). This is to reduce the power consumption and total area of the final PCB (by about 1/3). In terms of the figure above, this is equivalent of replacing the `G=200 and 32:1 multiplexer`, `ADC` and `LDO` components in the `Digitizing headstage` blocks by one component. 
+
+In the rest of this document, the original headstages will be refered to as **RHA-headstage**, while the new design will be referred to as **RHD-headstage**. The client software will be referred to as **gtkclient**.
 
 This document will describe:
 
@@ -112,9 +114,37 @@ The following steps were used to convert the old project files (example using `h
 ###<a name="Bridge-hw">Bridge</a>
 As illustrated by the [Receiver block in the system overview](#figure_overview), the bridge mainly consists of three antenna-2.4GHz radio pairs for wireless communication, Blackfin DSP for processing, Ethernet/MAC chip for communication with gtkclient, and DAC (typo of DAC in Tim's thesis) for outputting received neural signals as audio.
 
-In addition, it is also needed to program and debug the headstages.
+In addition to wireless communication with the headstages, the bridge is also needed to program and debug the headstages.
 
 <a name="bridge_labeled">*Bridge Board* ![labeled_bridge](https://github.com/allenyin/allen_wireless/raw/master/images/bridge_labeled.png  "labeled_bridge")</a>
+
+In the above image:
+
+A. Power switch.
+
+B. USB power cable. 
+
+C. Ethernet cable. Each operating headstage requires a bridge, requiring the PC on which gtkclient operates on to be connected to multiple bridges. Therefore, the ethernet port of the bridges and the client PC should all connect to the same switch or router.
+
+D. Audio jack. When gtkclient is running, connecting the bridge to an audio device allows the user to hear the the 4 selected channels in gtkclient.
+
+E. Blackfin BF537 DSP processor.
+
+F. JTAG header pins for debugging the bridge. The pin missing on the top row ensures correct orientation of the JTAG in-circuit emulator (ICE).
+
+G. Header pins for writing firmware to the bridge's flash memory. See [bridge flashing instructions](#Bridge-fw).
+
+H. Indicator LED lights. After power on, these LEDs would fluctuate. Normal operation is indicated by the LEDs lit up in the image lighting up. Except for the bottom most one, which should be blinking periodically.
+
+I. Header pins for writing firmware to the headstage's flash memory. See [RHA-flashing instructions](#RHA-fw) and [RHD-flashing instructions](#RHD-fw).
+
+J. Omnetics connector for writing firmware to the headstage's flash memory. The signals applied to the column of header pins above it are applied to the headstage through this connection to the corresponding omnetics connector on the headstage.
+
+K. JTAG header pins for debugging the headstage. The pin missing on the left column ensures correct orientation of JTAG ICE. See [RHD firmware testing](#JTAG-testing).
+
+L. Omnetics connector for JTAG debugging the headstage. The signals applied to the JTAG header pins are passed to the headstage through this connection.
+
+M. 2.4GHz Nordic radio and antenna pairs. Having three antenna allow for spatial reception diversity and enable better wireless signal quality.
 
 ###<a name="headstages">Headstages</a>
 All the same, except for some chips
