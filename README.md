@@ -147,7 +147,7 @@ M. 2.4GHz Nordic radio and antenna pairs. Having three antenna allow for spatial
 
 In image below, the fully assembled RHA-headstage is on the left. The RHD-headstage is on the right.
 
-<a name="headstages_labeled">*Headstage PCBs* ![labled_headstages](http://github.com/allenyin/allen_wireless/raw/master/images/headstages.png "labled_headstages")</a>
+<a name="headstages_labeled">*Headstage PCBs*</a>![labeled_headstages](https://github.com/allenyin/allen_wireless/raw/master/images/headstages.png "labled_headstages")
 
 Labeled in the image are the connectors the headstages can make:
 
