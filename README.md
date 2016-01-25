@@ -166,11 +166,37 @@ F. RHD-headstage Omnetics connector for flashing memory. The JTAG debugging conn
 The bottom half of both headstages are the `digitizing headstages` block in the [System overview diagram](#figure_overview), which is where the headstages differ hardware-wise. The top halves are the `transceiver block` and are identical.
 
 ###<a name="Firmware">Firmware</a>
-Firmware is so much code!
+The firmware is written in a combination of C and Blackfin assembly language. While Analog Devices (ADI) provides its own software development toolchains, it requires purchasing a pretty expensive license (though it comes with a lot more support). For the myopen and this project, the open source gnu gcc blackfin toolchain is used. Further, all development was done on debian based OS. The Makefiles in this repository are tested only in Ubuntu 14.04. Minor adjustments might be needed to work on other debian-based OS.
 
 ####<a name="Firmware-dependency">Dependency</a>
-bfin-elf toolchain, assembly, gcc, pyparallel, libparapin, parallel port.
-Talk about the flasher!
+
+Compiling the firmware requires the [Blackfin Toolchain in Linux for Bare Metal](https://blackfin.uclinux.org/doku.php?id=toolchain:installing). For debian-based linux OS:
+
+* Download the latest version, as of June, 2015, it's `blackfin-toolchain-elf-gcc-4.3-2014R1-RC2.x86_64.tar.bz2`
+* Extract and move to `/opt`
+* Add path to `/opt/uClinux/bfin-elf/bin` to the `PATH` variable through `.bashrc`
+
+Two must-have references:
+
+    * [ADSP-BF5xx/ADSP-BF60x Blackfin Processor Programming Reference](http://www.analog.com/media/en/dsp-documentation/processor-manuals/Blackfin_pgr_rev2.2.pdf), describes all assembly commands and options.
+    * [ADSP-BF533 Blackfin Processor Hardware Reference](http://www.analog.com/media/en/dsp-documentation/processor-manuals/ADSP-BF533_hwr_rev3.6.pdf), describes all components and functions of the processor.  BF533 processor is mostly identical with BF532, which are the processors onboard the headstages. For the bridge, see BF537.
+
+After compiling the firmware, the binary needs to be uploaded into the SPI flash memory onboard the bridge or headstage. This is done through a parallel port (for speed and relative ease). There are two ways this could be done.
+
+**Using Libparapin**
+In older computers with integrated parallel port (such as our lab's `rabbit` running DebianWheezy), [libparapin](http://parapin.sourceforge.net) can be installed to talk to the paralle port. This was used by Tim to develop and flash the RHA-headstages.
+
+After installation of libparapin (in either user or kernel mode), compile `myopen_multi/flasher/flash.c` with `make clean; make`. 
+
+With proper PC-to-bridge (and bridge-to-headstage) connections, compiled firmware binary can be uploaded with `sudo ./flash myprogram.ldr`.
+
+**Using Pyparallel (recommended)**
+Unfortunately Libparapin does not play nicely with parallel port PCI expansion cards and/or newer OS. I'm not sure what the exact culprit is, but the most recent version of libparapin is for kernel version2.6, and there hasn't been any activity on the project in several years.
+
+Fortunately the python library [pyparallel](https://github.com/pyserial/pyparallel), allows us to interact with the parallel conveniently. Note that `pyparallel` can also refer to a Python parallel processing package. See [Lewis Loflin's blog posts](http://www.bristolwatch.com/pport/index.htm) for details on using the library.
+
+After installing this module, firmware can be flashed with `python flash.py myprogram.ldr`. Error might occur indicating parallel port cannot be openened, in which case do `sudo rmmod lp; sudo modprobe ppdev` and try again.
+
 
 ####<a name="Bridge-fw">Bridge</a>
 How to flash bridge??
