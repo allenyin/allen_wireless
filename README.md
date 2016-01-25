@@ -5,9 +5,6 @@
 	* [Steps to convert old KiCad design files](#convertKiCad)
 	* [Bridge](#Bridge-hw)
 	* [Headstages](#headstages)
-		Overview of everything
-		* [RHA-headstage](#RHA-hw)
-		* [RHD-headstage](#RHD-hw)
 * [Firmware](#Firmware)
 	Everything needs to be flashed! Flashing is writing new firmware to the flash memory, which is loaded when blackfin is powered on and booted up. See corresponding sections.
 	* [Dependency](#Firmware-dependency)
@@ -147,13 +144,26 @@ L. Omnetics connector for JTAG debugging the headstage. The signals applied to t
 M. 2.4GHz Nordic radio and antenna pairs. Having three antenna allow for spatial reception diversity and enable better wireless signal quality.
 
 ###<a name="headstages">Headstages</a>
-All the same, except for some chips
 
-####<a name="RHA-hw">RHA-headstage</a>
-Blablabla, nothing much, read thesis
+In image below, the fully assembled RHA-headstage is on the left. The RHD-headstage is on the right.
 
-####<a name="RHD-hw">RHD-headstage</a>
-There are some replacement parts.
+<a name="headstages_labeled">*Headstage PCBs* ![labled_headstages](http://github.com/allenyin/allen_wireless/raw/master/images/headstages.png "labled_headstages")</a>
+
+Labeled in the image are the connectors the headstages can make:
+
+A. RHA-headstage Omnetics connectors to electrodes. Each of the four connectors has two rows of 20 pins each. The leftmost and rightmost pins of each row are guide posts and connect no signals. The second leftmost and the second rightmost pins of each row are the reference electrodes.
+
+B. RHA-headstage power connection to 3.7V battery.
+
+C. RHA-headstage Omnetics connector for flashing memory. The JTAG debugging connector is on the back side of the board at the same location.
+
+D. RHD-headstage Omnetics connectors to electrodes. Exactly the same as the RHA-headstage.
+
+E. RHD-headstage power connection to 3.7V battery. Connection not installed in the pictre.
+
+F. RHD-headstage Omnetics connector for flashing memory. The JTAG debugging connector is on the back side of the board at the same location.
+
+The bottom half of both headstages are the `digitizing headstages` block in the [System overview diagram](#figure_overview), which is where the headstages differ hardware-wise. The top halves are the `transceiver block` and are identical.
 
 ###<a name="Firmware">Firmware</a>
 Firmware is so much code!
