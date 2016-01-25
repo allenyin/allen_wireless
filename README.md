@@ -184,6 +184,7 @@ Two must-have references:
 After compiling the firmware, the binary needs to be uploaded into the SPI flash memory onboard the bridge or headstage. This is done through a parallel port (for speed and relative ease). There are two ways this could be done.
 
 **Using Libparapin**
+
 In older computers with integrated parallel port (such as our lab's `rabbit` running DebianWheezy), [libparapin](http://parapin.sourceforge.net) can be installed to talk to the paralle port. This was used by Tim to develop and flash the RHA-headstages.
 
 After installation of libparapin (in either user or kernel mode), compile `myopen_multi/flasher/flash.c` with `make clean; make`. 
@@ -191,6 +192,7 @@ After installation of libparapin (in either user or kernel mode), compile `myope
 With proper PC-to-bridge (and bridge-to-headstage) connections, compiled firmware binary can be uploaded with `sudo ./flash myprogram.ldr`.
 
 **Using Pyparallel (recommended)**
+
 Unfortunately Libparapin does not play nicely with parallel port PCI expansion cards and/or newer OS. I'm not sure what the exact culprit is, but the most recent version of libparapin is for kernel version2.6, and there hasn't been any activity on the project in several years.
 
 Fortunately the python library [pyparallel](https://github.com/pyserial/pyparallel), allows us to interact with the parallel conveniently. Note that `pyparallel` can also refer to a Python parallel processing package. See [Lewis Loflin's blog posts](http://www.bristolwatch.com/pport/index.htm) for details on using the library.
