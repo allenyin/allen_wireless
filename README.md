@@ -178,8 +178,8 @@ Compiling the firmware requires the [Blackfin Toolchain in Linux for Bare Metal]
 
 Two must-have references:
 
-    * [ADSP-BF5xx/ADSP-BF60x Blackfin Processor Programming Reference](http://www.analog.com/media/en/dsp-documentation/processor-manuals/Blackfin_pgr_rev2.2.pdf), describes all assembly commands and options.
-    * [ADSP-BF533 Blackfin Processor Hardware Reference](http://www.analog.com/media/en/dsp-documentation/processor-manuals/ADSP-BF533_hwr_rev3.6.pdf), describes all components and functions of the processor.  BF533 processor is mostly identical with BF532, which are the processors onboard the headstages. For the bridge, see BF537.
+* [ADSP-BF5xx/ADSP-BF60x Blackfin Processor Programming Reference](http://www.analog.com/media/en/dsp-documentation/processor-manuals/Blackfin_pgr_rev2.2.pdf), describes all assembly commands and options.
+* [ADSP-BF533 Blackfin Processor Hardware Reference](http://www.analog.com/media/en/dsp-documentation/processor-manuals/ADSP-BF533_hwr_rev3.6.pdf), describes all components and functions of the processor.  BF533 processor is mostly identical with BF532, which are the processors onboard the headstages. For the bridge, see BF537.
 
 After compiling the firmware, the binary needs to be uploaded into the SPI flash memory onboard the bridge or headstage. This is done through a parallel port (for speed and relative ease). There are two ways this could be done.
 
