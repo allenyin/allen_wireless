@@ -298,7 +298,9 @@ The RHA-headstage firmware was not modified from the original myopen project (ex
 
 	Note that if multiple headstages are used, they must be configured to operate on different radio frequency. To change the radio channel, go to `myopen_multi/headstage_firmware/main.c` and search for the call to `radio_init()` and change the input argument. An input value of `84`, for example, sets the radio to operate on `2400MHz + 84Hz = 2484Mhz`. Other possible values are 94, 114, and 124. The maximum is 124. These changes must be followed by firmware recompilation.
 
-    Theoretically, the 2.4GHz radio used onboard can operate with 2Msps on 62 different 2MHz bandwidth channels. The radio can operate from 2.4GHz to 2.525Ghz. When operating at 2Msps, each frequency requires a 2MHz bandwidth. Therefore, with no overlap, the input value to `radio_init()` can take values of 0, 2, 4,..., 125. However, the lower frequency bands are prone to attenuation by water absoprtion and interference from WiFi/Bluetooth/ZigBee bands. Therefore, the actual frequencies used should be limited to the higher bands. When multiple headstages are used, they should be set at frequencies as far apart as possible (note the separation of 10-20MHz for the values suggested).
+    Theoretically, the 2.4GHz radio used onboard can operate with 2Msps on 62 different 2MHz bandwidth channels. The radio can operate from 2.4GHz to 2.525Ghz. When operating at 2Msps, each frequency requires a 2MHz bandwidth. Therefore, with no overlap, the input value to `radio_init()` can take values of 0, 2, 4,..., 124. However, the lower frequency bands are prone to attenuation by water absoprtion and interference from WiFi/Bluetooth/ZigBee bands. Therefore, the actual frequencies used should be limited to the higher bands. When multiple headstages are used, they should be set at frequencies as far apart as possible (note the separation of 10-20MHz for the values suggested).
+
+    See [Nordic nRF24L01 manual section6.3](http://www.nordicsemi.com/eng/content/download/2730/34105/file/nRF24L01_Product_Specification_v2_0.pdf).
 
 3. Turn on the bridge, and flash the headstage with `make flash`. 
 
@@ -311,6 +313,10 @@ The RHA-headstage firmware was not modified from the original myopen project (ex
    
     After all (if any) gtkclient modifications, recompile gtkclient by navigating into `myopen_multi/gtkclient_multi` and type `make clean; make`. gtkclient is now ready to be used with RHA-headstages.
 
+When powered on, the LED onboard should blink periodically.
+
+The file `memory_map.ods` is a spreadsheet visualizing the memory organization used in the RHA-headstage firmware.
+
 ####<a name="RHD-fw">RHD-headstage</a>
 
 The parallel port-to-bridge connections and bridge-to-headstage connections are identical for RHD-headstage as for RHA-headstages. However, there are multiple firmwares available in the `myopen_multi/headstage2_firmware` directory. To program the RHD-headstage to use the final firmware version, navigate to that directory and:
@@ -321,8 +327,10 @@ The parallel port-to-bridge connections and bridge-to-headstage connections are 
 
 	Note that if multiple headstages are used, they must be configured to operate on different radio frequency. To change the radio channel, go to `myopen_multi/headstage_firmware/main.c` and search for the call to `radio_init()` and change the input argument. An input value of `84`, for example, sets the radio to operate on `2400MHz + 84Hz = 2484Mhz`. Other possible values are 94, 114, and 124. The maximum is 124. These changes must be followed by firmware recompilation.
 
-    Theoretically, the 2.4GHz radio used onboard can operate with 2Msps on 62 different 2MHz bandwidth channels. The radio can operate from 2.4GHz to 2.525Ghz. When operating at 2Msps, each frequency requires a 2MHz bandwidth. Therefore, with no overlap, the input value to `radio_init()` can take values of 0, 2, 4,..., 125. However, the lower frequency bands are prone to attenuation by water absoprtion and interference from WiFi/Bluetooth/ZigBee bands. Therefore, the actual frequencies used should be limited to the higher bands. When multiple headstages are used, they should be set at frequencies as far apart as possible (note the separation of 10-20MHz for the values suggested).
+    Theoretically, the 2.4GHz radio used onboard can operate with 2Msps on 62 different 2MHz bandwidth channels. The radio can operate from 2.4GHz to 2.525Ghz. When operating at 2Msps, each frequency requires a 2MHz bandwidth. Therefore, with no overlap, the input value to `radio_init()` can take values of 0, 2, 4,..., 124. However, the lower frequency bands are prone to attenuation by water absoprtion and interference from WiFi/Bluetooth/ZigBee bands. Therefore, the actual frequencies used should be limited to the higher bands. When multiple headstages are used, they should be set at frequencies as far apart as possible (note the separation of 10-20MHz for the values suggested).
 	
+    See [Nordic nRF24L01 manual section6.3](http://www.nordicsemi.com/eng/content/download/2730/34105/file/nRF24L01_Product_Specification_v2_0.pdf).
+
 3.  Turn on the bridge and do `make flash`. 
 
 	There should be a line in the output message that says `FIRMWARE_VERSION is RADIO_AGC_IIR_SAA`. If not, make sure again in Makefile that all other lines containing `FIMRWARE_VERSION=` is commented out.
@@ -334,16 +342,214 @@ The parallel port-to-bridge connections and bridge-to-headstage connections are 
 
 	After all (if any) gtkclient modifications, recompile gtkclient inside `myopen_multi/gtkclient_multi` directory with `make clean; make` -- gtkclient is now ready to be used with RHD-headstage.
 
-#####<a name="firmware-versions">Firmware versions</a>
-all that shiiiiet
+When turned on, the onboard LED should blink periodically.
 
-#####<a name="JTAG-testing">JTAG testing</a>
-Dependency
+####<a name="firmware-versions">Firmware versions</a>####
+There are other firmware version in this directory, many of them were used in the process and developing
+the final firmware.
 
-pictures and thangs! DAAAAAMN
+* `intan_setup_test.asm`:  
+
+    Polls the same channel from all 4 Intan amplifiers, and save periods to memory starting at FP_BASE (0xFF906F00). Plot the result using `plot_memdump.py`, function `within_amp()`. Used to find optimal setup for the RHD amplifiers.
+
+    Compile and flash with `make clean; make; make flash` after uncommenting `FIRMWARE_VERSION=intan_setup_test` and commenting out all other `FIRMWARE_VERSION` comments. Does not use the radio so not supported by gtkclient.
+
+    The blackfin cache memory organization can be visualized by the spreadsheet `Intan_setup.ods`.
+
+* `intan_setup_test2.asm`: 
+
+    Tests the intra-amp performance. Records a set number of periods from all 32 channels of a fixed amp (see comments in file), save to memory in A1 (0xFF904000). Results include Intan-setup responses. Use `plot_memdump.py`, function `within_amp()` to plot the results.
+
+    Compile and flash with `make clean; make; make flash` after uncommenting `FIRMWARE_VERSION=intan_setup_test2` and commenting out all other `FIMRWARE_VERSION` comments. Does not use the radio, not supported by gtkclient.
+
+    The blackfin cache memory organization can be visualized by the spreadsheet `Intan_setup.ods`
+
+* `firmware1.asm`:
+   
+    Integrated intan_test_setup2 into the firmware structure...after the setup process, repeatedly poll all the SPORT, but saves all channels from just one amp to WF_BUF. This allows for 256 32-bit words, which is equivalent to getting 16 samples from all 32-channels of the designated amplifier. 
+
+    After saving the samples, part of the signal chain (AGC+IIR+SAA) was used to see how much code-path can be fit in before data corruption happens. The data in WFBUF can be dumped after it's full and plotted with `plot_packet_samples.py` (`plot_packet('bla.txt', 16, 32)`). Contains no radio code. Not supported by gtkclient.
+
+* `firmware2.asm`:
+
+    Same as `firmware1.asm`, except the extra signal path code is replaced with nops to investiage code-length issues.
+
+* `radio_basic.asm`:
+
+    Built off firmware2.asm, but integrate in radio communication with gtkclient. The radio communication involved is a stripped-down version of the original radio protocol -- writes in the raw samples, but since no spike-sorting is done, the matching bits are simply set to 0. Instructions to add in the echo nibble and packet#-in-frame nibble are present, so gtkclient can correctly read and interpret the packet information. 
+                 
+    Requires uncommenting the `FIRMWARE_VERSION=RADIO_BASIC` in makefile to compile, uses the "memory_radio_basic.h" file, which describes the memory layout. The memory header file is taken care of by the Makefile. The corresponding header will be moved to be "memory.h" when the FIMRWARE_VERSION option is set.
+
+    The blackfin cache memory organization can be visualized by the spreadsheet `radio_basic_memoryMap.ods`.
+
+    To use with gtkclient, compile gtkclient with `RADIO_BASIC` set to true in the Makefile. 
+
+    While running gtkclient, since no matches are actually made, in the spike-window, the waveforms may be colored blue and messages in stdin about false-positivies can happen. This is normal and safe to ignore.
+
+* `radio_AGC.asm`:
+
+    Built off radio_basic.asm, but with added AGC functions. Same radio-communication protocol as in radio_basic. Compile with `FIMRWARE_VERSION=RADIO_AGC`, use "memory_AGC.h". 
+
+    The blackfin cache memory organization can be visualized by the spreadsheet `radio_AGC_memoryMap.ods`.
+
+    To use with gtkclient, compile gtkclient with `RADIO_AGC` set to true in its Makefile. Same spike false-positives will occur.
+
+* `radio_AGC_IIR.asm`:
+
+    Built off radio_AGC.asm, but added two IIR biquads to act as band-pass filter, set to [500, 9000Hz]. Compile with `FIMRWARE_VERSION=RADIO_AGC_IIR`, use "memory_AGC_IIR.h".
+
+    The blackfin cache memory organization can be visualized by the spreadsheet `radio_AGC_IIR_memoryMap.ods`.
+
+    To use with gtkclient, compile gtkclient with `RADIO_AGC_IIR` set to true in its Makefile. Same spike false-positives will occur.
+                   
+    Note that unlike the original gtkclient, this version will not have an option to set the gain. This is because previously the samples were 12-bits, with Q16 values, the IIR may adjust its coefficients to apply a gain of up to 2 on its incoming samples, this is the mechanism through which Tim's gtkclient applies the gain. In the RHD version of headstage, the incoming samples are already 16-bits, therefore no gain needs/should be applied.
+                   
+    By changing the IIR-biquad coefficients, oscillations of different frequency may be introduced. The `osc` radio button in this version of gtkclient does this. Clicking that radio button sets the IIR coefficients of the selected channels so the final IIR outputs oscilate at 919Hz. Clicking the `500-9000Hz` radio button restores the bandpass filtering behavior on the selected channels. This may serve as a good test for radio operation.
+
+* `IIR_oscillator_test.asm`: 
+   
+    Used to test IIR-based oscillator. Basically is radio_AGC_IIR.asm without the radio transmission code in the main thread, or the radio_loop code. Sets up initial conditions on the biquads and their coefficients. 
+                        
+    Save 68 samples each for 32 channels on a single amp (or different, can be changed in code) to memory at 0xff806300. JTAG running and dumping the memory can visualize the resulting waveform. Visualize using plot_memdump.py, `within_amp_32ch()`. Used to confirm the biquad oscillation coefficients.
+
+* `radio_AGC_IIR_SAA.asm`:   
+
+     Adding the spike-sorting using SAA instructions to radio_AGC_IIR.asm. This is the final firmware for RHD headstages. Compile with `FIRMWARE_VERSION=RADIO_AGC_IIR_SAA`, uses "memory_AGC_IIR_SAA.h". 
+
+     The blackfin cache memory organization can be visualized by the spreadsheet `radio_all_memoryMap.ods`.
+
+    Compile gtkclient with `RADIO_AGC_IIR_SAA` set to true in its Makefile.
+
+
+####<a name="JTAG-testing">JTAG testing</a>
+Both RHD and RHA headstages have JTAG connectors that allows for in-circuit debugging. Documented here are the procedures for using the [gnICE debugger](https://docs.blackfin.uclinux.org/doku.php?id=hw:jtag:gnice-plus). 
+
+After flasing the firmware you want to test onto the headstage, connect the 9-pin Omnetics connector labeled L on the [bridge](#bridge_labeled) to the 9-pin Omnetics connector on the back of the headstage.
+
+Connect gnICE from PC USB port to the JTAG header pins labeled J on the [bridge](#bridge_labeled).
+
+Turn on the bridge, in one terminal, type `bfin-gdbproxy -q bfin`, on successful detection of the debugger, the following message would appear:
+
+```
+Found USB cable: gnICE
+Connected to libftdi driver.
+IR length: 5
+Chain length: 1
+Device Id: 01100010011110100101000011001011 (0x627A50CB)
+  Manufacturer: Analog Devices, Inc. (0x0CB)
+  Part(0):      BF533 (0x27A5)
+  Stepping:     6
+  Filename:     /opt/uClinux/bfin-elf/bin/../share/urjtag/analog/bf533/bf533
+warning:   bfin: no board selected, BF533 is detected
+notice:    bfin: jc: waiting on TCP port 2001
+notice:    bfin: jc:  (you must connect GDB before using jtag console)
+notice:    bfin-gdbproxy: waiting on TCP port 2000
+```
+failed message such as:
+
+```
+Found USB cable: gnICE
+Connected to libftdi driver.
+warning: TDO seems to be stuck at 1
+error:     bfin: detecting parts failed
+Found USB cable: gnICE
+error: Couldn't connect to suitable USB device.
+error:     bfin: cable initialization failed
+Found USB cable: gnICE
+error: Couldn't connect to suitable USB device.
+error:     bfin: cable initialization failed
+```
+Usually means the headstage-to-bridge JTAG connection is incorrect, or the bridge is not powered on.
+
+After gnICE is detected, there are two ways to start a gdb debugging session. The first way is from terminal, do `bfin-elf-gdb stage.dxe`. Then in the `bfin-elf-gdb` prompt, type `target remote :2000` to connect to the gnICE. Successful connection would result in the following message in the gnICE terminal:
+
+```
+notice:    bfin-gdbproxy: connected
+```
+Debugging is then identical to using gdb.
+
+The graphical debugger [Insight](https://www.sourceware.org/insight/) can also be used, and is recommended. A good manual for using Insight with blackfin can be found in section5.ch's [IceBear](http://www.section5.ch/dsp/icebear/ICEbear-manual.pdf) manual. IceBear is an alternative in-circuit emulator(ICE)/debugger for the blackfin, but has been discontinued.
+
+To launch Insight, type `bfin-elf-insight stage.dxe`, should be able to connect to bfin-gdbproxy automatically. If not, in `File`->`Target Setting` chose the option `GDBServer/TCP` and for port enter `2000`.
+
+As of version6.6, Insight may pop messages asking whether you want to set up breakpoints on future library load, click `no`. Error message saying `error: bad text index "4"` can also be safely ignored by clicking `ok`.
 
 #####<a name="Utility-programs">Utility Programs</a>
-All dat python in your pants! what do they do?? Demo one up with JTAG!
+
+`myopen_multi/headstage2_firmware` also includes a number of utility programs used in the development and debugging process:
+
+* `plot_memdump.py`, requires matplotlib, numpy and scipy.
+
+    In JTAG debugging, memory values can be dumped when execution is paused. These values can then be processed and plotted. For example, while using `intan_setup_test2.asm`, with the following preprocessor setup:
+
+    ```
+    #define TESTFREQ                3200 // Hz
+    #define STORAGE                 2480
+    #define SAMPLE_PER_CH           150
+    #define SAMPLE_PER_CH_MINUS_3   147
+    #define TOTAL_CONVERT           4800   // 32*SAMPLE_PER_CH
+    #define TOTAL_CONVERT_MINUS_3   4797
+    ```
+
+    and the subroutine `save_one_amp` as:
+    
+    ```
+    save_one_amp:
+        r1 = w[p0 + (SPORT1_STAT - SPORT0_RX)];
+        cc = bittst(r1, 0);
+        if !cc jump save_one_amp;
+
+        // save new samples, in order from amp1 to amp4
+        r2 = [p0 + (SPORT1_RX - SPORT0_RX)];    // SPORT1 pri - 2nd amp
+        r3 = [p0 + (SPORT1_RX - SPORT0_RX)];    // SPORT1 sec - 1st amp
+        r2 >>= SHIFT_BITS;
+        r3 >>= SHIFT_BITS;
+        //w[p1++] = r3;                           // save 1st amp
+        //w[p1++] = r2;                           // save 2nd amp
+
+        r2 = [p0];                              // SPORT0 pri - 4th amp
+        r3 = [p0];                              // SPORT0 sec - 3rd amp
+        r2 >>= SHIFT_BITS;                      
+        r3 >>= SHIFT_BITS;
+        w[p1++] = r3;                           // save 3rd amp
+        //w[p1++] = r2;                           // save 4th amp
+        rts;
+    ```
+
+    and setting a breakpoint at the line `jump we_finished`, when the execution is paused, we will have recorded 2472 32-bit words starting from memory location `A1` with the address `0xFF904000`. If we were applying a 3200Hz wave to some of the third group of electrodes, that would mean we have recorded 15 periods of that signal.
+
+    In the gdb prompt of Insight debugger (or just the regular gdb prompt), we can dump the recorded signals (in addition to other setup values, see comments) to `gdb.txt` by:
+
+    ```
+    set logging redirect on
+    set logging on
+    x/2480xw 0xFF904000
+    set logging off
+    ```
+
+    We can then plot the recorded values from all 32 channels of the 3rd group of electrodes in iPython with functions defined in this script:
+
+    ```
+    %run plot_memdump.py
+    data = within_amp('gdb.txt', 32, 3200, 15)
+    ```
+
+    Below on the right is the plot result. Only 4 channels are actually applied the signal, the rest are grounded.
+
+    <a name="JTAG1">*Using plot_memdump.py with intan_setup_test2*</a>
+    
+    ![JTAG1](https://github.com/allenyin/allen_wireless/raw/master/images/plot_memdump_intan_setup_test2.png)
+
+    Use the function `within_amp_32ch()` for use with `IIR_oscillator_test.asm`.
+
+    The function `saveCh_to_mat()` can convert the dumped gdb values as mat files, which can be imported into Matlab for analysis.
+
+* `plot_packet_samples.py`
+
+* `fixedPointConvert.py`, `AGC_sim.py`
+
+* `calc_memoryAddr.py`
+
 
 ##<a name="gtkclient">Client Software</a>
 

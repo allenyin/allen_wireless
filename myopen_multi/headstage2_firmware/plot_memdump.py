@@ -8,6 +8,10 @@ Edit 11/15/2015: No longer need the regex command, just save gdb.txt to whatever
 
 Edit 1/6/2015: Note that the amplitude of the signal needs to be a bit higher to see values clearly.
 
+Use within_amp() for plotting intan_setup_test.asm, intan_setup_test2.asm results. Assumed dumped gdb.txt
+                 values include Intan setup results.
+    within_amp_32ch() for IIR_oscillator_test. Assume dumped gdb.txt contains only data values.
+
 """
 import numpy as np
 import matplotlib.pyplot as plt
@@ -298,6 +302,9 @@ def within_amp_32ch(fname, truncation=False, signed=False):
     '''
     Same as within_amp, assumes 32 channels, and doesn't care about number
     of periods.
+
+    Used with IIR_oscillator_test. Since it assumes the dumped values do not
+    contain setup values.
     '''
     data = load_mem_values(fname)
     data = convert_mem_values(data)

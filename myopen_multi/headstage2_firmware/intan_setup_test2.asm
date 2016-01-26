@@ -530,7 +530,7 @@ save_one_amp:
     r3 = [p0];                              // SPORT0 sec - 3rd amp
     r2 >>= SHIFT_BITS;                      
     r3 >>= SHIFT_BITS;
-    //w[p1++] = r3;                           // save 3rd amp
-    w[p1++] = r2;                           // save 4th amp
+    w[p1++] = r3;                           // save 3rd amp
+    //w[p1++] = r2;                           // save 4th amp
     rts;
 
