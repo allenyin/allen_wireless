@@ -8,7 +8,6 @@
 * [Firmware](#Firmware)
 	Everything needs to be flashed! Flashing is writing new firmware to the flash memory, which is loaded when blackfin is powered on and booted up. See corresponding sections.
 	* [Dependency](#Firmware-dependency)
-	Pyparallel, blackfin baremetal toolchain, etc.
 	* [Bridge](#Bridge-fw)
 	* [RHA-headstage](#RHA-fw)
 	* [RHD-headstage](#RHD-fw)
@@ -113,7 +112,7 @@ As illustrated by the [Receiver block in the system overview](#figure_overview),
 
 In addition to wireless communication with the headstages, the bridge is also needed to program and debug the headstages.
 
-<a name="bridge_labeled">*Bridge Board* ![labeled_bridge](https://github.com/allenyin/allen_wireless/raw/master/images/bridge_labeled.png  "labeled_bridge")</a>
+<a name="bridge_labeled">*Bridge Board* </a>![labeled_bridge](https://github.com/allenyin/allen_wireless/raw/master/images/bridge_labeled.png  "labeled_bridge")
 
 In the above image:
 
@@ -142,6 +141,27 @@ K. JTAG header pins for debugging the headstage. The pin missing on the left col
 L. Omnetics connector for JTAG debugging the headstage. The signals applied to the JTAG header pins are passed to the headstage through this connection.
 
 M. 2.4GHz Nordic radio and antenna pairs. Having three antenna allow for spatial reception diversity and enable better wireless signal quality.
+
+**Parallel Port Flash Cable**
+
+A 25-pins [IBM PC-comptabile parallel port](https://en.wikipedia.org/wiki/Parallel_port#Pinouts) cable is modified to use for the flashing process, see [firmware section](#Firmware) for instructions.  The unmodified end of the DB25 cable is connected to the parallel port, while the modified end connects to the 7-pin header connectors on the bridge, labeled G and I above.
+
+The flash cable on one end needs to be modified as shown below:
+
+<a name="flash_cable">*Flash Cable Schematic*</a>![flash_cable](https://github.com/allenyin/allen_wireless/raw/master/images/flash_cable_schematic.png "flash_cable")
+
+The left box shows the relevant pins on the unmodified DB25 connector, the right box shows the corresponding header pins on the bridge. There needs to be a `33pF` capacitor connecting `pin23` and `pin4` of the parallel cable. `pin5` of the cable needs to connect to the base of an NPN transistor, whose emmiter is connected to ground via either `pin23` or `pin24`, while the collector goes to `pin7` of the bridge headers.
+
+Specifically, the parallel port to SPI correspondence is:
+
+* `pin2` = `_CS` -- chip select of the SPI flash memory.
+* `pin13` = `SO` -- the input of the parallel port is connected to the output (SO) of the flash memory.
+* `pin3` = `SI` -- the output of the parallel port is connected to the input (SI) of the flash memory.
+* `pin4` = `SCLK` -- serial clock (SCLK) of the flash memory.
+
+`pin5` is not part of the 4-line SPI interface, but it is used to allow the line-driver onboard the bridge to select the flash memory to use the SPI bus. This is necessary since the SPI bus on the Blackfins of both the bridge and headstage is shared between the flash memory and the radio chip.
+
+The modified flash cable will include the capacitor and the NPN transistor. The polarity of the 7-pin connector can be figured out by probing to see which pin is grounded onboard the bridge.
 
 ###<a name="headstages">Headstages</a>
 
@@ -199,7 +219,48 @@ Fortunately the python library [pyparallel](https://github.com/pyserial/pyparall
 
 After installing this module, firmware can be flashed with `python flash.py myprogram.ldr`. Error might occur indicating parallel port cannot be openened, in which case do `sudo rmmod lp; sudo modprobe ppdev` and try again.
 
+Successful flash message:
+```
+python ../flasher/flash.py stage.ldr
+ldr file: stage.ldr
+File size 12202 bytes, 48 pages.
 
+Requesting manufacturer opcode...
+
+Read: 0xbf 
+
+Looks like microchip flash.
+Read: 0xbf 
+
+Read: 0x25 
+
+Read: 0x8d 
+
+Read: 0xbf 
+
+Detected: 
+SST25VF040
+SST25 sanity check ok.
+Status register 0x0
+Bank protect bits = read-write.
+AAI off.
+Block protect off.
+Device is not write enabled. (default)
+Device is ready.
+Erasing SST25!
+Waiting for the erase to complete..
+Status register 0x0
+Bank protect bits = read-write.
+AAI off.
+Block protect off.
+Device is not write enabled. (default)
+Device is ready.
+write_all2_SST25 writing buffer length 12202
+Verifying all..
+ ok.
+
+All pages verified correctly! :)
+```
 ####<a name="Bridge-fw">Bridge</a>
 How to flash bridge??
 
