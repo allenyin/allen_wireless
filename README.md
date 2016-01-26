@@ -112,7 +112,9 @@ As illustrated by the [Receiver block in the system overview](#figure_overview),
 
 In addition to wireless communication with the headstages, the bridge is also needed to program and debug the headstages.
 
-<a name="bridge_labeled">*Bridge Board* </a>![labeled_bridge](https://github.com/allenyin/allen_wireless/raw/master/images/bridge_labeled.png  "labeled_bridge")
+<a name="bridge_labeled">*Bridge Board* </a>
+
+![labeled_bridge](https://github.com/allenyin/allen_wireless/raw/master/images/bridge_labeled.png  "labeled_bridge")
 
 In the above image:
 
@@ -167,7 +169,9 @@ The modified flash cable will include the capacitor and the NPN transistor. The 
 
 In image below, the fully assembled RHA-headstage is on the left. The RHD-headstage is on the right.
 
-<a name="headstages_labeled">*Headstage PCBs*</a>![labeled_headstages](https://github.com/allenyin/allen_wireless/raw/master/images/headstages.png "labled_headstages")
+<a name="headstages_labeled">*Headstage PCBs*</a>
+
+![labeled_headstages](https://github.com/allenyin/allen_wireless/raw/master/images/headstages.png "labled_headstages")
 
 Labeled in the image are the connectors the headstages can make:
 
@@ -268,9 +272,15 @@ The bridge firmware was not modified from the original myopen project (except th
 <a name="Bridgeflash">*Flashing the bridge*</a>
 ![Bridgeflash](https://github.com/allenyin/allen_wireless/raw/master/images/Bridgeflash.jpg)
 
-Go to the `myopen_multi/bridge_firmware/` directory, and do `make clean; make; make flash`.
+1. Go to the `myopen_multi/bridge_firmware/` directory, and do `make clean; make` to compile the firmware. 
 
-`make flash` will use either the libparapin based `flash.c` or pyparallel based `flash.py` to write the firmware to memory, based on what option is enabled in the Makefile under the `flash` rule. The default option will use the Python method.
+	Note that each bridge is receives from a different headstage. Therefore, if multiple headstages are used, multiple bridges will need to be flashed and used. 
+
+	If multiple briges are used, make sure the MAC addresses for the bridges are different. Go to `myopen_multi/common_bfin/ethernet.c`, in function `SetupMacAddr()`, change the value of `MACaddr[5]` so that the bridges used have different values.
+
+2. Turn the bridge on, making sure the USB power cable is connected, then do `make flash`. 
+ 
+	`make flash` will use either the libparapin based `flash.c` or pyparallel based `flash.py` to write the firmware to memory, based on what option is enabled in the Makefile under the `flash` rule. The default option will use the Python method.
 
 ####<a name="RHA-fw">RHA-headstage</a>
 
@@ -278,28 +288,51 @@ The RHA-headstage firmware was not modified from the original myopen project (ex
 
 <a name="bridge_connection">*Bridge connection to flash headstage*</a>![bridge_connection](https://github.com/allenyin/allen_wireless/raw/master/images/bridge_connection.jpg)
 
-Connect the other end of the 9-pins cable to the top-side omnetics connector on the headstage as shown below, note that the top wire on the bridge is also the top wire on the headstage.
+1. Connect the other end of the 9-pins cable to the top-side omnetics connector on the headstage as shown below, note that the top wire on the bridge is also the top wire on the headstage.
 
-<a name="headstage_connection">*RHA-headstage connection*</a>![headstage_connection](https://github.com/allenyin/allen_wireless/raw/master/images/headstage_connection.jpg)
+	<a name="headstage_connection">*RHA-headstage connection*</a>![headstage_connection](https://github.com/allenyin/allen_wireless/raw/master/images/headstage_connection.jpg)
 
-Note that the RHA-headstage shown in the image is only the transceiver top half.
+	Note that the RHA-headstage shown in the image is only the transceiver top half.
 
-Go to the `myopen_multi/headstage_firmware/` directory, and do `make clean; make; make flash`.
+2. Go to the `myopen_multi/headstage_firmware/` directory, and do `make clean; make` to compile the firmware.
 
-`make flash` will use either the libparapin based `flash.c` or pyparallel based `flash.py` to write the firmware to memory, based on what option is enabled in the Makefile under the `flash` rule. The default option will use the Python method.
+	Note that if multiple headstages are used, they must be configured to operate on different radio frequency. To change the radio channel, go to `myopen_multi/headstage_firmware/main.c` and search for the call to `radio_init()` and change the input argument. An input value of `84`, for example, sets the radio to operate on `2400MHz + 84Hz = 2484Mhz`. Other possible values are 94, 114, and 124. The maximum is 124. These changes must be followed by firmware recompilation.
 
-If you are using the RHA-headstages for recording, make sure before launching gtkclient, in `myopen_multi/gtkclient_multi/Makefile`, the option `HEADSTAGE_TIM` is set to `TRUE`, while setting `RADIO_BASIC`, `RADIO_AGC`, `RADIO_AGC_IIR` and `RADIO_AGC_IIR_SAA` to `false`.
+    Theoretically, the 2.4GHz radio used onboard can operate with 2Msps on 62 different 2MHz bandwidth channels. The radio can operate from 2.4GHz to 2.525Ghz. When operating at 2Msps, each frequency requires a 2MHz bandwidth. Therefore, with no overlap, the input value to `radio_init()` can take values of 0, 2, 4,..., 125. However, the lower frequency bands are prone to attenuation by water absoprtion and interference from WiFi/Bluetooth/ZigBee bands. Therefore, the actual frequencies used should be limited to the higher bands. When multiple headstages are used, they should be set at frequencies as far apart as possible (note the separation of 10-20MHz for the values suggested).
 
-Then, compile gtkclient by navigating into `myopen_multi/gtkclient_multi` and type `make clean; make`. gtkclient is now ready to be used with RHA-headstages.
+3. Turn on the bridge, and flash the headstage with `make flash`. 
+
+	`make flash` will use either the libparapin based `flash.c` or pyparallel based `flash.py` to write the firmware to memory, based on what option is enabled in the Makefile under the `flash` rule. The default option will use the Python method.
+
+4. Modify gtkclient:
+ 	* Make sure in `myopen_multi/gtkclient_multi/Makefile`, the option `HEADSTAGE_TIM` is set to `TRUE`, while setting `RADIO_BASIC`, `RADIO_AGC`, `RADIO_AGC_IIR` and `RADIO_AGC_IIR_SAA` to `false`.
+	* Go to `myopen_multi/gtkclient_multi/src/gtkclient.cpp` and make sure the radio channel given to `radio_init()` in the headstage's firmware is present in the array `g_radioChannel`. 
+	* If using multiple headstage-bridge pairs for recording, make sure the value of `NSCALE` defined in `myopen_multi/gtkclient_multi/include/gtkclient.h` is set to the number of headstage-bridge pairs used.
+   
+    After all (if any) gtkclient modifications, recompile gtkclient by navigating into `myopen_multi/gtkclient_multi` and type `make clean; make`. gtkclient is now ready to be used with RHA-headstages.
 
 ####<a name="RHD-fw">RHD-headstage</a>
 
 The parallel port-to-bridge connections and bridge-to-headstage connections are identical for RHD-headstage as for RHA-headstages. However, there are multiple firmwares available in the `myopen_multi/headstage2_firmware` directory. To program the RHD-headstage to use the final firmware version, navigate to that directory and:
 
 1. Uncomment the line `FIRMWARE_VERSION=radio_AGC_IIR_SAA` line in `myopen_multi/headstage2_firmware/Makefile`.
-2. Type `make clean; make; make flash`. There should be a line in the output message that says `FIRMWARE_VERSION is RADIO_AGC_IIR_SAA`. If not, make sure again in Makefile that all other lines containing `FIMRWARE_VERSION=` is commented out.
-3. Go to `myopen_multi/gtkclient_multi/Makefile` and set the option `RADIO_AGC_IIR_SAA` to true, while setting `HEADSTAGE_TIM`, `RADIO_BASIC`, `RADIO_AGC`, `RADIO_AGC_IIR` to `false`.
-4. Compile gtkclient inside `myopen_multi/gtkclient_multi` directory with `make clean; make` -- gtkclient is now ready to be used with RHD-headstage.
+
+2. Type `make clean; make` to compile the firmware.
+
+	Note that if multiple headstages are used, they must be configured to operate on different radio frequency. To change the radio channel, go to `myopen_multi/headstage_firmware/main.c` and search for the call to `radio_init()` and change the input argument. An input value of `84`, for example, sets the radio to operate on `2400MHz + 84Hz = 2484Mhz`. Other possible values are 94, 114, and 124. The maximum is 124. These changes must be followed by firmware recompilation.
+
+    Theoretically, the 2.4GHz radio used onboard can operate with 2Msps on 62 different 2MHz bandwidth channels. The radio can operate from 2.4GHz to 2.525Ghz. When operating at 2Msps, each frequency requires a 2MHz bandwidth. Therefore, with no overlap, the input value to `radio_init()` can take values of 0, 2, 4,..., 125. However, the lower frequency bands are prone to attenuation by water absoprtion and interference from WiFi/Bluetooth/ZigBee bands. Therefore, the actual frequencies used should be limited to the higher bands. When multiple headstages are used, they should be set at frequencies as far apart as possible (note the separation of 10-20MHz for the values suggested).
+	
+3.  Turn on the bridge and do `make flash`. 
+
+	There should be a line in the output message that says `FIRMWARE_VERSION is RADIO_AGC_IIR_SAA`. If not, make sure again in Makefile that all other lines containing `FIMRWARE_VERSION=` is commented out.
+
+4. Modify gtkclient:
+	* Go to `myopen_multi/gtkclient_multi/Makefile` and set the option `RADIO_AGC_IIR_SAA` to true, while setting `HEADSTAGE_TIM`, `RADIO_BASIC`, `RADIO_AGC`, `RADIO_AGC_IIR` to `false`. This ensures gtkclient can correctly communicate with the RHD-headstage firmware.
+	* Go to `myopen_multi/gtkclient_multi/src/gtkclient.cpp` and make sure the radio channel given to `radio_init()` in the headstage's firmware is present in the array `g_radioChannel`.
+	* If using multiple headstage-bridge pairs for recording, make sure the value of `NSCALE` defined in `myopen_multi/gtkclient_multi/include/gtkclient.h` is set to the number of headstage-bridge pairs used.
+
+	After all (if any) gtkclient modifications, recompile gtkclient inside `myopen_multi/gtkclient_multi` directory with `make clean; make` -- gtkclient is now ready to be used with RHD-headstage.
 
 #####<a name="firmware-versions">Firmware versions</a>
 all that shiiiiet
