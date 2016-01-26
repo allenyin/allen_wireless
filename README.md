@@ -262,13 +262,43 @@ Verifying all..
 All pages verified correctly! :)
 ```
 ####<a name="Bridge-fw">Bridge</a>
-How to flash bridge??
+
+The bridge firmware was not modified from the original myopen project (except the Makefile, for directory consistency). To flash the bridge, connect the flash cable to the bridge header pins as below, note the direction of cable connection is marked on the red flash cable.
+
+<a name="Bridgeflash">*Flashing the bridge*</a>![Bridgeflash](https://github.com/allenyin/allen_wireless/raw/master/images/Bridgeflash.jpg)
+
+Go to the `myopen_multi/bridge_firmware/` directory, and do `make clean; make; make flash`.
+
+`make flash` will use either the libparapin based `flash.c` or pyparallel based `flash.py` to write the firmware to memory, based on what option is enabled in the Makefile under the `flash` rule. The default option will use the Python method.
 
 ####<a name="RHA-fw">RHA-headstage</a>
-How to flash?
+
+The RHA-headstage firmware was not modified from the original myopen project (except the Makefile, for directory consistency). To flash the heastage, connect the flash cable to the bridge header pins, and the 9-pins Omnetics cable to the bridge as shown below, note the direction of cable connection is marked on the red flash cable.
+
+<a name="bridge_connection">*Bridge connection to flash headstage*</a>![bridge_connection](https://github.com/allenyin/allen_wireless/raw/master/images/bridge_connection.jpg)
+
+Connect the other end of the 9-pins cable to the top-side omnetics connector on the headstage as shown below, note that the top wire on the bridge is also the top wire on the headstage.
+
+<a name="headstage_connection">*RHA-headstage connection*</a>![headstage_connection](https://github.com/allenyin/allen_wireless/raw/master/images/headstage_connection.jpg)
+
+Note that the RHA-headstage shown in the image is only the transceiver top half.
+
+Go to the `myopen_multi/headstage_firmware/` directory, and do `make clean; make; make flash`.
+
+`make flash` will use either the libparapin based `flash.c` or pyparallel based `flash.py` to write the firmware to memory, based on what option is enabled in the Makefile under the `flash` rule. The default option will use the Python method.
+
+If you are using the RHA-headstages for recording, make sure before launching gtkclient, in `myopen_multi/gtkclient_multi/Makefile`, the option `HEADSTAGE_TIM` is set to `TRUE`, while setting `RADIO_BASIC`, `RADIO_AGC`, `RADIO_AGC_IIR` and `RADIO_AGC_IIR_SAA` to `false`.
+
+Then, compile gtkclient by navigating into `myopen_multi/gtkclient_multi` and type `make clean; make`. gtkclient is now ready to be used with RHA-headstages.
 
 ####<a name="RHD-fw">RHD-headstage</a>
-Flashing depends on firmware version
+
+The parallel port-to-bridge connections and bridge-to-headstage connections are identical for RHD-headstage as for RHA-headstages. However, there are multiple firmwares available in the `myopen_multi/headstage2_firmware` directory. To program the RHD-headstage to use the final firmware version, navigate to that directory and:
+
+1. Uncomment the line `FIRMWARE_VERSION=radio_AGC_IIR_SAA` line in `myopen_multi/headstage2_firmware/Makefile`.
+2. Type `make clean; make; make flash`. There should be a line in the output message that says `FIRMWARE_VERSION is RADIO_AGC_IIR_SAA`. If not, make sure again in Makefile that all other lines containing `FIMRWARE_VERSION=` is commented out.
+3. Go to `myopen_multi/gtkclient_multi/Makefile` and set the option `RADIO_AGC_IIR_SAA` to true, while setting `HEADSTAGE_TIM`, `RADIO_BASIC`, `RADIO_AGC`, `RADIO_AGC_IIR` to `false`.
+4. Compile gtkclient inside `myopen_multi/gtkclient_multi` directory with `make clean; make` -- gtkclient is now ready to be used with RHD-headstage.
 
 #####<a name="firmware-versions">Firmware versions</a>
 all that shiiiiet
