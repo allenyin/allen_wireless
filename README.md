@@ -265,7 +265,8 @@ All pages verified correctly! :)
 
 The bridge firmware was not modified from the original myopen project (except the Makefile, for directory consistency). To flash the bridge, connect the flash cable to the bridge header pins as below, note the direction of cable connection is marked on the red flash cable.
 
-<a name="Bridgeflash">*Flashing the bridge*</a>![Bridgeflash](https://github.com/allenyin/allen_wireless/raw/master/images/Bridgeflash.jpg)
+<a name="Bridgeflash">*Flashing the bridge*</a>
+![Bridgeflash](https://github.com/allenyin/allen_wireless/raw/master/images/Bridgeflash.jpg)
 
 Go to the `myopen_multi/bridge_firmware/` directory, and do `make clean; make; make flash`.
 
