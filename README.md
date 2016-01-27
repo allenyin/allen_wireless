@@ -594,10 +594,11 @@ Since gtkclient uses the GTK2 GUI toolkit, which may not be a default repository
 
 gtkclient also requires `nvidia-cg-toolkit`, it is recommended (if not mandatory) to run gtkclient on Nvidia graphics cards. Also, according to [NVIDIA](https://developer.nvidia.com/cg-toolkit)
 
-```
-The Cg Toolkit is a legacy NVIDIA toolkit no longer under active development or support. Cg 3.1 is our last release and while we continue to make it avaiable to developers, we do not recommend using it in new development projects because future hardware features may not be supported.
-```
+>The Cg Toolkit is a legacy NVIDIA toolkit no longer under active development or support. Cg 3.1 is our last release and while we continue to make it avaiable to developers, we do not recommend using it in new development projects because future hardware features may not be supported.
+
 gtkclient is known to work fine on `Nvidia GeForce GTX760/770/550 Ti`. 
+
+
 
 ###<a name="gtkclient-compile">Compilation</a>
 
