@@ -661,7 +661,7 @@ Below is a screenshot of the main interface of gtkclient compiled for RHA-headst
 
 Below is a screenshot of the main interface of gtkclient compiled for RHD-headstage deployment firmware (`RADIO_AGC_IIR_SAA=true`).
 
-![RHDclient_main](https://github.com/allenyin/allen_wireless/raw/master/images/RHDclientMain.png)
+![RHDclient_main](https://github.com/allenyin/allen_wireless/raw/master/images/RHDgtkclientMain.png)
 
 
 
