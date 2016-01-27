@@ -625,6 +625,47 @@ Then `make clean; make` to compile.
 To compile gtkclient to work with other [firmware versions on RHD-headstage](#firmware-versions), set the corresponding option among `HEADSTAGE_TIM`, `RADIO_BASIC`, `RADIO_AGC`, `RADIO_AGC_IIR` and `RADIO_AGC_IIR_SAA` to `true` while setting the others to `false`.
 
 ###<a name="running-gtkclient">Running gtkclient</a>
+
+Communication between gtkclient and the headstages work as follows:
+
+1. When gtkclient is launched, it listens on the network for multicast messages.
+2. When the bridges are launched, it sends out multicast packets.
+3. gtkclient spawns `NSCALE` threads to listen for multicast packets from bridges. When a bridge packet is received, the sender bridge is mated with gtkclient, and one of these threads then handles all traffic from that bridge. 
+4. gtkclient assigns the bridges to operate on the radio frequency given in the `g_radioChannel` array.
+5. Each bridge then can exchange traffic with the headstage operating on the same radio frequency. The bridges then relay these traffic to gtkclient.
+
+This protocol makes it necessary for `NSCALE` to match the number of bridges and headstages used, for different bridges to have different MAC addresses, for different headstages to operate on different radio frequencies, and for the headstage radio frequencies to match the ones in `g_radioChannel`.
+
+Since this communication protocol requires using multicast traffic, it is necessary that if the bridges and the client PC are all connected to the same router/switch, the router/switch must be configured to disable multicast/IGMP filtering. Note that switches commonly allow multicast/IGMP traffic by default.
+
+Also, make sure the client PC allows `allmulti` traffic for the ethernet interface by `sudo ifconfig eth0 allmulti` or adding the line to `/etc/network/interfaces` file to enable multicast permanently.
+
+After compilation, gtkclient can be launched from the directory `myopen_multi/gtkclient_multi` by `./gtkclient`. It is recommended to turn on the the bridges after launching gtkclient to ensure mating. In the terminal window, messages such as:
+
+```
+Thread 140129180382976: rxed buf= neurobrdg
+Thread 140129180382976: a wild bridge appears at 10.145.39.253
+Thread 140129180382976: radio channel set to 84. It's super effective!
+```
+indicates 1)gtkclient has received a multicast packet `neurobrdg`, which 2) indicates the presence of a bridge at 10.145.39.253, and 3) the bridge is configured to operate on radio channel 84. `Thread 140129180382976` is the thread gtkclient spawned that is taking care of this new bridge.
+
+There will be one series of these messages for each bridge turned on. The absence of these messages indicate a problem in multicast traffic communication. Make sure the routers are configured correctly and the computer's ethernet interface allows allmulti.
+
+*RHA-headstage gtkclient*
+
+Below is a screenshot of the main interface of gtkclient compiled for RHA-headstage (`HEADSTAGE_TIM=true`).
+
+![RHAclient_main](https://github.com/allenyin/allen_wireless/raw/master/images/RHAclient_main.png)
+
+*RHD-headstage gtkclient*
+
+Below is a screenshot of the main interface of gtkclient compiled for RHD-headstage deployment firmware (`RADIO_AGC_IIR_SAA=true`).
+
+![RHDclient_main](https://github.com/allenyin/allen_wireless/raw/master/images/RHDclientMain.png)
+
+
+
+
 explain the GUI for RHA-headstage and RHD-headstage, possible problems and solutions.
 
 ###<a name="gtkclient-configuration">Configuration files</a>
