@@ -189,6 +189,20 @@ F. RHD-headstage Omnetics connector for flashing memory. The JTAG debugging conn
 
 The bottom half of both headstages are the `digitizing headstages` block in the [System overview diagram](#figure_overview), which is where the headstages differ hardware-wise. The top halves are the `transceiver block` and are identical.
 
+While the electrodes for both headstages are identical, the electrode-to-amplifier connections are different. Below are the electrode-to-channel mapping for each headstage, containing only the 32 signal-carrying electrodes of the connector (excluding the guide posts). Note that each amplifier is connected to one group of 32 electrodes.
+
+*RHA-headstage electrode-to-channel mapping, ordered from left-to-right*
+
+top-row|31|30|29|28|27|26|25|24|23|22|21|20|19|18|17|16|
+------------------------------------------------
+bot-row|15|14|13|12|11|10| 9| 8| 7| 6| 5| 4| 3| 2| 1| 0|
+
+*RHD-headstage electrode-to-channel mapping, ordered from left-to-right*
+
+top-row|23|22|21|20|19|18|17|16|15|14|13|12|11|10|9|8|
+------------------------------------------------------
+bot-row|24|25|26|27|28|29|30|31|0|1|2|3|4|5|6|7|
+
 ###<a name="Firmware">Firmware</a>
 The firmware is written in a combination of C and Blackfin assembly language. While Analog Devices (ADI) provides its own software development toolchains, it requires purchasing a pretty expensive license (though it comes with a lot more support). For the myopen and this project, the open source gnu gcc blackfin toolchain is used. Further, all development was done on debian based OS. The Makefiles in this repository are tested only in Ubuntu 14.04. Minor adjustments might be needed to work on other debian-based OS.
 
