@@ -19,6 +19,7 @@
     Section about protobufs
 	* [Compilation](#gtkclient-compile)
 	Compilation of different versions, their options, screenshots, usage (match radio channel numbers).
+    * [Running gtkclient](#running-gtkclient)
 	* [Configuration files](#gtkclient-configuration)
 	* [TODO/possible improvements](#gtkclient-TODO)
 	Threads, headstage.cpp, channels.h, protobufs.
@@ -333,7 +334,7 @@ The file `memory_map.ods` is a spreadsheet visualizing the memory organization u
 
 ####<a name="RHD-fw">RHD-headstage</a>
 
-The parallel port-to-bridge connections and bridge-to-headstage connections are identical for RHD-headstage as for RHA-headstages. However, there are multiple firmwares available in the `myopen_multi/headstage2_firmware` directory. To program the RHD-headstage to use the final firmware version, navigate to that directory and:
+The parallel port-to-bridge connections and bridge-to-headstage connections are identical for RHD-headstage as for RHA-headstages. However, there are multiple firmwares available in the `myopen_multi/headstage2_firmware` directory. To program the RHD-headstage to use the final firmware version -- `radio_AGC_IIR_SAA.asm`, navigate to that directory and:
 
 1. Uncomment the line `FIRMWARE_VERSION=radio_AGC_IIR_SAA` line in `myopen_multi/headstage2_firmware/Makefile`.
 
@@ -488,7 +489,7 @@ The graphical debugger [Insight](https://www.sourceware.org/insight/) can also b
 
 To launch Insight, type `bfin-elf-insight stage.dxe`, should be able to connect to bfin-gdbproxy automatically. If not, in `File`->`Target Setting` chose the option `GDBServer/TCP` and for port enter `2000`.
 
-As of version6.6, Insight may pop messages asking whether you want to set up breakpoints on future library load, click `no`. Error message saying `error: bad text index "4"` can also be safely ignored by clicking `ok`.
+As of version6.6, Insight may pop messages asking `Make breakpoint pending on future shared library load?` -- choose `no` on all of them. Error message saying `error: bad text index "4"` can also be safely ignored by clicking `ok`.
 
 #####<a name="Utility-programs">Utility Programs</a>
 
@@ -579,14 +580,51 @@ As of version6.6, Insight may pop messages asking whether you want to set up bre
 
 ##<a name="gtkclient">Client Software</a>
 
+The client software, *gtkclient* is as summarized in Hanson's [thesis](http://m8ta.com/tim/dissertation.pdf)
+
+```
+The sorting client is written in C/C++ using the GTK2 GUI toolkit with OpenGL and HLSL for graphics, [...] exclusively on Debian GNU/Linux. It consists of around 12600 lines of code, much for managing the GUI, displaying waveforms on the screen, maintaining persistent state, saving data, and communicating with [other] software clients [such as BMI3].
+```
+
 ###<a name="gtkclient-dependency">Dependency</a>
-All the deps in makefile, nvidia graphics card? protobuf. Make deps should be ok. Debian or Ubuntu14.04
+
+Most of the dependency can be installed by going to `myopen_multi/gtkclient_multi` and run `make deps` and following the instructions.
+
+Since gtkclient uses the GTK2 GUI toolkit, which may not be a default repository in newer linux distributions the user may have to edit the sources list or manaully download and install the packages. As of Ubuntu 14.04, this was not needed.
+
+gtkclient also requires `nvidia-cg-toolkit`, it is recommended (if not mandatory) to run gtkclient on Nvidia graphics cards. Also, according to [NVIDIA](https://developer.nvidia.com/cg-toolkit)
+
+```
+The Cg Toolkit is a legacy NVIDIA toolkit no longer under active development or support. Cg 3.1 is our last release and while we continue to make it avaiable to developers, we do not recommend using it in new development projects because future hardware features may not be supported.
+```
+gtkclient is known to work fine on `Nvidia GeForce GTX760/770/550 Ti`. 
 
 ###<a name="gtkclient-compile">Compilation</a>
-Match radio channel numbers!!!
-Compile for RHA
-Compile for RHD, different versions, so we can use for both!
-Screenshots! HOw do they work?
+
+gtkclient can be compiled to work with both RHA-headstage and RHD-headstage, the latter of which may operate on multiple versions of firmware.
+
+The deployment firmware versions is `myopen_multi/headstage_firmware/radio5.asm` for RHA-headstage, and `myopen_multi/headstage2_firmware/radio_AGC_IIR_SAA.asm`.
+
+Before compiling gtkclient to work with either RHA-headstage or RHD-headstage with the deployment firmware, one must:
+
+* Match headstage numbers - make sure value of `NSCALE` set in `myopen_multi/gtkclient_multi/include/gtkclient.h` is equal to the number of headstages to be used.
+* Match radio channels. 
+
+    * First make sure the headstages to be used operate on different radio channels when flashing their firmware (see [RHA-headstage firmware section](#RHA-fw) and [RHD-headstage firmware section](#RHD-fw)) for instructions.
+    * Make sure the radio channels of the headstages are present in the array `g_radioChannel` in `myopen_multi/gtkclient_multi/src/gtkClient.cpp`.
+
+* Make sure if multiple headstages are used, the same number of bridges are used as well and connected to the PC running gtkclient through a switch or router. Also make sure the MAC address for each bridge is different, see [Bridge firmware section](#Bridge-fw) for instructions on this.
+
+Then, if using RHA-headstage, go to `myopen_multi/gtkclient_multi` near the top of the file, set `HEADSTAGE_TIME=true` while setting `RADIO_BASIC=false`, `RADIO_AGC=false`, `RADIO_AGC_IIR=false`, and `RADIO_AGC_IIR_SAA=false`.
+
+If using deployment firmware on RHD-headstage, go to `myopen_multi/gtkclient_multi` near the top of the file, set `RADIO_AGC_IIR_SAA=true` while setting `HEADSTAGE_TIM=false`, `RADIO_BASIC=false`, `RADIO_AGC=false`, `RADIO_AGC_IIR=false`, and `RADIO_AGC_IIR_SAA=false`.
+
+Then `make clean; make` to compile.
+
+To compile gtkclient to work with other [firmware versions on RHD-headstage](#firmware-versions), set the corresponding option among `HEADSTAGE_TIM`, `RADIO_BASIC`, `RADIO_AGC`, `RADIO_AGC_IIR` and `RADIO_AGC_IIR_SAA` to `true` while setting the others to `false`.
+
+###<a name="running-gtkclient">Running gtkclient</a>
+explain the GUI for RHA-headstage and RHD-headstage, possible problems and solutions.
 
 ###<a name="gtkclient-configuration">Configuration files</a>
 What I changed...how does it work? Instructions on templates and why not to mix RHA and RHD.
