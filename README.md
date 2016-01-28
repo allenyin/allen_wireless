@@ -20,8 +20,8 @@
 	* [Compilation](#gtkclient-compile)
 	Compilation of different versions, their options, screenshots, usage (match radio channel numbers).
     * [Running gtkclient](#running-gtkclient)
-        *[RHA-headstage gtkclient](#RHAgtkclient)
-        *[RHD-headstage gtkclient](#RHDgtkclient)
+        * [RHA-headstage gtkclient](#RHAgtkclient)
+        * [RHD-headstage gtkclient](#RHDgtkclient)
 	* [Configuration files](#gtkclient-configuration)
 	* [TODO/possible improvements](#gtkclient-TODO)
 	Threads, headstage.cpp, channels.h, protobufs.
@@ -761,7 +761,7 @@ Below is a screenshot showing the client's `files` page.
 
 ![spike_page](https://github.com/allenyin/allen_wireless/raw/master/images/RHDgtkclient_filePage.png)
 
-*RHD-headstage gtkclient*
+###<a name="RHDgtkclient">RHD-headstage gtkclient</a>
 
 Below is a screenshot of the main interface of gtkclient compiled for RHD-headstage deployment firmware (`RADIO_AGC_IIR_SAA=true`).
 
