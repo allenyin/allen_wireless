@@ -658,7 +658,7 @@ During operation, the headstages send packets containing waveform and spike matc
 
 Actions made in the gtkclient GUI may result in command packets sent from gtkclient to the bridge, then to the headstages, establishing two-way communication.
 
-The gtkclient interfaces for both RHA-headstage and RHD-headstage are largely similar.
+The gtkclient interfaces for both RHA-headstage and RHD-headstage are largely similar. It's recommended to read this entire section to understand the interfaces and their differences.
 
 ###<a name="RHAgtkclient">RHA-headstage gtkclient</a>
 
@@ -754,6 +754,12 @@ The `Raster Window` selection box selects which channels' rasters are viewed. Ea
 The `Raster span` selection box sets the time length of the displayed data for the raster display (see `g_rasterSpan` in `src/gtkclient.cpp`).
 
 Below is a screenshot showing the client's `spikes` page.
+
+![spike_page](https://github.com/allenyin/allen_wireless/raw/master/images/RHDgtkclient_spikes.png)
+
+Below is a screenshot showing the client's `files` page.
+
+![spike_page](https://github.com/allenyin/allen_wireless/raw/master/images/RHDgtkclient_filePage.png)
 
 *RHD-headstage gtkclient*
 
