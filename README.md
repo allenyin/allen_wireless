@@ -20,6 +20,8 @@
 	* [Compilation](#gtkclient-compile)
 	Compilation of different versions, their options, screenshots, usage (match radio channel numbers).
     * [Running gtkclient](#running-gtkclient)
+        *[RHA-headstage gtkclient](#RHAgtkclient)
+        *[RHD-headstage gtkclient](#RHDgtkclient)
 	* [Configuration files](#gtkclient-configuration)
 	* [TODO/possible improvements](#gtkclient-TODO)
 	Threads, headstage.cpp, channels.h, protobufs.
@@ -52,7 +54,7 @@ This document will describe:
 * The different firmware versions used to develop and test the RHD-headstage.
 * Debugging tools.
 
-For technical details on the implementation of the firmware and , see Tim's thesis, and:
+For technical details on the implementation and development of the firmware, see Tim's thesis, and:
 
 1. [Blackfin communication with Intan RHD2132 via SPI simulation](http://allenyin.github.io/reading_list/2015/12/Blackfin-Intan-SPORT/)...Intan setup (including code)
 2. [Automatic Gain Control (AGC)](http://allenyin.github.io/reading_list/2015/12/WirelessAGC/)
@@ -60,6 +62,7 @@ For technical details on the implementation of the firmware and , see Tim's thes
 4. IIR oscillator.
 5. Debugging radio transmission -- incoming/outgoing packet structure, packet assembly
 7. gtkclient architecture...how does it work? Threads, channels, protobufs.
+8. LMS -- how it works
 
 This repository contains the following folders:
 
@@ -651,11 +654,104 @@ indicates 1)gtkclient has received a multicast packet `neurobrdg`, which 2) indi
 
 There will be one series of these messages for each bridge turned on. The absence of these messages indicate a problem in multicast traffic communication. Make sure the routers are configured correctly and the computer's ethernet interface allows allmulti.
 
-*RHA-headstage gtkclient*
+During operation, the headstages send packets containing waveform and spike matching data wirelessly to the bridge. The bridge then check and timestamps the packets to send to gtkclient. When gtkclient receives the packets from the bridge, it then processes the encapsulated data and renders display accordingly. An iterative estimate of the clock skew between the computer's performance counter and the timestamps received from the bridge is kept by gtkclient for timing.
+
+Actions made in the gtkclient GUI may result in command packets sent from gtkclient to the bridge, then to the headstages, establishing two-way communication.
+
+The gtkclient interfaces for both RHA-headstage and RHD-headstage are largely similar.
+
+###<a name="RHAgtkclient">RHA-headstage gtkclient</a>
 
 Below is a screenshot of the main interface of gtkclient compiled for RHA-headstage (`HEADSTAGE_TIM=true`).
 
 ![RHAclient_main](https://github.com/allenyin/allen_wireless/raw/master/images/RHAclient_main.png)
+
+On the top left corner, the message
+
+```
+radio Channel: 84
+headecho:84:(SYNC)
+```
+
+displays the radio channels from `g_radioChannel`, which the bridge is configured to operate on.
+
+Below that,
+
+* `pkts/sec` displays the rate at which gtkclient is getting packets from the bridges, which is a good estimate of the number of wireless packets the bridge has received from the headstages.
+
+* `dropped` shows how many packets have been lost or dropped since launching gtkclient due to wireless transmission. This number will always increase if the headstages are operating correctly. See [Debugging radio transmission] for more.
+
+* `BER` shows the Bit Error Rate. When bit error happens with received packets, they are rejected by gtkclient.
+
+* `strobe/sec` shows the rate at which gtkclient receives strobe packets, which is how other programs such as BMI3 request spike information from gtkclient.
+
+Below that are four channel selection boxes, and their corresponding gain setting and AGC target setting inputs. Each group of three input boxes is labeled `A`, `B`, `C` or `D`. The signals from the selected channels are plotted correspondingly on the right. The headstages can transmit raw waveforms for only four channels at a time.
+
+When one headstage is used, the range of channels is 0 to 127. When two are used, the range is 0 to 255, and so on.
+
+In the waveform window, teal lines separate each plot, and purple lines represent 0 -- the signal level of seen by the reference electrode.
+
+Below the channel selection, four tabbed panes may be selected - `rasters`, `spikes`, `sort`, and `file`. Displayed in the previous screenshot is the `raster` page, which includes the signal-chain and raster-display configurations.
+
+The `gain` and `AGC target` settings configure signal-chain parameters of the firmware onboard the RHA-headstage. The signal-chain consists of a series of stages that processes the samples from the ADC, all preceeding the spike template matching step.
+
+For the RHA-headstage, the signal chain includes, in cascading order (details can be found in Tim's thesis and the links near the start of this document):
+
+1. Automatic Gain Control (AGC) - amplifies the incoming signal so that the resulting signal has a fixed power level. The power level of each channel can be set with the `AGC target` input when that channel is selected. The button `Set all AGCtargets from A` sets the AGC target for all channels from all headstages to that of channel A.
+
+2. Least Mean Squared (LMS) adapative noise cancellations - attenuates the noise from one channel using the signals from the previous 7 channels. This stage can be turned off for all channels by choosing the `off` option in the `LMS` box.
+
+3. Infinite Impulse Response (IIR) digital filters. The RHA-headstage firmware implements an 8-pole butterworth bandpass filter by cascading four direct-form I biquads. The coefficients of these filters can be set in specific ways.
+
+    * The value given to the `gain` setting results in new set of filter coefficients that are written to the headstage. The gain range is between -2 and 2.
+    * The `500-6.7k` option in the `filter` box sets the filter on the four channels selected to pass the frequencies between 500Hz and 6.7kHz. This is the default option.
+    * The `150-10k` option in the `filter` box sets the filter on the four channels selected to pass the frequencies between 150Hz and 10kHz. 
+    * The `osc` option in the `filter` box sets the filter on the four channels such that the filter outputs oscillate at roughly 250Hz, with amplitude depending on the signal power prior to selecting this option. Note that the oscillation is only displayed when the `12 y4(n-1) (hi2 out,final)` option is selected in the `signal chain` box. 
+    
+        This is an easy way of checking if the wireless linke between the bridge and headstage is working. If there is a noticeable delay between checking this option and the waveforms showing oscillations, then the link quality is poor. Possible solutions include changing locations of the bridge/antenna, and restarting gtkclient and the bridges.
+
+    * The `flat` option in the `filter` box sets the filter to pass all frequencies.
+
+    Note that the default option for the `filter` box is `500-6.7k`. If another option e.g. `osc` is selected the changes will apply only to currently displayed channels (say Channel 7, 31, 8, and 16). When different channels are selected, the radio button for `osc` will still be selected, regardless of the new channel's filter settings.
+
+The first selectable box on the `raster` page allows the user to select what part of the signal chain the headstage will transmit. The default option is `12 y4(n-1) (hi2 out,final)`, which is the output of the last stage of IIR filters.
+
+Other options include:
+* `0 mean from integrator`: similar to an estimate of the raw input signal power.
+
+* `1 AGC gain`: channel's AGC gain
+
+* `2 LMS saturated sample`.
+
+* `3 AGC out / LMS save`: Output of the AGC stage.
+
+* `4 x1(n-1) / LMS out`: Output of the LMS stage, and input to the first IIR biquad.
+
+* `5 x1(n-2)`: Input to the first IIR biquad from last time step.
+
+* `6 x2(n-1) / y1(n-1) (lo1 out)`: Output of the first biquad, equivalent to the input to the second biquad. `lo1 out` indicates that the first biquad implements the first lowpass stage of the bandpass filter.
+
+* `7 x2(n-2) / y1(n-2)`: Last time step's output of the first biquad/input to second biquad.
+
+* `8 x3(n-1) / y2(n-1) (hi1 out)`: Output of the second biquad, equivalent to the input to the third biquad. `hi1 out` indicates that the second biquad implements the first highpass stage of the bandpass filter.
+
+* `9 x3(n-2) / y2(n-2)`: Last time step's output of the second biquad/input to third biquad.
+
+* `10 x4(n-1) / y3(n-1) (lo2 out)`: Output of the third biquad, equivalent to the input to the fourth biquad. `lo2 out` indicates the the third biquad implements the second lowpass stage of the bandpass filter.
+
+* `11 x4(n-2) / y3(n-2)`: Last time step's output of the third biquad/input of the fourth biquad.
+
+* `12 y4(n-1) (hi2 out, final)`: Output of the fourth biquad, also the output of the entire signal chain, and the default option selected. `hi2out, final` indicates the fourth biquad implements the second highpass stage of the bandpass filter.
+
+* `13 y4(n-2)`: Last time step's output of the fourth biquad.
+
+Below the four waveform displays is the raster display, which shows detected neural spikes as blue or yellow dots. The four horizontal red lines indicate the channels whose waveforms are currently displayed. The vertical red line indicates the current time.
+
+The `zoom` selection box sets the time length of the the displayed data for the waveform display (see `zoomSpinCB()` in `src/gtkclient.cpp`).
+
+The `Raster Window` selection box selects which channels' rasters are viewed. Each raster window displays the rspikes for 128 channels. If only one headstage is used, this option is inactivated. If two headstages are used, a value of `1` will display the rasters for channel 128-255, corresponding to channels from the second headstage.
+
+The `Raster span` selection box sets the time length of the displayed data for the raster display (see `g_rasterSpan` in `src/gtkclient.cpp`).
 
 *RHD-headstage gtkclient*
 

@@ -2158,8 +2158,8 @@ int main(int argn, char **argc)
 		"7	x2(n-2) / y1(n-2)",
 		"8	x3(n-1) / y2(n-1) (hi1 out)",
 		"9	x3(n-2) / y2(n-2)",
-		"10	x2(n-1) / y3(n-1) (lo2 out)",
-		"11	x2(n-2) / y3(n-2)",
+		"10	x4(n-1) / y3(n-1) (lo2 out)",
+		"11	x4(n-2) / y3(n-2)",
 		"12	y4(n-1) (hi2 out, final)",
 		"13	y4(n-2)" };
 #endif
