@@ -22,7 +22,9 @@
     * [Running gtkclient](#running-gtkclient)
         * [RHA-headstage gtkclient](#RHAgtkclient)
         * [RHD-headstage gtkclient](#RHDgtkclient)
-	* [Configuration files](#gtkclient-configuration)
+        * [Spike sorting](#SpikeSorting)
+        * [Saving recordings](#SavingRecordings)
+        * [Configuration files](#gtkclientConfigurations)
 	* [TODO/possible improvements](#gtkclient-TODO)
 	Threads, headstage.cpp, channels.h, protobufs.
 * [Quick Start](#quickstart)
@@ -63,6 +65,7 @@ For technical details on the implementation and development of the firmware, see
 5. Debugging radio transmission -- incoming/outgoing packet structure, packet assembly
 7. gtkclient architecture...how does it work? Threads, channels, protobufs.
 8. LMS -- how it works
+9. SAA spike sorting...how does it work?
 
 This repository contains the following folders:
 
@@ -662,7 +665,7 @@ The gtkclient interfaces for both RHA-headstage and RHD-headstage are largely si
 
 ###<a name="RHAgtkclient">RHA-headstage gtkclient</a>
 
-Below is a screenshot of the main interface of gtkclient compiled for RHA-headstage (`HEADSTAGE_TIM=true`).
+Below is a screenshot of the main interface of gtkclient compiled for RHA-headstage (`HEADSTAGE_TIM=true`), when the `rasters` tab is selected.
 
 ![RHAclient_main](https://github.com/allenyin/allen_wireless/raw/master/images/RHAclient_main.png)
 
@@ -691,7 +694,7 @@ When one headstage is used, the range of channels is 0 to 127. When two are used
 
 In the waveform window, teal lines separate each plot, and purple lines represent 0 -- the signal level of seen by the reference electrode.
 
-Below the channel selection, four tabbed panes may be selected - `rasters`, `spikes`, `sort`, and `file`. Displayed in the previous screenshot is the `raster` page, which includes the signal-chain and raster-display configurations.
+Below the channel selection, four tabbed panes may be selected - `rasters`, `spikes`, `sort`, and `file`. Displayed in the previous screenshot is the `raster` tab, which includes the signal-chain and raster-display configurations.
 
 The `gain` and `AGC target` settings configure signal-chain parameters of the firmware onboard the RHA-headstage. The signal-chain consists of a series of stages that processes the samples from the ADC, all preceeding the spike template matching step.
 
@@ -758,7 +761,7 @@ The `Raster span` selection box sets the time length of the displayed data for t
 
 ###<a name="RHDgtkclient">RHD-headstage gtkclient</a>
 
-Below is a screenshot of the main interface of gtkclient compiled for RHD-headstage deployment firmware (`RADIO_AGC_IIR_SAA=true`).
+Below is a screenshot of the main interface of gtkclient compiled for RHD-headstage deployment firmware (`RADIO_AGC_IIR_SAA=true`), with the `raster` tab selected.
 
 ![RHDclient_main](https://github.com/allenyin/allen_wireless/raw/master/images/RHDgtkclientMain.png)
 
@@ -806,23 +809,125 @@ The available options are:
 Other these signal-chain related differences, everything else on RHAgtkclient and RHDgtkclient are identical.
 
 
-
-Below is a screenshot showing the client's `spikes` page.
+###<a name="SpikeSorting">Spike sorting</a>
+Below is a screenshot showing the RHDgtkclient's `spikes` tab. Other than the absence of channel gain setting, it is identical to RHAclient's.
 
 ![spike_page](https://github.com/allenyin/allen_wireless/raw/master/images/RHDgtkclient_spikes.png)
 
-Below is a screenshot showing the client's `files` page.
+Spike sorting in gtkclient is very similar to that used by Plexon's SortClient and OfflineSorter. Four channels can be sorted at a time, corresponding to the channels being transmitted. 
 
-![spike_page](https://github.com/allenyin/allen_wireless/raw/master/images/RHDgtkclient_filePage.png)
+Waveforms are extracted around threshold and overlaid in each channel's window. The threshold can be set in both time and voltage domain. The threshold point is indicated by the intersecting gray lines in each channel's windows. Threshold is positive-only. The threshold values will be displayed on the left when the `sort` tab is selected.
 
+The PCA-projection of the overlaid waveforms are shown as dots to the right of the waveforms. Holding down the right mouse-button while moving through the points will show the corresponding waveform in green. Double-clicking at the area will recalculate the PCA-projection, this is useful to reset the PCA view.
 
+The PCA-projected points can be selected via a polygonal lasso - left-clicking and tracing out a loop. Right-clicking the selected area gives the options of `set as template 1 (cyan)` and `set as template 2 (red)`. If one of these options is selected, the mean and L1 norm of the selected points are computed, and sent to the headstage as the template and aperture for spike-matching.
 
-explain the GUI for RHA-headstage and RHD-headstage, possible problems and solutions.
+The selected points, and any future points in the future that fall within the selected area will then turn cyan or red. The aperture of the set templates are also displayed on the left side of the `spikes` page. The overlaid waveforms that correspond to the colored PCA-projections will also change from gray to assume their corresponding template colors. Waveforms that don't belong to either sorted clusters will remain gray.
 
-###<a name="gtkclient-configuration">Configuration files</a>
-What I changed...how does it work? Instructions on templates and why not to mix RHA and RHD.
+In the screenshot, both templates have been set for channel 31 (not really spikes, but just demonstrating the sorting tool). In all the overlaid waveform windows, there are also thicker orange and purple traces. Those are the 16-points waveform templates for those channels (as a result of calculating the mean of PCA-projections). These traces change whenever a template is set through the polygonal lasso. Note that the width of the 16-points templates are limited within the faint blue strip, which is more narrow than the overlaid waveforms.
+
+After the template and apertures for a channel are set and sent to the headstage, they will be used to detect spike onboard the headstage. The detection of spikes are sent along with raw waveform data in the radio packets, and these spikes are plotted in the raster window. When a channel is also one of the four channels whose raw samples are streamed, gtkclient will convolve the templates for that channel with the last 24 continuously transmitted samples and compare against the corresponding aperture to check for spikes. If gtkclient detects a spike but the radio packet does not report one, then `missed spike` message will be printed out in the terminal. If gtkclient does not detect a spike, but the radio packet does, then `false positive` message will be printed out instead.
+
+When spikes are detected, the interspike interval, binned at 768us spike sample rate is plotted on the bottom of the PCA-projection window. This can be seen in the screenshot as well for channel 31. 
+
+###<a name="SavingRecordings">Saving recordings</a>
+
+Below is a screenshot showing the client's `file` tab, identical for both RHAgtkclient and RHDgtkclient.
+
+![files_page](https://github.com/allenyin/allen_wireless/raw/master/images/RHDgtkclient_filePage.png)
+
+The right side of the window for the `file` tab is identical to that of `raster` tab. In the screenshot, the spikes detected on channel 31 are more visible as yellow and blue dots on the raster display.
+
+On the left side, the `files` tab provides several configurations:
+
+1. `cycle channels` checkbox. When checked, each of the four selected channel number will increment by 1 every 3 seconds.
+
+2. `draw mode` box:
+    * When `lines` option is selected, the raw waveforms displayed here, as well as the overlaid waveforms in the spike-sorting view will have lines connecting the received sample points. This is default option, and is the most intuitive plotting option.
+    * When `points` option is selected, the raw waveforms displayed here, as well as the overlaid waveforms in the spike-sorting view will simply plot the individual sample points. The display results will be more difficult to inspect, but it is useful when the amount of rendering needed increases, as a result of rapidly varying waveforms with high amplitudes and/or a lot of spike detections to plot.
+
+3. The text `configuration.bin` is displayed below the `draw mode` box. This indicates the configuration file we are reading from/writing to. See [Configuration files section](#gtkclientConfigurations).
+
+4. The `sync headstage` button, when pressed, will reset the signal-chain and spike-matching parameters stored on the headstage to match those set in gtkclient. A noteable exception is that the IIR filters will be reset to 500Hz to 6.7kHz bandpass for RHAgtkclient, and 500Hz to 9kHz bandpass for RHDgtkclient, regardless of what option is set in the `filters` box, which will not change.
+
+5. The `record` button initiates the recording process. When pressed, file dialog will prompt for where to save the file.
+
+6. The `stop` button stops the recording to file. The size of the recording is shown under the `sync headstage` button.
+
+7. The `pause` checkbox pauses an ongoing recording.
+
+The recording files are saved as a binary file. The data recorded include:
+
+* Received incoming packets in addition to client clock and bridge clock.
+* Outgoing packets, along with ASCII versions of the commands.
+
+The program `convert` is compiled along with gtkclient from `src/convert.cpp`. Running `convert infile.bin` yields four output files from the saved recordings, which can be easily processed in Matlab.
+
+* $.mat, which contains the vectors:
+    * `time` - wall time within the client, synchronous to the BMI (or any program requesting firing rates through TCP/IP).
+    * `mstimer` - hardware clock on bridge, runs at 9155.273438Hz. One entry per received packet. Timestamps for spikes should be pretty accurate.
+    * `spike_ts` - spike times, indexes time and mstimer. The spikes are matched on the headstages but only timestamped on teh bridge to conserve bandwidth.
+    * `spike_ch` - Channel of the spikes detected, same length as `spike_ts`.
+    * `spike_unit` - Unit of the spike detected in a channel. Same length as `spike_ts`. Note this wireless system assumes that both units in a channel can't fire at once.
+
+* $.nlg: Contains raw signed 8-bit integer matrix of analog traces (the continuously transmitted four selected channels). It's a matrix of 4x(received packets x 6). Each packet contains 6 samples from 4 channels. The script `plot_raw_channels.m` will plot these signals given the name of the nlg file.
+
+* $.chn.gz: gzipped version of $.nlg files.
+
+* $.log.gz: gzipped text of messages within the file (i.e. ASCII versions of the outgoing commands)
+
+###<a name="gtkclientConfigurations">Configuration files</a>
+
+Instances of gtkclient saves information about its state via [protobuf](https://developers.google.com/protocol-buffers/docs/cpptutorial) in two binary files: `state.bin` and `configuration.bin`.
+
+Upon launching, gtkclient looks for these two files. Sorted spike templates, channel threshold, signal chain settings and radio channel information settings are all saved in `configuration.bin`. If these files do not exist when gtkclient is launched, they will be created.
+
+It's important to remember that the session's settings will only be saved at the end if gtkclient is terminated by clicking the 'x' button on the GUI. Forced termination using `ctrl-c` will result in losing these setting information.
+
+If you want to use the sorted templates created from a different gtkclient instance (from another computer or in a different folder), simply copy the `configuration.bin` from that instance to the current gtkclient directory. Upon launching, the copied over `configuration.bin` file will be read instead. You might want to back up the replaced file for later.
+
+**Caution**
+However, be careful to not mix the usage of RHA-headstage/gtkclient generated templates with that generated by RHD-headstage/gtkclient. This is because not only the headstages differ in electrode layout (e.g. channel 31 on RHA-headstage is actually channel 23 on RHD-headstage), but also since the DSP signal-chains differ, the user would have to go through all the channels to resort.
+
+In general, do not mix using RHA-headstages with RHD-headstages.
+
+###<a name="TCPgtkclient">Communication with other programs</a>
+
+gtkclient can send firing rates information to requester throgh a TCP/IP socket. See Skunkape for implementation.
 
 ###<a name="gtkclient-TODO">TODO/possible improvements</a>
-More threadsafe? Redsicovery of bridges? Spatial bridge redundancy to improve range? Graphics improvements --opengl??
+* More threadsafe
+
+* Redsicovery of bridges after gtkclient is killed...maybe implement by remembering IP of bridges?
+
+* Spatial bridge redundancy to improve range? Need to rewrite the multicast protocol to bind then..
+
+* Graphics improvements --opengl??
+
+* UI improvements. For example, doing `sync headstage` result in resetting the radio buttons in `filters` box..will require exposing the buttons pointer.
+
+---------------------
+This section has only covered using gtkclient compiled with `HEADSTAGE_TIM` option (for RHA-headstage), and that compiled with `RADIO_AGC_IIR_SAA` option (for RHD-headstage). 
+
+Compilations of gtkclient with the other RHD-headstage options contains a subset of the `RADIO_AGC_IIR_SAA` gtkclient's functions.
 
 ##<a name="Quick Start">Quick Start</a>
+
+Here are steps to use 2 RHD-headstages with deployment firmware:
+
+1. Follow the [bridge flashing instructions](#Bridge-hw) to flash two bridges, making sure they have different MAC addresses. It is ok to skip this step if there are two existing bridges known to be flashed already and have different MAC addresses.
+
+2. Follow the [RHD-headstage flashing instructions](#RHD-fw) to flash two RHD-headstages, making sure they have different radio channels. Modify gtkclient as instructed and recompile. When connected to battery, the LED should blink.
+
+3. Launch gtkclient inside the `myopen_multi/gtkclient_multi` with `./gtkclient`.
+
+4. Turn on the bridges. The terminal from which gtkclient is launched should print out two sets of messages such as
+
+    ```
+    Thread 140129180382976: rxed buf= neurobrdg
+    Thread 140129180382976: a wild bridge appears at 10.145.39.253
+    Thread 140129180382976: radio channel set to 84. It's super effective!
+    ```
+    indicating the bridges have been discovered by gtkclient.
+
+5. Waveforms should start appearing on the waveform plots when gtkclient's `raster` or `files` tab is selected. If not, check if the heastages are powered, and if the radio-channels were set up correctly.

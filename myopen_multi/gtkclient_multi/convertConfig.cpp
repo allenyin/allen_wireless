@@ -9,6 +9,11 @@ using namespace std;
  * g++ convert_config.cpp proto/parameters.pb.cc -o convert_config `pkg-config --cflags --libs protobuf`
  */
 
+/* 
+ * Convert between spike-matching templates for RHA_headstage and RHD-headstage, by matching their electrode channels. However, since there are signal chain differences, one has to go through all the channels to reset threshold and AGC target, etc. So not too useful after all..
+ */
+
+
 /* RHA and RHD amplifier electrode layout correspondence
  * RHA | RHD
  * 0   | 7
