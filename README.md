@@ -6,7 +6,6 @@
 	* [Bridge](#Bridge-hw)
 	* [Headstages](#headstages)
 * [Firmware](#Firmware)
-	Everything needs to be flashed! Flashing is writing new firmware to the flash memory, which is loaded when blackfin is powered on and booted up. See corresponding sections.
 	* [Dependency](#Firmware-dependency)
 	* [Bridge](#Bridge-fw)
 	* [RHA-headstage](#RHA-fw)
@@ -16,9 +15,7 @@
 		* [Utility Programs](#Utility-programs)
 * [Client Software](#gtkclient)
 	* [Dependency](#gtkclient-dependency)
-    Section about protobufs
 	* [Compilation](#gtkclient-compile)
-	Compilation of different versions, their options, screenshots, usage (match radio channel numbers).
     * [Running gtkclient](#running-gtkclient)
         * [RHA-headstage gtkclient](#RHAgtkclient)
         * [RHD-headstage gtkclient](#RHDgtkclient)
@@ -26,7 +23,6 @@
         * [Saving recordings](#SavingRecordings)
         * [Configuration files](#gtkclientConfigurations)
 	* [TODO/possible improvements](#gtkclient-TODO)
-	Threads, headstage.cpp, channels.h, protobufs.
 * [Quick Start](#quickstart)
 
 ##<a name="Overview">Overview</a>
