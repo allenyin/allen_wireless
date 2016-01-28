@@ -650,7 +650,7 @@ Thread 140129180382976: rxed buf= neurobrdg
 Thread 140129180382976: a wild bridge appears at 10.145.39.253
 Thread 140129180382976: radio channel set to 84. It's super effective!
 ```
-indicates 1)gtkclient has received a multicast packet `neurobrdg`, which 2) indicates the presence of a bridge at 10.145.39.253, and 3) the bridge is configured to operate on radio channel 84. `Thread 140129180382976` is the thread gtkclient spawned that is taking care of this new bridge.
+indicates 1) gtkclient has received a multicast packet `neurobrdg`, which 2) indicates the presence of a bridge at 10.145.39.253, and 3) the bridge is configured to operate on radio channel 84. `Thread 140129180382976` is the thread gtkclient spawned that is taking care of this new bridge.
 
 There will be one series of these messages for each bridge turned on. The absence of these messages indicate a problem in multicast traffic communication. Make sure the routers are configured correctly and the computer's ethernet interface allows allmulti.
 
@@ -752,6 +752,8 @@ The `zoom` selection box sets the time length of the the displayed data for the 
 The `Raster Window` selection box selects which channels' rasters are viewed. Each raster window displays the rspikes for 128 channels. If only one headstage is used, this option is inactivated. If two headstages are used, a value of `1` will display the rasters for channel 128-255, corresponding to channels from the second headstage.
 
 The `Raster span` selection box sets the time length of the displayed data for the raster display (see `g_rasterSpan` in `src/gtkclient.cpp`).
+
+Below is a screenshot showing the client's `spikes` page.
 
 *RHD-headstage gtkclient*
 
