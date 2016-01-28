@@ -584,9 +584,7 @@ As of version6.6, Insight may pop messages asking `Make breakpoint pending on fu
 
 The client software, *gtkclient* is as summarized in Hanson's [thesis](http://m8ta.com/tim/dissertation.pdf)
 
-```
-The sorting client is written in C/C++ using the GTK2 GUI toolkit with OpenGL and HLSL for graphics, [...] exclusively on Debian GNU/Linux. It consists of around 12600 lines of code, much for managing the GUI, displaying waveforms on the screen, maintaining persistent state, saving data, and communicating with [other] software clients [such as BMI3].
-```
+> The sorting client is written in C/C++ using the GTK2 GUI toolkit with OpenGL and HLSL for graphics, [...] exclusively on Debian GNU/Linux. It consists of around 12600 lines of code, much for managing the GUI, displaying waveforms on the screen, maintaining persistent state, saving data, and communicating with [other] software clients [such as BMI3].
 
 ###<a name="gtkclient-dependency">Dependency</a>
 
