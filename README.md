@@ -716,8 +716,8 @@ For the RHA-headstage, the signal chain includes, in cascading order (details ca
 
 The first selectable box on the `raster` page allows the user to select what part of the signal chain the headstage will transmit. The default option is `12 y4(n-1) (hi2 out,final)`, which is the output of the last stage of IIR filters.
 
-Other options include:
-* `0 mean from integrator`: similar to an estimate of the raw input signal power.
+The available options include:
+* `0 mean from integrator`: Intermediate value used in the AGC stage, similar to an estimate of the raw input signal power.
 
 * `1 AGC gain`: channel's AGC gain
 
@@ -745,6 +745,8 @@ Other options include:
 
 * `13 y4(n-2)`: Last time step's output of the fourth biquad.
 
+The ability to inspect all these intermediate values provide great debugging value.
+
 Below the four waveform displays is the raster display, which shows detected neural spikes as blue or yellow dots. The four horizontal red lines indicate the channels whose waveforms are currently displayed. The vertical red line indicates the current time.
 
 The `zoom` selection box sets the time length of the the displayed data for the waveform display (see `zoomSpinCB()` in `src/gtkclient.cpp`).
@@ -753,13 +755,6 @@ The `Raster Window` selection box selects which channels' rasters are viewed. Ea
 
 The `Raster span` selection box sets the time length of the displayed data for the raster display (see `g_rasterSpan` in `src/gtkclient.cpp`).
 
-Below is a screenshot showing the client's `spikes` page.
-
-![spike_page](https://github.com/allenyin/allen_wireless/raw/master/images/RHDgtkclient_spikes.png)
-
-Below is a screenshot showing the client's `files` page.
-
-![spike_page](https://github.com/allenyin/allen_wireless/raw/master/images/RHDgtkclient_filePage.png)
 
 ###<a name="RHDgtkclient">RHD-headstage gtkclient</a>
 
@@ -767,6 +762,58 @@ Below is a screenshot of the main interface of gtkclient compiled for RHD-headst
 
 ![RHDclient_main](https://github.com/allenyin/allen_wireless/raw/master/images/RHDgtkclientMain.png)
 
+It is very similar to that of the RHA-headstage gtkclient. The main differences are:
+
+1. There's no `gain` input setting near the channel selection boxes. Consequently, there is no `Set all gains from A` button in the `rasters` pane.
+
+2. There is no `LMS` settings.
+
+3. The options available in the `filter` box are different.
+
+4. The options available in the signal-chain selection box are different.
+
+These differences reflect the differences in the DSP signal-chain implemented in RHD-headstage's deployment firmware, as well as the hardware difference between the `Intan RHD2132` amplifiers and the `Intan RHA2132` amplifiers + ADC combination. The signal-chain implemented here includes, in cascading order:
+
+1. AGC - to amplify the input signal to a fixed power level. However, due to implementation differences, the same `AGC target` setting here will yield different resulting signal level from that in RHA-headstage-gtkclient.
+
+2. Infinite Impulse Response (IIR) digital filters. The RHD-headstage firmware implements 4-poles butterworth bandpass filter by cascading two direct-form I biquads. The coefficients of tehse filters can be set in specific ways:
+
+    * The `500-9kHz` option in the `filter` box sets the filter on the four channels selected to pass the frequencies between 500Hz and 9kHz. This is the default option. Note the different frequency range here from RHAgtkclient.
+    * The `osc` option in the `filter` box sets the filter on the four channels such that the filter outputs oscillate at roughly 919Hz, with amplitude depending on the signal power prior to selecting this option. The oscillation is only displayed when the `8 y2(n-1)/final output` option is selected in the `signal chain` box.
+
+        The oscillation frequency is different due to ease of selecting coefficients using the two-stage bandpass filters. 
+
+    The behavior of filtering option selection is the same.
+
+There is no `LMS` stage in the signal chain -- thus no `LMS` settings.
+
+The new amplifiers digitize the input signals with higher precision, so there is no need and no available bits to digitally amplify the signals in the IIR stage - hence the removal of `gain` input settings (see [IIR implementation](http://allenyin.github.io/reading_list/2016/01/DirectFormI-IIR-butterworth-filters/) for details).
+
+As a result of the signal chain differences, the signal chain selection box on the `raster` page presents different options. The default option is `8 y2(n-1)/final output`, which is the output of the last stage of IIR fitlers.
+
+The available options are:
+* `0 Samples from Intan`: They are samples output by the Intan RHD2132 amplifiers, before any DSP from the blackfin.
+* `1 Integrated mean`: Intermediate value used in the AGC stage, similar to an estimate of the raw input signal power.
+* `2 AGC gain`: channel's AGC gain
+* `3 AGC out`: Output of the AGC stage 
+* `4 x0(n-1)/AGC out`: Output of the AGC stage, input to the first IIR biquad.
+* `5 x0(n-2)`: Last time step's input to the first IIR biquad.
+* `6 y1(n-1)`: Output of the first IIR biquad, equivalent to input to the second IIR biquad.
+* `7 y1(n-2)`: Last time step's output of the first IIR biquad/input to the second IIR biquad.
+* `8 y2(n-1)/final output`: Output of the second IIR biquad, final output of the signal chain. It's the default option.
+* `9 y2(n-2)`: Last time step's output of the second IIR biquad.
+
+Other these signal-chain related differences, everything else on RHAgtkclient and RHDgtkclient are identical.
+
+
+
+Below is a screenshot showing the client's `spikes` page.
+
+![spike_page](https://github.com/allenyin/allen_wireless/raw/master/images/RHDgtkclient_spikes.png)
+
+Below is a screenshot showing the client's `files` page.
+
+![spike_page](https://github.com/allenyin/allen_wireless/raw/master/images/RHDgtkclient_filePage.png)
 
 
 

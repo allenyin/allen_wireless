@@ -286,8 +286,8 @@ void Headstage::setChans(int signalChain){
 		1	gain                 |  integrated mean
 		2	saturated sample     |  AGC-gain
 		3	AGC out / LMS save   |  AGC-output        <--- radio_agc end
-		4	x1(n-1) / LMS out    |  x0(n-1)/AGC-out
-		5	x1(n-2)              |  x0(n-2)
+		4	x1(n-1) / LMS out    |  x1(n-1)/AGC-out
+		5	x1(n-2)              |  x1(n-2)
 		6	x2(n-1) / y1(n-1)    |  y1(n-1)
 		7	x2(n-2) / y1(n-2)    |  y1(n-2)
 		8	x3(n-1) / y2(n-1)    |  y2(n-1)/final out

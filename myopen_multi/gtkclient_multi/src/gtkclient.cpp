@@ -2139,8 +2139,8 @@ int main(int argn, char **argc)
         "1 Integrated mean",    // value is signed
         "2 AGC gain",           // value is always positive, between 0-127
         "3 AGC out",            // value is AGCgain*(sample-mean), signed.
-        "4 x0(n-1)/AGC out",        
-        "5 x0(n-2)",
+        "4 x1(n-1)/AGC out",        
+        "5 x1(n-2)",
         "6 y1(n-1)",            // shared between LPF1 and HPF1
         "7 y1(n-2)",            // shared between LPF1 and HPF1
         "8 y2(n-1)/final output",
