@@ -52,16 +52,17 @@ This document will describe:
 * The different firmware versions used to develop and test the RHD-headstage.
 * Debugging tools.
 
-For technical details on the implementation and development of the firmware, see Tim's thesis, and:
+For technical details on the implementation, development, and troubleshooting of the firmware, see Tim's thesis, and the following development notes:
 
-1. [Blackfin communication with Intan RHD2132 via SPI simulation](http://allenyin.github.io/reading_list/2015/12/Blackfin-Intan-SPORT/)...Intan setup (including code)
-2. [Automatic Gain Control (AGC)](http://allenyin.github.io/reading_list/2015/12/WirelessAGC/)
-3. [Imiplementing direct-form I biquad IIR filters](http://allenyin.github.io/reading_list/2016/01/DirectFormI-IIR-butterworth-filters/)
-4. IIR oscillator.
-5. Debugging radio transmission -- incoming/outgoing packet structure, packet assembly
-7. gtkclient architecture...how does it work? Threads, channels, protobufs.
-8. LMS -- how it works
-9. SAA spike sorting...how does it work?
+1. [Wireless Headstage: Blackfin BF532 headstage firmware setup](http://allenyin.github.io/reading_list/2016/01/BlackfinSetup)
+2. [Wireless Headstage: Blackfin BF532 communication with Intan RHD2132 via SPI simulation via SPORT](http://allenyin.github.io/reading_list/2015/12/Blackfin-Intan-SPORT)
+3. [Wireless Headstage: AGC with Blackfin BF532 and Intan RHD2132](http://allenyin.github.io/reading_list/2015/12/WirelessAGC)
+4. [Wireless Headstage: Least-Mean Squared (LMS) adaptive noise cancellation](http://allenyin.github.io/reading_list/2016/01/BlackfinLMS)
+5. [Wireless Headstage: Implementing direct-form I biquad IIR filters](http://allenyin.github.io/reading_list/2016/01/DirectFormI-IIR-butterworth-filters)
+6. [Wireless Headstage: Generate oscillations by setting IIR coefficients](http://allenyin.github.io/reading_list/2016/01/IIRoscillator)
+7. [Spike sorting via PCA and spike detection with SAA](http://allenyin.github.io/reading_list/2016/01/BlackfinSpikeSorting)
+8. [Wireless Headstage: Radio transmission protocol between headstage and gtkclient](http://allenyin.github.io/reading_list/2016/01/BlackfinRadioTrans)
+9. [Wireless Headstage: gtkclient notes](http://allenyin.github.io/reading_list/2016/01/gtkclient)
 
 This repository contains the following folders:
 
@@ -397,7 +398,7 @@ the final firmware.
 
     Built off firmware2.asm, but integrate in radio communication with gtkclient. The radio communication involved is a stripped-down version of the original radio protocol -- writes in the raw samples, but since no spike-sorting is done, the matching bits are simply set to 0. Instructions to add in the echo nibble and packet#-in-frame nibble are present, so gtkclient can correctly read and interpret the packet information. 
                  
-    Requires uncommenting the `FIRMWARE_VERSION=RADIO_BASIC` in makefile to compile, uses the "memory_radio_basic.h" file, which describes the memory layout. The memory header file is taken care of by the Makefile. The corresponding header will be moved to be "memory.h" when the FIMRWARE_VERSION option is set.
+    Requires uncommenting the `FIRMWARE_VERSION=RADIO_BASIC` in makefile to compile, uses the "memory_radio_basic.h" file, which describes the memory layout. The memory header file is taken care of by the Makefile. The corresponding header will be moved to be "memory.h" when the `FIMRWARE_VERSION` option is set.
 
     The blackfin cache memory organization can be visualized by the spreadsheet `radio_basic_memoryMap.ods`.
 
