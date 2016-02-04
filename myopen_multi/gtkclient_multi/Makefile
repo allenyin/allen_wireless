@@ -10,7 +10,7 @@ HEADSTAGE_TIM = false
 RADIO_BASIC = false 
 RADIO_AGC = false 
 RADIO_AGC_IIR = false
-RADIO_AGC_IIR_SAA = true 
+RADIO_AGC_IIR_SAA = true
 
 CC  = gcc
 CPP = g++
