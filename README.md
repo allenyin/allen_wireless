@@ -776,7 +776,7 @@ These differences reflect the differences in the DSP signal-chain implemented in
 
 2. Infinite Impulse Response (IIR) digital filters. The RHD-headstage firmware implements 4-poles butterworth bandpass filter by cascading two direct-form I biquads. The coefficients of tehse filters can be set in specific ways:
 
-    * The `500-7kHz` option in the `filter` box sets the filter on the four channels selected to pass the frequencies between 500Hz and 9kHz. This is the default option. Note the slightly different frequency range here from RHAgtkclient.
+    * The `500-7kHz` option in the `filter` box sets the filter on the four channels selected to pass the frequencies between 500Hz and 7kHz. This is the default option. Note the slightly different frequency range here from RHAgtkclient.
     * The `osc` option in the `filter` box sets the filter on the four channels such that the filter outputs oscillate at roughly 919Hz, with amplitude depending on the signal power prior to selecting this option. The oscillation is only displayed when the `8 y2(n-1)/final output` option is selected in the `signal chain` box.
 
         The oscillation frequency is different due to ease of selecting coefficients using the two-stage bandpass filters. 
