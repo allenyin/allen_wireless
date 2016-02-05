@@ -545,10 +545,18 @@ void Headstage::resetBiquads(int chan){
 	int i,j;
 	int tid = chan/128;
 	//(to send, needs to keep correct channel name)
-	b[0] = 6004.f; //assume there is already energy in the
-	b[1] = 12008.f; //delay line.
-	b[2] = -4594.f; //10 -> should be about 919Hz @ fs = 31250Hz
+    /* The following is for bandpass of [500Hz, 9kHz]
+	b[0] = 6004.f; 
+	b[1] = 12008.f; 
+	b[2] = -4594.f; 
 	b[3] = -3039.f;
+    */
+
+    // Bandpass of [500Hz, 7kHz]
+    b[0] = 4041.f;
+    b[1] = 8081.f;
+    b[2] = 3139.f;
+    b[3] = -2917.f;
 	
 	unsigned int* ptr = m_sendbuf[tid];
 	ptr += (m_sendW[tid] % m_sendL[tid]) * 8; //8 because we send 8 32-bit ints /pkt.

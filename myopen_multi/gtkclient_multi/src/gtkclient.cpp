@@ -2189,8 +2189,11 @@ int main(int argn, char **argc)
 	gtk_box_pack_start (GTK_BOX (box1), button, TRUE, TRUE, 0);
     
     //add osc / reset radio buttons
-    mk_radio("500-9kHz,osc",2,
+    //mk_radio("500-9kHz,osc",2,
+    //        box1,true,"filter",filterRadioCB);
+    mk_radio("500-7kHz,osc",2,
             box1,true,"filter",filterRadioCB);
+
 
 #else
     button = gtk_button_new_with_label ("Set all gains from A");

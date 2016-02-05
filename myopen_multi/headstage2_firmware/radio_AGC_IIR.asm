@@ -31,11 +31,19 @@
 #define REG7  0x8700    // get back 0xff00
 
 // Intan REG8-13, configured for [250Hz, 10kHz]
-#define REG8  0x8811    // get back 0xff11. Changed from 0x8816 on 12/28/2015
+//#define REG8  0x8811    // get back 0xff11. 
+//#define REG9  0x8900    // get back 0xff00
+//#define REG10 0x8a10    // get back 0xff10. 
+//#define REG11 0x8b00    // get back 0xff00
+//#define REG12 0x8c11    // get back 0xff11. 
+//#define REG13 0x8d00    // get back 0xff00
+
+// Intan REG8-13, configured for [250Hz, 7.5kHz]
+#define REG8  0x8816    // get back 0xff16
 #define REG9  0x8900    // get back 0xff00
-#define REG10 0x8a10    // get back 0xff10. Changed from 0x8817 on 12/28/2015
+#define REG10 0x8a17    // get back 0xff17
 #define REG11 0x8b00    // get back 0xff00
-#define REG12 0x8c11    // get back 0xff11. Changed from 0x8815 on 12/28/2015
+#define REG12 0x8c15    // get back 0xff15
 #define REG13 0x8d00    // get back 0xff00
 
 #define REG14 0x8eff    // get back 0xffff
@@ -630,11 +638,17 @@ lt2_top:
     r0.l = 1;       w[i0++] = r0.l;     // Set this to zero to disable AGC. Q7.8
 
     /* IIR filter, biquad implementation. */
+    // LPF1: 7000Hz cutoff 
+    r0 = 4041 (x); w[i0++] = r0.l; w[i0++] = r0.l;  // b0
+    r0 = 8081 (x); w[i0++] = r0.l; w[i0++] = r0.l;  // b1
+    r0 = 3139 (x); w[i0++] = r0.l; w[i0++] = r0.l;  // a0
+    r0 = -2917(x); w[i0++] = r0.l; w[i0++] = r0.l;  // a1
+
     // LPF1: 9000Hz cutoff 
-    r0 = 6004 (x); w[i0++] = r0.l; w[i0++] = r0.l;  // b0
-    r0 = 12008(x); w[i0++] = r0.l; w[i0++] = r0.l;  // b1
-    r0 = -4594(x); w[i0++] = r0.l; w[i0++] = r0.l;  // a0
-    r0 = -3039(x); w[i0++] = r0.l; w[i0++] = r0.l;  // a1
+    //r0 = 6004 (x); w[i0++] = r0.l; w[i0++] = r0.l;  // b0
+    //r0 = 12008(x); w[i0++] = r0.l; w[i0++] = r0.l;  // b1
+    //r0 = -4594(x); w[i0++] = r0.l; w[i0++] = r0.l;  // a0
+    //r0 = -3039(x); w[i0++] = r0.l; w[i0++] = r0.l;  // a1
 
     // HPF1: 500Hz cutoff
 	r0 = 15260 (x);	w[i0++] = r0.l; w[i0++] = r0.l; // b0
