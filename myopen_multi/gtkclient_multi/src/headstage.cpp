@@ -136,6 +136,7 @@ void Headstage::saveMessage(int tid, const char *fmt, ...){
 	m_messW[tid]++;
 }
 
+#ifdef HEADSTAGE_TIM
 void Headstage::updateGain(int chan){
 	/* remember, channels 0 and 32 are filtered at the same time.
 		then 64 and 96
@@ -214,6 +215,99 @@ void Headstage::updateGain(int chan){
 	m_echo[tid]++;
 }
 
+#elif RADIO_GAIN_IIR_SAA
+// Method to convert Q7.8 gain values to binary. 
+// Not a class method
+unsigned int binaryGain(float gain) {
+    double fractpart, intpart;
+
+    unsigned int int2bin, fract2bin;
+
+    if (gain < 0) {
+        float pos_mag = 128 + gain;
+        fractpart = modf(pos_mag, &intpart);
+        int2bin = (unsigned int)(intpart + 128);
+    }
+    else {
+        fractpart = modf(gain, &intpart);
+        int2bin = (unsigned int) intpart;
+    }
+
+    fract2bin = 0;                              // the integer rep of the binary sequence of the fract part
+    switch((int)(fractpart/0.1 + 0.5f)) {       // add the 0.5f to make sure it rounds to nearest integer,
+        case 1:                                 // otherwise C/C++ rounds toward 0 by default.
+            fract2bin = 25; break;
+        case 2:
+            fract2bin = 51; break;
+        case 3:
+            fract2bin = 76; break;
+        case 4:
+            fract2bin = 102; break;
+        case 5:
+            fract2bin = 128; break;
+        case 6:
+            fract2bin = 153; break;
+        case 7:
+            fract2bin = 179; break;
+        case 8:
+            fract2bin = 204; break;
+        case 9:
+            fract2bin = 230; break;
+    }
+    
+//    cout << "gain=" << gain << endl;
+//    cout << "intpart=" << intpart << " converts into " << (int2bin << 8) << endl;
+//    cout << "fractpart=" << fractpart << " converts into " << fract2bin << endl;
+    return (int2bin << 8) + fract2bin;
+}
+
+void Headstage::updateGain(int chan) {
+    int tid = chan/128;
+    chan = chan & ( (128*(tid+1)-1) ^ 32);
+    unsigned int p = 0;
+    int kchan = chan & 127;
+    if (kchan >= 64) p += 1;
+
+    // Slot means whether the chan occupies the lower or higher 16-bit in memory
+    int slot = 0;
+    if ((kchan&32) > 0) slot = 1;   // our channel is in uppery 16-bit
+
+    // gain should always be positive
+    // if slot>1, then gain2 is lower address
+    float gain1 = m_c[chan]->getGain();
+    float gain2 = (slot>0)? m_c[chan-32]->getGain() : m_c[chan+32]->getGain();
+
+    /* Each command packet has 4 address-value pairs. Since we are setting the pre-gain for
+     * just one channel, the packet will contain 4 identical address-value pairs.
+     *
+     * But first, we need to conver the float gain into correct Q7.8 binary values.
+     */
+    unsigned int gain_bin1 = binaryGain(gain1);
+    unsigned int gain_bin2 = binaryGain(gain2);
+
+    // now we construct the packet
+    unsigned int * ptr = m_sendbuf[tid];
+    ptr += (m_sendW[tid] % m_sendL[tid]) * 8;
+
+    // we use the address of the lower channel in the slot
+    int kchan_new = slot > 0 ? kchan-32 : kchan;
+    for (int i=0; i<4; i++) {
+        // first the address, use kchan_new
+        ptr[i*2+0] = htonl(echoHeadstage(m_echo[tid], A1 + 
+                    (A1_STRIDE*(kchan_new & 31) + p*(A1_IIRSTARTA+A1_IIR))*4));
+        unsigned int u = slot > 0 ? ((gain_bin2 & 0xffff) | ((gain_bin1 & 0xffff)<<16)) :
+                                    ((gain_bin1 & 0xffff) | ((gain_bin2 & 0xffff)<<16));
+        ptr[i*2+1] = htonl(u);
+    }
+    m_sendW[tid]++;
+    saveMessage(tid, "preGain %d %3.2f %d %3.2f thread %d", chan, gain1, slot>0?chan-32:chan+32, gain2, tid);
+    m_echo[tid]++;
+}
+#endif
+
+
+
+
 void Headstage::setOsc(int chan){
 	//turn two channels e.g. 0 and 32 into oscillators.
 	float b[4];
@@ -223,7 +317,7 @@ void Headstage::setOsc(int chan){
 	//(to send, needs to keep correct channel name)
 	b[0] = 0.f; //assume there is already energy in the
 	b[1] = 0.f; //delay line.
-#if defined(RADIO_AGC_IIR) || defined(RADIO_AGC_IIR_SAA)
+#if defined(RADIO_AGC_IIR) || defined(RADIO_AGC_IIR_SAA) || defined(RADIO_GAIN_IIR_SAA)
 	b[2] = 32768.f - 573; //10 -> should be about 919Hz @ fs = 31250Hz
     printf("Here we have special coef\n");
 #else
@@ -534,7 +628,7 @@ void Headstage::resetBiquads(int chan){
 	setBiquad(chan, &(m_lowpass_coefs[4]), 2);
 	setBiquad(chan, &(m_highpass_coefs[4]), 3);
 
-#elif defined(RADIO_AGC_IIR) || defined(RADIO_AGC_IIR_SAA)
+#elif defined(RADIO_AGC_IIR) || defined(RADIO_AGC_IIR_SAA) || defined(RADIO_GAIN_IIR_SAA)
     /* The only change that would happen is turning it into an oscillator
      * Thus resetting just change the coefficients of the first biquad back.
      */
@@ -545,18 +639,19 @@ void Headstage::resetBiquads(int chan){
 	int i,j;
 	int tid = chan/128;
 	//(to send, needs to keep correct channel name)
-    /* The following is for bandpass of [500Hz, 9kHz]
+    //The following is for bandpass of [500Hz, 9kHz]
 	b[0] = 6004.f; 
 	b[1] = 12008.f; 
 	b[2] = -4594.f; 
 	b[3] = -3039.f;
-    */
 
     // Bandpass of [500Hz, 7kHz]
+    /*
     b[0] = 4041.f;
     b[1] = 8081.f;
     b[2] = 3139.f;
     b[3] = -2917.f;
+    */
 	
 	unsigned int* ptr = m_sendbuf[tid];
 	ptr += (m_sendW[tid] % m_sendL[tid]) * 8; //8 because we send 8 32-bit ints /pkt.

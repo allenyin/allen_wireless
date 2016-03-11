@@ -6,11 +6,12 @@ DBG = true
 JACK = false
 MUDFLAP = false
 STACKPROTECTOR = false
-HEADSTAGE_TIM = false
+HEADSTAGE_TIM = false 
 RADIO_BASIC = false 
 RADIO_AGC = false 
-RADIO_AGC_IIR = false
-RADIO_AGC_IIR_SAA = true 
+RADIO_AGC_IIR = false 
+RADIO_AGC_IIR_SAA = fasle 
+RADIO_GAIN_IIR_SAA = true 
 
 CC  = gcc
 CPP = g++
@@ -94,6 +95,10 @@ endif
 
 ifeq ($(strip $(RADIO_AGC_IIR_SAA)), true)
 	CPPFLAGS += -DRADIO_AGC_IIR_SAA
+endif
+
+ifeq ($(strip $(RADIO_GAIN_IIR_SAA)), true)
+	CPPFLAGS += -DRADIO_GAIN_IIR_SAA
 endif
 
 

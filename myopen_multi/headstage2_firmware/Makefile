@@ -9,7 +9,8 @@
 #FIRMWARE_VERSION = radio_AGC
 #FIRMWARE_VERSION = radio_AGC_IIR
 #FIRMWARE_VERSION = IIR_oscillator_test
-FIRMWARE_VERSION = radio_AGC_IIR_SAA
+#FIRMWARE_VERSION = radio_AGC_IIR_SAA
+FIRMWARE_VERSION = radio_gain_IIR_SAA
 
 
 ASMSRCS = crt0.o 
@@ -53,6 +54,9 @@ $(info FIRMWARE_VERSION is IIR_OSCILLATOR_TEST)
 else ifeq ($(FIRMWARE_VERSION), radio_AGC_IIR_SAA)
 $(info FIRMWARE_VERSION is RADIO_AGC_IIR_SAA)
 	ASMSRCS += radio_AGC_IIR_SAA.o
+else ifeq ($(FIRMWARE_VERSION), radio_gain_IIR_SAA)
+$(info FIRMWARE_VERSION is RADIO_GAIN_IIR_SAA)
+	ASMSRCS += radio_gain_IIR_SAA.o
 else
 $(info FIRMWARE_VERSION is DEFAULT)
 	ASMSRCS += firmware1.o
@@ -127,13 +131,15 @@ else ifeq ($(FIRMWARE_VERSION), intan_setup_test2)
 else ifeq ($(FIRMWARE_VERSION), radio_basic)
 	cp memory_radio_basic.h memory.h
 else ifeq ($(FIRMWARE_VERSION), radio_AGC)
-	cp memroy_AGC.h memory.h
+	cp memory_AGC.h memory.h
 else ifeq ($(FIRMWARE_VERSION), radio_AGC_IIR)
 	cp memory_AGC_IIR.h memory.h
 else ifeq ($(FIRMWARE_VERSION), IIR_oscillator_test)
 	cp memory_AGC_IIR.h memory.h
 else ifeq ($(FIRMWARE_VERSION), radio_AGC_IIR_SAA)
 	cp memory_AGC_IIR_SAA.h memory.h
+else ifeq ($(FIRMWARE_VERSION), radio_gain_IIR_SAA)
+	cp memory_gain_IIR_SAA.h memory.h
 else
 	cp memory_RHA.h memory.h
 endif
@@ -154,3 +160,4 @@ reset:
 # Then in a separate command prompt,
 #	  bfin-elf-insight or bfin-elf-gdb stage.dxe
 # For the latter, connect to "target remote :2000" 
+

@@ -1,4 +1,4 @@
-function [channels] = plot_raw_channels(fname)
+function [channels] = plot_raw_channels(fname, varargin)
 % fname: name of the .nlg file output from convert
 % outputs the 4 raw waveforms, and plots them.
 % 
@@ -35,11 +35,23 @@ channels = zeros(4, vectorLen);
 %       4   | 6
 %       ... | ...
 
-figure;
+doplot = true;
+if nargin > 1,
+    if ischar(varargin{1}) && strcmpi(varargin{1}, 'noplot'),
+        doplot = false;
+    end
+end
+
+if doplot
+    figure;
+end
+
 for i=1:4,
     channels(i,:) = data(i:4:numel(data));
-    subplot(4,1,i)
-    plot(channels(i,:));
+    if doplot,
+        subplot(4,1,i)
+        plot(channels(i,:));
+    end
 end
 
 end

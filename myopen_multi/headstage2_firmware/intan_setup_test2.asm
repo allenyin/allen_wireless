@@ -16,19 +16,30 @@
 #define REG1  0x8102    // get back 0xff02
 #define REG2  0x8204    // get back 0xff04
 #define REG3  0x8300    // get back 0xff00
-#define REG4  0x8480    // get back 0xff80
-#define REG4_DSP 0x8494 // get back 0xff94 -- cutoff at 375Hz
+
+#define REG4  0x8480             // get back 0xff80
+#define REG4_DSP 0x8494          // get back 0xff94 -- cutoff at 375Hz
+#define REG4_DSP_SIGNED   0x84D4 // get back 0xffD4 - DSP, signed output
+
 #define REG5  0x8500    // get back 0xff00
 #define REG6  0x8600    // get back 0xff00
 #define REG7  0x8700    // get back 0xff00
 
-// Intan bandpass: [150Hz, 7.5kHz]
-#define REG8  0x8816    // get back 0xff16
+// Intan REG8-13, configured for [250Hz, 10kHz]
+#define REG8  0x8811    // get back 0xff11. 
 #define REG9  0x8900    // get back 0xff00
-#define REG10 0x8a17    // get back 0xff17
+#define REG10 0x8a10    // get back 0xff10. 
 #define REG11 0x8b00    // get back 0xff00
-#define REG12 0x8c15    // get back 0xff15
+#define REG12 0x8c11    // get back 0xff11. 
 #define REG13 0x8d00    // get back 0xff00
+
+// Intan REG8-13, configured for [250Hz, 7.5kHz]
+//#define REG8  0x8816    // get back 0xff16
+//#define REG9  0x8900    // get back 0xff00
+//#define REG10 0x8a17    // get back 0xff17
+//#define REG11 0x8b00    // get back 0xff00
+//#define REG12 0x8c15    // get back 0xff15
+//#define REG13 0x8d00    // get back 0xff00
 
 #define REG14 0x8eff    // get back 0xffff
 #define REG15 0x8fff    // get back 0xffff
@@ -80,13 +91,27 @@
 
   Total = 2400 + 72 = 2472 --> round to 2480 words
 
+  ---------------------------------
+  Testing signal integrity, max words = 11936 words -> 746 samples/channel
+  Total = 11936 + 72 = 12008
+
 */
+
+/*
 #define TESTFREQ                3200 // Hz
 #define STORAGE                 2480
 #define SAMPLE_PER_CH           150
 #define SAMPLE_PER_CH_MINUS_3   147
 #define TOTAL_CONVERT           4800   // 32*SAMPLE_PER_CH
 #define TOTAL_CONVERT_MINUS_3   4797
+*/
+
+// For Jneuron signal testing..
+#define STORAGE                 4008 
+#define SAMPLE_PER_CH           246
+#define SAMPLE_PER_CH_MINUS_3   243
+#define TOTAL_CONVERT           7872
+#define TOTAL_CONVERT_MINUS_3   7869
 
 /* Note in here, the first Intan sample saved is ch0! No need for correction later */
 
@@ -98,7 +123,7 @@ _radio_bidi_asm:
     p1.h = HI(A1);
     r0 = 0 (z);
     p5 = STORAGE;
-    lsetup(lt_top, lt_bot) lc0 = p5; // write zeros to 80 locations
+    lsetup(lt_top, lt_bot) lc0 = p5; // initialize zeros
 lt_top:
     [p1++] = r0;
 lt_bot: nop;
@@ -175,7 +200,7 @@ intan_setup:
     call wait_samples;
     
     //r0 = REG4 (z);
-    r0 = REG4_DSP (z);  // this with DSP filter enabled
+    r0 = REG4_DSP_SIGNED (z);  // this with DSP filter enabled
     r0 = r0 << SHIFT_BITS;
     [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
     [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
@@ -523,14 +548,14 @@ save_one_amp:
     r3 = [p0 + (SPORT1_RX - SPORT0_RX)];    // SPORT1 sec - 1st amp
     r2 >>= SHIFT_BITS;
     r3 >>= SHIFT_BITS;
-    //w[p1++] = r3;                           // save 1st amp
+    w[p1++] = r3;                           // save 1st amp
     //w[p1++] = r2;                           // save 2nd amp
 
     r2 = [p0];                              // SPORT0 pri - 4th amp
     r3 = [p0];                              // SPORT0 sec - 3rd amp
     r2 >>= SHIFT_BITS;                      
     r3 >>= SHIFT_BITS;
-    w[p1++] = r3;                           // save 3rd amp
+    //w[p1++] = r3;                           // save 3rd amp
     //w[p1++] = r2;                           // save 4th amp
     rts;
 

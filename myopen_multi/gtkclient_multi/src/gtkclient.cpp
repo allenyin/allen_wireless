@@ -105,6 +105,8 @@ int g_signalChain = 10;
 int g_signalChain = 0;
 #elif RADIO_AGC
 int g_signalChain = 3;
+#elif RADIO_GAIN_IIR_SAA
+int g_signalChain = 0;
 #else // RADIO_AGC_IIR or RADIO_AGC_IIR_SAA
 int g_signalChain = 8;
 #endif
@@ -125,8 +127,6 @@ std::atomic<int> g_totalPackets(0);
 std::atomic<int> g_totalDropped(0);
 int          g_strobePackets = 0;
 unsigned int g_dropped[NSCALE] = {0}; //compare against the bridge.
-
-
 
 class Channel;
 //Channel*	g_c[NSCALE*128];
@@ -177,6 +177,15 @@ GtkWidget*     g_pktpsLabel;
 GtkWidget*     g_stbpsLabel; //strobe per second label, todo: put in raster
 GtkWidget*     g_fileSizeLabel;
 GtkWidget*     g_confFileLabel;
+GtkWidget*     g_audioFileLabel;
+GtkWidget*     g_testFileSizeLabel;
+GtkWidget*     g_audioTimeLabel;
+
+// audio file testing
+char *testAudioFile;
+bool audioFileLoaded = false;
+double audioStartTime = 0; // time since gtkclient init when audio started
+bool savingTestFile = false;
 
 std::string g_configFile = "configuration.bin";
 std::string g_stateFile  = "state.bin";
@@ -764,11 +773,24 @@ static gboolean rotate (gpointer user_data){
 			(double)g_strobePackets/(double)(gettime()));
 	gtk_label_set_text(GTK_LABEL(g_stbpsLabel), str); //works!
 
-	snprintf(str, 256, "%.2f MB", (double)g_spkwriter.bytes()/1e6);
-	gtk_label_set_text(GTK_LABEL(g_fileSizeLabel), str);
-	
-	//snprintf(str, 256,  "%s", g_configFile.c_str());
-	gtk_label_set_text(GTK_LABEL(g_confFileLabel), g_configFile.c_str());
+    if(!savingTestFile) {
+        snprintf(str, 256, "%.2f MB", (double)g_spkwriter.bytes()/1e6);
+    	gtk_label_set_text(GTK_LABEL(g_fileSizeLabel), str);
+    } else {
+        // test file size
+        snprintf(str, 256, "Test Recording Size: %.2f MB", (double)g_spkwriter.bytes()/1e6);
+        gtk_label_set_text(GTK_LABEL(g_testFileSizeLabel), str);
+
+        // test file time
+        double audioDuration = gettime() - audioStartTime;
+        int minute = floor(audioDuration/60);
+        int secs = floor(audioDuration - 60*minute);
+        snprintf(str, 256, "Audio Time: %d:%d", minute, secs);
+        gtk_label_set_text(GTK_LABEL(g_audioTimeLabel), str);
+    }
+
+    snprintf(str, 256, "Current Config File: %s", g_configFile.c_str());    
+	gtk_label_set_text(GTK_LABEL(g_confFileLabel), str);
 	return TRUE;
 }
 void saveState(){
@@ -829,6 +851,7 @@ void destroy(GtkWidget *, gpointer){
 	//delete g_vsFade;
 	delete g_vsFadeColor;
 	delete g_vsThreshold;
+    delete testAudioFile;
 	cgDestroyContext(myCgContext);
 	
 	google::protobuf::ShutdownProtobufLibrary();
@@ -1121,9 +1144,11 @@ packet format in the file, as saved here:
 						int ch = g_channel[k];
 						if(ch > (tid+1)*128 || ch < (tid*128)){ continue;}//channel not in bridge, don't update
                         // sampple is signed, hence the (samp+128)/255 conversion below
-                        char samp = p->data[j*4+k];
+                        signed char samp = p->data[j*4+k];
+                        
                         //if(k==0) {
-                        //    printf("k=%d, samp = 0x%x\n", k, samp & 0xff);
+                        //    printf("k=%d, samp=%d, converted to %f\n", k, samp & 0xff,
+                        //            (((samp+128.f)/255.f)-0.5f)*2.f);
                         //}
                         g_fbuf[k][(g_fbufW[k] % g_nsamp)*3 + 1]=(((samp+128.f)/255.f)-0.5f)*2.f; //range +-1.
 
@@ -1478,6 +1503,12 @@ void updateChannelUI(int k){
 	gtk_adjustment_set_value(g_apertureSpin[k*2+1], g_c[ch]->getAperture(1));
 	gtk_adjustment_set_value(g_thresholdSpin[k], g_c[ch]->getThreshold());
 	gtk_adjustment_set_value(g_centeringSpin[k], g_c[ch]->getCentering());
+#elif RADIO_GAIN_IIR_SAA
+	gtk_adjustment_set_value(g_gainSpin[k], g_c[ch]->getGain());
+	gtk_adjustment_set_value(g_apertureSpin[k*2+0], g_c[ch]->getAperture(0));
+	gtk_adjustment_set_value(g_apertureSpin[k*2+1], g_c[ch]->getAperture(1));
+	gtk_adjustment_set_value(g_thresholdSpin[k], g_c[ch]->getThreshold());
+	gtk_adjustment_set_value(g_centeringSpin[k], g_c[ch]->getCentering());
 #else
 	gtk_adjustment_set_value(g_agcSpin[k], g_c[ch]->getAGC());
 	gtk_adjustment_set_value(g_gainSpin[k], g_c[ch]->getGain());
@@ -1517,6 +1548,7 @@ static void channelSpinCB( GtkWidget*, gpointer p){
 	}
 }
 
+#if defined(HEADSTAGE_TIM) || defined(RADIO_GAIN_IIR_SAA)
 static void gainSpinCB( GtkWidget*, gpointer p){
 	int h = (int)((long long)p & 0xf);
 	if(h >= 0 && h < 4 && !g_uiRecursion){
@@ -1541,10 +1573,14 @@ static void gainSetAll(gpointer ){
         g_c[i]->resetPca();
     }
 
+#ifdef HEADSTAGE_TIM
 	for(int i=0; i<32; i++){
 		g_headstage->resetBiquads(i);
 	}
+#endif
 }
+#endif
+
 static void thresholdSpinCB( GtkWidget* , gpointer p){
 	int h = (int)((long long)p & 0xf);
 	if(h >= 0 && h < 4 && !g_uiRecursion){
@@ -1655,7 +1691,7 @@ static void filterRadioCB(GtkWidget *button, gpointer p){
 		}
 	}
 }
-#elif defined (RADIO_AGC_IIR) || defined(RADIO_AGC_IIR_SAA)
+#elif defined (RADIO_AGC_IIR) || defined(RADIO_AGC_IIR_SAA) || defined(RADIO_GAIN_IIR_SAA)
 static void filterRadioCB(GtkWidget *button, gpointer p) {
     // only sets the currently viewed channels.
     if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(button))) {
@@ -1735,6 +1771,7 @@ static void notebookPageChangedCB(GtkWidget *,
 	if(page == 1) g_mode = MODE_SORT;
 	if(page == 2) g_mode = MODE_SORT;
 	if(page == 3) g_mode = MODE_RASTERS;
+    if(page == 4) g_mode = MODE_RASTERS;
 }
 static GtkAdjustment* mk_spinner(const char* txt, GtkWidget* container,
 							 float start, float min, float max, float step,
@@ -1799,6 +1836,12 @@ static void mk_radio(const char* txt, int ntxt,
 	}
 }
 static void openSaveFile(gpointer parent_window) {
+    if (savingTestFile) {
+        // if already writing due to test file, do nothing
+        printf("Error: Already saving test file, terminate that recording first!\n");
+        return;
+    }
+
 	GtkWidget *dialog;
 	dialog = gtk_file_chooser_dialog_new ("Save File",
 						(GtkWindow*)parent_window,
@@ -1826,8 +1869,70 @@ static void openSaveFile(gpointer parent_window) {
 		g_closeSaveFile = false;
 		g_saveFile = true;
 		g_free (filename);
-	}
+        
+    }
 	gtk_widget_destroy (dialog);
+}
+
+static void openAudioFile(gpointer parent_window) {
+    if (savingTestFile) {
+        printf("Cannot load audio file while test recording is running!\n");
+    }
+    GtkWidget *dialog;
+    dialog = gtk_file_chooser_dialog_new("Audio File",
+                      (GtkWindow*)parent_window,
+                      GTK_FILE_CHOOSER_ACTION_OPEN,
+                      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                      GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
+                      NULL);
+    if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_ACCEPT) {
+        testAudioFile  = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
+        printf("Selected filename is %s\n", testAudioFile);
+        // update the label
+        char str[256];
+        snprintf(str, 256, "Audio File:\n %s", testAudioFile);
+        gtk_label_set_text(GTK_LABEL(g_audioFileLabel), str);
+        audioFileLoaded = true;
+    }
+    gtk_widget_destroy(dialog);
+}
+
+static void openTestSaveFile(gpointer parent_window) {
+    if(!audioFileLoaded) {
+        printf("Error: No audio file is loaded!\n");
+        return;
+    }
+
+    if (g_spkwriter.enable()) {
+        printf("Error: Already recording either test file or regular file. Stop that first!\n");
+        return;
+    }
+
+    GtkWidget *dialog;
+    dialog = gtk_file_chooser_dialog_new("Save Test File",
+                    (GtkWindow*)parent_window,
+                    GTK_FILE_CHOOSER_ACTION_SAVE,
+                    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                    GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT,
+                    NULL);
+    gtk_file_chooser_set_do_overwrite_confirmation(GTK_FILE_CHOOSER(dialog), TRUE);
+    gtk_file_chooser_set_filename(GTK_FILE_CHOOSER(dialog), "data.bin");
+    if (gtk_dialog_run(GTK_DIALOG(dialog)) == GTK_RESPONSE_ACCEPT) {
+        char *filename;
+        filename = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
+        g_spkwriter.open(filename);
+        g_closeSaveFile = false;
+        g_saveFile = true;
+        g_free(filename);
+        
+        savingTestFile = true;
+        // play audio file
+        char str[256];
+        snprintf(str, 256, "vlc %s &", testAudioFile);
+        system(str);
+        audioStartTime = gettime();
+    }
+    gtk_widget_destroy(dialog);
 }
 
 static void setConfFile(gpointer parent_window) {
@@ -1851,6 +1956,11 @@ static void setConfFile(gpointer parent_window) {
 }
 
 static void closeSaveFile(gpointer) {
+    if (savingTestFile) {
+        printf("Nothing will be done: Test recording is currently running!\n");
+        return;
+    }
+
 	//close it here, with lock. Mutex lock the other segments then
 	g_closeSaveFile = true;
 	
@@ -1858,9 +1968,26 @@ static void closeSaveFile(gpointer) {
 		g_spkwriter.close();
 		g_closeSaveFile = false;
 		g_saveFile = false;
+      }
+}
+
+static void closeTestSaveFile(gpointer) {
+    if (!savingTestFile) {
+        printf("Nothing will be done: Regular recording is currently running!\n");
+        return;
+    }
+	//close it here, with lock. Mutex lock the other segments then
+	g_closeSaveFile = true;
+	
+	if(g_closeSaveFile && g_saveFile){
+		g_spkwriter.close();
+		g_closeSaveFile = false;
+		g_saveFile = false;
+        savingTestFile = false;
 
 	  }
 }
+
 void saveMatrix(const char* fname, gsl_matrix* v){
 	FILE* fid = fopen(fname, "w");
 	int m = v->size1;
@@ -2094,6 +2221,11 @@ int main(int argn, char **argc)
 								  	g_c[g_channel[i]]->getAGC(),
 									0, 32000, 1000,
 								  	agcSpinCB, i);
+#elif RADIO_GAIN_IIR_SAA
+        g_gainSpin[i] = mk_spinner("pre-gain", bx3,
+                                   g_c[g_channel[i]]->getGain(),
+                                   -128, 127.9, 0.1,
+                                   gainSpinCB, i);
 #else
 		g_gainSpin[i] = mk_spinner("gain", bx3,
                                 g_c[g_channel[i]]->getGain(),
@@ -2141,10 +2273,21 @@ int main(int argn, char **argc)
         "3 AGC out",            // value is AGCgain*(sample-mean), signed.
         "4 x1(n-1)/AGC out",        
         "5 x1(n-2)",
-        "6 y1(n-1)",            // shared between LPF1 and HPF1
-        "7 y1(n-2)",            // shared between LPF1 and HPF1
-        "8 y2(n-1)/final output",
-        "9 y2(n-2)"
+        "6 y1(n-1) LPF",            // shared between LPF1 and HPF1
+        "7 y1(n-2) LPF",            // shared between LPF1 and HPF1
+        "8 y2(n-1)/final output HPF",
+        "9 y2(n-2) HPF"
+    };
+#elif RADIO_GAIN_IIR_SAA
+    const char* signalNames[W1_STRIDE] = {
+        "0 Samples from Intan",
+        "1 Gained Sample",
+        "2 x1(n-1)/Gained Sample",
+        "3 x1(n-2)",
+        "4 y1(n-1) LPF",
+        "5 y1(n-2) LPF",
+        "6 y2(n-1)/final output HPF",
+        "7 y2(n-2) HPF"
     };
 #else
 	const char* signalNames[W1_STRIDE] = {
@@ -2163,9 +2306,9 @@ int main(int argn, char **argc)
 		"12	y4(n-1) (hi2 out, final)",
 		"13	y4(n-2)" };
 #endif
-	button = 0;
+    button = 0;
 	combo = gtk_combo_box_new_text();
-   gtk_container_add( GTK_CONTAINER( frame ), combo );
+    gtk_container_add( GTK_CONTAINER( frame ), combo );
 
 	for(int k=0; k<W1_STRIDE; k++){
         printf("Attached signal: %s\n", signalNames[k]);
@@ -2189,11 +2332,20 @@ int main(int argn, char **argc)
 	gtk_box_pack_start (GTK_BOX (box1), button, TRUE, TRUE, 0);
     
     //add osc / reset radio buttons
-    //mk_radio("500-9kHz,osc",2,
-    //        box1,true,"filter",filterRadioCB);
-    mk_radio("500-7kHz,osc",2,
-            box1,true,"filter",filterRadioCB);
+    
+    //mk_radio("500-7kHz,osc",2,box1,true,"filter",filterRadioCB);
+    mk_radio("250-9kHz,osc",2,box1,true,"filter",filterRadioCB);
 
+#elif RADIO_GAIN_IIR_SAA
+    // set all gain button
+    button = gtk_button_new_with_label ("Set all gains from A");
+	g_signal_connect(button, "clicked", G_CALLBACK (gainSetAll),0);
+	gtk_box_pack_start (GTK_BOX (box1), button, TRUE, TRUE, 0);
+
+    // add osc/reset radio buttons
+    //mk_radio("500-7kHz,osc",2,box1,true,"filter",filterRadioCB);
+    //mk_radio("500-9kHz,osc",2,box1,true,"filter",filterRadioCB);
+    mk_radio("250-9kHz,osc",2,box1,true,"filter",filterRadioCB);
 
 #else
     button = gtk_button_new_with_label ("Set all gains from A");
@@ -2392,6 +2544,62 @@ int main(int argn, char **argc)
 	label = gtk_label_new("file");
 	gtk_label_set_angle(GTK_LABEL(label), 90);
 	gtk_notebook_insert_page(GTK_NOTEBOOK(notebook), box1, label, 3);
+
+// validation testing page
+    box1 = gtk_vbox_new(FALSE, 0);
+    
+    // label for audio file being played
+    bx = gtk_hbox_new(FALSE, 3);
+    g_audioFileLabel = gtk_label_new("Audio File:");
+    gtk_label_set_line_wrap(GTK_LABEL(g_audioFileLabel), TRUE);
+    gtk_misc_set_alignment(GTK_MISC(g_audioFileLabel), 0, 0);
+    gtk_box_pack_start(GTK_BOX(bx), g_audioFileLabel, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(box1), bx, TRUE, TRUE, 0);
+    gtk_widget_show(g_audioFileLabel);
+
+    // label for current time of audio file
+    bx = gtk_hbox_new(FALSE, 3);
+    g_audioTimeLabel = gtk_label_new("Audio Time:");
+    gtk_label_set_line_wrap(GTK_LABEL(g_audioTimeLabel), TRUE);
+    gtk_misc_set_alignment(GTK_MISC(g_audioTimeLabel), 0, 0);
+    gtk_box_pack_start(GTK_BOX(bx), g_audioTimeLabel, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(box1), bx, TRUE, TRUE, 0);
+    gtk_widget_show(g_audioTimeLabel);
+
+    // button to load audio file
+    bx = gtk_hbox_new(FALSE, 3);
+    button = gtk_button_new_with_label("Load Audio file");
+    g_signal_connect(button, "clicked", G_CALLBACK(openAudioFile),
+                    (gpointer*)window);
+    gtk_box_pack_start(GTK_BOX(bx), button, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(box1), bx, TRUE, TRUE, 0);
+
+    // label for recording file size
+    bx = gtk_hbox_new(FALSE, 3);
+    g_testFileSizeLabel = gtk_label_new("Recording File Size:");
+    gtk_misc_set_alignment(GTK_MISC(g_testFileSizeLabel), 0, 0);
+    gtk_box_pack_start(GTK_BOX(bx), g_testFileSizeLabel, FALSE, FALSE, 0);
+    gtk_widget_show(g_testFileSizeLabel);
+    gtk_box_pack_start(GTK_BOX(box1), bx, TRUE, TRUE, 0);
+    gtk_widget_show(g_testFileSizeLabel);
+
+    // Record and Stop button
+    bx = gtk_hbox_new (FALSE, 3);
+    button = gtk_button_new_with_label("Record with Audio");
+    g_signal_connect(button, "clicked", G_CALLBACK(openTestSaveFile),   // launches audio at same time
+                     (gpointer*)window);
+    gtk_box_pack_start(GTK_BOX(bx), button, FALSE, FALSE, 0);
+    
+    button = gtk_button_new_with_label("Stop");
+    g_signal_connect(button, "clicked", G_CALLBACK(closeTestSaveFile), 0);  // same as regular stop button
+    gtk_box_pack_start(GTK_BOX(bx), button, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(box1), bx, TRUE, TRUE, 0);
+
+    gtk_widget_show(box1);
+    label = gtk_label_new("test");
+    gtk_label_set_angle(GTK_LABEL(label), 90);
+    gtk_notebook_insert_page(GTK_NOTEBOOK(notebook), box1, label, 3);
+
 //finish up
 	gtk_paned_add1(GTK_PANED(paned), v1);
 	gtk_paned_add2(GTK_PANED(paned), da1);
@@ -2471,6 +2679,8 @@ int main(int argn, char **argc)
     gtk_combo_box_set_active(GTK_COMBO_BOX(combo), 3);
 #elif defined(RADIO_AGC_IIR) || defined(RADIO_AGC_IIR_SAA)
     gtk_combo_box_set_active(GTK_COMBO_BOX(combo), 8);
+#elif RADIO_GAIN_IIR_SAA
+    gtk_combo_box_set_active(GTK_COMBO_BOX(combo), 6);
 #else
 	gtk_combo_box_set_active(GTK_COMBO_BOX(combo), 12);
 #endif

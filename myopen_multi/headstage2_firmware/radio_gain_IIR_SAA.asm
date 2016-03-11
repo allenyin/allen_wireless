@@ -21,22 +21,42 @@
 #define REG2  0x8204    // get back 0xff04
 #define REG3  0x8300    // get back 0xff00
 
-#define REG4              0x8480 // get back 0xff80
-#define REG4_DSP_UNSIGNED 0x8484 // get back 0xff94
-#define REG4_DSP_SIGNED   0x84D4 // get back 0xffD4
-#define REG4_SIGNED       0x84C4 // get back 0xffC4
+#define REG4              0x8480   // get back 0xff80 - no DSP, offset binary
+#define REG4_DSP_UNSIGNED 0x8494   // get back 0xff94 - DSP 300Hz, offset binary
+#define REG4_DSP_SIGNED   0x84D4   // get back 0xffD4 - DSP 300Hz, signed output
+#define REG4_SIGNED       0x84C4   // get back 0xffC4 - no DSP, signed output
+#define REG4_DSP_SIGNED_1Hz 0x84DC // get back 0xffDC - DSP 1Hz, signed output
 
 #define REG5  0x8500    // get back 0xff00
 #define REG6  0x8600    // get back 0xff00
 #define REG7  0x8700    // get back 0xff00
 
-// Intan REG8-13, configured from [250Hz, 10kHz]
-#define REG8  0x8811    // get back 0xff11. Changed from 0x8816 on 12/28/2015
-#define REG9  0x8900    // get back 0xff00
-#define REG10 0x8a10    // get back 0xff10. Changed from 0x8817 on 12/28/2015
-#define REG11 0x8b00    // get back 0xff00
-#define REG12 0x8c11    // get back 0xff11. Changed from 0x8815 on 12/28/2015
-#define REG13 0x8d00    // get back 0xff00
+//----------- Hardware bandpass settings ------------
+// Intan REG8-13, configured for [250Hz, 10kHz]
+//#define REG8  0x8811    // get back 0xff11. 
+//#define REG9  0x8900    // get back 0xff00
+//#define REG10 0x8a10    // get back 0xff10. 
+//#define REG11 0x8b00    // get back 0xff00
+//#define REG12 0x8c11    // get back 0xff11. 
+//#define REG13 0x8d00    // get back 0xff00
+
+// Intan REG8-13, configured for [250Hz, 7.5kHz]
+//#define REG8  0x8816    // get back 0xff16
+//#define REG9  0x8900    // get back 0xff00
+//#define REG10 0x8a17    // get back 0xff17
+//#define REG11 0x8b00    // get back 0xff00
+//#define REG12 0x8c15    // get back 0xff15
+//#define REG13 0x8d00    // get back 0xff00
+
+// Intan REG8-13, configured for [1Hz, 10kHz]
+#define REG8  0x8811      // get back 0xff11
+#define REG9  0x8900      // get back 0xff00
+#define REG10 0x8a10      // get back 0xff10
+#define REG11 0x8b00      // get back 0xff00
+#define REG12 0x8c2c      // get back 0xff2c
+#define REG13 0x8d06      // get back 0xff06
+
+//---------------------------------------------------
 
 #define REG14 0x8eff    // get back 0xffff
 #define REG15 0x8fff    // get back 0xffff
@@ -45,6 +65,7 @@
 #define CALIB 0x5500    // get back 0x8000
 
 #define CONVERT0 0x0000
+
 .align 8    // call is a 5-cycle latency if target is aligned.
 _get_asm:
     /* Sampling thread:
@@ -113,7 +134,6 @@ wait_samples_main:
     r0 >>= SHIFT_BITS;
     r1 = r1 & r2;           
     r2 = r0 + r1;                          // r2 = Ch32, Ch0 (lo, hi). 16-bits samples
-    r2 = r2 << 3 (v,s); // mulitply signal by 8..experiment
 
     // load in new convert command
     r7 = NEXT_CHANNEL_SHIFTED; 
@@ -122,24 +142,10 @@ wait_samples_main:
     [p0 + (SPORT0_TX - SPORT0_RX)] = r7;   // SPORT0 primary TX
     [p0 + (SPORT0_TX - SPORT0_RX)] = r7;   // SPORT0 sec TX
 
-    r5 = [i0++];    // r5.l=0x7fff, r5.h=0x8000. i0 @2nd inte coefs after.
+    r5 = [i0++];    // r5.l=ch0 gain, r5.h=ch32 gain. i0@LPF1 b0
 .align 8
-    // integrator stage - the incoming samples are alreayd in Q1.15 format.
-
-    [i2++] = r2 || r0 = [i1++]; // save new sample. i1,i2 @ integrator mean after
-    a0 = r2.l * r5.l, a1 = r2.h * r5.l || r1 = [i1++];  // a0=(Q31)sample. r1=integrated mean. i1@AGCgain
-
-    // r0=how much sample deviates from integrated mean. r6.l=0x7fff, r6.h=0x0640
-    r0.l = (a0 += r1.l * r5.h), r0.h = (a1 += r1.h * r5.h) || r6=[i0++]; // i0@AGC_target after
-    
-    a0 = r1.l * r6.l, a1 = r1.h * r6.l; // a0=mean in Q31
-
-    // r2=updated mean. r5=AGC-gain, r7=AGC-target. i1@final-sample, i0@AGC-scaler/enable. 
-    r2.l = (a0 += r0.l * r6.h), r2.h = (a1 += r0.h * r6.h) || r5=[i1++] || r7=[i0++];
-
-    // AGC-stage
-
-    a0 = r0.l * r5.l, a1 = r0.h * r5.h || [i2++] = r2; //a0,a1=AGCgain*devFromMean. Save new mean. i2@AGCgain
+    [i2++] = r2 || r0 = [i1++]; // save new sample. i1,i2 @ gained-sample
+    a0 = r2.l * r5.l, a1 = r2.h * r5.h || r0 = [i1++]; // a0,a1=gain*sample. i1@x0(n-1)
     
     /* Result in accumulator is Q1.31. Multiplication treated as (Q1.31)*(Q7.8). Q7.8 has
        8 bits before the decimal point. The result should have 9 bits before the decimal point.
@@ -152,35 +158,41 @@ wait_samples_main:
     a0 = a0 << 8;   
     a1 = a1 << 8;
     r0.l = a0, r0.h = a1;     // Move half reg, treat result as signe frac. Round to bit 16 and extract.
-    a0 = abs a0, a1 = abs a1; // Need to compare abs-scaled deviation to target.
-    
-    // Signed-int mode for MAC. Result should be 0x7fff or 0x8000, tell us if target is smaller or not.
-    // r6.l = 16384 (0.5), r6.h = 1 (AGC-enable). i0@integ_coef1
-    r4.l = (a0 -= r7.l * r7.l), r4.h = (a1 -= r7.h * r7.h) (is) || r6 = [i0++];
 
-    /* Update AGC-gain (trick math here):
-       r5 = AGC-gain, which is in Q8.8 format. r6.l=0x4000=0.5 in Q1.15 format.
-       Turns out if we do 
-            a0=r5.l*r6.l, r3.l=(a0-=0*0) (s2rnd)
-       Then the result in r3.l is the same value in Q8.8 format.
+    [i2++] = r0;              // Save gained-sample. i2@x0(n-1)
 
-       In the second line below, r4.l/h is either 0x7fff or 0x8000. So it acts as 
-       either subtracting 2^-8 from the original Q8.8 gain's value; Or as adding
-       2^-7 to the original Q8.8 gain's value after extraction.
+.align 8
+    /* Start 2 back-to-back direct-form 1 biquads. At this point,
+        r0 = final gained sample
+        i0 @ LPF1 b0
+        i1 @ x0(n-1) of current channel.
+        i2 @ x0(n-1) of current channel.
+
+       If i1 and i2 are dereferenced (read out) in the same cycle, the processor will stall -- each of the
+       1k SRAM memory banks has only one port.
    */
-    a0 = r5.l * r6.l, a1 = r5.h * r6.l;     // load a0 with scaled AGC-gain
-    r3.l = (a0 -= r4.l * r6.h), r3.h = (a1 -= r4.h * r6.h) (s2rnd); // within certain range gain doesnt change
-    r3 = abs r3 (v);
-    [i2++] = r3 || r2 = [i1++];    // Save AGC-gain, i2@final sample. i1@next sample
-    [i2++] = r0;                   // Save final sample, i2@next sample
+   r5 = [i0++] || r1 = [i1++];  // r5=b0(LPF), r1=x0(n-1); i0@b1(LPF), i1@x0(n-2)
+   a0 = r0.l * r5.l, a1 = r0.h * r5.h || r6 = [i0++] || r2 = [i1++];    // r6=b1(LPF), r2=x0(n-2)
+   a0 += r1.l * r6.l, a1 += r1.h * r6.h || r7 = [i0++] || r3 = [i1++];  // r7=a0(LPF), r3=y1(n-1)
+   a0 += r2.l * r5.l, a1 += r2.h * r5.h || r5 = [i0++] || r4 = [i1++];  // r5=a1(LPF), r4=y1(n-2)
+   a0 += r3.l * r7.l, a1 += r3.h * r7.h || [i2++] = r0;                 // update x0(n-1), i2@x0(n-2)
+   r0.l = (a0 += r4.l * r5.l), r0.h = (a1 += r4.h * r5.h) (s2rnd) || [i2++] = r1; // r0=y1(n), update x0(n-2)
 
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+   // now i0@b0(HPF1), i1@y2(n-1). i2@y1(n-1)
+   r5 = [i0++] || [i2++] = r0;  // r5=b0(HPF1), update y1(n-1); i0@b1(HPF1), i2@y1(n-2)
+   a0 = r0.l * r5.l, a1 = r0.h * r5.h || r6 = [i0++] || [i2++] = r3;    // r6=b1(HPF1). update y1(n-2)
+   a0 += r3.l * r6.l, a1 += r3.h * r6.h || r7 = [i0++] || r1 = [i1++];  // r7=a0(HPF1). r1=y2(n-1)
+   a0 += r4.l * r5.l, a1 += r4.h * r5.h || r2 = [i1++];                 // r2=y2(n-2)
+   a0 += r1.l * r7.l, a1 += r1.h * r7.h || r5 = [i0++];                 // r5=a1(HPF1)
+   r0.l = (a0 += r2.l * r5.l), r0.h = (a1 += r2.h * r5.h) (s2rnd);      // r0=y2(n)
 
+   // now i0@next ch integ1; i1@next sample; i2@y2(n-1)
+   [i2++] = r0; // save current y2(n) in y2(n-1)'s spot. i2 @ y2(n-2)
+   [i2++] = r1; // save current y2(n-1) in y2(n-2)'s spot. i2 @ next sample
+   [--sp] = r0; // save current result on the stack
 
+   // all pointers are ready for next two channels of this group.
+   // i0 @ next ch integ1; i1,i2 @ next sample.
 
 //---------------------------------------------------------------------------------------
     r2.h = 0XFFFF;
@@ -194,61 +206,159 @@ nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
     r0 >>= SHIFT_BITS;
     r1 = r1 & r2;
     r2 = r0 + r1;
-    r2 = r2 << 3 (v,s); // pre-gain=8, experiment
 
-    r5 = [i0++];
+    r5 = [i0++];    // r5.l = ch64 gain, r5.h=ch96 gain. i0@LPF1 b0
 .align 8    
-    // integrator stage
-    [i2++] = r2 || r0 = [i1++]; // save new sample. i1,i2 @ integrator mean after.
-    a0 = r2.l * r5.l, a1 = r2.h * r5.l || r1 = [i1++];  // a0=(Q15)sample. r1=integrated mean. i1@AGCgain
-    
-    // r0=how much sample deviates from mean. r6.l=0x7fff, r6.h=0x0640
-    r0.l = (a0 += r1.l * r5.h), r0.h = (a1 += r1.h * r5.h) || r6=[i0++]; // i0@AGCTargert after
-
-    a0 = r1.l * r6.l, a1 = r1.h * r6.l; // a0=mean
-
-    // r2=updated mean. r5=AGCgain, r7=AGCTarget. i1@final-sample, i0@AGC-scaler/enable.
-    r2.l = (a0 += r0.l * r6.h), r2.h = (a1 += r0.h * r6.h) || r5=[i1++] || r7=[i0++];
-
-    // AGC-stage
-    a0 = r0.l * r5.l, a1 = r0.h * r5.h || [i2++] = r2; //a0,a1=AGCgain*devFromMean. Save new mean. i2@AGCgain
+    [i2++] = r2 || r0 = [i1++]; // save new sample. i1,i2 @ gained-sample
+    a0 = r2.l * r5.l, a1 = r2.h * r5.h || r0 = [i1++];  // a0,a1=gain*sample. i1@x0(n-1)
     a0 = a0 << 8;
     a1 = a1 << 8;
     r0.l = a0, r0.h = a1;     // Move half reg, treat result as signed frac. Round to bit 16 and extract.
-    a0 = abs a0, a1 = abs a1; // Compare abs-scaled deviation to target.
 
-    // signed-int mode MAC. Result should be 0x7fff or 0x8000 - tells if target is smaller or not.
-    // r6.l = 0x4000, r6.h=1 (AGC-enable). i0@integ_coef1
-    r4.l = (a0 -= r7.l * r7.l), r4.h = (a1 -= r7.h * r7.h) (is) || r6 = [i0++];
+    [i2++] = r0;              // Save gained-sample. i2@x0(n-1)
 
-    // update AGCgain
-    a0 = r5.l * r6.l, a1 = r5.h * r6.l; // convert AGCgain to Q1.15
-    r3.l = (a0 -= r4.l * r6.h), r3.h = (a1 -= r4.h * r6.h) (s2rnd);
-    r3 = abs r3 (v);
-    [i2++] = r3 || r2 = [i1++]; // Save AGCgain. i2@final sample. i1@next sample
-    [i2++] = r0;                // Save final sample, i2@next sample.
+.align 8
+    /* Start 2 back-to-back direct-form 1 biquads. At this point,
+        r0 = final gained-sample
+        i0 @ LPF1 b0
+        i1 @ x0(n-1) of current channel.
+        i2 @ x0(n-1) of current channel.
 
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-nop;nop;nop;nop;nop;nop;nop;nop;nop;
+       If i1 and i2 are dereferenced (read out) in the same cycle, the processor will stall -- each of the
+       1k SRAM memory banks has only one port.
+   */
+   r5 = [i0++] || r1 = [i1++];  // r5=b0(LPF), r1=x0(n-1); i0@b1(LPF), i1@x0(n-2)
+   a0 = r0.l * r5.l, a1 = r0.h * r5.h || r6 = [i0++] || r2 = [i1++];    // r6=b1(LPF), r2=x0(n-2)
+   a0 += r1.l * r6.l, a1 += r1.h * r6.h || r7 = [i0++] || r3 = [i1++];  // r7=a0(LPF), r3=y1(n-1)
+   a0 += r2.l * r5.l, a1 += r2.h * r5.h || r5 = [i0++] || r4 = [i1++];  // r5=a1(LPF), r4=y1(n-2)
+   a0 += r3.l * r7.l, a1 += r3.h * r7.h || [i2++] = r0;                 // update x0(n-1), i2@x0(n-2)
+   r0.l = (a0 += r4.l * r5.l), r0.h = (a1 += r4.h * r5.h) (s2rnd) || [i2++] = r1; // r0=y1(n), update x0(n-2)
 
-//----------------------------------------------------------------------------------------  
-    r0 = 0; // not doing template match, so this is the dummy match
+   // now i0@b0(HPF1), i1@y2(n-1). i2@y1(n-1)
+   r5 = [i0++] || [i2++] = r0;  // r5=b0(HPF1), update y1(n-1); i0@b1(HPF1), i2@y1(n-2)
+   a0 = r0.l * r5.l, a1 = r0.h * r5.h || r6 = [i0++] || [i2++] = r3;    // r6=b1(HPF1). update y1(n-2)
+   a0 += r3.l * r6.l, a1 += r3.h * r6.h || r7 = [i0++] || r1 = [i1++];  // r7=a0(HPF1). r1=y2(n-1)
+   a0 += r4.l * r5.l, a1 += r4.h * r5.h || r2 = [i1++];                 // r2=y2(n-2)
+   a0 += r1.l * r7.l, a1 += r1.h * r7.h || r5 = [i0++];                 // r5=a1(HPF1)
+   r3.l = (a0 += r2.l * r5.l), r3.h = (a1 += r2.h * r5.h) (s2rnd);      // r3=y2(n)
+
+   // now i0@template_A(t); i1@next sample; i2@y2(n-1)
+   [i2++] = r3;                // save current y2(n) in y2(n-1)'s spot. i2 @ y2(n-2)
+   r2 = [sp++] || [i2++] = r1; // save current y2(n-1) in y2(n-2)'s spot. i2 @ next sample.
+                               // read back ch[0,32]'s results from stack to r2
+
+   // Template comparison, plexon style. Sliding window, no threshold.
+   // r2=samples from amp1 and amp2; r3=samples from amp3 and amp4. Pack them
+   r2 = r2 >>> 8 (v);   // vector shift 16-bit to 8 bits, preserve sign
+   r3 = r3 >>> 8 (v);
+   r4 = bytepack(r2, r3); // amp4,3,2,1 (hi to low byte)
+   r0 = [FP - FP_8080];   // r0=0x80808080;
+   r4 = r4 ^ r0;          // convert to unsigned offset binary. SAA works on unsigned numbers.
+   r0 = r4;               // save a copy for later
+
+.align 8;   // template A: load order is t, t-15, t-14,...t-1
+    a0 = a1 = 0 || r2 = [i0++]; //r2=template_A(t), r0 and r4 contains byte-packed samples just collected
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; //r2=template_A(t-15), r0=bytepack(t-15)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; //r2=template_A(t-14), r0=bytepack(t-14)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; //r2=template_A(t-13), r0=bytepack(t-13)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; //r2=template_A(t-12), r0=bytepack(t-12)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; //r2=template_A(t-11), r0=bytepack(t-11)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; //r2=template_A(t-10), r0=bytepack(t-10)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; //r2=template_A(t-9),  r0=bytepack(t-9)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; //r2=template_A(t-8),  r0=bytepack(t-8)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; //r2=template_A(t-7),  r0=bytepack(t-7)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; //r2=template_A(t-6),  r0=bytepack(t-6)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; //r2=template_A(t-5),  r0=bytepack(t-5)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; //r2=template_A(t-4),  r0=bytepack(t-4)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; //r2=template_A(t-3),  r0=bytepack(t-3)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; //r2=template_A(t-2),  r0=bytepack(t-2)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; //r2=template_A(t-2),  r0=bytepack(t-1)
+    saa( r1:0, r3:2 ) || [i3++] = r4; // write bytepack(t), inc i3
+
+    // saa results in a0.l, a0.h, a1.l, a1.h (amp4,3,2,1); compare to aperture
+    // i0 @ Aperture[amp1A, amp2A]
+    r0 = a0, r1 = a1 (fu) || r2 = [i0++] || i3 -= m3; // r2=aperture[amp1A,amp2A], i3@saved bytepack(t-15)
+    // subtract and saturate - if the answer is negative-->spike!
+    r0 = r0 -|- r2 (s) || r3 = [i0++]; // r0=[amp1A match, amp2A match], r3=aperture[amp3A,amp4A]
+    r1 = r1 -|- r3 (s);                // r1=[amp3A match, amp4A match]
+    // shift to bit 0, sign preserved
+    r0 = r0 >>> 15 (v); // r0.h and r0.l will be 0xffff or 0x0000 (match or not)
+    r1 = r1 >>> 15 (v);
+    r0 = -r0 (v);       // now 0x0001 or 0x0000 (match or not)
+    r1 = -r1 (v);       // save both for packing later
+    r1 << = 1;
+    r6 = r0 + r1;       // r6=[14 zeros][amp4A][amp2A][14 zeros][amp3A][amp1A]
+
+.align 8;   // template B: load order is t-15, t-14,...,t
+    a0 = a1 = 0 || r0 = [i3++] || r2 = [i0++];       // r2=template_B(t-15), r0=bytepack(t-15)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; // r2=template_B(t-14), r0=bytepack(t-14)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; // r2=template_B(t-13), r0=bytepack(t-13)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; // r2=template_B(t-12), r0=bytepack(t-12)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; // r2=template_B(t-11), r0=bytepack(t-11)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; // r2=template_B(t-10), r0=bytepack(t-10)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; // r2=template_B(t-9),  r0=bytepack(t-9)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; // r2=template_B(t-8),  r0=bytepack(t-8)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; // r2=template_B(t-7),  r0=bytepack(t-7)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; // r2=template_B(t-6),  r0=bytepack(t-6)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; // r2=template_B(t-5),  r0=bytepacK(t-5)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; // r2=template_B(t-4),  r0=bytepack(t-4)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; // r2=template_B(t-3),  r0=bytepack(t-3)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; // r2=template_B(t-2),  r0=bytepacK(t-2)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; // r2=template_B(t-1),  r0=bytepack(t-1)
+    saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; // r2=template_B(t),    r0=bytepack(t)
+    saa( r1:0, r3:2 );  // i0@Aperture[amp1B,amp2B], i3@nbytepack(t-15) for next set of channels
+
+    // saa result in a0.l, a0.h, a1.l, a1.h.
+    r0 = a0, r1 = a1 (fu) || r2 = [i0++];   // r2=aperture[amp1B,amp2B]
+    // subtract and saturate - if answer is negative-->spike!
+    r0 = r0 -|- r2 (s) || r3 = [i0++];      // r3=aperture[amp3B, amp4B], i0@integrator coeffs for next set
+    r1 = r1 -|- r3 (s);
+    // shift to bit 0, sign preserved
+    r0 = r0 >>> 15 (v);
+    r1 = r1 >>> 15 (v);
+    r0 = -r0 (v);
+    r1 = -r1 (v);
+    r1 <<= 3;
+    r0 <<= 2;
+    r0 = r0 + r1; // r0=[12 zeros][amp4B][amp2B][14 zeros][amp3B][amp1B][2 zeros]
+    r0 = r0 + r6; // add to tempA matches.
+
+    // Extra nops the signal path can tolerate.
+    nop;nop;nop;nop;nop;nop;
+
+    /* 
+    r0 currently is:
+    r0.h = [12 zeros][amp4B][amp2B][amp4A][amp2A]
+    r0.l = [12 zeros][amp3B][amp1B][amp3A][amp1A]
+    Need to merge the two nibbles into a byte. Then record down the match results.
+    */
+    r0.h = r0.h << 4;
+    r0.l = r0.l + r0.h; // r0.l is now [8 zeros][amp4B][amp2B][amp4A][amp2A][amp3B][amp1B][amp3A][amp1A]
+    r0 = r0.b (z);
 
     p0 = [FP - FP_CHAN];
-    r6 = p0;            // r6 = current group of channels
+    p1 = [FP - FP_ENC_LUT_BASE];    // 3 cycle latency before we can use p1 (??why?)
+    p5 = [FP - FP_MATCH_BASE];
+    r6 = p0;                        // r6 = current group of channels
+    p5 = p5 + p0;                   // p5 = address to write the template matching byte to
+    r1 = b[p5];
+    r1 = r1 | r0;                   // Need to OR in case both template get spikes within the time of a pkt
+    p0 = r1;                        // p0=match-byte, act as offset to 8bit-to-7bit LUT
+    b[p5] = r1;                     // Update the 8bit template matches.
+
+    // After updating the template matches for this group, need to update its corresponding 7bit encoding.
+    // This 7bit byte will be added into the radio packet.
+    p3 = 32;
+    p5 = p5+p3; // Corresponding location in 7bit region for this group of chans
+    p1 = p1+p0; // Get corresponding LUT address,
+    r2 = b[p1]; // read 7bit encoding from LUT,
+    b[p5] = r2; // write encoding to 7bit region
     
-    /*
-        r4 = packet byte count (qs)
-        r5 = number of queued packets, 0-15
-        r6 = group number (0-31), [FP_CHAN]
-    */
     r0 = 31; 
     cc = r6 == r0;
-    if !cc jump end_txchan (bp);    // finish if not group31.
+    if !cc jump end_txchan (bp);
     
+    // Add to radio packet if current group is 31
     // p0 and p5 are free; p1 and p3 are static and reset below.
     // p4 points to WFBUF - location in a pkt we are writing the new samples to
 
@@ -265,37 +375,48 @@ nop;nop;nop;nop;nop;nop;nop;nop;nop;
     b[p4++] = r1;
     b[p4++] = r2;
     b[p4++] = r3;
-    
-    r4 = [FP - FP_QS];
+    r4 = [FP - FP_QS];  // r4 = Bytes of samples for each channel in pkt: 0-6
     r7 = 6;
     r4 += 1;
+    i3 += 4;            // End of an iteration, previous bytepack(t-14) becomes the next bytepack(t-15)
+
     cc = r4 == r7;
+    if !cc jump end_txchan_qs (bp);
+    
     // if we don't have 6 samples for each TXCHANx yet, then continue;
     // otherwise add the template matches and finish constructing the pkt
-    
-    if !cc jump end_txchan_qs (bp);
-    r5 = [FP - FP_QPACKETS];
-    p1 = r5;                        // used to index to state_lut; hide 4 cycle latency
+    r5 = [FP - FP_QPACKETS];        // r5 = Number of queued pkts, 0-15
+    p1 = r5;                        // Used to index to state_lut; hide 4 cycle latency
     p0 = [FP - FP_STATE_LUT_BASE];
-    r5 += 1;                        // one more packet on the queue.
-    [FP - FP_QPACKETS] = r5;        // write-back num-pkt
-    p0 = (p0 + p1) << 2;            // 4 byte align
-    r5 = [FP - FP_ECHO];            // echo flag in bits 31, 23, 15, 7.
-    r7 = [p0];
+    p5 = [FP - FP_MATCH_PTR7];      // p5=start of 7bit templ matches record
+    r5 += 1;                        // Add one more packet on the queue.
+    [FP - FP_QPACKETS] = r5;        // Update # of queued pkts
     
-    // p5 and and anyting related to FP_MATCH_PTR7 is set to 0, if edited it fucks with the 
-    // echo bits in the template match bytes, and screws with the transmission.
-    r0 = 0;
-    r1 = 0;
+    p0 = (p0 + p1) << 2;            // Address to find frame#-in-pkt (QS) mask. Table is 4 byte align
+    r5 = [FP - FP_ECHO];            // r5 = Echo from gtkclient - echo flag in bits 31, 23, 15, 7.
+    r7 = [p0];                      // r7 = QS mask
 
-    // flag upper bit in each byte with QS & echo
+    // read in the 7bit template matches (2 32-bit words per pkt)
+    r0 = [p5++];
+    r1 = [p5++];
+    // Flag upper bits in each byte with QS & echo bits
     r0 = r0 | r7;
     r1 = r1 | r5;
-    
-    // write template match to pkt
+
+    // Reset the area just read in 7bit and 8bit MATCH memory
+    r7 = p5;                   // r7 = Address in 7bit area right now
+    p0 = -36;
+    p5 = p5 + p0;              // p5 = corresponding address in 8bit (32+4 for post-inc)
+    bitclr(r7,6);              // Reset r7 pointer
+    bitset(r7,5);              // to keep it within 7b-encoding region
+    [FP - FP_MATCH_PTR7] = r7; // and write it back
+       
+    // Write masked template match to pkt
     [p4++] = r0;
     [p4++] = r1;
-    r4 = 0;         // clear sample count in qs (also reset templat match in 8b region).
+    r4 = 0;         // Clear sample count in qs (also reset templat match in 8b region).
+    [p5--] = r4;    // Reset template match,
+    [p5--] = r4;    // in 8bit region
 
 end_txchan_qs:
     [FP - FP_QS] = r4;  // if we just finished a pkt, QS=0, otherwise it was incremented already.
@@ -473,7 +594,7 @@ _radio_bidi_asm:
         4-channel group we want.
     */
     // channel 0 
-    r0.l = LO(W1 + 1);   // ch0 amp or integrator output 
+    r0.l = LO(W1 + 1);   // ch0 Intan sample output
     r0.h = HI(W1 + 1);
     [FP - FP_TXCHAN0] = r0;
     // channel 31
@@ -527,6 +648,13 @@ _radio_bidi_asm:
     l2 = l1;
     b2 = b1;
 
+    // i3 is for reading/writing template delays (post-filter)
+    i3.l = LO(T1);
+    i3.h = HI(T1);
+    l3 = T1_LENGTH;
+    b3 = i3;
+    m3 = 16*4;    // 16 32-bit words -- used to go back 16 saved samples in T1
+
     /* Next, we go through circular buffer A1, and set up the coefficients needed for the 
        signal chain. 
 
@@ -536,7 +664,14 @@ _radio_bidi_asm:
        The memory structure of A1 is then made up of 32 A1_strides(also see memory_map spreadsheet), 
        each A1 stride contains the following:
 
-       AGC ceofs
+       Aperture B  (2 32-bit words)         <--- high address
+       Templates B (16 32-bit words)
+       Aperture A  (2 32-bit words)
+       Templates A (16 32-bit words)
+       IIR coefs   (8 32-bit words) 
+       gain coefs  (1 32-bit words)    
+       IIR coefs   (8 32-bit words)
+       gain coefs  (1 32-bit words)  ---    <--- low address
 
        There are a total of 32 groups of 4-channels. Each each loop of lt_top, we populate 1 A1-stride.
        Each lt2_top loop populates the 2 of the 4-channels in a particular group.
@@ -550,31 +685,109 @@ lt_top:
     p5 = 2;
     lsetup(lt2_top, lt2_bot) lc1 = p5;  // each lt2_top is one set of coefs
 lt2_top:
-    // gain and integrator
+    // Fixed signed gain. Assume input samples are 16-bits signed.
+    r0.l = 0x0200; w[i0++] = r0.l;  // initial gain is 2, in Q7.8
+    r0.l = 0x0200; w[i0++] = r0.l;  // initial gain is 2, in Q7.8
+   
+    /* IIR filter, biquad implementation. */
+    // LPF1: 7000Hz cutoff 
+    //r0 = 4041 (x); w[i0++] = r0.l; w[i0++] = r0.l;  // b0
+    //r0 = 8081 (x); w[i0++] = r0.l; w[i0++] = r0.l;  // b1
+    //r0 = 3139 (x); w[i0++] = r0.l; w[i0++] = r0.l;  // a0
+    //r0 = -2917(x); w[i0++] = r0.l; w[i0++] = r0.l;  // a1
+
+    // LPF1: 9000Hz cutoff 
+    r0 = 6004 (x); w[i0++] = r0.l; w[i0++] = r0.l;  // b0
+    r0 = 12008(x); w[i0++] = r0.l; w[i0++] = r0.l;  // b1
+    r0 = -4594(x); w[i0++] = r0.l; w[i0++] = r0.l;  // a0
+    r0 = -3039(x); w[i0++] = r0.l; w[i0++] = r0.l;  // a1
     
-    // Assuming input samples are 12-bits unsigned.
-    /*
-    r0.l = 32767;   w[i0++] = r0.l;
-    r0.l = -16384;  w[i0++] = r0.l;
-    r0.l = 16384;   w[i0++] = r0.l;
-    r0.l = 800;     w[i0++] = r0.l;
-    */
+    // HPF1: 250Hz cutoff
+    r0 = 15812 (x);	w[i0++] = r0.l; w[i0++] = r0.l; // b0
+	r0 = -31624(x); w[i0++] = r0.l; w[i0++] = r0.l; // b1
+	r0 = 31604 (x);	w[i0++] = r0.l; w[i0++] = r0.l; // a0
+	r0 = -15260(x); w[i0++] = r0.l; w[i0++] = r0.l; // a1
 
-    // Assuming input samples are 16-bits signed
-    r0.l = 0x7fff;  w[i0++] = r0.l;
-    r0.l = 0x8000;  w[i0++] = r0.l;
-    r0.l = 0x7fff;  w[i0++] = r0.l;
-    r0.l = 1600;    w[i0++] = r0.l;
+    // HPF1: 500Hz cutoff
+	//r0 = 15260 (x);	w[i0++] = r0.l; w[i0++] = r0.l; // b0
+	//r0 = -30519(x); w[i0++] = r0.l; w[i0++] = r0.l; // b1
+	//r0 = 30442 (x);	w[i0++] = r0.l; w[i0++] = r0.l; // a0
+	//r0 = -14213(x); w[i0++] = r0.l; w[i0++] = r0.l; // a1
 
-    /* AGC: 
-        Target is 6000*16384, which in Q15 is ~0.09155. We store just the target's square
-        root (in Q15). This is so we can later accomodate big target values (32 bits).
-    */
-    r0.l = 9915;    w[i0++] = r0.l;     // AGC target sqrt = sqrt(6000*16384), Q15.
-    r0.l = 9915;    w[i0++] = r0.l;     // AGC target sqrt = sqrt(6000*16384), Q15.
-    r0.l = 16384;   w[i0++] = r0.l;     // Q15, =0.5
-    r0.l = 1;       w[i0++] = r0.l;     // Set this to zero to disable AGC. Q7.8
 lt2_bot: nop;
+
+    // After all the filtering, templates for each channel/neuron
+    // 127 113 102 111 132 155 195 235 250 224 187 160 142 126
+	r0 = 127; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8; //this is the 'new' sample.
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //16 template b is in order.
+	r0 = 113; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8; //not efficient but whatever.
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //1
+	r0 = 102; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //2
+	r0 = 111; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //3
+	r0 = 132; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //4
+	r0 = 155; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //5
+	r0 = 195; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //6
+	r0 = 235; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //7
+	r0 = 250; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //8
+	r0 = 224; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //9
+	r0 = 187; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //10
+	r0 = 160; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //11
+	r0 = 142; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //12
+	r0 = 126; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //13
+	r0 = 120; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //14
+	r0 = 110; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //15
+	//aperture: default small.
+	r0.l = 56; r0.h = 56; [i0++] = r0; [i0++] = r0;
+
+	// 127 113 102 111 132 155 195 235 250 224 187 160 142 127
+	r0 = 127; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8; //not efficient but whatever.
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //1
+	r0 = 113; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //2
+	r0 = 102; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //3
+	r0 = 111; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //4
+	r0 = 132; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //5
+	r0 = 155; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //6
+	r0 = 195; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //7
+	r0 = 235; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //8
+	r0 = 250; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //9
+	r0 = 224; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //10
+	r0 = 187; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //11
+	r0 = 160; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //12
+	r0 = 142; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //13
+	r0 = 127; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //14
+	r0 = 110; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //15
+	r0 = 95; 	r1 = r0 << 8; r2 = r1 << 8; r3 = r2 << 8;
+				r0 = r0 | r1; r0 = r0 | r2; r0 = r0 | r3; [i0++] = r0; //16
+	//aperture: default small.
+	r0.l = 56; r0.h = 56; [i0++] = r0; [i0++] = r0;
 
 lt_bot: nop;
 
@@ -727,7 +940,7 @@ sport_configs:
     call wait_samples;                     // call 4
     
     //r0 = REG4 (z);
-    r0 = REG4_DSP_SIGNED (z);  // this with DSP filter enabled, signed samples
+    r0 = REG4_DSP_SIGNED_1Hz (z);  // this with DSP filter enabled, signed samples
     r0 = r0 << SHIFT_BITS;
     [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
     [p0 + (SPORT0_TX - SPORT0_RX)] = r0;

@@ -25,26 +25,38 @@
 #define REG4_DSP_UNSIGNED 0x8494 // get back 0xff94 - DSP, offset binary
 #define REG4_DSP_SIGNED   0x84D4 // get back 0xffD4 - DSP, signed output
 #define REG4_SIGNED       0x84C4 // get back 0xffC4 - no DSP, signed output
+#define REG4_DSP_SIGNED_1Hz 0x84DC // get back 0xffDC - DSP 1Hz, signed output
 
 #define REG5  0x8500    // get back 0xff00
 #define REG6  0x8600    // get back 0xff00
 #define REG7  0x8700    // get back 0xff00
 
+//----------- Hardware bandpass settings ------------
 // Intan REG8-13, configured for [250Hz, 10kHz]
-//#define REG8  0x8811    // get back 0xff11. 
-//#define REG9  0x8900    // get back 0xff00
-//#define REG10 0x8a10    // get back 0xff10. 
-//#define REG11 0x8b00    // get back 0xff00
-//#define REG12 0x8c11    // get back 0xff11. 
-//#define REG13 0x8d00    // get back 0xff00
+#define REG8  0x8811    // get back 0xff11. 
+#define REG9  0x8900    // get back 0xff00
+#define REG10 0x8a10    // get back 0xff10. 
+#define REG11 0x8b00    // get back 0xff00
+#define REG12 0x8c11    // get back 0xff11. 
+#define REG13 0x8d00    // get back 0xff00
 
 // Intan REG8-13, configured for [250Hz, 7.5kHz]
-#define REG8  0x8816    // get back 0xff16
-#define REG9  0x8900    // get back 0xff00
-#define REG10 0x8a17    // get back 0xff17
-#define REG11 0x8b00    // get back 0xff00
-#define REG12 0x8c15    // get back 0xff15
-#define REG13 0x8d00    // get back 0xff00
+//#define REG8  0x8816    // get back 0xff16
+//#define REG9  0x8900    // get back 0xff00
+//#define REG10 0x8a17    // get back 0xff17
+//#define REG11 0x8b00    // get back 0xff00
+//#define REG12 0x8c15    // get back 0xff15
+//#define REG13 0x8d00    // get back 0xff00
+
+// Intan REG8-13, configured for [1Hz, 10kHz]
+//#define REG8  0x8811      // get back 0xff11
+//#define REG9  0x8900      // get back 0xff00
+//#define REG10 0x8a10      // get back 0xff10
+//#define REG11 0x8b00      // get back 0xff00
+//#define REG12 0x8c2c      // get back 0xff2c
+//#define REG13 0x8d06      // get back 0xff06
+
+//---------------------------------------------------
 
 #define REG14 0x8eff    // get back 0xffff
 #define REG15 0x8fff    // get back 0xffff
@@ -740,11 +752,11 @@ lt2_top:
     r0.l = 800;     w[i0++] = r0.l;
     */
 
-    // Assuming input samples are 16-bits signed
-    r0.l = 0x7fff;  w[i0++] = r0.l;
-    r0.l = 0x8000;  w[i0++] = r0.l;
-    r0.l = 0x7fff;  w[i0++] = r0.l;
-    r0.l = 1600;    w[i0++] = r0.l;
+    // Assuming input samples are 16-bits signed. Diff from before since no s2rnd
+    r0.l = 0x7fff;  w[i0++] = r0.l; // (Q15) 1
+    r0.l = 0x8000;  w[i0++] = r0.l; // (Q15) -1
+    r0.l = 0x7fff;  w[i0++] = r0.l; // (Q15) 1
+    r0.l = 1600;    w[i0++] = r0.l; // (Q15) 0.0488
 
     /* AGC: 
         Target is 6000*16384, which in Q15 is ~0.09155. We store just the target's square
@@ -757,23 +769,30 @@ lt2_top:
 
     /* IIR filter, biquad implementation. */
     // LPF1: 7000Hz cutoff 
-    r0 = 4041 (x); w[i0++] = r0.l; w[i0++] = r0.l;  // b0
-    r0 = 8081 (x); w[i0++] = r0.l; w[i0++] = r0.l;  // b1
-    r0 = 3139 (x); w[i0++] = r0.l; w[i0++] = r0.l;  // a0
-    r0 = -2917(x); w[i0++] = r0.l; w[i0++] = r0.l;  // a1
+    //r0 = 4041 (x); w[i0++] = r0.l; w[i0++] = r0.l;  // b0
+    //r0 = 8081 (x); w[i0++] = r0.l; w[i0++] = r0.l;  // b1
+    //r0 = 3139 (x); w[i0++] = r0.l; w[i0++] = r0.l;  // a0
+    //r0 = -2917(x); w[i0++] = r0.l; w[i0++] = r0.l;  // a1
 
     // LPF1: 9000Hz cutoff 
-    //r0 = 6004 (x); w[i0++] = r0.l; w[i0++] = r0.l;  // b0
-    //r0 = 12008(x); w[i0++] = r0.l; w[i0++] = r0.l;  // b1
-    //r0 = -4594(x); w[i0++] = r0.l; w[i0++] = r0.l;  // a0
-    //r0 = -3039(x); w[i0++] = r0.l; w[i0++] = r0.l;  // a1
+    r0 = 6004 (x); w[i0++] = r0.l; w[i0++] = r0.l;  // b0
+    r0 = 12008(x); w[i0++] = r0.l; w[i0++] = r0.l;  // b1
+    r0 = -4594(x); w[i0++] = r0.l; w[i0++] = r0.l;  // a0
+    r0 = -3039(x); w[i0++] = r0.l; w[i0++] = r0.l;  // a1
+    
+    // HPF1: 250Hz cutoff
+    r0 = 15812 (x);	w[i0++] = r0.l; w[i0++] = r0.l; // b0
+	r0 = -31624(x); w[i0++] = r0.l; w[i0++] = r0.l; // b1
+	r0 = 31604 (x);	w[i0++] = r0.l; w[i0++] = r0.l; // a0
+	r0 = -15260(x); w[i0++] = r0.l; w[i0++] = r0.l; // a1
 
     // HPF1: 500Hz cutoff
-	r0 = 15260 (x);	w[i0++] = r0.l; w[i0++] = r0.l; // b0
-	r0 = -30519(x); w[i0++] = r0.l; w[i0++] = r0.l; // b1
-	r0 = 30442 (x);	w[i0++] = r0.l; w[i0++] = r0.l; // a0
-	r0 = -14213(x); w[i0++] = r0.l; w[i0++] = r0.l; // a1
-lt2_bot: nop;
+	//r0 = 15260 (x);	w[i0++] = r0.l; w[i0++] = r0.l; // b0
+	//r0 = -30519(x); w[i0++] = r0.l; w[i0++] = r0.l; // b1
+	//r0 = 30442 (x);	w[i0++] = r0.l; w[i0++] = r0.l; // a0
+	//r0 = -14213(x); w[i0++] = r0.l; w[i0++] = r0.l; // a1
+
+    lt2_bot: nop;
 
     // After all the filtering, templates for each channel/neuron
     // 127 113 102 111 132 155 195 235 250 224 187 160 142 126

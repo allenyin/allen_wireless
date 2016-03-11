@@ -2,7 +2,7 @@
 Script to check gtkclient is calculating variable address correctly.
 """
 A1 = 0xFF904000     # may change
-A1_AGC = 4          # may change
+A1_AGC = 1          # may change
 A1_LMS = 0          # may change
 A1_IIR = 8          # may change
 A1_TEMPLATE = 16     # may change
@@ -17,7 +17,7 @@ A1_APERTUREB = (A1_TEMPB + A1_TEMPLATE)
 A1_STRIDE = (A1_APERTUREB + A1_APERTURE)
 
 W1 = 0xFF804000
-W1_STRIDE = 10       # may change
+W1_STRIDE = 8       # may change
 
 FP_CHAN = 4
 FP_QS =	8 
@@ -62,6 +62,26 @@ def setAGC(chan):
     addr = A1 + (A1_STRIDE*(kchan & 31) + p*(A1_IIRSTARTA+A1_IIR) +2)*4 + g
     return hex(addr)
 
+def setpreGain(chan):
+    tid = chan/128
+    chan = chan & ( (128*(tid+1)-1) ^ 32)
+    p = 0
+    kchan = chan & 127
+    if kchan >= 64:
+        p = p+1
+
+    slot = 0
+    if kchan&32 > 0:
+        slot = 1
+
+    if slot > 0:
+        kchan_new = kchan-32
+    else:
+        kchan_new = kchan
+
+    addr = A1+ (A1_STRIDE*(kchan_new & 31) + p*(A1_IIRSTARTA+A1_IIR))*4
+    return hex(addr)
+
 def setChans(c, signalChain):
     """
     Gives the address of the signalChain values to be streamed
@@ -84,6 +104,16 @@ def setChans(c, signalChain):
         11	x2(n-2) / y3(n-2)
         12	y4(n-1)
         13	y4(n-2)
+
+    For RADIO_GAIN_IIR_SAA
+        "0 Samples from Intan",
+        "1 Gained Sample",
+        "2 x1(n-1)/Gained Sample",
+        "3 x1(n-2)",
+        "4 y1(n-1)",
+        "5 y1(n-2)",
+        "6 y2(n-1)/final output",
+        "7 y2(n-2)"
 
     c is channel number
     """

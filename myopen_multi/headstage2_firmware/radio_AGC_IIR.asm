@@ -293,8 +293,8 @@ wait_samples_main:
    nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
    nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
    nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-   nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-   nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+//   nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+//   nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
 
 //----------------------------------------------------------------------------------------  
     r0 = 0; // not doing template match, so this is the dummy match

@@ -31,11 +31,19 @@
 #define REG7  0x8700    // get back 0xff00
 
 // Intan REG8-13, configured for [150Hz, 7.5kHz]
-#define REG8  0x8816    // get back 0xff16
+//#define REG8  0x8816    // get back 0xff16
+//#define REG9  0x8900    // get back 0xff00
+//#define REG10 0x8a17    // get back 0xff17
+//#define REG11 0x8b00    // get back 0xff00
+//#define REG12 0x8c15    // get back 0xff15
+//#define REG13 0x8d00    // get back 0xff00
+
+// Intan REG8-13, configured for [250Hz, 10kHz]
+#define REG8  0x8811    // get back 0xff11. 
 #define REG9  0x8900    // get back 0xff00
-#define REG10 0x8a17    // get back 0xff17
+#define REG10 0x8a10    // get back 0xff10. 
 #define REG11 0x8b00    // get back 0xff00
-#define REG12 0x8c15    // get back 0xff15
+#define REG12 0x8c11    // get back 0xff11. 
 #define REG13 0x8d00    // get back 0xff00
 
 #define REG14 0x8eff    // get back 0xffff
@@ -121,6 +129,7 @@ wait_samples_main:
     r0 >>= SHIFT_BITS;
     r1 = r1 & r2;
     r2 = r0 + r1;                          // r2 = Ch32, Ch0 (lo, hi). 16-bits samples
+    r2 = r2 << 3 (v,s);   // multiple signal by 16
     [i1++] = r2;    // save new sample
 
     // load in new convert command
@@ -137,7 +146,6 @@ nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
 nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
 nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
 
-nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
 nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
 nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
 
@@ -161,6 +169,8 @@ nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
     r0 >>= SHIFT_BITS;
     r1 = r1 & r2;
     r2 = r0 + r1;
+
+    r2 = r2 << 3 (v,s);
         
     [i1++] = r2;    // save new sample
 
@@ -817,7 +827,7 @@ sport_configs:
     [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
     call wait_samples;                     // call 4
     
-    r0 = REG4_SIGNED (z);  // this with DSP filter enabled
+    r0 = REG4_DSP_SIGNED (z);  // this with DSP filter enabled
     r0 = r0 << SHIFT_BITS;
     [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
     [p0 + (SPORT0_TX - SPORT0_RX)] = r0;

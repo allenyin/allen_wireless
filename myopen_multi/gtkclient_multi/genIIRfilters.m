@@ -7,16 +7,16 @@ close all;
 % w/2*fs
 
 fs = 31250;   % sampling frequency
-% 2nd order butterworth LPF, cutoff at 9kHz
-fc_LPF = 7000 ;
+% 2nd order butterworth LPF, cutoff at fc_LPF
+fc_LPF = 9000 ; % Hz
 wn_LPF = (fc_LPF/fs)*2;  % normalized cutoff frequency (units=pi rad/sample)
 [b_LPF, a_LPF] = butter(2, wn_LPF, 'low');  % descending powers of z, const first
 figure;
 title('2nd order LPF');
 freqz(b_LPF, a_LPF);
 
-% 2nd order butterworth HPF, cutoff at 500Hz
-fc_HPF = 500;
+% 2nd order butterworth HPF, cutoff fc_HPF
+fc_HPF = 250;   % Hz
 wn_HPF = (fc_HPF/fs)*2;
 [b_HPF, a_HPF] = butter(2, wn_HPF, 'high');
 figure;
