@@ -1057,7 +1057,7 @@ packet format in the file, as saved here:
 					g_totalDropped.fetch_add(drop - g_dropped[tid]);
 				}
 				g_dropped[tid] = drop;
-			}
+            }
             // skip the 4-byte bridge header.
 			ptr += 4;
 			n -= 4;
@@ -1926,9 +1926,11 @@ static void openTestSaveFile(gpointer parent_window) {
         g_free(filename);
         
         savingTestFile = true;
+
         // play audio file
         char str[256];
-        snprintf(str, 256, "vlc %s &", testAudioFile);
+        // write timestamped vlc log
+        snprintf(str, 256, "vlc -vvv %s 2>&1 | tee | ./timestamp.sh &", testAudioFile);
         system(str);
         audioStartTime = gettime();
     }

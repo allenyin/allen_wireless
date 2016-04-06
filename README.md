@@ -18,9 +18,11 @@
 	* [Compilation](#gtkclient-compile)
     * [Running gtkclient](#running-gtkclient)
         * [RHA-headstage gtkclient](#RHAgtkclient)
-        * [RHD-headstage gtkclient](#RHDgtkclient)
+        * [RHD-headstage gtkclient with AGC](#RHDgtkclient_AGC)
+        * [RHD-headstage gtkclient with fixed gain](#RHDgtkclient_gain)
         * [Spike sorting](#SpikeSorting)
         * [Saving recordings](#SavingRecordings)
+        * [Test recording](#TestRecording)
         * [Configuration files](#gtkclientConfigurations)
 	* [TODO/possible improvements](#gtkclient-TODO)
 * [Quick Start](#quickstart)
@@ -337,9 +339,9 @@ The file `memory_map.ods` is a spreadsheet visualizing the memory organization u
 
 ####<a name="RHD-fw">RHD-headstage</a>
 
-The parallel port-to-bridge connections and bridge-to-headstage connections are identical for RHD-headstage as for RHA-headstages. However, there are multiple firmwares available in the `myopen_multi/headstage2_firmware` directory. To program the RHD-headstage to use the final firmware version -- `radio_AGC_IIR_SAA.asm`, navigate to that directory and:
+The parallel port-to-bridge connections and bridge-to-headstage connections are identical for RHD-headstage as for RHA-headstages. However, there are multiple firmwares available in the `myopen_multi/headstage2_firmware` directory. To program the RHD-headstage to use the final firmware version -- `radio_gain_IIR_SAA.asm`, navigate to that directory and:
 
-1. Uncomment the line `FIRMWARE_VERSION=radio_AGC_IIR_SAA` line in `myopen_multi/headstage2_firmware/Makefile`.
+1. Uncomment the line `FIRMWARE_VERSION=radio_gain_IIR_SAA` line in `myopen_multi/headstage2_firmware/Makefile`.
 
 2. Type `make clean; make` to compile the firmware.
 
@@ -351,10 +353,10 @@ The parallel port-to-bridge connections and bridge-to-headstage connections are 
 
 3.  Turn on the bridge and do `make flash`. 
 
-	There should be a line in the output message that says `FIRMWARE_VERSION is RADIO_AGC_IIR_SAA`. If not, make sure again in Makefile that all other lines containing `FIMRWARE_VERSION=` is commented out.
+	There should be a line in the output message that says `FIRMWARE_VERSION is RADIO_GAIN_IIR_SAA`. If not, make sure again in Makefile that all other lines containing `FIMRWARE_VERSION=` is commented out.
 
 4. Modify gtkclient:
-	* Go to `myopen_multi/gtkclient_multi/Makefile` and set the option `RADIO_AGC_IIR_SAA` to true, while setting `HEADSTAGE_TIM`, `RADIO_BASIC`, `RADIO_AGC`, `RADIO_AGC_IIR` to `false`. This ensures gtkclient can correctly communicate with the RHD-headstage firmware.
+	* Go to `myopen_multi/gtkclient_multi/Makefile` and set the option `RADIO_GAIN_IIR_SAA` to true, while setting `HEADSTAGE_TIM`, `RADIO_BASIC`, `RADIO_AGC`, `RADIO_AGC_IIR`, `RADIO_AGC_IIR_SAA` to `false`. This ensures gtkclient can correctly communicate with the RHD-headstage firmware.
 	* Go to `myopen_multi/gtkclient_multi/src/gtkclient.cpp` and make sure the radio channel given to `radio_init()` in the headstage's firmware is present in the array `g_radioChannel`.
 	* If using multiple headstage-bridge pairs for recording, make sure the value of `NSCALE` defined in `myopen_multi/gtkclient_multi/include/gtkclient.h` is set to the number of headstage-bridge pairs used.
 
@@ -398,7 +400,7 @@ the final firmware.
 
     Built off firmware2.asm, but integrate in radio communication with gtkclient. The radio communication involved is a stripped-down version of the original radio protocol -- writes in the raw samples, but since no spike-sorting is done, the matching bits are simply set to 0. Instructions to add in the echo nibble and packet#-in-frame nibble are present, so gtkclient can correctly read and interpret the packet information. 
                  
-    Requires uncommenting the `FIRMWARE_VERSION=RADIO_BASIC` in makefile to compile, uses the "memory_radio_basic.h" file, which describes the memory layout. The memory header file is taken care of by the Makefile. The corresponding header will be moved to be "memory.h" when the `FIMRWARE_VERSION` option is set.
+    Requires uncommenting the `FIRMWARE_VERSION=radio_basic` in makefile to compile, uses the "memory_radio_basic.h" file, which describes the memory layout. The memory header file is taken care of by the Makefile. The corresponding header will be moved to be "memory.h" when the `FIMRWARE_VERSION` option is set.
 
     The blackfin cache memory organization can be visualized by the spreadsheet `radio_basic_memoryMap.ods`.
 
@@ -408,7 +410,7 @@ the final firmware.
 
 * `radio_AGC.asm`:
 
-    Built off radio_basic.asm, but with added AGC functions. Same radio-communication protocol as in radio_basic. Compile with `FIMRWARE_VERSION=RADIO_AGC`, use "memory_AGC.h". 
+    Built off radio_basic.asm, but with added AGC functions. Same radio-communication protocol as in radio_basic. Compile with `FIMRWARE_VERSION=radio_AGC`, use "memory_AGC.h". 
 
     The blackfin cache memory organization can be visualized by the spreadsheet `radio_AGC_memoryMap.ods`.
 
@@ -416,7 +418,7 @@ the final firmware.
 
 * `radio_AGC_IIR.asm`:
 
-    Built off radio_AGC.asm, but added two IIR biquads to act as band-pass filter, set to [500, 9000Hz]. Compile with `FIMRWARE_VERSION=RADIO_AGC_IIR`, use "memory_AGC_IIR.h".
+    Built off radio_AGC.asm, but added two IIR biquads to act as band-pass filter, set to [500, 9000Hz]. Compile with `FIMRWARE_VERSION=radio_AGC_IIR`, use "memory_AGC_IIR.h".
 
     The blackfin cache memory organization can be visualized by the spreadsheet `radio_AGC_IIR_memoryMap.ods`.
 
@@ -434,11 +436,19 @@ the final firmware.
 
 * `radio_AGC_IIR_SAA.asm`:   
 
-     Adding the spike-sorting using SAA instructions to radio_AGC_IIR.asm. This is the final firmware for RHD headstages. Compile with `FIRMWARE_VERSION=RADIO_AGC_IIR_SAA`, uses "memory_AGC_IIR_SAA.h". 
+     Adding the spike-sorting using SAA instructions to radio_AGC_IIR.asm. <s>This is the final firmware for RHD headstages</s>. Compile with `FIRMWARE_VERSION=radio_AGC_IIR_SAA`, uses "memory_AGC_IIR_SAA.h". 
 
      The blackfin cache memory organization can be visualized by the spreadsheet `radio_all_memoryMap.ods`.
 
-    Compile gtkclient with `RADIO_AGC_IIR_SAA` set to true in its Makefile.
+     Edit on 4/5/2016 - Validation has shown that AGC makes spike sort harder when SNR is low. Therefore, this is no longer recommended as the final version for RHD-headstage.
+
+* `radio_gain_IIR_SAA.asm`:
+
+     The IIR and SAA parts of the signal chain are present in this version of the firmware. However, the AGC stage has been replaced by a manually set fixed-gain stage, the gain ranges from -128 to 127.5 in increments of 0.5. Compile with `FIRMWARE_VERSION=radio_gain_IIR_SAA`, uses "memory_gain_IIR_SAA.h".
+
+    The blackfin cache memory organization can be visualized by the spreadsheet `radio_gain_IIR_SAA_memoryMap.ods`.
+
+    As of 4/5/2016, this is recommended as the final firmware version to be used on the RHD-headstage.
 
 
 ####<a name="JTAG-testing">JTAG testing</a>
@@ -599,8 +609,6 @@ gtkclient also requires `nvidia-cg-toolkit`, it is recommended (if not mandatory
 
 gtkclient is known to work fine on `Nvidia GeForce GTX760/770/550 Ti`. 
 
-
-
 ###<a name="gtkclient-compile">Compilation</a>
 
 gtkclient can be compiled to work with both RHA-headstage and RHD-headstage, the latter of which may operate on multiple versions of firmware.
@@ -617,13 +625,13 @@ Before compiling gtkclient to work with either RHA-headstage or RHD-headstage wi
 
 * Make sure if multiple headstages are used, the same number of bridges are used as well and connected to the PC running gtkclient through a switch or router. Also make sure the MAC address for each bridge is different, see [Bridge firmware section](#Bridge-fw) for instructions on this.
 
-Then, if using RHA-headstage, go to `myopen_multi/gtkclient_multi` near the top of the file, set `HEADSTAGE_TIME=true` while setting `RADIO_BASIC=false`, `RADIO_AGC=false`, `RADIO_AGC_IIR=false`, and `RADIO_AGC_IIR_SAA=false`.
+Then, if using RHA-headstage, go to `myopen_multi/gtkclient_multi` near the top of the file, set `HEADSTAGE_TIME=true` while setting `RADIO_BASIC=false`, `RADIO_AGC=false`, `RADIO_AGC_IIR=false`, `RADIO_AGC_IIR_SAA=false`, and `RADIO_GAIN_IIR_SAA=false`. Note that the options correspond to the different version of RHD-headstage firmware, with capitalization differences.
 
-If using deployment firmware on RHD-headstage, go to `myopen_multi/gtkclient_multi` near the top of the file, set `RADIO_AGC_IIR_SAA=true` while setting `HEADSTAGE_TIM=false`, `RADIO_BASIC=false`, `RADIO_AGC=false`, `RADIO_AGC_IIR=false`, and `RADIO_AGC_IIR_SAA=false`.
+If using deployment firmware on RHD-headstage, go to `myopen_multi/gtkclient_multi` near the top of the file, set <s>`RADIO_AGC_IIR_SAA=true`</s> `RADIO_GAIN_IIR_SAA=true` while setting `HEADSTAGE_TIM=false`, `RADIO_BASIC=false`, `RADIO_AGC=false`, `RADIO_AGC_IIR=false`, and `RADIO_AGC_IIR_SAA=false`.
 
 Then `make clean; make` to compile.
 
-To compile gtkclient to work with other [firmware versions on RHD-headstage](#firmware-versions), set the corresponding option among `HEADSTAGE_TIM`, `RADIO_BASIC`, `RADIO_AGC`, `RADIO_AGC_IIR` and `RADIO_AGC_IIR_SAA` to `true` while setting the others to `false`.
+To compile gtkclient to work with other [firmware versions on RHD-headstage](#firmware-versions), set the corresponding option among `HEADSTAGE_TIM`, `RADIO_BASIC`, `RADIO_AGC`, `RADIO_AGC_IIR`, `RADIO_AGC_IIR_SAA` and `RADIO_GAIN_IIR_SAA` to `true` while setting the others to `false`.
 
 ###<a name="running-gtkclient">Running gtkclient</a>
 
@@ -689,7 +697,7 @@ When one headstage is used, the range of channels is 0 to 127. When two are used
 
 In the waveform window, teal lines separate each plot, and purple lines represent 0 -- the signal level of seen by the reference electrode.
 
-Below the channel selection, four tabbed panes may be selected - `rasters`, `spikes`, `sort`, and `file`. Displayed in the previous screenshot is the `raster` tab, which includes the signal-chain and raster-display configurations.
+Below the channel selection, five tabbed panes may be selected - `rasters`, `spikes`, `sort`, `test`, and `file`. Displayed in the previous screenshot is the `raster` tab, which includes the signal-chain and raster-display configurations.
 
 The `gain` and `AGC target` settings configure signal-chain parameters of the firmware onboard the RHA-headstage. The signal-chain consists of a series of stages that processes the samples from the ADC, all preceeding the spike template matching step.
 
@@ -754,11 +762,11 @@ The `Raster Window` selection box selects which channels' rasters are viewed. Ea
 The `Raster span` selection box sets the time length of the displayed data for the raster display (see `g_rasterSpan` in `src/gtkclient.cpp`).
 
 
-###<a name="RHDgtkclient">RHD-headstage gtkclient</a>
+###<a name="RHDgtkclient_AGC">RHD-headstage gtkclient with AGC</a>
 
-Below is a screenshot of the main interface of gtkclient compiled for RHD-headstage deployment firmware (`RADIO_AGC_IIR_SAA=true`), with the `raster` tab selected.
+Below is a screenshot of the main interface of gtkclient compiled for RHD-headstage <s>deployment</s> firmware (`RADIO_AGC_IIR_SAA=true`), with the `raster` tab selected.
 
-![RHDclient_main](https://github.com/allenyin/allen_wireless/raw/master/images/RHDgtkclientMain.png)
+![RHDclient_main_AGC](https://github.com/allenyin/allen_wireless/raw/master/images/RHDgtkclientMain_AGC.png)
 
 It is very similar to that of the RHA-headstage gtkclient. The main differences are:
 
@@ -770,13 +778,13 @@ It is very similar to that of the RHA-headstage gtkclient. The main differences 
 
 4. The options available in the signal-chain selection box are different.
 
-These differences reflect the differences in the DSP signal-chain implemented in RHD-headstage's deployment firmware, as well as the hardware difference between the `Intan RHD2132` amplifiers and the `Intan RHA2132` amplifiers + ADC combination. The signal-chain implemented here includes, in cascading order:
+These differences reflect the differences in the DSP signal-chain implemented in RHD-headstage's <s>deployment</s> AGC-version of firmware, as well as the hardware difference between the `Intan RHD2132` amplifiers and the `Intan RHA2132` amplifiers + ADC combination. The signal-chain implemented here includes, in cascading order:
 
 1. AGC - to amplify the input signal to a fixed power level. However, due to implementation differences, the same `AGC target` setting here will yield different resulting signal level from that in RHA-headstage-gtkclient.
 
 2. Infinite Impulse Response (IIR) digital filters. The RHD-headstage firmware implements 4-poles butterworth bandpass filter by cascading two direct-form I biquads. The coefficients of tehse filters can be set in specific ways:
 
-    * The `500-7kHz` option in the `filter` box sets the filter on the four channels selected to pass the frequencies between 500Hz and 7kHz. This is the default option. Note the slightly different frequency range here from RHAgtkclient.
+    * The `250-9kHz` option in the `filter` box sets the filter on the four channels selected to pass the frequencies between 250Hz and 7kHz. This is the default option. Note the slightly different frequency range here from RHAgtkclient.
     * The `osc` option in the `filter` box sets the filter on the four channels such that the filter outputs oscillate at roughly 919Hz, with amplitude depending on the signal power prior to selecting this option. The oscillation is only displayed when the `8 y2(n-1)/final output` option is selected in the `signal chain` box.
 
         The oscillation frequency is different due to ease of selecting coefficients using the two-stage bandpass filters. 
@@ -787,25 +795,49 @@ There is no `LMS` stage in the signal chain -- thus no `LMS` settings.
 
 The new amplifiers digitize the input signals with higher precision, so there is no need and no available bits to digitally amplify the signals in the IIR stage - hence the removal of `gain` input settings (see [IIR implementation](http://allenyin.github.io/reading_list/2016/01/DirectFormI-IIR-butterworth-filters/) for details).
 
-As a result of the signal chain differences, the signal chain selection box on the `raster` page presents different options. The default option is `8 y2(n-1)/final output`, which is the output of the last stage of IIR fitlers.
+As a result of the signal chain differences, the signal chain selection box on the `raster` page presents different options. The default option is `8 y2(n-1)/final output HPF`, which is the output of the last stage of IIR filters (high pass).
 
 The available options are:
 * `0 Samples from Intan`: They are samples output by the Intan RHD2132 amplifiers, before any DSP from the blackfin.
 * `1 Integrated mean`: Intermediate value used in the AGC stage, similar to an estimate of the raw input signal power.
 * `2 AGC gain`: channel's AGC gain
 * `3 AGC out`: Output of the AGC stage 
-* `4 x0(n-1)/AGC out`: Output of the AGC stage, input to the first IIR biquad.
-* `5 x0(n-2)`: Last time step's input to the first IIR biquad.
-* `6 y1(n-1)`: Output of the first IIR biquad, equivalent to input to the second IIR biquad.
-* `7 y1(n-2)`: Last time step's output of the first IIR biquad/input to the second IIR biquad.
-* `8 y2(n-1)/final output`: Output of the second IIR biquad, final output of the signal chain. It's the default option.
-* `9 y2(n-2)`: Last time step's output of the second IIR biquad.
+* `4 x1(n-1)/AGC out`: Output of the AGC stage, input to the first IIR biquad.
+* `5 x1(n-2)`: Last time step's input to the first IIR biquad.
+* `6 y1(n-1) LPF`: Output of the first IIR biquad, equivalent to input to the second IIR biquad.
+* `7 y1(n-2) LPF`: Last time step's output of the first IIR biquad/input to the second IIR biquad.
+* `8 y2(n-1)/final output HPF`: Output of the second IIR biquad, final output of the signal chain. It's the default option.
+* `9 y2(n-2) HPF`: Last time step's output of the second IIR biquad.
 
 Other these signal-chain related differences, everything else on RHAgtkclient and RHDgtkclient are identical.
 
+###<a name="RHDgtkclient_gain">RHD-headstage gtkclient with fixed gain</a>
 
+Below is a screenshot of the main interface of gtkclient compiled for RHD-headstage deployment firmware (`RADIO_GAIN_IIR_SAA=true`), with the `raster` tab selected.
+
+![RHDclient_main_gain](https://github.com/allenyin/allen_wireless/raw/master/images/RHDgtkclientMain_gain.png)
+
+It differs from RHDgtkclient-AGC in:
+
+1. There's no `AGC target` setting near the channel selection boxes. Instead, there is a `pre-gain` setting. The value here may range from -128 to -127.5, in increments of 0.5.
+
+2. The signal chain box offers different options, they reflect the differences between the firmware `radio_gain_IIR_SAA.asm` and `radio_AGC_IIR_SAA.asm`, which in cascading order:
+
+    1. Fixed pre-gain. The incoming samples from Intan amplifiers are directly multiplied by the manually set pre-gain.
+    2. IIR digital filters, these are identical as those in the AGC-version of firmware.
+
+Therefore, the signal chain selection box has less options. The default option is `6 y2(n-1)/final output HPF`, which is the output of the last stage of the IIR filters. The available options are:
+* `0 Samples from Intan`: They are samples output by the Intan RHD2132 amplifiers, before any blackfin DSP.
+* `1 Gained Sample`: The sample values after multiplied by pre-gain.
+* `2 x1(n-1)/Gained Sample`: Same as the gained sample, input to the first IIR biquad.
+* `3 x1(n-2)`: Last time step's input to the first IIR biquad.
+* `4 y1(n-1) LPF`: Output of the first IIR (low pass) biquad, equivalent to input to the second IIR biquad.
+* `5 y1(n-2) LPF`: last time step's output of the first IIR biquad/input to the second IIR biquad.
+* `6 y2(n-1)/final output HPF`: Output of the second IIR biquad (highpass), final output of the signal chain. It's the default option.
+* `7 y2(n-2) HPF`: Last time step's output of the second IIR biquad.
+    
 ###<a name="SpikeSorting">Spike sorting</a>
-Below is a screenshot showing the RHDgtkclient's `spikes` tab. Other than the absence of channel gain setting, it is identical to RHAclient's.
+Below is a screenshot showing the RHDgtkclient-gain's `spikes` tab. Other than the absence of AGC setting, it is identical to RHAclient's.
 
 ![spike_page](https://github.com/allenyin/allen_wireless/raw/master/images/RHDgtkclient_spikes.png)
 
@@ -819,11 +851,13 @@ The PCA-projected points can be selected via a polygonal lasso - left-clicking a
 
 The selected points, and any future points in the future that fall within the selected area will then turn cyan or red. The aperture of the set templates are also displayed on the left side of the `spikes` page. The overlaid waveforms that correspond to the colored PCA-projections will also change from gray to assume their corresponding template colors. Waveforms that don't belong to either sorted clusters will remain gray.
 
-In the screenshot, both templates have been set for channel 31 (not really spikes, but just demonstrating the sorting tool). In all the overlaid waveform windows, there are also thicker orange and purple traces. Those are the 16-points waveform templates for those channels (as a result of calculating the mean of PCA-projections). These traces change whenever a template is set through the polygonal lasso. Note that the width of the 16-points templates are limited within the faint blue strip, which is more narrow than the overlaid waveforms.
+In the screenshot, both templates have been set for channel 71 (not really spikes, but just demonstrating the sorting tool). In all the overlaid waveform windows, there are also thicker orange and purple traces. Those are the 16-points waveform templates for those channels (as a result of calculating the mean of PCA-projections). These traces change whenever a template is set through the polygonal lasso. Note that the width of the 16-points templates are limited within the faint blue strip, which is more narrow than the overlaid waveforms.
 
 After the template and apertures for a channel are set and sent to the headstage, they will be used to detect spike onboard the headstage. The detection of spikes are sent along with raw waveform data in the radio packets, and these spikes are plotted in the raster window. When a channel is also one of the four channels whose raw samples are streamed, gtkclient will convolve the templates for that channel with the last 24 continuously transmitted samples and compare against the corresponding aperture to check for spikes. If gtkclient detects a spike but the radio packet does not report one, then `missed spike` message will be printed out in the terminal. If gtkclient does not detect a spike, but the radio packet does, then `false positive` message will be printed out instead.
 
-When spikes are detected, the interspike interval, binned at 768us spike sample rate is plotted on the bottom of the PCA-projection window. This can be seen in the screenshot as well for channel 31. 
+When spikes are detected, the interspike interval, binned at 768us spike sample rate is plotted on the bottom of the PCA-projection window. This can be seen in the screenshot as well for channel 71. 
+
+
 
 ###<a name="SavingRecordings">Saving recordings</a>
 
@@ -870,6 +904,37 @@ The program `convert` is compiled along with gtkclient from `src/convert.cpp`. R
 * $.chn.gz: gzipped version of $.nlg files.
 
 * $.log.gz: gzipped text of messages within the file (i.e. ASCII versions of the outgoing commands)
+
+To plot the analog traces, see [plot_raw_channels.m](https://github.com/allenyin/recording_validation/blob/master/analysis/plot_raw_channels.m).
+
+To convert the spike times relative to recording start, the following scheme can be used:
+
+```matlab
+load(spikeFile);                % load .mat file
+f_mstimer = 9155.273438;        % hardware clock in Hz
+mstimer = double(mstimer);      % convert from uint32 to double
+spike_ts = double(spike_ts);    % convert from uint32 to double
+
+mstimer = mstimer - mstimer(1); % process mstimer to start at 0
+mstimer = mstimer/f_mstimer;    % convert values in mstimer to seconds
+spikeTimes = mstimer(spike_ts); % spike times in bridge time, in seconds
+```
+
+###<a name="TestRecording">Test recording</a>
+
+Below is a screenshot showing the client's `test` tab, identical for both RHAgtkclient and all versions of RHDgtkclient.
+
+![test_page](https://github.com/allenyin/allen_wireless/raw/master/images/RHDclientfinal_testPage.png)
+
+The right side of the window for the `test` tab is identical to that of `raster` tab. In the screenshot, the spikes detected on channle 71 are more visible as yellow and blue dots on the raster display.
+
+On the left side, the `test` tab provides several buttons. The purpose of this tab is to facilitate [recording from simulated signals](http://allenyin.github.io/reading_list/2016/03/WirelessValidationPktLoss). Simulated signals can be saved as audio files and played from the same computer where gtkclient runs. The audio signal can be passed to the wireless headstages (RHA or RHD) via [Plexon headstage tester units](http://www.plexon.com/products/headstage-tester-units). This page allows the user to specifiy the audio file, and start both the recording and audio with minimal delay.
+
+1. `Load Audio File`: Brings up a dialog asking the user to specify the desired audio file. After selection the file's name will be displayed under the `Audio File:` field.
+
+2. `Record with Audio`: Brings up a dialog asking the user where to save the recording file. After selection, the recording will be started, along with vlc playing the selected audio file. There is roughly a 0.4-0.5 seconds delay between recording start and vlc playback start. The recording file size as well as audio time (min:sec) will be displayed. While a recording initialized this way is happening, pressing the `record` button in the `file` page triggers nothing, and vice versa.
+
+3. `Stop`: Stops the recording. Allows new recording to be initiated subsequently from either `test` or `file` page.
 
 ###<a name="gtkclientConfigurations">Configuration files</a>
 

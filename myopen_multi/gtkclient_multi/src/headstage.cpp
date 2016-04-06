@@ -631,6 +631,8 @@ void Headstage::resetBiquads(int chan){
 #elif defined(RADIO_AGC_IIR) || defined(RADIO_AGC_IIR_SAA) || defined(RADIO_GAIN_IIR_SAA)
     /* The only change that would happen is turning it into an oscillator
      * Thus resetting just change the coefficients of the first biquad back.
+     *
+     * The second biquad coefficients are unchanged in the firmware onboard the headstage.
      */
     // reset all coefs in two channels.
     //printf("Resetting biquads...\n");
@@ -639,7 +641,7 @@ void Headstage::resetBiquads(int chan){
 	int i,j;
 	int tid = chan/128;
 	//(to send, needs to keep correct channel name)
-    //The following is for bandpass of [500Hz, 9kHz]
+    //The following is for bandpass of [2500Hz, 9kHz]
 	b[0] = 6004.f; 
 	b[1] = 12008.f; 
 	b[2] = -4594.f; 
