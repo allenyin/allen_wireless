@@ -613,7 +613,7 @@ gtkclient is known to work fine on `Nvidia GeForce GTX760/770/550 Ti`.
 
 gtkclient can be compiled to work with both RHA-headstage and RHD-headstage, the latter of which may operate on multiple versions of firmware.
 
-The deployment firmware versions is `myopen_multi/headstage_firmware/radio5.asm` for RHA-headstage, and `myopen_multi/headstage2_firmware/radio_AGC_IIR_SAA.asm`.
+The deployment firmware versions is `myopen_multi/headstage_firmware/radio5.asm` for RHA-headstage, and `myopen_multi/headstage2_firmware/radio_gain_IIR_SAA.asm`.
 
 Before compiling gtkclient to work with either RHA-headstage or RHD-headstage with the deployment firmware, one must:
 
