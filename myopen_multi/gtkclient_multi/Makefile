@@ -17,7 +17,8 @@ CC  = gcc
 CPP = g++
 TARGET = /usr/local/bin
 
-CPPFLAGS := -Iinclude -Iproto -I/usr/include -I../common_host
+HDF5INCLUDE := -I/usr/include/hdf5/serial  # libhdf5 manually installed
+CPPFLAGS := -Iinclude -Iproto -I/usr/include -I../common_host $(HDF5INCLUDE)
 CPPFLAGS += -Wall -Wcast-align -Wpointer-arith -Wshadow -Wsign-compare \
 -Wformat=2 -Wno-format-y2k -Wmissing-braces -Wparentheses -Wtrigraphs \
 -Wextra -pedantic -std=c++11 -Wno-int-to-pointer-cast 
@@ -28,8 +29,11 @@ CFLAGS := -Wall -Wcast-align -Wpointer-arith -Wshadow -Wsign-compare \
 
 #LDFLAGS := -lGL -lGLU -lpthread -lCg -lCgGL -lgsl -lcblas -latlas -lm \
 -lmatio -lhdf5
-LDFLAGS := -lGL -lGLU -lc -lm -lpthread -lCg -lCgGL -lgsl -lcblas -latlas \
-	-lmatio -lhdf5 -lprotobuf
+
+# libhdf5 manually installed
+HDF5LD := -L/usr/lib/x86_64-linux-gnu/hdf5/serial -lhdf5 -lhdf5_cpp 	
+LDFLAGS += -lGL -lGLU -lc -lm -lpthread -lCg -lCgGL -lgsl -lcblas -latlas \
+		   -lmatio -lprotobuf $(HDF5LD)
 
 GLIBS := gtk+-2.0 gtkglext-1.0 gtkglext-x11-1.0 protobuf
 GTKFLAGS = `pkg-config --cflags $(GLIBS) `
@@ -123,7 +127,7 @@ src/%.o: src/%.c
 	$(CC) -c $(CFLAGS) $< -o $@
 
 convert: $(COBJS)
-	$(CPP) -o $@ $^ -lmatio -lhdf5 -lz
+	$(CPP) -o $@ $^ -lmatio -lz $(HDF5LD)
 
 convertConfig: convertConfig.cpp proto/parameters.pb.cc
 	@touch $@
@@ -131,7 +135,7 @@ convertConfig: convertConfig.cpp proto/parameters.pb.cc
 	$(CPP) $^ -o $@ `pkg-config --cflags --libs protobuf`
 
 wf_plot: src/wf_plot.o
-	$(CC) -o $@ $^ -lGL -lGLU -lglut -lpthread -lmatio -lhdf5 -lpng
+	$(CC) -o $@ $^ -lGL -lGLU -lglut -lpthread -lmatio -lpng $(HDF5LD)
 
 clean:
 	rm -rf gtkclient convert wf_plot src/*.o
