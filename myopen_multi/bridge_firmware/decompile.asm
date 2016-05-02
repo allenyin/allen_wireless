@@ -564,24 +564,24 @@ ffa00570:	28 18       	IF CC JUMP 0xffa005c0 <_spi_write_register_ver+0x74>;
 ffa00572:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff9000e1(-7339807) */
 ffa00576:	0e 30       	R1 = R6;
 ffa00578:	00 e1 00 00 	R0.L = 0x0;		/* (  0)	R0=0xff900000 <_l1_data_a>(-7340032) */
-ffa0057c:	00 e3 22 0a 	CALL 0xffa019c0 <_printf_int>;
+ffa0057c:	00 e3 42 0a 	CALL 0xffa01a00 <_printf_int>;
 ffa00580:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900000 <_l1_data_a>(-7340032) */
-ffa00584:	00 e1 6c 05 	R0.L = 0x56c;		/* (1388)	R0=0xff90056c(-7338644) */
-ffa00588:	00 e3 80 08 	CALL 0xffa01688 <_uart_str>;
-ffa0058c:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff90056c(-7338644) */
+ffa00584:	00 e1 f0 05 	R0.L = 0x5f0;		/* (1520)	R0=0xff9005f0(-7338512) */
+ffa00588:	00 e3 a0 08 	CALL 0xffa016c8 <_uart_str>;
+ffa0058c:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff9005f0(-7338512) */
 ffa00590:	0d 30       	R1 = R5;
 ffa00592:	00 e1 14 00 	R0.L = 0x14;		/* ( 20)	R0=0xff900014(-7340012) */
-ffa00596:	00 e3 63 09 	CALL 0xffa0185c <_printf_hex_byte>;
+ffa00596:	00 e3 83 09 	CALL 0xffa0189c <_printf_hex_byte>;
 ffa0059a:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900014(-7340012) */
-ffa0059e:	00 e1 6c 05 	R0.L = 0x56c;		/* (1388)	R0=0xff90056c(-7338644) */
-ffa005a2:	00 e3 73 08 	CALL 0xffa01688 <_uart_str>;
-ffa005a6:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff90056c(-7338644) */
+ffa0059e:	00 e1 f0 05 	R0.L = 0x5f0;		/* (1520)	R0=0xff9005f0(-7338512) */
+ffa005a2:	00 e3 93 08 	CALL 0xffa016c8 <_uart_str>;
+ffa005a6:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff9005f0(-7338512) */
 ffa005aa:	00 e1 20 00 	R0.L = 0x20;		/* ( 32)	R0=0xff900020(-7340000) */
 ffa005ae:	0f 30       	R1 = R7;
-ffa005b0:	00 e3 56 09 	CALL 0xffa0185c <_printf_hex_byte>;
+ffa005b0:	00 e3 76 09 	CALL 0xffa0189c <_printf_hex_byte>;
 ffa005b4:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900020(-7340000) */
-ffa005b8:	00 e1 9c 07 	R0.L = 0x79c;		/* (1948)	R0=0xff90079c(-7338084) */
-ffa005bc:	00 e3 66 08 	CALL 0xffa01688 <_uart_str>;
+ffa005b8:	00 e1 20 08 	R0.L = 0x820;		/* (2080)	R0=0xff900820(-7337952) */
+ffa005bc:	00 e3 86 08 	CALL 0xffa016c8 <_uart_str>;
 ffa005c0:	04 30       	R0 = R4;
 ffa005c2:	01 e8 00 00 	UNLINK;
 ffa005c6:	20 05       	(R7:4) = [SP++];
@@ -631,11 +631,11 @@ ffa00630:	76 43       	R6 = R6.B (Z);
 ffa00632:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff90007c(-7339908) */
 ffa00636:	0e 30       	R1 = R6;
 ffa00638:	00 e1 2c 00 	R0.L = 0x2c;		/* ( 44)	R0=0xff90002c(-7339988) */
-ffa0063c:	00 e3 c2 09 	CALL 0xffa019c0 <_printf_int>;
+ffa0063c:	00 e3 e2 09 	CALL 0xffa01a00 <_printf_int>;
 ffa00640:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff90002c(-7339988) */
-ffa00644:	00 e1 9c 07 	R0.L = 0x79c;		/* (1948)	R0=0xff90079c(-7338084) */
+ffa00644:	00 e1 20 08 	R0.L = 0x820;		/* (2080)	R0=0xff900820(-7337952) */
 ffa00648:	ef 42       	R7 = R5.L (Z);
-ffa0064a:	00 e3 1f 08 	CALL 0xffa01688 <_uart_str>;
+ffa0064a:	00 e3 3f 08 	CALL 0xffa016c8 <_uart_str>;
 ffa0064e:	07 30       	R0 = R7;
 ffa00650:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
 ffa00652:	02 60       	R2 = 0x0 (X);		/*		R2=0x0(  0) */
@@ -753,10 +753,10 @@ ffa0076e:	80 61       	R0 = 0x30 (X);		/*		R0=0x30( 48) */
 ffa00770:	0a e1 30 09 	P2.L = 0x930;		/* (2352)	P2=0xffc00930(-4191952) */
 ffa00774:	4d e1 90 ff 	P5.H = 0xff90;		/* (-112)	P5=0xff900704 */
 ffa00778:	10 97       	W[P2] = R0;
-ffa0077a:	0d e1 34 0c 	P5.L = 0xc34;		/* (3124)	P5=0xff900c34 <_g_sampCh> */
+ffa0077a:	0d e1 b8 0c 	P5.L = 0xcb8;		/* (3256)	P5=0xff900cb8 <_g_sampCh> */
 ffa0077e:	48 e1 90 ff 	P0.H = 0xff90;		/* (-112)	P0=0xff90150c */
 ffa00782:	6e 99       	R6 = B[P5] (X);
-ffa00784:	08 e1 3c 0c 	P0.L = 0xc3c;		/* (3132)	P0=0xff900c3c <_g_sampR> */
+ffa00784:	08 e1 c0 0c 	P0.L = 0xcc0;		/* (3264)	P0=0xff900cc0 <_g_sampR> */
 ffa00788:	75 43       	R5 = R6.B (Z);
 ffa0078a:	04 91       	R4 = [P0];
 ffa0078c:	22 e1 ff 01 	R2 = 0x1ff (X);		/*		R2=0x1ff(511) */
@@ -764,14 +764,14 @@ ffa00790:	65 50       	R1 = R5 + R4;
 ffa00792:	11 54       	R0 = R1 & R2;
 ffa00794:	20 32       	P4 = R0;
 ffa00796:	49 e1 90 ff 	P1.H = 0xff90;		/* (-112)	P1=0xff900500 */
-ffa0079a:	09 e1 68 0c 	P1.L = 0xc68;		/* (3176)	P1=0xff900c68 <_g_samples> */
+ffa0079a:	09 e1 ec 0c 	P1.L = 0xcec;		/* (3308)	P1=0xff900cec <_g_samples> */
 ffa0079e:	11 64       	R1 += 0x2;		/* (  2) */
 ffa007a0:	51 54       	R1 = R1 & R2;
 ffa007a2:	a1 5a       	P2 = P1 + P4;
 ffa007a4:	53 99       	R3 = B[P2] (X);
 ffa007a6:	11 32       	P2 = R1;
 ffa007a8:	4c e1 90 ff 	P4.H = 0xff90;		/* (-112)	P4=0xff900000 <_l1_data_a> */
-ffa007ac:	0c e1 44 0c 	P4.L = 0xc44;		/* (3140)	P4=0xff900c44 <_g_sampOff> */
+ffa007ac:	0c e1 c8 0c 	P4.L = 0xcc8;		/* (3272)	P4=0xff900cc8 <_g_sampOff> */
 ffa007b0:	06 4b       	BITTGL (R6, 0x0);		/* bit  0 */
 ffa007b2:	72 43       	R2 = R6.B (Z);
 ffa007b4:	51 5a       	P1 = P1 + P2;
@@ -809,7 +809,7 @@ ffa007fc:	84 05       	(R7:0, P5:4) = [SP++];
 ffa007fe:	26 01       	ASTAT = [SP++];
 ffa00800:	11 00       	RTI;
 ffa00802:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900910 */
-ffa00806:	0a e1 20 0c 	P2.L = 0xc20;		/* (3104)	P2=0xff900c20 <_g_sampW> */
+ffa00806:	0a e1 a4 0c 	P2.L = 0xca4;		/* (3236)	P2=0xff900ca4 <_g_sampW> */
 ffa0080a:	10 91       	R0 = [P2];
 ffa0080c:	04 0a       	CC = R4 <= R0 (IU);
 ffa0080e:	3b 14       	IF !CC JUMP 0xffa00884 <_audio_out+0x128> (BP);
@@ -817,8 +817,8 @@ ffa00810:	20 52       	R0 = R0 - R4;
 ffa00812:	21 e1 d4 01 	R1 = 0x1d4 (X);		/*		R1=0x1d4(468) */
 ffa00816:	08 0a       	CC = R0 <= R1 (IU);
 ffa00818:	61 18       	IF CC JUMP 0xffa008da <_audio_out+0x17e>;
-ffa0081a:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900c20 <_g_sampW> */
-ffa0081e:	0a e1 14 0c 	P2.L = 0xc14;		/* (3092)	P2=0xff900c14 <_g_sampMode> */
+ffa0081a:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900ca4 <_g_sampW> */
+ffa0081e:	0a e1 98 0c 	P2.L = 0xc98;		/* (3224)	P2=0xff900c98 <_g_sampMode> */
 ffa00822:	10 99       	R0 = B[P2] (Z);
 ffa00824:	08 0c       	CC = R0 == 0x1;
 ffa00826:	40 18       	IF CC JUMP 0xffa008a6 <_audio_out+0x14a>;
@@ -830,9 +830,9 @@ ffa00830:	10 08       	CC = R0 == R2;
 ffa00832:	3c 18       	IF CC JUMP 0xffa008aa <_audio_out+0x14e>;
 ffa00834:	10 0c       	CC = R0 == 0x2;
 ffa00836:	44 18       	IF CC JUMP 0xffa008be <_audio_out+0x162>;
-ffa00838:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900c14 <_g_sampMode> */
+ffa00838:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900c98 <_g_sampMode> */
 ffa0083c:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
-ffa0083e:	0a e1 24 0c 	P2.L = 0xc24;		/* (3108)	P2=0xff900c24 <_g_sampInc> */
+ffa0083e:	0a e1 a8 0c 	P2.L = 0xca8;		/* (3240)	P2=0xff900ca8 <_g_sampInc> */
 ffa00842:	e0 4f       	R0 <<= 0x1c;
 ffa00844:	10 93       	[P2] = R0;
 ffa00846:	10 91       	R0 = [P2];
@@ -862,8 +862,8 @@ ffa0087e:	01 54       	R0 = R1 & R0;
 ffa00880:	20 93       	[P4] = R0;
 ffa00882:	b7 2f       	JUMP.S 0xffa007f0 <_audio_out+0x94>;
 ffa00884:	00 93       	[P0] = R0;
-ffa00886:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900c24 <_g_sampInc> */
-ffa0088a:	0a e1 14 0c 	P2.L = 0xc14;		/* (3092)	P2=0xff900c14 <_g_sampMode> */
+ffa00886:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900ca8 <_g_sampInc> */
+ffa0088a:	0a e1 98 0c 	P2.L = 0xc98;		/* (3224)	P2=0xff900c98 <_g_sampMode> */
 ffa0088e:	10 99       	R0 = B[P2] (Z);
 ffa00890:	08 0c       	CC = R0 == 0x1;
 ffa00892:	20 18       	IF CC JUMP 0xffa008d2 <_audio_out+0x176>;
@@ -878,15 +878,15 @@ ffa008a2:	10 99       	R0 = B[P2] (Z);
 ffa008a4:	c8 2f       	JUMP.S 0xffa00834 <_audio_out+0xd8>;
 ffa008a6:	20 60       	R0 = 0x4 (X);		/*		R0=0x4(  4) */
 ffa008a8:	10 9b       	B[P2] = R0;
-ffa008aa:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900c14 <_g_sampMode> */
+ffa008aa:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900c98 <_g_sampMode> */
 ffa008ae:	40 e1 13 10 	R0.H = 0x1013;		/* (4115)	R0=0x10130004(269680644) */
-ffa008b2:	0a e1 24 0c 	P2.L = 0xc24;		/* (3108)	P2=0xff900c24 <_g_sampInc> */
+ffa008b2:	0a e1 a8 0c 	P2.L = 0xca8;		/* (3240)	P2=0xff900ca8 <_g_sampInc> */
 ffa008b6:	00 e1 cd ab 	R0.L = 0xabcd;		/* (-21555)	R0=0x1013abcd(269724621) */
 ffa008ba:	10 93       	[P2] = R0;
 ffa008bc:	c5 2f       	JUMP.S 0xffa00846 <_audio_out+0xea>;
-ffa008be:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900c24 <_g_sampInc> */
+ffa008be:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900ca8 <_g_sampInc> */
 ffa008c2:	40 e1 f1 0f 	R0.H = 0xff1;		/* (4081)	R0=0xff1abcd(267496397) */
-ffa008c6:	0a e1 24 0c 	P2.L = 0xc24;		/* (3108)	P2=0xff900c24 <_g_sampInc> */
+ffa008c6:	0a e1 a8 0c 	P2.L = 0xca8;		/* (3240)	P2=0xff900ca8 <_g_sampInc> */
 ffa008ca:	00 e1 21 43 	R0.L = 0x4321;		/* (17185)	R0=0xff14321(267469601) */
 ffa008ce:	10 93       	[P2] = R0;
 ffa008d0:	bb 2f       	JUMP.S 0xffa00846 <_audio_out+0xea>;
@@ -897,8 +897,8 @@ ffa008d8:	ae 2f       	JUMP.S 0xffa00834 <_audio_out+0xd8>;
 ffa008da:	22 e1 63 00 	R2 = 0x63 (X);		/*		R2=0x63( 99) */
 ffa008de:	10 0a       	CC = R0 <= R2 (IU);
 ffa008e0:	d3 1b       	IF CC JUMP 0xffa00886 <_audio_out+0x12a>;
-ffa008e2:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900c24 <_g_sampInc> */
-ffa008e6:	0a e1 14 0c 	P2.L = 0xc14;		/* (3092)	P2=0xff900c14 <_g_sampMode> */
+ffa008e2:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900ca8 <_g_sampInc> */
+ffa008e6:	0a e1 98 0c 	P2.L = 0xc98;		/* (3224)	P2=0xff900c98 <_g_sampMode> */
 ffa008ea:	a1 2f       	JUMP.S 0xffa0082c <_audio_out+0xd0>;
 
 ffa008ec <_oled_delay>:
@@ -924,7 +924,7 @@ ffa0091c:	00 00       	NOP;
 ffa0091e:	00 00       	NOP;
 ffa00920:	cb 42       	R3 = R1.L (Z);
 ffa00922:	50 e1 c0 ff 	I0.H = 0xffc0;		/* (-64)	I0=0xffc00000(-4194304) */
-ffa00926:	48 e1 c0 ff 	P0.H = 0xffc0;		/* (-64)	P0=0xffc00c3c(-4191172) */
+ffa00926:	48 e1 c0 ff 	P0.H = 0xffc0;		/* (-64)	P0=0xffc00cc0(-4191040) */
 ffa0092a:	49 60       	R1 = 0x9 (X);		/*		R1=0x9(  9) */
 ffa0092c:	10 e1 04 15 	I0.L = 0x1504;		/* (5380)	I0=0xffc01504(-4188924) */
 ffa00930:	22 e1 00 10 	R2 = 0x1000 (X);		/*		R2=0x1000(4096) */
@@ -1042,8 +1042,8 @@ ffa00a48:	10 00       	RTS;
 
 ffa00a4c <_wait_flash>:
 ffa00a4c:	ec 05       	[--SP] = (R7:5, P5:4);
-ffa00a4e:	4c e1 c0 ff 	P4.H = 0xffc0;		/* (-64)	P4=0xffc00c44(-4191164) */
-ffa00a52:	4d e1 c0 ff 	P5.H = 0xffc0;		/* (-64)	P5=0xffc00c34(-4191180) */
+ffa00a4e:	4c e1 c0 ff 	P4.H = 0xffc0;		/* (-64)	P4=0xffc00cc8(-4191032) */
+ffa00a52:	4d e1 c0 ff 	P5.H = 0xffc0;		/* (-64)	P5=0xffc00cb8(-4191048) */
 ffa00a56:	00 e8 03 00 	LINK 0xc;		/* (12) */
 ffa00a5a:	0c e1 04 07 	P4.L = 0x704;		/* (1796)	P4=0xffc00704(-4192508) */
 ffa00a5e:	15 60       	R5 = 0x2 (X);		/*		R5=0x2(  2) */
@@ -1281,11 +1281,11 @@ ffa00cb6:	01 08       	CC = R1 == R0;
 ffa00cb8:	0f 1c       	IF CC JUMP 0xffa00cd6 <_write_flash+0xf6> (BP);
 ffa00cba:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900000 <_l1_data_a>(-7340032) */
 ffa00cbe:	00 e1 44 00 	R0.L = 0x44;		/* ( 68)	R0=0xff900044(-7339964) */
-ffa00cc2:	00 e3 cd 05 	CALL 0xffa0185c <_printf_hex_byte>;
+ffa00cc2:	00 e3 ed 05 	CALL 0xffa0189c <_printf_hex_byte>;
 ffa00cc6:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900044(-7339964) */
 ffa00cca:	29 99       	R1 = B[P5] (Z);
 ffa00ccc:	00 e1 54 00 	R0.L = 0x54;		/* ( 84)	R0=0xff900054(-7339948) */
-ffa00cd0:	00 e3 c6 05 	CALL 0xffa0185c <_printf_hex_byte>;
+ffa00cd0:	00 e3 e6 05 	CALL 0xffa0189c <_printf_hex_byte>;
 ffa00cd4:	06 60       	R6 = 0x0 (X);		/*		R6=0x0(  0) */
 ffa00cd6:	0f 64       	R7 += 0x1;		/* (  1) */
 ffa00cd8:	a7 09       	CC = R7 < R4 (IU);
@@ -1299,7 +1299,7 @@ ffa00ce8:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900054(-7339948) */
 ffa00cec:	01 e8 00 00 	UNLINK;
 ffa00cf0:	00 e1 60 00 	R0.L = 0x60;		/* ( 96)	R0=0xff900060(-7339936) */
 ffa00cf4:	a3 05       	(R7:4, P5:3) = [SP++];
-ffa00cf6:	00 e2 0d 07 	JUMP.L 0xffa01b10 <_printf_str>;
+ffa00cf6:	00 e2 2d 07 	JUMP.L 0xffa01b50 <_printf_str>;
 	...
 
 ffa00cfc <_eth_listen>:
@@ -1310,18 +1310,18 @@ ffa00d04:	01 e8 00 00 	UNLINK;
 ffa00d08:	10 00       	RTS;
 ffa00d0a:	47 30       	R0 = FP;
 ffa00d0c:	e0 67       	R0 += -0x4;		/* ( -4) */
-ffa00d0e:	00 e3 e7 14 	CALL 0xffa036dc <_bfin_EMAC_recv>;
+ffa00d0e:	00 e3 25 15 	CALL 0xffa03758 <_bfin_EMAC_recv>;
 ffa00d12:	00 0d       	CC = R0 <= 0x0;
 ffa00d14:	f8 1b       	IF CC JUMP 0xffa00d04 <_eth_listen+0x8>;
 ffa00d16:	f9 b9       	P1 = [FP -0x4];
 ffa00d18:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff901508 */
-ffa00d1c:	0a e1 f0 0e 	P2.L = 0xef0;		/* (3824)	P2=0xff900ef0 <_NetDataDestIP> */
+ffa00d1c:	0a e1 74 0f 	P2.L = 0xf74;		/* (3956)	P2=0xff900f74 <_NetDataDestIP> */
 ffa00d20:	11 91       	R1 = [P2];
 ffa00d22:	c8 a1       	R0 = [P1 + 0x1c];
 ffa00d24:	08 08       	CC = R0 == R1;
 ffa00d26:	ef 17       	IF !CC JUMP 0xffa00d04 <_eth_listen+0x8> (BP);
 ffa00d28:	48 e4 13 00 	R0 = W[P1 + 0x26] (Z);
-ffa00d2c:	00 e3 2e 0a 	CALL 0xffa02188 <_htons>;
+ffa00d2c:	00 e3 4e 0a 	CALL 0xffa021c8 <_htons>;
 ffa00d30:	c0 42       	R0 = R0.L (Z);
 ffa00d32:	21 e1 f6 10 	R1 = 0x10f6 (X);		/*		R1=0x10f6(4342) */
 ffa00d36:	08 08       	CC = R0 == R1;
@@ -1329,9 +1329,9 @@ ffa00d38:	e6 17       	IF !CC JUMP 0xffa00d04 <_eth_listen+0x8> (BP);
 ffa00d3a:	f0 b9       	R0 = [FP -0x4];
 ffa00d3c:	41 e1 90 ff 	R1.H = 0xff90;		/* (-112)	R1=0xff9010f6(-7335690) */
 ffa00d40:	60 65       	R0 += 0x2c;		/* ( 44) */
-ffa00d42:	01 e1 48 0c 	R1.L = 0xc48;		/* (3144)	R1=0xff900c48 <_g_outpkt>(-7336888) */
+ffa00d42:	01 e1 cc 0c 	R1.L = 0xccc;		/* (3276)	R1=0xff900ccc <_g_outpkt>(-7336756) */
 ffa00d46:	02 61       	R2 = 0x20 (X);		/*		R2=0x20( 32) */
-ffa00d48:	00 e3 32 07 	CALL 0xffa01bac <_memcpy_>;
+ffa00d48:	00 e3 52 07 	CALL 0xffa01bec <_memcpy_>;
 ffa00d4c:	dc 2f       	JUMP.S 0xffa00d04 <_eth_listen+0x8>;
 	...
 
@@ -1352,7 +1352,7 @@ ffa00d74:	39 60       	R1 = 0x7 (X);		/*		R1=0x7(  7) */
 ffa00d76:	22 e1 70 00 	R2 = 0x70 (X);		/*		R2=0x70(112) */
 ffa00d7a:	ff e3 3b fa 	CALL 0xffa001f0 <_spi_write_register>;
 ffa00d7e:	24 00       	SSYNC;
-ffa00d80:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00ef0(-4190480) */
+ffa00d80:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00f74(-4190348) */
 ffa00d84:	0a e1 04 07 	P2.L = 0x704;		/* (1796)	P2=0xffc00704(-4192508) */
 ffa00d88:	7b e5 fa ff 	R3 = W[FP + -0xc] (X);
 ffa00d8c:	13 97       	W[P2] = R3;
@@ -1367,7 +1367,7 @@ ffa00da4:	87 bb       	[FP -0x20] = R7;
 ffa00da6:	07 0c       	CC = R7 == 0x0;
 ffa00da8:	f2 10       	IF !CC JUMP 0xffa00f8c <_getRadioPacket+0x23c>;
 ffa00daa:	48 e1 90 ff 	P0.H = 0xff90;		/* (-112)	P0=0xff90000a */
-ffa00dae:	08 e1 1c 0c 	P0.L = 0xc1c;		/* (3100)	P0=0xff900c1c <_wrptr> */
+ffa00dae:	08 e1 a0 0c 	P0.L = 0xca0;		/* (3232)	P0=0xff900ca0 <_wrptr> */
 ffa00db2:	78 bb       	[FP -0x24] = P0;
 ffa00db4:	78 b9       	P0 = [FP -0x24];
 ffa00db6:	80 b9       	R0 = [FP -0x20];
@@ -1381,7 +1381,7 @@ ffa00dca:	0c e1 0c 05 	P4.L = 0x50c;		/* (1292)	P4=0xffc0050c(-4193012) */
 ffa00dce:	05 60       	R5 = 0x0 (X);		/*		R5=0x0(  0) */
 ffa00dd0:	06 02       	R6 = CC;
 ffa00dd2:	04 e1 18 05 	R4.L = 0x518;		/* (1304)	R4=0xffc00518(-4193000) */
-ffa00dd6:	0b e1 20 0c 	P3.L = 0xc20;		/* (3104)	P3=0xff900c20 <_g_sampW> */
+ffa00dd6:	0b e1 a4 0c 	P3.L = 0xca4;		/* (3236)	P3=0xff900ca4 <_g_sampW> */
 ffa00dda:	25 97       	W[P4] = R5;
 ffa00ddc:	ff e3 ee f9 	CALL 0xffa001b8 <_spi_delay>;
 ffa00de0:	0e 02       	CC = R6;
@@ -1401,8 +1401,8 @@ ffa00dfa:	03 1c       	IF CC JUMP 0xffa00e00 <_getRadioPacket+0xb0> (BP);
 ffa00dfc:	08 0c       	CC = R0 == 0x1;
 ffa00dfe:	0e 10       	IF !CC JUMP 0xffa00e1a <_getRadioPacket+0xca>;
 ffa00e00:	23 e1 ff 01 	R3 = 0x1ff (X);		/*		R3=0x1ff(511) */
-ffa00e04:	48 e1 90 ff 	P0.H = 0xff90;		/* (-112)	P0=0xff900c1c <_wrptr> */
-ffa00e08:	08 e1 68 0c 	P0.L = 0xc68;		/* (3176)	P0=0xff900c68 <_g_samples> */
+ffa00e04:	48 e1 90 ff 	P0.H = 0xff90;		/* (-112)	P0=0xff900ca0 <_wrptr> */
+ffa00e08:	08 e1 ec 0c 	P0.L = 0xcec;		/* (3308)	P0=0xff900cec <_g_samples> */
 ffa00e0c:	18 91       	R0 = [P3];
 ffa00e0e:	58 54       	R1 = R0 & R3;
 ffa00e10:	09 32       	P1 = R1;
@@ -1445,7 +1445,7 @@ ffa00e64:	a9 4e       	R1 >>= 0x15;
 ffa00e66:	51 54       	R1 = R1 & R2;
 ffa00e68:	49 e1 90 ff 	P1.H = 0xff90;		/* (-112)	P1=0xff900032 */
 ffa00e6c:	08 56       	R0 = R0 | R1;
-ffa00e6e:	09 e1 10 0c 	P1.L = 0xc10;		/* (3088)	P1=0xff900c10 <_g_nextFlag> */
+ffa00e6e:	09 e1 94 0c 	P1.L = 0xc94;		/* (3220)	P1=0xff900c94 <_g_nextFlag> */
 ffa00e72:	58 56       	R1 = R0 | R3;
 ffa00e74:	0a 91       	R2 = [P1];
 ffa00e76:	0a 08       	CC = R2 == R1;
@@ -1453,12 +1453,12 @@ ffa00e78:	11 18       	IF CC JUMP 0xffa00e9a <_getRadioPacket+0x14a>;
 ffa00e7a:	91 09       	CC = R1 < R2 (IU);
 ffa00e7c:	96 1c       	IF CC JUMP 0xffa00fa8 <_getRadioPacket+0x258> (BP);
 ffa00e7e:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900708 */
-ffa00e82:	0a e1 38 0c 	P2.L = 0xc38;		/* (3128)	P2=0xff900c38 <_g_dropped> */
+ffa00e82:	0a e1 bc 0c 	P2.L = 0xcbc;		/* (3260)	P2=0xff900cbc <_g_dropped> */
 ffa00e86:	10 91       	R0 = [P2];
 ffa00e88:	10 52       	R0 = R0 - R2;
 ffa00e8a:	08 50       	R0 = R0 + R1;
 ffa00e8c:	10 93       	[P2] = R0;
-ffa00e8e:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00c38(-4191176) */
+ffa00e8e:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00cbc(-4191044) */
 ffa00e92:	20 60       	R0 = 0x4 (X);		/*		R0=0x4(  4) */
 ffa00e94:	0a e1 08 07 	P2.L = 0x708;		/* (1800)	P2=0xffc00708(-4192504) */
 ffa00e98:	10 97       	W[P2] = R0;
@@ -1484,7 +1484,7 @@ ffa00ec8:	e0 b9       	R0 = [FP -0x8];
 ffa00eca:	ff e3 7d fa 	CALL 0xffa003c4 <_spi_write_byte>;
 ffa00ece:	78 b9       	P0 = [FP -0x24];
 ffa00ed0:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900708 */
-ffa00ed4:	0a e1 08 0c 	P2.L = 0xc08;		/* (3080)	P2=0xff900c08 <_g_radioChan> */
+ffa00ed4:	0a e1 8c 0c 	P2.L = 0xc8c;		/* (3212)	P2=0xff900c8c <_g_radioChan> */
 ffa00ed8:	12 91       	R2 = [P2];
 ffa00eda:	21 e1 f4 10 	R1 = 0x10f4 (X);		/*		R1=0x10f4(4340) */
 ffa00ede:	04 cc 11 04 	R2 = R2 + R1 (NS) || R0 = [P0] || NOP;
@@ -1493,17 +1493,17 @@ ffa00ee6:	4f 30       	R1 = FP;
 ffa00ee8:	20 64       	R0 += 0x4;		/* (  4) */
 ffa00eea:	d2 42       	R2 = R2.L (Z);
 ffa00eec:	f9 67       	R1 += -0x1;		/* ( -1) */
-ffa00eee:	00 e3 43 0f 	CALL 0xffa02d74 <_udp_packet_setup>;
+ffa00eee:	00 e3 63 0f 	CALL 0xffa02db4 <_udp_packet_setup>;
 ffa00ef2:	08 32       	P1 = R0;
 ffa00ef4:	b8 e5 ff ff 	R0 = B[FP + -0x1] (X);
 ffa00ef8:	00 0d       	CC = R0 <= 0x0;
 ffa00efa:	41 18       	IF CC JUMP 0xffa00f7c <_getRadioPacket+0x22c>;
-ffa00efc:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900c08 <_g_radioChan> */
-ffa00f00:	0a e1 38 0c 	P2.L = 0xc38;		/* (3128)	P2=0xff900c38 <_g_dropped> */
+ffa00efc:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900c8c <_g_radioChan> */
+ffa00f00:	0a e1 bc 0c 	P2.L = 0xcbc;		/* (3260)	P2=0xff900cbc <_g_dropped> */
 ffa00f04:	10 91       	R0 = [P2];
-ffa00f06:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900c38 <_g_dropped> */
+ffa00f06:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900cbc <_g_dropped> */
 ffa00f0a:	08 93       	[P1] = R0;
-ffa00f0c:	0a e1 1c 0c 	P2.L = 0xc1c;		/* (3100)	P2=0xff900c1c <_wrptr> */
+ffa00f0c:	0a e1 a0 0c 	P2.L = 0xca0;		/* (3232)	P2=0xff900ca0 <_wrptr> */
 ffa00f10:	10 91       	R0 = [P2];
 ffa00f12:	10 4e       	R0 >>= 0x2;
 ffa00f14:	00 0c       	CC = R0 == 0x0;
@@ -1524,12 +1524,12 @@ ffa00f30:	81 09       	CC = R1 < R0 (IU);
 ffa00f32:	f8 1f       	IF CC JUMP 0xffa00f22 <_getRadioPacket+0x1d2> (BP);
 ffa00f34:	a0 32       	P4 = I0;
 ffa00f36:	6c 32       	P5 = P4;
-ffa00f38:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900c1c <_wrptr> */
-ffa00f3c:	0a e1 18 0c 	P2.L = 0xc18;		/* (3096)	P2=0xff900c18 <_trptr> */
+ffa00f38:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900ca0 <_wrptr> */
+ffa00f3c:	0a e1 9c 0c 	P2.L = 0xc9c;		/* (3228)	P2=0xff900c9c <_trptr> */
 ffa00f40:	10 91       	R0 = [P2];
 ffa00f42:	08 64       	R0 += 0x1;		/* (  1) */
 ffa00f44:	10 93       	[P2] = R0;
-ffa00f46:	00 e3 3d 0a 	CALL 0xffa023c0 <_bfin_EMAC_send_nocopy>;
+ffa00f46:	00 e3 5d 0a 	CALL 0xffa02400 <_bfin_EMAC_send_nocopy>;
 ffa00f4a:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
 ffa00f4c:	20 93       	[P4] = R0;
 ffa00f4e:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
@@ -1540,7 +1540,7 @@ ffa00f58:	c8 42       	R0 = R1.L (Z);
 ffa00f5a:	2a 92       	[P5++] = R2;
 ffa00f5c:	18 08       	CC = R0 == R3;
 ffa00f5e:	fc 17       	IF !CC JUMP 0xffa00f56 <_getRadioPacket+0x206> (BP);
-ffa00f60:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00c18(-4191208) */
+ffa00f60:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00c9c(-4191076) */
 ffa00f64:	78 b9       	P0 = [FP -0x24];
 ffa00f66:	20 e1 04 40 	R0 = 0x4004 (X);		/*		R0=0x4004(16388) */
 ffa00f6a:	0a e1 04 07 	P2.L = 0x704;		/* (1796)	P2=0xffc00704(-4192508) */
@@ -1551,13 +1551,13 @@ ffa00f74:	01 e8 00 00 	UNLINK;
 ffa00f78:	a3 05       	(R7:4, P5:3) = [SP++];
 ffa00f7a:	10 00       	RTS;
 ffa00f7c:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900704 */
-ffa00f80:	0a e1 18 0c 	P2.L = 0xc18;		/* (3096)	P2=0xff900c18 <_trptr> */
+ffa00f80:	0a e1 9c 0c 	P2.L = 0xc9c;		/* (3228)	P2=0xff900c9c <_trptr> */
 ffa00f84:	10 91       	R0 = [P2];
 ffa00f86:	08 64       	R0 += 0x1;		/* (  1) */
 ffa00f88:	10 93       	[P2] = R0;
 ffa00f8a:	eb 2f       	JUMP.S 0xffa00f60 <_getRadioPacket+0x210>;
-ffa00f8c:	49 e1 90 ff 	P1.H = 0xff90;		/* (-112)	P1=0xff900c10 <_g_nextFlag> */
-ffa00f90:	09 e1 1c 0c 	P1.L = 0xc1c;		/* (3100)	P1=0xff900c1c <_wrptr> */
+ffa00f8c:	49 e1 90 ff 	P1.H = 0xff90;		/* (-112)	P1=0xff900c94 <_g_nextFlag> */
+ffa00f90:	09 e1 a0 0c 	P1.L = 0xca0;		/* (3232)	P1=0xff900ca0 <_wrptr> */
 ffa00f94:	4d 91       	P5 = [P1];
 ffa00f96:	79 bb       	[FP -0x24] = P1;
 ffa00f98:	ff e3 08 f9 	CALL 0xffa001a8 <_ustimer>;
@@ -1567,8 +1567,8 @@ ffa00fa0:	10 91       	R0 = [P2];
 ffa00fa2:	20 64       	R0 += 0x4;		/* (  4) */
 ffa00fa4:	10 93       	[P2] = R0;
 ffa00fa6:	07 2f       	JUMP.S 0xffa00db4 <_getRadioPacket+0x64>;
-ffa00fa8:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900c18 <_trptr> */
-ffa00fac:	0a e1 38 0c 	P2.L = 0xc38;		/* (3128)	P2=0xff900c38 <_g_dropped> */
+ffa00fa8:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900c9c <_trptr> */
+ffa00fac:	0a e1 bc 0c 	P2.L = 0xcbc;		/* (3260)	P2=0xff900cbc <_g_dropped> */
 ffa00fb0:	10 91       	R0 = [P2];
 ffa00fb2:	80 64       	R0 += 0x10;		/* ( 16) */
 ffa00fb4:	10 52       	R0 = R0 - R2;
@@ -1582,7 +1582,7 @@ ffa00fc4:	e0 b9       	R0 = [FP -0x8];
 ffa00fc6:	21 e1 00 04 	R1 = 0x400 (X);		/*		R1=0x400(1024) */
 ffa00fca:	ff e3 7b fa 	CALL 0xffa004c0 <_radio_set_tx>;
 ffa00fce:	24 00       	SSYNC;
-ffa00fd0:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00c38(-4191176) */
+ffa00fd0:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00cbc(-4191044) */
 ffa00fd4:	0a e1 04 07 	P2.L = 0x704;		/* (1796)	P2=0xffc00704(-4192508) */
 ffa00fd8:	79 e5 fa ff 	R1 = W[FP + -0xc] (X);
 ffa00fdc:	4d e1 c0 ff 	P5.H = 0xffc0;		/* (-64)	P5=0xffc01508(-4188920) */
@@ -1590,7 +1590,7 @@ ffa00fe0:	4c e1 90 ff 	P4.H = 0xff90;		/* (-112)	P4=0xff900000 <_l1_data_a> */
 ffa00fe4:	11 97       	W[P2] = R1;
 ffa00fe6:	20 e1 a0 00 	R0 = 0xa0 (X);		/*		R0=0xa0(160) */
 ffa00fea:	0d e1 0c 05 	P5.L = 0x50c;		/* (1292)	P5=0xffc0050c(-4193012) */
-ffa00fee:	0c e1 48 0c 	P4.L = 0xc48;		/* (3144)	P4=0xff900c48 <_g_outpkt> */
+ffa00fee:	0c e1 cc 0c 	P4.L = 0xccc;		/* (3276)	P4=0xff900ccc <_g_outpkt> */
 ffa00ff2:	28 97       	W[P5] = R0;
 ffa00ff4:	5c 32       	P3 = P4;
 ffa00ff6:	ff e3 e1 f8 	CALL 0xffa001b8 <_spi_delay>;
@@ -1641,7 +1641,7 @@ ffa0105e:	4c e1 c0 ff 	P4.H = 0xffc0;		/* (-64)	P4=0xffc00000(-4194304) */
 ffa01062:	00 e8 05 00 	LINK 0x14;		/* (20) */
 ffa01066:	0c e1 04 32 	P4.L = 0x3204;		/* (12804)	P4=0xffc03204(-4181500) */
 ffa0106a:	20 e1 9c c1 	R0 = -0x3e64 (X);		/*		R0=0xffffc19c(-15972) */
-ffa0106e:	48 e1 c0 ff 	P0.H = 0xffc0;		/* (-64)	P0=0xffc00c68(-4191128) */
+ffa0106e:	48 e1 c0 ff 	P0.H = 0xffc0;		/* (-64)	P0=0xffc00cec(-4190996) */
 ffa01072:	20 97       	W[P4] = R0;
 ffa01074:	08 e1 30 15 	P0.L = 0x1530;		/* (5424)	P0=0xffc01530(-4188880) */
 ffa01078:	1a 60       	R2 = 0x3 (X);		/*		R2=0x3(  3) */
@@ -1668,7 +1668,7 @@ ffa010ae:	0d e1 04 04 	P5.L = 0x404;		/* (1028)	P5=0xffc00404(-4193276) */
 ffa010b2:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00514(-4193004) */
 ffa010b6:	29 97       	W[P5] = R1;
 ffa010b8:	0a e1 10 04 	P2.L = 0x410;		/* (1040)	P2=0xffc00410(-4193264) */
-ffa010bc:	49 e1 c0 ff 	P1.H = 0xffc0;		/* (-64)	P1=0xffc00c1c(-4191204) */
+ffa010bc:	49 e1 c0 ff 	P1.H = 0xffc0;		/* (-64)	P1=0xffc00ca0(-4191072) */
 ffa010c0:	09 e1 0c 04 	P1.L = 0x40c;		/* (1036)	P1=0xffc0040c(-4193268) */
 ffa010c4:	11 97       	W[P2] = R1;
 ffa010c6:	20 e1 80 00 	R0 = 0x80 (X);		/*		R0=0x80(128) */
@@ -1684,14 +1684,14 @@ ffa010dc:	10 97       	W[P2] = R0;
 ffa010de:	f8 63       	R0 = -0x1 (X);		/*		R0=0xffffffff( -1) */
 ffa010e0:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900410 */
 ffa010e4:	b8 4f       	R0 <<= 0x17;
-ffa010e6:	0a e1 68 0e 	P2.L = 0xe68;		/* (3688)	P2=0xff900e68 <_printf_temp> */
+ffa010e6:	0a e1 ec 0e 	P2.L = 0xeec;		/* (3820)	P2=0xff900eec <_printf_temp> */
 ffa010ea:	10 93       	[P2] = R0;
 ffa010ec:	20 e1 01 e0 	R0 = -0x1fff (X);		/*		R0=0xffffe001(-8191) */
-ffa010f0:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900e68 <_printf_temp> */
+ffa010f0:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900eec <_printf_temp> */
 ffa010f4:	50 4f       	R0 <<= 0xa;
-ffa010f6:	0a e1 6c 0e 	P2.L = 0xe6c;		/* (3692)	P2=0xff900e6c <_printf_out> */
+ffa010f6:	0a e1 f0 0e 	P2.L = 0xef0;		/* (3824)	P2=0xff900ef0 <_printf_out> */
 ffa010fa:	10 93       	[P2] = R0;
-ffa010fc:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00e6c(-4190612) */
+ffa010fc:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00ef0(-4190480) */
 ffa01100:	0a e1 40 15 	P2.L = 0x1540;		/* (5440)	P2=0xffc01540(-4188864) */
 ffa01104:	10 95       	R0 = W[P2] (Z);
 ffa01106:	58 4c       	BITCLR (R0, 0xb);		/* bit 11 */
@@ -1711,7 +1711,7 @@ ffa01124:	42 6e       	P2 += -0x38;		/* (-56) */
 ffa01126:	20 e1 00 14 	R0 = 0x1400 (X);		/*		R0=0x1400(5120) */
 ffa0112a:	10 97       	W[P2] = R0;
 ffa0112c:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
-ffa0112e:	00 e3 1f 07 	CALL 0xffa01f6c <_udelay>;
+ffa0112e:	00 e3 3f 07 	CALL 0xffa01fac <_udelay>;
 ffa01132:	c0 61       	R0 = 0x38 (X);		/*		R0=0x38( 56) */
 ffa01134:	ff e3 e6 fb 	CALL 0xffa00900 <_oled_write>;
 ffa01138:	ff e3 6c fc 	CALL 0xffa00a10 <_oled_waitbusy>;
@@ -1732,13 +1732,13 @@ ffa01166:	ff e3 cd fb 	CALL 0xffa00900 <_oled_write>;
 ffa0116a:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff90000f(-7340017) */
 ffa0116e:	21 e1 c4 02 	R1 = 0x2c4 (X);		/*		R1=0x2c4(708) */
 ffa01172:	00 e1 7c 00 	R0.L = 0x7c;		/* (124)	R0=0xff90007c(-7339908) */
-ffa01176:	00 e3 25 04 	CALL 0xffa019c0 <_printf_int>;
+ffa01176:	00 e3 45 04 	CALL 0xffa01a00 <_printf_int>;
 ffa0117a:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff90007c(-7339908) */
 ffa0117e:	00 e1 84 00 	R0.L = 0x84;		/* (132)	R0=0xff900084(-7339900) */
-ffa01182:	00 e3 c7 04 	CALL 0xffa01b10 <_printf_str>;
+ffa01182:	00 e3 e7 04 	CALL 0xffa01b50 <_printf_str>;
 ffa01186:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900084(-7339900) */
 ffa0118a:	00 e1 88 00 	R0.L = 0x88;		/* (136)	R0=0xff900088(-7339896) */
-ffa0118e:	00 e3 c1 04 	CALL 0xffa01b10 <_printf_str>;
+ffa0118e:	00 e3 e1 04 	CALL 0xffa01b50 <_printf_str>;
 ffa01192:	49 e1 40 00 	P1.H = 0x40;		/* ( 64)	P1=0x40040c */
 ffa01196:	02 68       	P2 = 0x0 (X);		/*		P2=0x0(  0) */
 ffa01198:	22 e1 ca de 	R2 = -0x2136 (X);		/*		R2=0xffffdeca(-8502) */
@@ -1752,1615 +1752,1606 @@ ffa011b2:	53 b4       	W[P2 + 0x2] = R3;
 ffa011b4:	90 b4       	W[P2 + 0x4] = R0;
 ffa011b6:	d1 b4       	W[P2 + 0x6] = R1;
 ffa011b8:	42 6c       	P2 += 0x8;		/* (  8) */
-ffa011ba:	05 68       	P5 = 0x0 (X);		/*		P5=0x0(  0) */
-ffa011bc:	06 60       	R6 = 0x0 (X);		/*		R6=0x0(  0) */
-ffa011be:	02 20       	JUMP.S 0xffa011c2 <_main+0x166>;
-ffa011c0:	45 6c       	P5 += 0x8;		/* (  8) */
-ffa011c2:	2f 95       	R7 = W[P5] (Z);
-ffa011c4:	80 e1 ca de 	R0 = 0xdeca (Z);		/*		R0=0xdeca(57034) */
-ffa011c8:	07 08       	CC = R7 == R0;
-ffa011ca:	15 1c       	IF CC JUMP 0xffa011f4 <_main+0x198> (BP);
-ffa011cc:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff90deca(-7282998) */
-ffa011d0:	0e 30       	R1 = R6;
-ffa011d2:	00 e1 9c 00 	R0.L = 0x9c;		/* (156)	R0=0xff90009c(-7339876) */
-ffa011d6:	00 e3 99 03 	CALL 0xffa01908 <_printf_hex>;
-ffa011da:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff90009c(-7339876) */
-ffa011de:	00 e1 a8 00 	R0.L = 0xa8;		/* (168)	R0=0xff9000a8(-7339864) */
-ffa011e2:	0f 30       	R1 = R7;
-ffa011e4:	00 e3 92 03 	CALL 0xffa01908 <_printf_hex>;
-ffa011e8:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff9000a8(-7339864) */
-ffa011ec:	00 e1 9c 07 	R0.L = 0x79c;		/* (1948)	R0=0xff90079c(-7338084) */
-ffa011f0:	00 e3 90 04 	CALL 0xffa01b10 <_printf_str>;
-ffa011f4:	81 e1 ad fb 	R1 = 0xfbad (Z);		/*		R1=0xfbad(64429) */
-ffa011f8:	68 a4       	R0 = W[P5 + 0x2] (Z);
-ffa011fa:	08 08       	CC = R0 == R1;
-ffa011fc:	08 1c       	IF CC JUMP 0xffa0120c <_main+0x1b0> (BP);
-ffa011fe:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff90079c(-7338084) */
-ffa01202:	00 e1 9c 00 	R0.L = 0x9c;		/* (156)	R0=0xff90009c(-7339876) */
-ffa01206:	0e 30       	R1 = R6;
-ffa01208:	00 e3 80 03 	CALL 0xffa01908 <_printf_hex>;
-ffa0120c:	81 e1 ed c0 	R1 = 0xc0ed (Z);		/*		R1=0xc0ed(49389) */
-ffa01210:	a8 a4       	R0 = W[P5 + 0x4] (Z);
-ffa01212:	08 08       	CC = R0 == R1;
-ffa01214:	08 1c       	IF CC JUMP 0xffa01224 <_main+0x1c8> (BP);
-ffa01216:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff90009c(-7339876) */
-ffa0121a:	00 e1 9c 00 	R0.L = 0x9c;		/* (156)	R0=0xff90009c(-7339876) */
-ffa0121e:	0e 30       	R1 = R6;
-ffa01220:	00 e3 74 03 	CALL 0xffa01908 <_printf_hex>;
-ffa01224:	81 e1 be ba 	R1 = 0xbabe (Z);		/*		R1=0xbabe(47806) */
-ffa01228:	e8 a4       	R0 = W[P5 + 0x6] (Z);
-ffa0122a:	08 08       	CC = R0 == R1;
-ffa0122c:	08 1c       	IF CC JUMP 0xffa0123c <_main+0x1e0> (BP);
-ffa0122e:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff90009c(-7339876) */
-ffa01232:	00 e1 9c 00 	R0.L = 0x9c;		/* (156)	R0=0xff90009c(-7339876) */
-ffa01236:	0e 30       	R1 = R6;
-ffa01238:	00 e3 68 03 	CALL 0xffa01908 <_printf_hex>;
-ffa0123c:	4a e1 ff 01 	P2.H = 0x1ff;		/* (511)	P2=0x1ff0000 */
-ffa01240:	0a e1 f8 ff 	P2.L = 0xfff8;		/* ( -8)	P2=0x1fffff8 */
-ffa01244:	0e 64       	R6 += 0x1;		/* (  1) */
-ffa01246:	55 08       	CC = P5 == P2;
-ffa01248:	bc 17       	IF !CC JUMP 0xffa011c0 <_main+0x164> (BP);
-ffa0124a:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff90009c(-7339876) */
-ffa0124e:	00 e1 b0 00 	R0.L = 0xb0;		/* (176)	R0=0xff9000b0(-7339856) */
-ffa01252:	00 e3 5f 04 	CALL 0xffa01b10 <_printf_str>;
-ffa01256:	00 e3 5d 0f 	CALL 0xffa03110 <_bfin_EMAC_init>;
-ffa0125a:	f0 bb       	[FP -0x4] = R0;
-ffa0125c:	00 0c       	CC = R0 == 0x0;
-ffa0125e:	8f 19       	IF CC JUMP 0xffa0157c <_main+0x520>;
-ffa01260:	4d e1 90 ff 	P5.H = 0xff90;		/* (-112)	P5=0xff900000 <_l1_data_a> */
-ffa01264:	0d e1 ec 0e 	P5.L = 0xeec;		/* (3820)	P5=0xff900eec <_NetOurIP> */
-ffa01268:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff9000b0(-7339856) */
-ffa0126c:	29 99       	R1 = B[P5] (Z);
-ffa0126e:	00 e1 c0 00 	R0.L = 0xc0;		/* (192)	R0=0xff9000c0(-7339840) */
-ffa01272:	00 e3 a7 03 	CALL 0xffa019c0 <_printf_int>;
-ffa01276:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff9000c0(-7339840) */
-ffa0127a:	a9 e4 01 00 	R1 = B[P5 + 0x1] (Z);
-ffa0127e:	00 e1 c4 00 	R0.L = 0xc4;		/* (196)	R0=0xff9000c4(-7339836) */
-ffa01282:	00 e3 9f 03 	CALL 0xffa019c0 <_printf_int>;
-ffa01286:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff9000c4(-7339836) */
-ffa0128a:	a9 e4 02 00 	R1 = B[P5 + 0x2] (Z);
-ffa0128e:	00 e1 c4 00 	R0.L = 0xc4;		/* (196)	R0=0xff9000c4(-7339836) */
-ffa01292:	00 e3 97 03 	CALL 0xffa019c0 <_printf_int>;
-ffa01296:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff9000c4(-7339836) */
-ffa0129a:	a9 e4 03 00 	R1 = B[P5 + 0x3] (Z);
-ffa0129e:	00 e1 c4 00 	R0.L = 0xc4;		/* (196)	R0=0xff9000c4(-7339836) */
-ffa012a2:	00 e3 8f 03 	CALL 0xffa019c0 <_printf_int>;
-ffa012a6:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff9000c4(-7339836) */
-ffa012aa:	00 e1 c8 00 	R0.L = 0xc8;		/* (200)	R0=0xff9000c8(-7339832) */
-ffa012ae:	00 e3 31 04 	CALL 0xffa01b10 <_printf_str>;
-ffa012b2:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc0fff8(-4128776) */
-ffa012b6:	20 e1 83 38 	R0 = 0x3883 (X);		/*		R0=0x3883(14467) */
-ffa012ba:	0a e1 00 32 	P2.L = 0x3200;		/* (12800)	P2=0xffc03200(-4181504) */
-ffa012be:	10 97       	W[P2] = R0;
-ffa012c0:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc03200(-4181504) */
-ffa012c4:	20 e1 56 fe 	R0 = -0x1aa (X);		/*		R0=0xfffffe56(-426) */
-ffa012c8:	0a e1 30 07 	P2.L = 0x730;		/* (1840)	P2=0xffc00730(-4192464) */
-ffa012cc:	10 97       	W[P2] = R0;
-ffa012ce:	20 e1 ab 01 	R0 = 0x1ab (X);		/*		R0=0x1ab(427) */
-ffa012d2:	82 6c       	P2 += 0x10;		/* ( 16) */
-ffa012d4:	10 97       	W[P2] = R0;
-ffa012d6:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00730(-4192464) */
-ffa012da:	20 e1 40 01 	R0 = 0x140 (X);		/*		R0=0x140(320) */
-ffa012de:	0a e1 10 32 	P2.L = 0x3210;		/* (12816)	P2=0xffc03210(-4181488) */
-ffa012e2:	10 97       	W[P2] = R0;
-ffa012e4:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc03210(-4181488) */
-ffa012e8:	0a e1 40 15 	P2.L = 0x1540;		/* (5440)	P2=0xffc01540(-4188864) */
-ffa012ec:	10 95       	R0 = W[P2] (Z);
-ffa012ee:	08 4c       	BITCLR (R0, 0x1);		/* bit  1 */
-ffa012f0:	10 97       	W[P2] = R0;
-ffa012f2:	82 6f       	P2 += -0x10;		/* (-16) */
-ffa012f4:	10 95       	R0 = W[P2] (Z);
-ffa012f6:	08 4a       	BITSET (R0, 0x1);		/* bit  1 */
-ffa012f8:	10 97       	W[P2] = R0;
-ffa012fa:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc01540(-4188864) */
-ffa012fe:	0a e1 04 32 	P2.L = 0x3204;		/* (12804)	P2=0xffc03204(-4181500) */
-ffa01302:	10 95       	R0 = W[P2] (Z);
-ffa01304:	08 4c       	BITCLR (R0, 0x1);		/* bit  1 */
-ffa01306:	10 97       	W[P2] = R0;
-ffa01308:	49 e1 c0 ff 	P1.H = 0xffc0;		/* (-64)	P1=0xffc00000(-4194304) */
-ffa0130c:	09 e1 00 09 	P1.L = 0x900;		/* (2304)	P1=0xffc00900(-4192000) */
-ffa01310:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa01312:	08 97       	W[P1] = R0;
-ffa01314:	24 00       	SSYNC;
-ffa01316:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff903204 */
-ffa0131a:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa0131c:	0a e1 3c 0c 	P2.L = 0xc3c;		/* (3132)	P2=0xff900c3c <_g_sampR> */
-ffa01320:	10 93       	[P2] = R0;
-ffa01322:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900c3c <_g_sampR> */
-ffa01326:	0a e1 20 0c 	P2.L = 0xc20;		/* (3104)	P2=0xff900c20 <_g_sampW> */
-ffa0132a:	10 93       	[P2] = R0;
-ffa0132c:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900c20 <_g_sampW> */
-ffa01330:	0a e1 44 0c 	P2.L = 0xc44;		/* (3140)	P2=0xff900c44 <_g_sampOff> */
-ffa01334:	10 93       	[P2] = R0;
-ffa01336:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900c44 <_g_sampOff> */
-ffa0133a:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
-ffa0133c:	0a e1 14 0c 	P2.L = 0xc14;		/* (3092)	P2=0xff900c14 <_g_sampMode> */
-ffa01340:	10 9b       	B[P2] = R0;
-ffa01342:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
-ffa01344:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900c14 <_g_sampMode> */
-ffa01348:	d8 4f       	R0 <<= 0x1b;
-ffa0134a:	0a e1 24 0c 	P2.L = 0xc24;		/* (3108)	P2=0xff900c24 <_g_sampInc> */
-ffa0134e:	10 93       	[P2] = R0;
-ffa01350:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900c24 <_g_sampInc> */
-ffa01354:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa01356:	0a e1 34 0c 	P2.L = 0xc34;		/* (3124)	P2=0xff900c34 <_g_sampCh> */
-ffa0135a:	10 9b       	B[P2] = R0;
-ffa0135c:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00c34(-4191180) */
-ffa01360:	e8 60       	R0 = 0x1d (X);		/*		R0=0x1d( 29) */
-ffa01362:	0a e1 08 09 	P2.L = 0x908;		/* (2312)	P2=0xffc00908(-4191992) */
-ffa01366:	10 97       	W[P2] = R0;
-ffa01368:	f8 60       	R0 = 0x1f (X);		/*		R0=0x1f( 31) */
-ffa0136a:	22 6c       	P2 += 0x4;		/* (  4) */
-ffa0136c:	10 97       	W[P2] = R0;
-ffa0136e:	b8 60       	R0 = 0x17 (X);		/*		R0=0x17( 23) */
-ffa01370:	c2 6f       	P2 += -0x8;		/* ( -8) */
-ffa01372:	10 97       	W[P2] = R0;
-ffa01374:	20 e1 03 4e 	R0 = 0x4e03 (X);		/*		R0=0x4e03(19971) */
-ffa01378:	08 97       	W[P1] = R0;
-ffa0137a:	40 e1 a0 ff 	R0.H = 0xffa0;		/* (-96)	R0=0xffa04e03(-6271485) */
-ffa0137e:	4a e1 e0 ff 	P2.H = 0xffe0;		/* (-32)	P2=0xffe00908(-2094840) */
-ffa01382:	00 e1 5c 07 	R0.L = 0x75c;		/* (1884)	R0=0xffa0075c <_audio_out>(-6289572) */
-ffa01386:	0a e1 1c 20 	P2.L = 0x201c;		/* (8220)	P2=0xffe0201c(-2088932) */
-ffa0138a:	10 93       	[P2] = R0;
-ffa0138c:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc0201c(-4186084) */
-ffa01390:	0a e1 0c 01 	P2.L = 0x10c;		/* (268)	P2=0xffc0010c(-4194036) */
-ffa01394:	10 91       	R0 = [P2];
-ffa01396:	48 4a       	BITSET (R0, 0x9);		/* bit  9 */
-ffa01398:	4d e1 90 ff 	P5.H = 0xff90;		/* (-112)	P5=0xff900eec <_NetOurIP> */
-ffa0139c:	10 93       	[P2] = R0;
-ffa0139e:	0d e1 08 0c 	P5.L = 0xc08;		/* (3080)	P5=0xff900c08 <_g_radioChan> */
-ffa013a2:	24 e1 00 01 	R4 = 0x100 (X);		/*		R4=0x100(256) */
-ffa013a6:	2c e1 00 80 	P4 = -0x8000 (X);		/*		P4=0xffff8000(-32768) */
-ffa013aa:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff90075c(-7338148) */
-ffa013ae:	00 e1 cc 00 	R0.L = 0xcc;		/* (204)	R0=0xff9000cc(-7339828) */
-ffa013b2:	00 e3 af 03 	CALL 0xffa01b10 <_printf_str>;
-ffa013b6:	00 e3 05 10 	CALL 0xffa033c0 <_bridge_publish>;
-ffa013ba:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff90010c */
-ffa013be:	06 60       	R6 = 0x0 (X);		/*		R6=0x0(  0) */
-ffa013c0:	0a e1 1c 0c 	P2.L = 0xc1c;		/* (3100)	P2=0xff900c1c <_wrptr> */
-ffa013c4:	16 93       	[P2] = R6;
-ffa013c6:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900c1c <_wrptr> */
-ffa013ca:	0a e1 18 0c 	P2.L = 0xc18;		/* (3096)	P2=0xff900c18 <_trptr> */
-ffa013ce:	16 93       	[P2] = R6;
-ffa013d0:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900c18 <_trptr> */
-ffa013d4:	0a e1 38 0c 	P2.L = 0xc38;		/* (3128)	P2=0xff900c38 <_g_dropped> */
-ffa013d8:	16 93       	[P2] = R6;
-ffa013da:	40 43       	R0 = R0.B (Z);
-ffa013dc:	28 93       	[P5] = R0;
-ffa013de:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900c38 <_g_dropped> */
-ffa013e2:	0a e1 10 0c 	P2.L = 0xc10;		/* (3088)	P2=0xff900c10 <_g_nextFlag> */
-ffa013e6:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff9000cc(-7339828) */
-ffa013ea:	16 93       	[P2] = R6;
-ffa013ec:	00 e1 e0 00 	R0.L = 0xe0;		/* (224)	R0=0xff9000e0(-7339808) */
-ffa013f0:	00 e3 90 03 	CALL 0xffa01b10 <_printf_str>;
-ffa013f4:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00c10(-4191216) */
-ffa013f8:	20 e1 00 04 	R0 = 0x400 (X);		/*		R0=0x400(1024) */
-ffa013fc:	0a e1 04 07 	P2.L = 0x704;		/* (1796)	P2=0xffc00704(-4192508) */
-ffa01400:	10 97       	W[P2] = R0;
-ffa01402:	20 e1 50 02 	R0 = 0x250 (X);		/*		R0=0x250(592) */
-ffa01406:	22 6c       	P2 += 0x4;		/* (  4) */
-ffa01408:	10 97       	W[P2] = R0;
-ffa0140a:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00704(-4192508) */
-ffa0140e:	10 60       	R0 = 0x2 (X);		/*		R0=0x2(  2) */
-ffa01410:	0a e1 08 15 	P2.L = 0x1508;		/* (5384)	P2=0xffc01508(-4188920) */
-ffa01414:	10 97       	W[P2] = R0;
-ffa01416:	24 00       	SSYNC;
-ffa01418:	27 e1 7f 00 	R7 = 0x7f (X);		/*		R7=0x7f(127) */
-ffa0141c:	2a 99       	R2 = B[P5] (Z);
-ffa0141e:	ba 54       	R2 = R2 & R7;
-ffa01420:	41 60       	R1 = 0x8 (X);		/*		R1=0x8(  8) */
-ffa01422:	80 60       	R0 = 0x10 (X);		/*		R0=0x10( 16) */
-ffa01424:	ff e3 d4 f8 	CALL 0xffa005cc <_radio_init>;
-ffa01428:	2a 99       	R2 = B[P5] (Z);
-ffa0142a:	ba 54       	R2 = R2 & R7;
-ffa0142c:	01 61       	R1 = 0x20 (X);		/*		R1=0x20( 32) */
-ffa0142e:	20 e1 40 00 	R0 = 0x40 (X);		/*		R0=0x40( 64) */
-ffa01432:	ff e3 cd f8 	CALL 0xffa005cc <_radio_init>;
-ffa01436:	2a 99       	R2 = B[P5] (Z);
-ffa01438:	ba 54       	R2 = R2 & R7;
-ffa0143a:	21 e1 00 01 	R1 = 0x100 (X);		/*		R1=0x100(256) */
-ffa0143e:	20 e1 00 02 	R0 = 0x200 (X);		/*		R0=0x200(512) */
-ffa01442:	ff e3 c5 f8 	CALL 0xffa005cc <_radio_init>;
-ffa01446:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff901508 */
-ffa0144a:	0a e1 3c 0c 	P2.L = 0xc3c;		/* (3132)	P2=0xff900c3c <_g_sampR> */
-ffa0144e:	16 93       	[P2] = R6;
-ffa01450:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900c3c <_g_sampR> */
-ffa01454:	0a e1 20 0c 	P2.L = 0xc20;		/* (3104)	P2=0xff900c20 <_g_sampW> */
-ffa01458:	16 93       	[P2] = R6;
-ffa0145a:	80 60       	R0 = 0x10 (X);		/*		R0=0x10( 16) */
-ffa0145c:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
-ffa0145e:	ff e3 e5 f7 	CALL 0xffa00428 <_radio_set_rx>;
-ffa01462:	20 e1 40 00 	R0 = 0x40 (X);		/*		R0=0x40( 64) */
-ffa01466:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
-ffa01468:	ff e3 e0 f7 	CALL 0xffa00428 <_radio_set_rx>;
-ffa0146c:	20 e1 00 02 	R0 = 0x200 (X);		/*		R0=0x200(512) */
-ffa01470:	21 e1 00 04 	R1 = 0x400 (X);		/*		R1=0x400(1024) */
-ffa01474:	ff e3 da f7 	CALL 0xffa00428 <_radio_set_rx>;
-ffa01478:	28 91       	R0 = [P5];
-ffa0147a:	38 4e       	R0 >>= 0x7;
-ffa0147c:	00 4b       	BITTGL (R0, 0x0);		/* bit  0 */
-ffa0147e:	4b e1 c0 ff 	P3.H = 0xffc0;		/* (-64)	P3=0xffc00c20(-4191200) */
-ffa01482:	0f 60       	R7 = 0x1 (X);		/*		R7=0x1(  1) */
-ffa01484:	05 60       	R5 = 0x0 (X);		/*		R5=0x0(  0) */
-ffa01486:	46 43       	R6 = R0.B (Z);
-ffa01488:	0b e1 0c 07 	P3.L = 0x70c;		/* (1804)	P3=0xffc0070c(-4192500) */
-ffa0148c:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900c20 <_g_sampW> */
-ffa01490:	0a e1 40 0c 	P2.L = 0xc40;		/* (3136)	P2=0xff900c40 <_g_streamEnabled> */
-ffa01494:	10 99       	R0 = B[P2] (Z);
-ffa01496:	00 0c       	CC = R0 == 0x0;
-ffa01498:	89 1f       	IF CC JUMP 0xffa013aa <_main+0x34e> (BP);
-ffa0149a:	f0 b9       	R0 = [FP -0x4];
-ffa0149c:	ff e3 30 fc 	CALL 0xffa00cfc <_eth_listen>;
-ffa014a0:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00c40(-4191168) */
-ffa014a4:	0a e1 00 07 	P2.L = 0x700;		/* (1792)	P2=0xffc00700(-4192512) */
-ffa014a8:	10 95       	R0 = W[P2] (Z);
-ffa014aa:	41 60       	R1 = 0x8 (X);		/*		R1=0x8(  8) */
-ffa014ac:	01 54       	R0 = R1 & R0;
-ffa014ae:	00 0c       	CC = R0 == 0x0;
-ffa014b0:	3f 18       	IF CC JUMP 0xffa0152e <_main+0x4d2>;
-ffa014b2:	00 00       	NOP;
-ffa014b4:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00700(-4192512) */
-ffa014b8:	0a e1 00 07 	P2.L = 0x700;		/* (1792)	P2=0xffc00700(-4192512) */
-ffa014bc:	10 95       	R0 = W[P2] (Z);
-ffa014be:	28 48       	CC = !BITTST (R0, 0x5);		/* bit  5 */
-ffa014c0:	44 18       	IF CC JUMP 0xffa01548 <_main+0x4ec>;
-ffa014c2:	00 00       	NOP;
-ffa014c4:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00700(-4192512) */
-ffa014c8:	0a e1 00 07 	P2.L = 0x700;		/* (1792)	P2=0xffc00700(-4192512) */
-ffa014cc:	10 95       	R0 = W[P2] (Z);
-ffa014ce:	04 54       	R0 = R4 & R0;
-ffa014d0:	00 0c       	CC = R0 == 0x0;
-ffa014d2:	4b 18       	IF CC JUMP 0xffa01568 <_main+0x50c>;
-ffa014d4:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00700(-4192512) */
-ffa014d8:	0a e1 00 07 	P2.L = 0x700;		/* (1792)	P2=0xffc00700(-4192512) */
-ffa014dc:	21 e1 28 01 	R1 = 0x128 (X);		/*		R1=0x128(296) */
-ffa014e0:	10 95       	R0 = W[P2] (Z);
-ffa014e2:	01 54       	R0 = R1 & R0;
-ffa014e4:	08 08       	CC = R0 == R1;
-ffa014e6:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
-ffa014e8:	38 07       	IF CC R7 = R0;
-ffa014ea:	20 e1 50 02 	R0 = 0x250 (X);		/*		R0=0x250(592) */
-ffa014ee:	42 6c       	P2 += 0x8;		/* (  8) */
-ffa014f0:	10 97       	W[P2] = R0;
-ffa014f2:	ff e3 5b f6 	CALL 0xffa001a8 <_ustimer>;
-ffa014f6:	08 4e       	R0 >>= 0x1;
-ffa014f8:	21 e1 81 f7 	R1 = -0x87f (X);		/*		R1=0xfffff781(-2175) */
-ffa014fc:	80 c0 01 18 	A1 = R0.L * R1.L (FU);
-ffa01500:	41 e1 0b e5 	R1.H = 0xe50b;		/* (-6901)	R1=0xe50bf781(-452200575) */
-ffa01504:	01 e1 81 f7 	R1.L = 0xf781;		/* (-2175)	R1=0xe50bf781(-452200575) */
-ffa01508:	83 c6 80 51 	A1 = A1 >> 0x10;
-ffa0150c:	81 c0 01 86 	A1 += R0.H * R1.L, A0 = R0.H * R1.H (FU);
-ffa01510:	81 c0 08 98 	A1 += R1.H * R0.L (FU);
-ffa01514:	83 c6 80 51 	A1 = A1 >> 0x10;
-ffa01518:	0b c4 3f 80 	A0 += A1;
-ffa0151c:	8b c0 00 38 	R0 = A0 (FU);
-ffa01520:	58 4e       	R0 >>= 0xb;
-ffa01522:	28 08       	CC = R0 == R5;
-ffa01524:	b4 1b       	IF CC JUMP 0xffa0148c <_main+0x430>;
-ffa01526:	4c 30       	R1 = P4;
-ffa01528:	19 97       	W[P3] = R1;
-ffa0152a:	28 30       	R5 = R0;
-ffa0152c:	b0 2f       	JUMP.S 0xffa0148c <_main+0x430>;
-ffa0152e:	7a 43       	R2 = R7.B (Z);
-ffa01530:	80 60       	R0 = 0x10 (X);		/*		R0=0x10( 16) */
-ffa01532:	f6 b0       	[SP + 0xc] = R6;
-ffa01534:	ff e3 0e fc 	CALL 0xffa00d50 <_getRadioPacket>;
-ffa01538:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00700(-4192512) */
-ffa0153c:	0a e1 00 07 	P2.L = 0x700;		/* (1792)	P2=0xffc00700(-4192512) */
-ffa01540:	10 95       	R0 = W[P2] (Z);
-ffa01542:	07 60       	R7 = 0x0 (X);		/*		R7=0x0(  0) */
-ffa01544:	28 48       	CC = !BITTST (R0, 0x5);		/* bit  5 */
-ffa01546:	bf 17       	IF !CC JUMP 0xffa014c4 <_main+0x468> (BP);
-ffa01548:	7a 43       	R2 = R7.B (Z);
-ffa0154a:	20 e1 40 00 	R0 = 0x40 (X);		/*		R0=0x40( 64) */
-ffa0154e:	f6 b0       	[SP + 0xc] = R6;
-ffa01550:	01 61       	R1 = 0x20 (X);		/*		R1=0x20( 32) */
-ffa01552:	ff e3 ff fb 	CALL 0xffa00d50 <_getRadioPacket>;
-ffa01556:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00700(-4192512) */
-ffa0155a:	0a e1 00 07 	P2.L = 0x700;		/* (1792)	P2=0xffc00700(-4192512) */
-ffa0155e:	10 95       	R0 = W[P2] (Z);
-ffa01560:	04 54       	R0 = R4 & R0;
-ffa01562:	07 60       	R7 = 0x0 (X);		/*		R7=0x0(  0) */
-ffa01564:	00 0c       	CC = R0 == 0x0;
-ffa01566:	b7 17       	IF !CC JUMP 0xffa014d4 <_main+0x478> (BP);
-ffa01568:	7a 43       	R2 = R7.B (Z);
-ffa0156a:	f6 b0       	[SP + 0xc] = R6;
-ffa0156c:	20 e1 00 02 	R0 = 0x200 (X);		/*		R0=0x200(512) */
-ffa01570:	21 e1 00 01 	R1 = 0x100 (X);		/*		R1=0x100(256) */
+ffa011ba:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff90c0ed(-7290643) */
+ffa011be:	00 e1 9c 00 	R0.L = 0x9c;		/* (156)	R0=0xff90009c(-7339876) */
+ffa011c2:	00 e3 c7 04 	CALL 0xffa01b50 <_printf_str>;
+ffa011c6:	05 68       	P5 = 0x0 (X);		/*		P5=0x0(  0) */
+ffa011c8:	06 60       	R6 = 0x0 (X);		/*		R6=0x0(  0) */
+ffa011ca:	02 20       	JUMP.S 0xffa011ce <_main+0x172>;
+ffa011cc:	45 6c       	P5 += 0x8;		/* (  8) */
+ffa011ce:	2f 95       	R7 = W[P5] (Z);
+ffa011d0:	80 e1 ca de 	R0 = 0xdeca (Z);		/*		R0=0xdeca(57034) */
+ffa011d4:	07 08       	CC = R7 == R0;
+ffa011d6:	15 1c       	IF CC JUMP 0xffa01200 <_main+0x1a4> (BP);
+ffa011d8:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff90deca(-7282998) */
+ffa011dc:	0e 30       	R1 = R6;
+ffa011de:	00 e1 ac 00 	R0.L = 0xac;		/* (172)	R0=0xff9000ac(-7339860) */
+ffa011e2:	00 e3 b3 03 	CALL 0xffa01948 <_printf_hex>;
+ffa011e6:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff9000ac(-7339860) */
+ffa011ea:	00 e1 b8 00 	R0.L = 0xb8;		/* (184)	R0=0xff9000b8(-7339848) */
+ffa011ee:	0f 30       	R1 = R7;
+ffa011f0:	00 e3 ac 03 	CALL 0xffa01948 <_printf_hex>;
+ffa011f4:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff9000b8(-7339848) */
+ffa011f8:	00 e1 20 08 	R0.L = 0x820;		/* (2080)	R0=0xff900820(-7337952) */
+ffa011fc:	00 e3 aa 04 	CALL 0xffa01b50 <_printf_str>;
+ffa01200:	81 e1 ad fb 	R1 = 0xfbad (Z);		/*		R1=0xfbad(64429) */
+ffa01204:	68 a4       	R0 = W[P5 + 0x2] (Z);
+ffa01206:	08 08       	CC = R0 == R1;
+ffa01208:	08 1c       	IF CC JUMP 0xffa01218 <_main+0x1bc> (BP);
+ffa0120a:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900820(-7337952) */
+ffa0120e:	00 e1 ac 00 	R0.L = 0xac;		/* (172)	R0=0xff9000ac(-7339860) */
+ffa01212:	0e 30       	R1 = R6;
+ffa01214:	00 e3 9a 03 	CALL 0xffa01948 <_printf_hex>;
+ffa01218:	81 e1 ed c0 	R1 = 0xc0ed (Z);		/*		R1=0xc0ed(49389) */
+ffa0121c:	a8 a4       	R0 = W[P5 + 0x4] (Z);
+ffa0121e:	08 08       	CC = R0 == R1;
+ffa01220:	08 1c       	IF CC JUMP 0xffa01230 <_main+0x1d4> (BP);
+ffa01222:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff9000ac(-7339860) */
+ffa01226:	00 e1 ac 00 	R0.L = 0xac;		/* (172)	R0=0xff9000ac(-7339860) */
+ffa0122a:	0e 30       	R1 = R6;
+ffa0122c:	00 e3 8e 03 	CALL 0xffa01948 <_printf_hex>;
+ffa01230:	81 e1 be ba 	R1 = 0xbabe (Z);		/*		R1=0xbabe(47806) */
+ffa01234:	e8 a4       	R0 = W[P5 + 0x6] (Z);
+ffa01236:	08 08       	CC = R0 == R1;
+ffa01238:	08 1c       	IF CC JUMP 0xffa01248 <_main+0x1ec> (BP);
+ffa0123a:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff9000ac(-7339860) */
+ffa0123e:	00 e1 ac 00 	R0.L = 0xac;		/* (172)	R0=0xff9000ac(-7339860) */
+ffa01242:	0e 30       	R1 = R6;
+ffa01244:	00 e3 82 03 	CALL 0xffa01948 <_printf_hex>;
+ffa01248:	4a e1 ff 01 	P2.H = 0x1ff;		/* (511)	P2=0x1ff0000 */
+ffa0124c:	0a e1 f8 ff 	P2.L = 0xfff8;		/* ( -8)	P2=0x1fffff8 */
+ffa01250:	0e 64       	R6 += 0x1;		/* (  1) */
+ffa01252:	55 08       	CC = P5 == P2;
+ffa01254:	bc 17       	IF !CC JUMP 0xffa011cc <_main+0x170> (BP);
+ffa01256:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff9000ac(-7339860) */
+ffa0125a:	00 e1 c0 00 	R0.L = 0xc0;		/* (192)	R0=0xff9000c0(-7339840) */
+ffa0125e:	00 e3 79 04 	CALL 0xffa01b50 <_printf_str>;
+ffa01262:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff9000c0(-7339840) */
+ffa01266:	00 e1 d0 00 	R0.L = 0xd0;		/* (208)	R0=0xff9000d0(-7339824) */
+ffa0126a:	00 e3 73 04 	CALL 0xffa01b50 <_printf_str>;
+ffa0126e:	00 e3 71 0f 	CALL 0xffa03150 <_bfin_EMAC_init>;
+ffa01272:	f0 bb       	[FP -0x4] = R0;
+ffa01274:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff9000d0(-7339824) */
+ffa01278:	00 e1 e0 00 	R0.L = 0xe0;		/* (224)	R0=0xff9000e0(-7339808) */
+ffa0127c:	00 e3 6a 04 	CALL 0xffa01b50 <_printf_str>;
+ffa01280:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff9000e0(-7339808) */
+ffa01284:	00 e1 ec 00 	R0.L = 0xec;		/* (236)	R0=0xff9000ec(-7339796) */
+ffa01288:	f1 b9       	R1 = [FP -0x4];
+ffa0128a:	00 e3 bb 03 	CALL 0xffa01a00 <_printf_int>;
+ffa0128e:	f0 b9       	R0 = [FP -0x4];
+ffa01290:	00 0c       	CC = R0 == 0x0;
+ffa01292:	95 19       	IF CC JUMP 0xffa015bc <_main+0x560>;
+ffa01294:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff9000ec(-7339796) */
+ffa01298:	00 e1 f0 00 	R0.L = 0xf0;		/* (240)	R0=0xff9000f0(-7339792) */
+ffa0129c:	00 e3 5a 04 	CALL 0xffa01b50 <_printf_str>;
+ffa012a0:	4d e1 90 ff 	P5.H = 0xff90;		/* (-112)	P5=0xff900000 <_l1_data_a> */
+ffa012a4:	0d e1 70 0f 	P5.L = 0xf70;		/* (3952)	P5=0xff900f70 <_NetOurIP> */
+ffa012a8:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff9000f0(-7339792) */
+ffa012ac:	29 99       	R1 = B[P5] (Z);
+ffa012ae:	00 e1 ec 00 	R0.L = 0xec;		/* (236)	R0=0xff9000ec(-7339796) */
+ffa012b2:	00 e3 a7 03 	CALL 0xffa01a00 <_printf_int>;
+ffa012b6:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff9000ec(-7339796) */
+ffa012ba:	a9 e4 01 00 	R1 = B[P5 + 0x1] (Z);
+ffa012be:	00 e1 00 01 	R0.L = 0x100;		/* (256)	R0=0xff900100(-7339776) */
+ffa012c2:	00 e3 9f 03 	CALL 0xffa01a00 <_printf_int>;
+ffa012c6:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900100(-7339776) */
+ffa012ca:	a9 e4 02 00 	R1 = B[P5 + 0x2] (Z);
+ffa012ce:	00 e1 00 01 	R0.L = 0x100;		/* (256)	R0=0xff900100(-7339776) */
+ffa012d2:	00 e3 97 03 	CALL 0xffa01a00 <_printf_int>;
+ffa012d6:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900100(-7339776) */
+ffa012da:	a9 e4 03 00 	R1 = B[P5 + 0x3] (Z);
+ffa012de:	00 e1 00 01 	R0.L = 0x100;		/* (256)	R0=0xff900100(-7339776) */
+ffa012e2:	00 e3 8f 03 	CALL 0xffa01a00 <_printf_int>;
+ffa012e6:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900100(-7339776) */
+ffa012ea:	00 e1 04 01 	R0.L = 0x104;		/* (260)	R0=0xff900104(-7339772) */
+ffa012ee:	00 e3 31 04 	CALL 0xffa01b50 <_printf_str>;
+ffa012f2:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc0fff8(-4128776) */
+ffa012f6:	20 e1 83 38 	R0 = 0x3883 (X);		/*		R0=0x3883(14467) */
+ffa012fa:	0a e1 00 32 	P2.L = 0x3200;		/* (12800)	P2=0xffc03200(-4181504) */
+ffa012fe:	10 97       	W[P2] = R0;
+ffa01300:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc03200(-4181504) */
+ffa01304:	20 e1 56 fe 	R0 = -0x1aa (X);		/*		R0=0xfffffe56(-426) */
+ffa01308:	0a e1 30 07 	P2.L = 0x730;		/* (1840)	P2=0xffc00730(-4192464) */
+ffa0130c:	10 97       	W[P2] = R0;
+ffa0130e:	20 e1 ab 01 	R0 = 0x1ab (X);		/*		R0=0x1ab(427) */
+ffa01312:	82 6c       	P2 += 0x10;		/* ( 16) */
+ffa01314:	10 97       	W[P2] = R0;
+ffa01316:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00730(-4192464) */
+ffa0131a:	20 e1 40 01 	R0 = 0x140 (X);		/*		R0=0x140(320) */
+ffa0131e:	0a e1 10 32 	P2.L = 0x3210;		/* (12816)	P2=0xffc03210(-4181488) */
+ffa01322:	10 97       	W[P2] = R0;
+ffa01324:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc03210(-4181488) */
+ffa01328:	0a e1 40 15 	P2.L = 0x1540;		/* (5440)	P2=0xffc01540(-4188864) */
+ffa0132c:	10 95       	R0 = W[P2] (Z);
+ffa0132e:	08 4c       	BITCLR (R0, 0x1);		/* bit  1 */
+ffa01330:	10 97       	W[P2] = R0;
+ffa01332:	82 6f       	P2 += -0x10;		/* (-16) */
+ffa01334:	10 95       	R0 = W[P2] (Z);
+ffa01336:	08 4a       	BITSET (R0, 0x1);		/* bit  1 */
+ffa01338:	10 97       	W[P2] = R0;
+ffa0133a:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc01540(-4188864) */
+ffa0133e:	0a e1 04 32 	P2.L = 0x3204;		/* (12804)	P2=0xffc03204(-4181500) */
+ffa01342:	10 95       	R0 = W[P2] (Z);
+ffa01344:	08 4c       	BITCLR (R0, 0x1);		/* bit  1 */
+ffa01346:	10 97       	W[P2] = R0;
+ffa01348:	49 e1 c0 ff 	P1.H = 0xffc0;		/* (-64)	P1=0xffc00000(-4194304) */
+ffa0134c:	09 e1 00 09 	P1.L = 0x900;		/* (2304)	P1=0xffc00900(-4192000) */
+ffa01350:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa01352:	08 97       	W[P1] = R0;
+ffa01354:	24 00       	SSYNC;
+ffa01356:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff903204 */
+ffa0135a:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa0135c:	0a e1 c0 0c 	P2.L = 0xcc0;		/* (3264)	P2=0xff900cc0 <_g_sampR> */
+ffa01360:	10 93       	[P2] = R0;
+ffa01362:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900cc0 <_g_sampR> */
+ffa01366:	0a e1 a4 0c 	P2.L = 0xca4;		/* (3236)	P2=0xff900ca4 <_g_sampW> */
+ffa0136a:	10 93       	[P2] = R0;
+ffa0136c:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900ca4 <_g_sampW> */
+ffa01370:	0a e1 c8 0c 	P2.L = 0xcc8;		/* (3272)	P2=0xff900cc8 <_g_sampOff> */
+ffa01374:	10 93       	[P2] = R0;
+ffa01376:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900cc8 <_g_sampOff> */
+ffa0137a:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
+ffa0137c:	0a e1 98 0c 	P2.L = 0xc98;		/* (3224)	P2=0xff900c98 <_g_sampMode> */
+ffa01380:	10 9b       	B[P2] = R0;
+ffa01382:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
+ffa01384:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900c98 <_g_sampMode> */
+ffa01388:	d8 4f       	R0 <<= 0x1b;
+ffa0138a:	0a e1 a8 0c 	P2.L = 0xca8;		/* (3240)	P2=0xff900ca8 <_g_sampInc> */
+ffa0138e:	10 93       	[P2] = R0;
+ffa01390:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900ca8 <_g_sampInc> */
+ffa01394:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa01396:	0a e1 b8 0c 	P2.L = 0xcb8;		/* (3256)	P2=0xff900cb8 <_g_sampCh> */
+ffa0139a:	10 9b       	B[P2] = R0;
+ffa0139c:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00cb8(-4191048) */
+ffa013a0:	e8 60       	R0 = 0x1d (X);		/*		R0=0x1d( 29) */
+ffa013a2:	0a e1 08 09 	P2.L = 0x908;		/* (2312)	P2=0xffc00908(-4191992) */
+ffa013a6:	10 97       	W[P2] = R0;
+ffa013a8:	f8 60       	R0 = 0x1f (X);		/*		R0=0x1f( 31) */
+ffa013aa:	22 6c       	P2 += 0x4;		/* (  4) */
+ffa013ac:	10 97       	W[P2] = R0;
+ffa013ae:	b8 60       	R0 = 0x17 (X);		/*		R0=0x17( 23) */
+ffa013b0:	c2 6f       	P2 += -0x8;		/* ( -8) */
+ffa013b2:	10 97       	W[P2] = R0;
+ffa013b4:	20 e1 03 4e 	R0 = 0x4e03 (X);		/*		R0=0x4e03(19971) */
+ffa013b8:	08 97       	W[P1] = R0;
+ffa013ba:	40 e1 a0 ff 	R0.H = 0xffa0;		/* (-96)	R0=0xffa04e03(-6271485) */
+ffa013be:	4a e1 e0 ff 	P2.H = 0xffe0;		/* (-32)	P2=0xffe00908(-2094840) */
+ffa013c2:	00 e1 5c 07 	R0.L = 0x75c;		/* (1884)	R0=0xffa0075c <_audio_out>(-6289572) */
+ffa013c6:	0a e1 1c 20 	P2.L = 0x201c;		/* (8220)	P2=0xffe0201c(-2088932) */
+ffa013ca:	10 93       	[P2] = R0;
+ffa013cc:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc0201c(-4186084) */
+ffa013d0:	0a e1 0c 01 	P2.L = 0x10c;		/* (268)	P2=0xffc0010c(-4194036) */
+ffa013d4:	10 91       	R0 = [P2];
+ffa013d6:	48 4a       	BITSET (R0, 0x9);		/* bit  9 */
+ffa013d8:	4d e1 90 ff 	P5.H = 0xff90;		/* (-112)	P5=0xff900f70 <_NetOurIP> */
+ffa013dc:	10 93       	[P2] = R0;
+ffa013de:	0d e1 8c 0c 	P5.L = 0xc8c;		/* (3212)	P5=0xff900c8c <_g_radioChan> */
+ffa013e2:	24 e1 00 01 	R4 = 0x100 (X);		/*		R4=0x100(256) */
+ffa013e6:	2c e1 00 80 	P4 = -0x8000 (X);		/*		P4=0xffff8000(-32768) */
+ffa013ea:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff90075c(-7338148) */
+ffa013ee:	00 e1 08 01 	R0.L = 0x108;		/* (264)	R0=0xff900108(-7339768) */
+ffa013f2:	00 e3 af 03 	CALL 0xffa01b50 <_printf_str>;
+ffa013f6:	00 e3 05 10 	CALL 0xffa03400 <_bridge_publish>;
+ffa013fa:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff90010c */
+ffa013fe:	06 60       	R6 = 0x0 (X);		/*		R6=0x0(  0) */
+ffa01400:	0a e1 a0 0c 	P2.L = 0xca0;		/* (3232)	P2=0xff900ca0 <_wrptr> */
+ffa01404:	16 93       	[P2] = R6;
+ffa01406:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900ca0 <_wrptr> */
+ffa0140a:	0a e1 9c 0c 	P2.L = 0xc9c;		/* (3228)	P2=0xff900c9c <_trptr> */
+ffa0140e:	16 93       	[P2] = R6;
+ffa01410:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900c9c <_trptr> */
+ffa01414:	0a e1 bc 0c 	P2.L = 0xcbc;		/* (3260)	P2=0xff900cbc <_g_dropped> */
+ffa01418:	16 93       	[P2] = R6;
+ffa0141a:	40 43       	R0 = R0.B (Z);
+ffa0141c:	28 93       	[P5] = R0;
+ffa0141e:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900cbc <_g_dropped> */
+ffa01422:	0a e1 94 0c 	P2.L = 0xc94;		/* (3220)	P2=0xff900c94 <_g_nextFlag> */
+ffa01426:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900108(-7339768) */
+ffa0142a:	16 93       	[P2] = R6;
+ffa0142c:	00 e1 1c 01 	R0.L = 0x11c;		/* (284)	R0=0xff90011c(-7339748) */
+ffa01430:	00 e3 90 03 	CALL 0xffa01b50 <_printf_str>;
+ffa01434:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00c94(-4191084) */
+ffa01438:	20 e1 00 04 	R0 = 0x400 (X);		/*		R0=0x400(1024) */
+ffa0143c:	0a e1 04 07 	P2.L = 0x704;		/* (1796)	P2=0xffc00704(-4192508) */
+ffa01440:	10 97       	W[P2] = R0;
+ffa01442:	20 e1 50 02 	R0 = 0x250 (X);		/*		R0=0x250(592) */
+ffa01446:	22 6c       	P2 += 0x4;		/* (  4) */
+ffa01448:	10 97       	W[P2] = R0;
+ffa0144a:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00704(-4192508) */
+ffa0144e:	10 60       	R0 = 0x2 (X);		/*		R0=0x2(  2) */
+ffa01450:	0a e1 08 15 	P2.L = 0x1508;		/* (5384)	P2=0xffc01508(-4188920) */
+ffa01454:	10 97       	W[P2] = R0;
+ffa01456:	24 00       	SSYNC;
+ffa01458:	27 e1 7f 00 	R7 = 0x7f (X);		/*		R7=0x7f(127) */
+ffa0145c:	2a 99       	R2 = B[P5] (Z);
+ffa0145e:	ba 54       	R2 = R2 & R7;
+ffa01460:	41 60       	R1 = 0x8 (X);		/*		R1=0x8(  8) */
+ffa01462:	80 60       	R0 = 0x10 (X);		/*		R0=0x10( 16) */
+ffa01464:	ff e3 b4 f8 	CALL 0xffa005cc <_radio_init>;
+ffa01468:	2a 99       	R2 = B[P5] (Z);
+ffa0146a:	ba 54       	R2 = R2 & R7;
+ffa0146c:	01 61       	R1 = 0x20 (X);		/*		R1=0x20( 32) */
+ffa0146e:	20 e1 40 00 	R0 = 0x40 (X);		/*		R0=0x40( 64) */
+ffa01472:	ff e3 ad f8 	CALL 0xffa005cc <_radio_init>;
+ffa01476:	2a 99       	R2 = B[P5] (Z);
+ffa01478:	ba 54       	R2 = R2 & R7;
+ffa0147a:	21 e1 00 01 	R1 = 0x100 (X);		/*		R1=0x100(256) */
+ffa0147e:	20 e1 00 02 	R0 = 0x200 (X);		/*		R0=0x200(512) */
+ffa01482:	ff e3 a5 f8 	CALL 0xffa005cc <_radio_init>;
+ffa01486:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff901508 */
+ffa0148a:	0a e1 c0 0c 	P2.L = 0xcc0;		/* (3264)	P2=0xff900cc0 <_g_sampR> */
+ffa0148e:	16 93       	[P2] = R6;
+ffa01490:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900cc0 <_g_sampR> */
+ffa01494:	0a e1 a4 0c 	P2.L = 0xca4;		/* (3236)	P2=0xff900ca4 <_g_sampW> */
+ffa01498:	16 93       	[P2] = R6;
+ffa0149a:	80 60       	R0 = 0x10 (X);		/*		R0=0x10( 16) */
+ffa0149c:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
+ffa0149e:	ff e3 c5 f7 	CALL 0xffa00428 <_radio_set_rx>;
+ffa014a2:	20 e1 40 00 	R0 = 0x40 (X);		/*		R0=0x40( 64) */
+ffa014a6:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
+ffa014a8:	ff e3 c0 f7 	CALL 0xffa00428 <_radio_set_rx>;
+ffa014ac:	20 e1 00 02 	R0 = 0x200 (X);		/*		R0=0x200(512) */
+ffa014b0:	21 e1 00 04 	R1 = 0x400 (X);		/*		R1=0x400(1024) */
+ffa014b4:	ff e3 ba f7 	CALL 0xffa00428 <_radio_set_rx>;
+ffa014b8:	28 91       	R0 = [P5];
+ffa014ba:	38 4e       	R0 >>= 0x7;
+ffa014bc:	00 4b       	BITTGL (R0, 0x0);		/* bit  0 */
+ffa014be:	4b e1 c0 ff 	P3.H = 0xffc0;		/* (-64)	P3=0xffc00ca4(-4191068) */
+ffa014c2:	0f 60       	R7 = 0x1 (X);		/*		R7=0x1(  1) */
+ffa014c4:	05 60       	R5 = 0x0 (X);		/*		R5=0x0(  0) */
+ffa014c6:	46 43       	R6 = R0.B (Z);
+ffa014c8:	0b e1 0c 07 	P3.L = 0x70c;		/* (1804)	P3=0xffc0070c(-4192500) */
+ffa014cc:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900ca4 <_g_sampW> */
+ffa014d0:	0a e1 c4 0c 	P2.L = 0xcc4;		/* (3268)	P2=0xff900cc4 <_g_streamEnabled> */
+ffa014d4:	10 99       	R0 = B[P2] (Z);
+ffa014d6:	00 0c       	CC = R0 == 0x0;
+ffa014d8:	89 1f       	IF CC JUMP 0xffa013ea <_main+0x38e> (BP);
+ffa014da:	f0 b9       	R0 = [FP -0x4];
+ffa014dc:	ff e3 10 fc 	CALL 0xffa00cfc <_eth_listen>;
+ffa014e0:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00cc4(-4191036) */
+ffa014e4:	0a e1 00 07 	P2.L = 0x700;		/* (1792)	P2=0xffc00700(-4192512) */
+ffa014e8:	10 95       	R0 = W[P2] (Z);
+ffa014ea:	41 60       	R1 = 0x8 (X);		/*		R1=0x8(  8) */
+ffa014ec:	01 54       	R0 = R1 & R0;
+ffa014ee:	00 0c       	CC = R0 == 0x0;
+ffa014f0:	3f 18       	IF CC JUMP 0xffa0156e <_main+0x512>;
+ffa014f2:	00 00       	NOP;
+ffa014f4:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00700(-4192512) */
+ffa014f8:	0a e1 00 07 	P2.L = 0x700;		/* (1792)	P2=0xffc00700(-4192512) */
+ffa014fc:	10 95       	R0 = W[P2] (Z);
+ffa014fe:	28 48       	CC = !BITTST (R0, 0x5);		/* bit  5 */
+ffa01500:	44 18       	IF CC JUMP 0xffa01588 <_main+0x52c>;
+ffa01502:	00 00       	NOP;
+ffa01504:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00700(-4192512) */
+ffa01508:	0a e1 00 07 	P2.L = 0x700;		/* (1792)	P2=0xffc00700(-4192512) */
+ffa0150c:	10 95       	R0 = W[P2] (Z);
+ffa0150e:	04 54       	R0 = R4 & R0;
+ffa01510:	00 0c       	CC = R0 == 0x0;
+ffa01512:	4b 18       	IF CC JUMP 0xffa015a8 <_main+0x54c>;
+ffa01514:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00700(-4192512) */
+ffa01518:	0a e1 00 07 	P2.L = 0x700;		/* (1792)	P2=0xffc00700(-4192512) */
+ffa0151c:	21 e1 28 01 	R1 = 0x128 (X);		/*		R1=0x128(296) */
+ffa01520:	10 95       	R0 = W[P2] (Z);
+ffa01522:	01 54       	R0 = R1 & R0;
+ffa01524:	08 08       	CC = R0 == R1;
+ffa01526:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
+ffa01528:	38 07       	IF CC R7 = R0;
+ffa0152a:	20 e1 50 02 	R0 = 0x250 (X);		/*		R0=0x250(592) */
+ffa0152e:	42 6c       	P2 += 0x8;		/* (  8) */
+ffa01530:	10 97       	W[P2] = R0;
+ffa01532:	ff e3 3b f6 	CALL 0xffa001a8 <_ustimer>;
+ffa01536:	08 4e       	R0 >>= 0x1;
+ffa01538:	21 e1 81 f7 	R1 = -0x87f (X);		/*		R1=0xfffff781(-2175) */
+ffa0153c:	80 c0 01 18 	A1 = R0.L * R1.L (FU);
+ffa01540:	41 e1 0b e5 	R1.H = 0xe50b;		/* (-6901)	R1=0xe50bf781(-452200575) */
+ffa01544:	01 e1 81 f7 	R1.L = 0xf781;		/* (-2175)	R1=0xe50bf781(-452200575) */
+ffa01548:	83 c6 80 51 	A1 = A1 >> 0x10;
+ffa0154c:	81 c0 01 86 	A1 += R0.H * R1.L, A0 = R0.H * R1.H (FU);
+ffa01550:	81 c0 08 98 	A1 += R1.H * R0.L (FU);
+ffa01554:	83 c6 80 51 	A1 = A1 >> 0x10;
+ffa01558:	0b c4 3f 80 	A0 += A1;
+ffa0155c:	8b c0 00 38 	R0 = A0 (FU);
+ffa01560:	58 4e       	R0 >>= 0xb;
+ffa01562:	28 08       	CC = R0 == R5;
+ffa01564:	b4 1b       	IF CC JUMP 0xffa014cc <_main+0x470>;
+ffa01566:	4c 30       	R1 = P4;
+ffa01568:	19 97       	W[P3] = R1;
+ffa0156a:	28 30       	R5 = R0;
+ffa0156c:	b0 2f       	JUMP.S 0xffa014cc <_main+0x470>;
+ffa0156e:	7a 43       	R2 = R7.B (Z);
+ffa01570:	80 60       	R0 = 0x10 (X);		/*		R0=0x10( 16) */
+ffa01572:	f6 b0       	[SP + 0xc] = R6;
 ffa01574:	ff e3 ee fb 	CALL 0xffa00d50 <_getRadioPacket>;
-ffa01578:	07 60       	R7 = 0x0 (X);		/*		R7=0x0(  0) */
-ffa0157a:	ad 2f       	JUMP.S 0xffa014d4 <_main+0x478>;
-ffa0157c:	00 e3 58 10 	CALL 0xffa0362c <_DHCP_req>;
-ffa01580:	70 2e       	JUMP.S 0xffa01260 <_main+0x204>;
+ffa01578:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00700(-4192512) */
+ffa0157c:	0a e1 00 07 	P2.L = 0x700;		/* (1792)	P2=0xffc00700(-4192512) */
+ffa01580:	10 95       	R0 = W[P2] (Z);
+ffa01582:	07 60       	R7 = 0x0 (X);		/*		R7=0x0(  0) */
+ffa01584:	28 48       	CC = !BITTST (R0, 0x5);		/* bit  5 */
+ffa01586:	bf 17       	IF !CC JUMP 0xffa01504 <_main+0x4a8> (BP);
+ffa01588:	7a 43       	R2 = R7.B (Z);
+ffa0158a:	20 e1 40 00 	R0 = 0x40 (X);		/*		R0=0x40( 64) */
+ffa0158e:	f6 b0       	[SP + 0xc] = R6;
+ffa01590:	01 61       	R1 = 0x20 (X);		/*		R1=0x20( 32) */
+ffa01592:	ff e3 df fb 	CALL 0xffa00d50 <_getRadioPacket>;
+ffa01596:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00700(-4192512) */
+ffa0159a:	0a e1 00 07 	P2.L = 0x700;		/* (1792)	P2=0xffc00700(-4192512) */
+ffa0159e:	10 95       	R0 = W[P2] (Z);
+ffa015a0:	04 54       	R0 = R4 & R0;
+ffa015a2:	07 60       	R7 = 0x0 (X);		/*		R7=0x0(  0) */
+ffa015a4:	00 0c       	CC = R0 == 0x0;
+ffa015a6:	b7 17       	IF !CC JUMP 0xffa01514 <_main+0x4b8> (BP);
+ffa015a8:	7a 43       	R2 = R7.B (Z);
+ffa015aa:	f6 b0       	[SP + 0xc] = R6;
+ffa015ac:	20 e1 00 02 	R0 = 0x200 (X);		/*		R0=0x200(512) */
+ffa015b0:	21 e1 00 01 	R1 = 0x100 (X);		/*		R1=0x100(256) */
+ffa015b4:	ff e3 ce fb 	CALL 0xffa00d50 <_getRadioPacket>;
+ffa015b8:	07 60       	R7 = 0x0 (X);		/*		R7=0x0(  0) */
+ffa015ba:	ad 2f       	JUMP.S 0xffa01514 <_main+0x4b8>;
+ffa015bc:	00 e3 64 10 	CALL 0xffa03684 <_DHCP_req>;
+ffa015c0:	6a 2e       	JUMP.S 0xffa01294 <_main+0x238>;
 	...
 
-ffa01584 <___divsi3>:
-ffa01584:	c8 58       	R3 = R0 ^ R1;
-ffa01586:	07 c4 00 80 	R0 = ABS R0;
-ffa0158a:	18 03       	CC = V;
-ffa0158c:	82 c6 fb c7 	R3 = ROT R3 BY -0x1;
-ffa01590:	07 c4 08 82 	R1 = ABS R1;
-ffa01594:	88 08       	CC = R0 < R1;
-ffa01596:	76 18       	IF CC JUMP 0xffa01682 <___divsi3+0xfe>;
-ffa01598:	82 c6 89 85 	R2 = R1 >> 0xf;
-ffa0159c:	0a 02       	CC = R2;
-ffa0159e:	1e 18       	IF CC JUMP 0xffa015da <___divsi3+0x56>;
-ffa015a0:	82 c6 81 84 	R2 = R1 << 0x10;
-ffa015a4:	02 09       	CC = R2 <= R0;
-ffa015a6:	1a 18       	IF CC JUMP 0xffa015da <___divsi3+0x56>;
-ffa015a8:	48 42       	DIVS (R0, R1);
-ffa015aa:	08 42       	DIVQ (R0, R1);
-ffa015ac:	08 42       	DIVQ (R0, R1);
-ffa015ae:	08 42       	DIVQ (R0, R1);
-ffa015b0:	08 42       	DIVQ (R0, R1);
-ffa015b2:	08 42       	DIVQ (R0, R1);
-ffa015b4:	08 42       	DIVQ (R0, R1);
-ffa015b6:	08 42       	DIVQ (R0, R1);
-ffa015b8:	08 42       	DIVQ (R0, R1);
-ffa015ba:	08 42       	DIVQ (R0, R1);
-ffa015bc:	08 42       	DIVQ (R0, R1);
-ffa015be:	08 42       	DIVQ (R0, R1);
-ffa015c0:	08 42       	DIVQ (R0, R1);
-ffa015c2:	08 42       	DIVQ (R0, R1);
-ffa015c4:	08 42       	DIVQ (R0, R1);
-ffa015c6:	08 42       	DIVQ (R0, R1);
-ffa015c8:	08 42       	DIVQ (R0, R1);
-ffa015ca:	c0 42       	R0 = R0.L (Z);
-ffa015cc:	82 c6 0b 83 	R1 = R3 >> 0x1f;
-ffa015d0:	08 50       	R0 = R0 + R1;
-ffa015d2:	81 43       	R1 = -R0;
-ffa015d4:	f3 49       	CC = BITTST (R3, 0x1e);		/* bit 30 */
-ffa015d6:	01 07       	IF CC R0 = R1;
-ffa015d8:	10 00       	RTS;
-ffa015da:	01 0c       	CC = R1 == 0x0;
-ffa015dc:	34 18       	IF CC JUMP 0xffa01644 <___divsi3+0xc0>;
-ffa015de:	00 0c       	CC = R0 == 0x0;
-ffa015e0:	3f 18       	IF CC JUMP 0xffa0165e <___divsi3+0xda>;
-ffa015e2:	08 08       	CC = R0 == R1;
-ffa015e4:	30 18       	IF CC JUMP 0xffa01644 <___divsi3+0xc0>;
-ffa015e6:	09 0c       	CC = R1 == 0x1;
-ffa015e8:	2e 18       	IF CC JUMP 0xffa01644 <___divsi3+0xc0>;
-ffa015ea:	06 c6 01 c4 	R2.L = ONES R1;
-ffa015ee:	d2 42       	R2 = R2.L (Z);
-ffa015f0:	0a 0c       	CC = R2 == 0x1;
-ffa015f2:	37 18       	IF CC JUMP 0xffa01660 <___divsi3+0xdc>;
-ffa015f4:	f9 68       	P1 = 0x1f (X);		/*		P1=0x1f( 31) */
-ffa015f6:	68 05       	[--SP] = (R7:5);
-ffa015f8:	8a 43       	R2 = -R1;
-ffa015fa:	42 01       	[--SP] = R2;
-ffa015fc:	82 c6 08 84 	R2 = R0 << 0x1;
-ffa01600:	88 59       	R6 = R0 ^ R1;
-ffa01602:	82 c6 0e 8b 	R5 = R6 >> 0x1f;
-ffa01606:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa01608:	aa 56       	R2 = R2 | R5;
-ffa0160a:	88 59       	R6 = R0 ^ R1;
-ffa0160c:	a2 e0 12 10 	LSETUP(0xffa01610 <___divsi3+0x8c>, 0xffa01630 <___divsi3+0xac>) LC0 = P1;
-ffa01610:	82 c6 0a 8f 	R7 = R2 >> 0x1f;
-ffa01614:	82 c6 0a 84 	R2 = R2 << 0x1;
-ffa01618:	82 ce 08 80 	R0 = R0 << 0x1 || R5 = [SP] || NOP;
-ffa0161c:	35 91 00 00 
-ffa01620:	38 56       	R0 = R0 | R7;
-ffa01622:	86 0c       	CC = R6 < 0x0;
-ffa01624:	29 07       	IF CC R5 = R1;
-ffa01626:	28 50       	R0 = R0 + R5;
-ffa01628:	88 59       	R6 = R0 ^ R1;
-ffa0162a:	82 c6 0e 8b 	R5 = R6 >> 0x1f;
-ffa0162e:	05 4b       	BITTGL (R5, 0x0);		/* bit  0 */
-ffa01630:	aa 50       	R2 = R2 + R5;
-ffa01632:	82 c6 0b 83 	R1 = R3 >> 0x1f;
-ffa01636:	8a 50       	R2 = R2 + R1;
-ffa01638:	f3 49       	CC = BITTST (R3, 0x1e);		/* bit 30 */
-ffa0163a:	90 43       	R0 = -R2;
-ffa0163c:	02 06       	IF !CC R0 = R2;
-ffa0163e:	26 6c       	SP += 0x4;		/* (  4) */
-ffa01640:	28 05       	(R7:5) = [SP++];
-ffa01642:	10 00       	RTS;
-ffa01644:	01 0c       	CC = R1 == 0x0;
-ffa01646:	fa 63       	R2 = -0x1 (X);		/*		R2=0xffffffff( -1) */
-ffa01648:	0a 4e       	R2 >>= 0x1;
-ffa0164a:	06 18       	IF CC JUMP 0xffa01656 <___divsi3+0xd2>;
-ffa0164c:	08 08       	CC = R0 == R1;
-ffa0164e:	82 e1 01 00 	R2 = 0x1 (Z);		/*		R2=0x1(  1) */
-ffa01652:	02 18       	IF CC JUMP 0xffa01656 <___divsi3+0xd2>;
-ffa01654:	10 30       	R2 = R0;
-ffa01656:	02 30       	R0 = R2;
-ffa01658:	92 43       	R2 = -R2;
-ffa0165a:	f3 49       	CC = BITTST (R3, 0x1e);		/* bit 30 */
-ffa0165c:	02 07       	IF CC R0 = R2;
-ffa0165e:	10 00       	RTS;
-ffa01660:	82 c6 08 85 	R2 = R0 >> 0x1f;
-ffa01664:	81 0c       	CC = R1 < 0x0;
-ffa01666:	f8 1b       	IF CC JUMP 0xffa01656 <___divsi3+0xd2>;
-ffa01668:	05 c6 01 02 	R1.L = SIGNBITS R1;
-ffa0166c:	c9 42       	R1 = R1.L (Z);
-ffa0166e:	11 67       	R1 += -0x1e;		/* (-30) */
-ffa01670:	02 c6 08 80 	R0 = LSHIFT R0 BY R1.L;
-ffa01674:	82 c6 0b 83 	R1 = R3 >> 0x1f;
-ffa01678:	08 50       	R0 = R0 + R1;
-ffa0167a:	82 43       	R2 = -R0;
-ffa0167c:	f3 49       	CC = BITTST (R3, 0x1e);		/* bit 30 */
-ffa0167e:	02 07       	IF CC R0 = R2;
-ffa01680:	10 00       	RTS;
-ffa01682:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa01684:	10 00       	RTS;
+ffa015c4 <___divsi3>:
+ffa015c4:	c8 58       	R3 = R0 ^ R1;
+ffa015c6:	07 c4 00 80 	R0 = ABS R0;
+ffa015ca:	18 03       	CC = V;
+ffa015cc:	82 c6 fb c7 	R3 = ROT R3 BY -0x1;
+ffa015d0:	07 c4 08 82 	R1 = ABS R1;
+ffa015d4:	88 08       	CC = R0 < R1;
+ffa015d6:	76 18       	IF CC JUMP 0xffa016c2 <___divsi3+0xfe>;
+ffa015d8:	82 c6 89 85 	R2 = R1 >> 0xf;
+ffa015dc:	0a 02       	CC = R2;
+ffa015de:	1e 18       	IF CC JUMP 0xffa0161a <___divsi3+0x56>;
+ffa015e0:	82 c6 81 84 	R2 = R1 << 0x10;
+ffa015e4:	02 09       	CC = R2 <= R0;
+ffa015e6:	1a 18       	IF CC JUMP 0xffa0161a <___divsi3+0x56>;
+ffa015e8:	48 42       	DIVS (R0, R1);
+ffa015ea:	08 42       	DIVQ (R0, R1);
+ffa015ec:	08 42       	DIVQ (R0, R1);
+ffa015ee:	08 42       	DIVQ (R0, R1);
+ffa015f0:	08 42       	DIVQ (R0, R1);
+ffa015f2:	08 42       	DIVQ (R0, R1);
+ffa015f4:	08 42       	DIVQ (R0, R1);
+ffa015f6:	08 42       	DIVQ (R0, R1);
+ffa015f8:	08 42       	DIVQ (R0, R1);
+ffa015fa:	08 42       	DIVQ (R0, R1);
+ffa015fc:	08 42       	DIVQ (R0, R1);
+ffa015fe:	08 42       	DIVQ (R0, R1);
+ffa01600:	08 42       	DIVQ (R0, R1);
+ffa01602:	08 42       	DIVQ (R0, R1);
+ffa01604:	08 42       	DIVQ (R0, R1);
+ffa01606:	08 42       	DIVQ (R0, R1);
+ffa01608:	08 42       	DIVQ (R0, R1);
+ffa0160a:	c0 42       	R0 = R0.L (Z);
+ffa0160c:	82 c6 0b 83 	R1 = R3 >> 0x1f;
+ffa01610:	08 50       	R0 = R0 + R1;
+ffa01612:	81 43       	R1 = -R0;
+ffa01614:	f3 49       	CC = BITTST (R3, 0x1e);		/* bit 30 */
+ffa01616:	01 07       	IF CC R0 = R1;
+ffa01618:	10 00       	RTS;
+ffa0161a:	01 0c       	CC = R1 == 0x0;
+ffa0161c:	34 18       	IF CC JUMP 0xffa01684 <___divsi3+0xc0>;
+ffa0161e:	00 0c       	CC = R0 == 0x0;
+ffa01620:	3f 18       	IF CC JUMP 0xffa0169e <___divsi3+0xda>;
+ffa01622:	08 08       	CC = R0 == R1;
+ffa01624:	30 18       	IF CC JUMP 0xffa01684 <___divsi3+0xc0>;
+ffa01626:	09 0c       	CC = R1 == 0x1;
+ffa01628:	2e 18       	IF CC JUMP 0xffa01684 <___divsi3+0xc0>;
+ffa0162a:	06 c6 01 c4 	R2.L = ONES R1;
+ffa0162e:	d2 42       	R2 = R2.L (Z);
+ffa01630:	0a 0c       	CC = R2 == 0x1;
+ffa01632:	37 18       	IF CC JUMP 0xffa016a0 <___divsi3+0xdc>;
+ffa01634:	f9 68       	P1 = 0x1f (X);		/*		P1=0x1f( 31) */
+ffa01636:	68 05       	[--SP] = (R7:5);
+ffa01638:	8a 43       	R2 = -R1;
+ffa0163a:	42 01       	[--SP] = R2;
+ffa0163c:	82 c6 08 84 	R2 = R0 << 0x1;
+ffa01640:	88 59       	R6 = R0 ^ R1;
+ffa01642:	82 c6 0e 8b 	R5 = R6 >> 0x1f;
+ffa01646:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa01648:	aa 56       	R2 = R2 | R5;
+ffa0164a:	88 59       	R6 = R0 ^ R1;
+ffa0164c:	a2 e0 12 10 	LSETUP(0xffa01650 <___divsi3+0x8c>, 0xffa01670 <___divsi3+0xac>) LC0 = P1;
+ffa01650:	82 c6 0a 8f 	R7 = R2 >> 0x1f;
+ffa01654:	82 c6 0a 84 	R2 = R2 << 0x1;
+ffa01658:	82 ce 08 80 	R0 = R0 << 0x1 || R5 = [SP] || NOP;
+ffa0165c:	35 91 00 00 
+ffa01660:	38 56       	R0 = R0 | R7;
+ffa01662:	86 0c       	CC = R6 < 0x0;
+ffa01664:	29 07       	IF CC R5 = R1;
+ffa01666:	28 50       	R0 = R0 + R5;
+ffa01668:	88 59       	R6 = R0 ^ R1;
+ffa0166a:	82 c6 0e 8b 	R5 = R6 >> 0x1f;
+ffa0166e:	05 4b       	BITTGL (R5, 0x0);		/* bit  0 */
+ffa01670:	aa 50       	R2 = R2 + R5;
+ffa01672:	82 c6 0b 83 	R1 = R3 >> 0x1f;
+ffa01676:	8a 50       	R2 = R2 + R1;
+ffa01678:	f3 49       	CC = BITTST (R3, 0x1e);		/* bit 30 */
+ffa0167a:	90 43       	R0 = -R2;
+ffa0167c:	02 06       	IF !CC R0 = R2;
+ffa0167e:	26 6c       	SP += 0x4;		/* (  4) */
+ffa01680:	28 05       	(R7:5) = [SP++];
+ffa01682:	10 00       	RTS;
+ffa01684:	01 0c       	CC = R1 == 0x0;
+ffa01686:	fa 63       	R2 = -0x1 (X);		/*		R2=0xffffffff( -1) */
+ffa01688:	0a 4e       	R2 >>= 0x1;
+ffa0168a:	06 18       	IF CC JUMP 0xffa01696 <___divsi3+0xd2>;
+ffa0168c:	08 08       	CC = R0 == R1;
+ffa0168e:	82 e1 01 00 	R2 = 0x1 (Z);		/*		R2=0x1(  1) */
+ffa01692:	02 18       	IF CC JUMP 0xffa01696 <___divsi3+0xd2>;
+ffa01694:	10 30       	R2 = R0;
+ffa01696:	02 30       	R0 = R2;
+ffa01698:	92 43       	R2 = -R2;
+ffa0169a:	f3 49       	CC = BITTST (R3, 0x1e);		/* bit 30 */
+ffa0169c:	02 07       	IF CC R0 = R2;
+ffa0169e:	10 00       	RTS;
+ffa016a0:	82 c6 08 85 	R2 = R0 >> 0x1f;
+ffa016a4:	81 0c       	CC = R1 < 0x0;
+ffa016a6:	f8 1b       	IF CC JUMP 0xffa01696 <___divsi3+0xd2>;
+ffa016a8:	05 c6 01 02 	R1.L = SIGNBITS R1;
+ffa016ac:	c9 42       	R1 = R1.L (Z);
+ffa016ae:	11 67       	R1 += -0x1e;		/* (-30) */
+ffa016b0:	02 c6 08 80 	R0 = LSHIFT R0 BY R1.L;
+ffa016b4:	82 c6 0b 83 	R1 = R3 >> 0x1f;
+ffa016b8:	08 50       	R0 = R0 + R1;
+ffa016ba:	82 43       	R2 = -R0;
+ffa016bc:	f3 49       	CC = BITTST (R3, 0x1e);		/* bit 30 */
+ffa016be:	02 07       	IF CC R0 = R2;
+ffa016c0:	10 00       	RTS;
+ffa016c2:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa016c4:	10 00       	RTS;
 	...
 
-ffa01688 <_uart_str>:
-ffa01688:	e3 05       	[--SP] = (R7:4, P5:3);
-ffa0168a:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00700(-4192512) */
-ffa0168e:	00 e8 03 00 	LINK 0xc;		/* (12) */
-ffa01692:	20 32       	P4 = R0;
-ffa01694:	0a e1 24 04 	P2.L = 0x424;		/* (1060)	P2=0xffc00424(-4193244) */
-ffa01698:	10 95       	R0 = W[P2] (Z);
-ffa0169a:	c0 42       	R0 = R0.L (Z);
-ffa0169c:	08 0c       	CC = R0 == 0x1;
-ffa0169e:	71 18       	IF CC JUMP 0xffa01780 <_uart_str+0xf8>;
-ffa016a0:	00 00       	NOP;
-ffa016a2:	00 00       	NOP;
-ffa016a4:	00 00       	NOP;
-ffa016a6:	63 99       	R3 = B[P4] (X);
-ffa016a8:	08 61       	R0 = 0x21 (X);		/*		R0=0x21( 33) */
-ffa016aa:	03 08       	CC = R3 == R0;
-ffa016ac:	07 18       	IF CC JUMP 0xffa016ba <_uart_str+0x32>;
-ffa016ae:	06 60       	R6 = 0x0 (X);		/*		R6=0x0(  0) */
-ffa016b0:	06 30       	R0 = R6;
-ffa016b2:	01 e8 00 00 	UNLINK;
-ffa016b6:	a3 05       	(R7:4, P5:3) = [SP++];
-ffa016b8:	10 00       	RTS;
-ffa016ba:	a2 e5 01 00 	R2 = B[P4 + 0x1] (X);
-ffa016be:	17 43       	R7 = R2.B (X);
-ffa016c0:	07 0c       	CC = R7 == 0x0;
-ffa016c2:	f6 1b       	IF CC JUMP 0xffa016ae <_uart_str+0x26>;
-ffa016c4:	6c 32       	P5 = P4;
-ffa016c6:	4c e1 90 ff 	P4.H = 0xff90;		/* (-112)	P4=0xff908000 */
-ffa016ca:	15 6c       	P5 += 0x2;		/* (  2) */
-ffa016cc:	06 60       	R6 = 0x0 (X);		/*		R6=0x0(  0) */
-ffa016ce:	24 e1 bf ff 	R4 = -0x41 (X);		/*		R4=0xffffffbf(-65) */
-ffa016d2:	25 e1 9f ff 	R5 = -0x61 (X);		/*		R5=0xffffff9f(-97) */
-ffa016d6:	0c e1 0c 0c 	P4.L = 0xc0c;		/* (3084)	P4=0xff900c0c <__bss_start> */
-ffa016da:	2b e1 80 ff 	P3 = -0x80 (X);		/*		P3=0xffffff80(-128) */
-ffa016de:	2c 20       	JUMP.S 0xffa01736 <_uart_str+0xae>;
-ffa016e0:	68 60       	R0 = 0xd (X);		/*		R0=0xd( 13) */
-ffa016e2:	07 08       	CC = R7 == R0;
-ffa016e4:	35 18       	IF CC JUMP 0xffa0174e <_uart_str+0xc6>;
-ffa016e6:	22 50       	R0 = R2 + R4;
-ffa016e8:	40 43       	R0 = R0.B (Z);
-ffa016ea:	c9 60       	R1 = 0x19 (X);		/*		R1=0x19( 25) */
-ffa016ec:	08 0a       	CC = R0 <= R1 (IU);
-ffa016ee:	37 1c       	IF CC JUMP 0xffa0175c <_uart_str+0xd4> (BP);
-ffa016f0:	03 61       	R3 = 0x20 (X);		/*		R3=0x20( 32) */
-ffa016f2:	15 50       	R0 = R5 + R2;
-ffa016f4:	40 43       	R0 = R0.B (Z);
-ffa016f6:	c9 60       	R1 = 0x19 (X);		/*		R1=0x19( 25) */
-ffa016f8:	08 0a       	CC = R0 <= R1 (IU);
-ffa016fa:	02 30       	R0 = R2;
-ffa016fc:	11 43       	R1 = R2.B (X);
-ffa016fe:	80 66       	R0 += -0x30;		/* (-48) */
-ffa01700:	19 07       	IF CC R3 = R1;
-ffa01702:	40 43       	R0 = R0.B (Z);
-ffa01704:	4a 60       	R2 = 0x9 (X);		/*		R2=0x9(  9) */
-ffa01706:	10 0a       	CC = R0 <= R2 (IU);
-ffa01708:	19 07       	IF CC R3 = R1;
-ffa0170a:	60 61       	R0 = 0x2c (X);		/*		R0=0x2c( 44) */
-ffa0170c:	07 08       	CC = R7 == R0;
-ffa0170e:	2f 18       	IF CC JUMP 0xffa0176c <_uart_str+0xe4>;
-ffa01710:	09 61       	R1 = 0x21 (X);		/*		R1=0x21( 33) */
-ffa01712:	0f 08       	CC = R7 == R1;
-ffa01714:	26 18       	IF CC JUMP 0xffa01760 <_uart_str+0xd8>;
-ffa01716:	fa 61       	R2 = 0x3f (X);		/*		R2=0x3f( 63) */
-ffa01718:	17 08       	CC = R7 == R2;
-ffa0171a:	88 10       	IF !CC JUMP 0xffa0182a <_uart_str+0x1a2>;
-ffa0171c:	20 e1 3f 02 	R0 = 0x23f (X);		/*		R0=0x23f(575) */
-ffa01720:	ff e3 f0 f8 	CALL 0xffa00900 <_oled_write>;
-ffa01724:	6a 98       	R2 = B[P5++] (X);
-ffa01726:	17 43       	R7 = R2.B (X);
-ffa01728:	0e 64       	R6 += 0x1;		/* (  1) */
-ffa0172a:	07 0c       	CC = R7 == 0x0;
-ffa0172c:	c2 1b       	IF CC JUMP 0xffa016b0 <_uart_str+0x28>;
-ffa0172e:	20 e1 00 04 	R0 = 0x400 (X);		/*		R0=0x400(1024) */
-ffa01732:	06 08       	CC = R6 == R0;
-ffa01734:	be 1b       	IF CC JUMP 0xffa016b0 <_uart_str+0x28>;
-ffa01736:	51 60       	R1 = 0xa (X);		/*		R1=0xa( 10) */
-ffa01738:	0f 08       	CC = R7 == R1;
-ffa0173a:	d3 17       	IF !CC JUMP 0xffa016e0 <_uart_str+0x58> (BP);
-ffa0173c:	20 99       	R0 = B[P4] (Z);
-ffa0173e:	30 48       	CC = !BITTST (R0, 0x6);		/* bit  6 */
-ffa01740:	18 1c       	IF CC JUMP 0xffa01770 <_uart_str+0xe8> (BP);
-ffa01742:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900424 */
-ffa01746:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa01748:	0a e1 0c 0c 	P2.L = 0xc0c;		/* (3084)	P2=0xff900c0c <__bss_start> */
-ffa0174c:	10 9b       	B[P2] = R0;
-ffa0174e:	60 99       	R0 = B[P4] (X);
-ffa01750:	4b 30       	R1 = P3;
-ffa01752:	08 56       	R0 = R0 | R1;
-ffa01754:	40 43       	R0 = R0.B (Z);
-ffa01756:	ff e3 d5 f8 	CALL 0xffa00900 <_oled_write>;
-ffa0175a:	e5 2f       	JUMP.S 0xffa01724 <_uart_str+0x9c>;
-ffa0175c:	13 43       	R3 = R2.B (X);
-ffa0175e:	ca 2f       	JUMP.S 0xffa016f2 <_uart_str+0x6a>;
-ffa01760:	0b 61       	R3 = 0x21 (X);		/*		R3=0x21( 33) */
-ffa01762:	22 e1 00 02 	R2 = 0x200 (X);		/*		R2=0x200(512) */
-ffa01766:	13 50       	R0 = R3 + R2;
-ffa01768:	c0 42       	R0 = R0.L (Z);
-ffa0176a:	db 2f       	JUMP.S 0xffa01720 <_uart_str+0x98>;
-ffa0176c:	63 61       	R3 = 0x2c (X);		/*		R3=0x2c( 44) */
-ffa0176e:	fa 2f       	JUMP.S 0xffa01762 <_uart_str+0xda>;
-ffa01770:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900c0c <__bss_start> */
-ffa01774:	20 e1 40 00 	R0 = 0x40 (X);		/*		R0=0x40( 64) */
-ffa01778:	0a e1 0c 0c 	P2.L = 0xc0c;		/* (3084)	P2=0xff900c0c <__bss_start> */
-ffa0177c:	10 9b       	B[P2] = R0;
-ffa0177e:	e8 2f       	JUMP.S 0xffa0174e <_uart_str+0xc6>;
-ffa01780:	63 99       	R3 = B[P4] (X);
-ffa01782:	08 61       	R0 = 0x21 (X);		/*		R0=0x21( 33) */
-ffa01784:	03 08       	CC = R3 == R0;
-ffa01786:	58 18       	IF CC JUMP 0xffa01836 <_uart_str+0x1ae>;
-ffa01788:	00 00       	NOP;
-ffa0178a:	00 00       	NOP;
-ffa0178c:	54 32       	P2 = P4;
-ffa0178e:	50 99       	R0 = B[P2] (X);
-ffa01790:	01 43       	R1 = R0.B (X);
-ffa01792:	01 0c       	CC = R1 == 0x0;
-ffa01794:	8a 1b       	IF CC JUMP 0xffa016a8 <_uart_str+0x20>;
-ffa01796:	42 32       	P0 = P2;
-ffa01798:	4d e1 c0 ff 	P5.H = 0xffc0;		/* (-64)	P5=0xffc00c08(-4191224) */
-ffa0179c:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00c0c(-4191220) */
-ffa017a0:	08 6c       	P0 += 0x1;		/* (  1) */
-ffa017a2:	0d e1 00 04 	P5.L = 0x400;		/* (1024)	P5=0xffc00400(-4193280) */
-ffa017a6:	0a e1 14 04 	P2.L = 0x414;		/* (1044)	P2=0xffc00414(-4193260) */
-ffa017aa:	02 61       	R2 = 0x20 (X);		/*		R2=0x20( 32) */
-ffa017ac:	57 60       	R7 = 0xa (X);		/*		R7=0xa( 10) */
-ffa017ae:	6e 60       	R6 = 0xd (X);		/*		R6=0xd( 13) */
-ffa017b0:	29 e1 00 04 	P1 = 0x400 (X);		/*		P1=0x400(1024) */
-ffa017b4:	55 60       	R5 = 0xa (X);		/*		R5=0xa( 10) */
-ffa017b6:	b2 e0 19 10 	LSETUP(0xffa017ba <_uart_str+0x132>, 0xffa017e8 <_uart_str+0x160>) LC1 = P1;
-ffa017ba:	29 08       	CC = R1 == R5;
-ffa017bc:	18 18       	IF CC JUMP 0xffa017ec <_uart_str+0x164>;
-ffa017be:	00 00       	NOP;
-ffa017c0:	00 43       	R0 = R0.B (X);
-ffa017c2:	28 97       	W[P5] = R0;
-ffa017c4:	10 95       	R0 = W[P2] (Z);
-ffa017c6:	02 54       	R0 = R2 & R0;
-ffa017c8:	00 0c       	CC = R0 == 0x0;
-ffa017ca:	0b 10       	IF !CC JUMP 0xffa017e0 <_uart_str+0x158>;
-ffa017cc:	00 00       	NOP;
-ffa017ce:	00 00       	NOP;
-ffa017d0:	42 34       	I0 = P2;
-ffa017d2:	00 00       	NOP;
-ffa017d4:	00 00       	NOP;
-ffa017d6:	20 9d       	R0.L = W[I0];
-ffa017d8:	02 54       	R0 = R2 & R0;
-ffa017da:	00 0c       	CC = R0 == 0x0;
-ffa017dc:	fb 1f       	IF CC JUMP 0xffa017d2 <_uart_str+0x14a> (BP);
-ffa017de:	90 32       	P2 = I0;
-ffa017e0:	40 98       	R0 = B[P0++] (X);
-ffa017e2:	01 43       	R1 = R0.B (X);
-ffa017e4:	01 0c       	CC = R1 == 0x0;
-ffa017e6:	61 1b       	IF CC JUMP 0xffa016a8 <_uart_str+0x20>;
-ffa017e8:	00 00       	NOP;
-ffa017ea:	5f 2f       	JUMP.S 0xffa016a8 <_uart_str+0x20>;
-ffa017ec:	2f 97       	W[P5] = R7;
-ffa017ee:	10 95       	R0 = W[P2] (Z);
-ffa017f0:	02 54       	R0 = R2 & R0;
-ffa017f2:	00 0c       	CC = R0 == 0x0;
-ffa017f4:	0b 10       	IF !CC JUMP 0xffa0180a <_uart_str+0x182>;
-ffa017f6:	00 00       	NOP;
-ffa017f8:	00 00       	NOP;
-ffa017fa:	42 34       	I0 = P2;
-ffa017fc:	00 00       	NOP;
+ffa016c8 <_uart_str>:
+ffa016c8:	e3 05       	[--SP] = (R7:4, P5:3);
+ffa016ca:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00700(-4192512) */
+ffa016ce:	00 e8 03 00 	LINK 0xc;		/* (12) */
+ffa016d2:	20 32       	P4 = R0;
+ffa016d4:	0a e1 24 04 	P2.L = 0x424;		/* (1060)	P2=0xffc00424(-4193244) */
+ffa016d8:	10 95       	R0 = W[P2] (Z);
+ffa016da:	c0 42       	R0 = R0.L (Z);
+ffa016dc:	08 0c       	CC = R0 == 0x1;
+ffa016de:	71 18       	IF CC JUMP 0xffa017c0 <_uart_str+0xf8>;
+ffa016e0:	00 00       	NOP;
+ffa016e2:	00 00       	NOP;
+ffa016e4:	00 00       	NOP;
+ffa016e6:	63 99       	R3 = B[P4] (X);
+ffa016e8:	08 61       	R0 = 0x21 (X);		/*		R0=0x21( 33) */
+ffa016ea:	03 08       	CC = R3 == R0;
+ffa016ec:	07 18       	IF CC JUMP 0xffa016fa <_uart_str+0x32>;
+ffa016ee:	06 60       	R6 = 0x0 (X);		/*		R6=0x0(  0) */
+ffa016f0:	06 30       	R0 = R6;
+ffa016f2:	01 e8 00 00 	UNLINK;
+ffa016f6:	a3 05       	(R7:4, P5:3) = [SP++];
+ffa016f8:	10 00       	RTS;
+ffa016fa:	a2 e5 01 00 	R2 = B[P4 + 0x1] (X);
+ffa016fe:	17 43       	R7 = R2.B (X);
+ffa01700:	07 0c       	CC = R7 == 0x0;
+ffa01702:	f6 1b       	IF CC JUMP 0xffa016ee <_uart_str+0x26>;
+ffa01704:	6c 32       	P5 = P4;
+ffa01706:	4c e1 90 ff 	P4.H = 0xff90;		/* (-112)	P4=0xff908000 */
+ffa0170a:	15 6c       	P5 += 0x2;		/* (  2) */
+ffa0170c:	06 60       	R6 = 0x0 (X);		/*		R6=0x0(  0) */
+ffa0170e:	24 e1 bf ff 	R4 = -0x41 (X);		/*		R4=0xffffffbf(-65) */
+ffa01712:	25 e1 9f ff 	R5 = -0x61 (X);		/*		R5=0xffffff9f(-97) */
+ffa01716:	0c e1 90 0c 	P4.L = 0xc90;		/* (3216)	P4=0xff900c90 <__bss_start> */
+ffa0171a:	2b e1 80 ff 	P3 = -0x80 (X);		/*		P3=0xffffff80(-128) */
+ffa0171e:	2c 20       	JUMP.S 0xffa01776 <_uart_str+0xae>;
+ffa01720:	68 60       	R0 = 0xd (X);		/*		R0=0xd( 13) */
+ffa01722:	07 08       	CC = R7 == R0;
+ffa01724:	35 18       	IF CC JUMP 0xffa0178e <_uart_str+0xc6>;
+ffa01726:	22 50       	R0 = R2 + R4;
+ffa01728:	40 43       	R0 = R0.B (Z);
+ffa0172a:	c9 60       	R1 = 0x19 (X);		/*		R1=0x19( 25) */
+ffa0172c:	08 0a       	CC = R0 <= R1 (IU);
+ffa0172e:	37 1c       	IF CC JUMP 0xffa0179c <_uart_str+0xd4> (BP);
+ffa01730:	03 61       	R3 = 0x20 (X);		/*		R3=0x20( 32) */
+ffa01732:	15 50       	R0 = R5 + R2;
+ffa01734:	40 43       	R0 = R0.B (Z);
+ffa01736:	c9 60       	R1 = 0x19 (X);		/*		R1=0x19( 25) */
+ffa01738:	08 0a       	CC = R0 <= R1 (IU);
+ffa0173a:	02 30       	R0 = R2;
+ffa0173c:	11 43       	R1 = R2.B (X);
+ffa0173e:	80 66       	R0 += -0x30;		/* (-48) */
+ffa01740:	19 07       	IF CC R3 = R1;
+ffa01742:	40 43       	R0 = R0.B (Z);
+ffa01744:	4a 60       	R2 = 0x9 (X);		/*		R2=0x9(  9) */
+ffa01746:	10 0a       	CC = R0 <= R2 (IU);
+ffa01748:	19 07       	IF CC R3 = R1;
+ffa0174a:	60 61       	R0 = 0x2c (X);		/*		R0=0x2c( 44) */
+ffa0174c:	07 08       	CC = R7 == R0;
+ffa0174e:	2f 18       	IF CC JUMP 0xffa017ac <_uart_str+0xe4>;
+ffa01750:	09 61       	R1 = 0x21 (X);		/*		R1=0x21( 33) */
+ffa01752:	0f 08       	CC = R7 == R1;
+ffa01754:	26 18       	IF CC JUMP 0xffa017a0 <_uart_str+0xd8>;
+ffa01756:	fa 61       	R2 = 0x3f (X);		/*		R2=0x3f( 63) */
+ffa01758:	17 08       	CC = R7 == R2;
+ffa0175a:	88 10       	IF !CC JUMP 0xffa0186a <_uart_str+0x1a2>;
+ffa0175c:	20 e1 3f 02 	R0 = 0x23f (X);		/*		R0=0x23f(575) */
+ffa01760:	ff e3 d0 f8 	CALL 0xffa00900 <_oled_write>;
+ffa01764:	6a 98       	R2 = B[P5++] (X);
+ffa01766:	17 43       	R7 = R2.B (X);
+ffa01768:	0e 64       	R6 += 0x1;		/* (  1) */
+ffa0176a:	07 0c       	CC = R7 == 0x0;
+ffa0176c:	c2 1b       	IF CC JUMP 0xffa016f0 <_uart_str+0x28>;
+ffa0176e:	20 e1 00 04 	R0 = 0x400 (X);		/*		R0=0x400(1024) */
+ffa01772:	06 08       	CC = R6 == R0;
+ffa01774:	be 1b       	IF CC JUMP 0xffa016f0 <_uart_str+0x28>;
+ffa01776:	51 60       	R1 = 0xa (X);		/*		R1=0xa( 10) */
+ffa01778:	0f 08       	CC = R7 == R1;
+ffa0177a:	d3 17       	IF !CC JUMP 0xffa01720 <_uart_str+0x58> (BP);
+ffa0177c:	20 99       	R0 = B[P4] (Z);
+ffa0177e:	30 48       	CC = !BITTST (R0, 0x6);		/* bit  6 */
+ffa01780:	18 1c       	IF CC JUMP 0xffa017b0 <_uart_str+0xe8> (BP);
+ffa01782:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900424 */
+ffa01786:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa01788:	0a e1 90 0c 	P2.L = 0xc90;		/* (3216)	P2=0xff900c90 <__bss_start> */
+ffa0178c:	10 9b       	B[P2] = R0;
+ffa0178e:	60 99       	R0 = B[P4] (X);
+ffa01790:	4b 30       	R1 = P3;
+ffa01792:	08 56       	R0 = R0 | R1;
+ffa01794:	40 43       	R0 = R0.B (Z);
+ffa01796:	ff e3 b5 f8 	CALL 0xffa00900 <_oled_write>;
+ffa0179a:	e5 2f       	JUMP.S 0xffa01764 <_uart_str+0x9c>;
+ffa0179c:	13 43       	R3 = R2.B (X);
+ffa0179e:	ca 2f       	JUMP.S 0xffa01732 <_uart_str+0x6a>;
+ffa017a0:	0b 61       	R3 = 0x21 (X);		/*		R3=0x21( 33) */
+ffa017a2:	22 e1 00 02 	R2 = 0x200 (X);		/*		R2=0x200(512) */
+ffa017a6:	13 50       	R0 = R3 + R2;
+ffa017a8:	c0 42       	R0 = R0.L (Z);
+ffa017aa:	db 2f       	JUMP.S 0xffa01760 <_uart_str+0x98>;
+ffa017ac:	63 61       	R3 = 0x2c (X);		/*		R3=0x2c( 44) */
+ffa017ae:	fa 2f       	JUMP.S 0xffa017a2 <_uart_str+0xda>;
+ffa017b0:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900c90 <__bss_start> */
+ffa017b4:	20 e1 40 00 	R0 = 0x40 (X);		/*		R0=0x40( 64) */
+ffa017b8:	0a e1 90 0c 	P2.L = 0xc90;		/* (3216)	P2=0xff900c90 <__bss_start> */
+ffa017bc:	10 9b       	B[P2] = R0;
+ffa017be:	e8 2f       	JUMP.S 0xffa0178e <_uart_str+0xc6>;
+ffa017c0:	63 99       	R3 = B[P4] (X);
+ffa017c2:	08 61       	R0 = 0x21 (X);		/*		R0=0x21( 33) */
+ffa017c4:	03 08       	CC = R3 == R0;
+ffa017c6:	58 18       	IF CC JUMP 0xffa01876 <_uart_str+0x1ae>;
+ffa017c8:	00 00       	NOP;
+ffa017ca:	00 00       	NOP;
+ffa017cc:	54 32       	P2 = P4;
+ffa017ce:	50 99       	R0 = B[P2] (X);
+ffa017d0:	01 43       	R1 = R0.B (X);
+ffa017d2:	01 0c       	CC = R1 == 0x0;
+ffa017d4:	8a 1b       	IF CC JUMP 0xffa016e8 <_uart_str+0x20>;
+ffa017d6:	42 32       	P0 = P2;
+ffa017d8:	4d e1 c0 ff 	P5.H = 0xffc0;		/* (-64)	P5=0xffc00c8c(-4191092) */
+ffa017dc:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00c90(-4191088) */
+ffa017e0:	08 6c       	P0 += 0x1;		/* (  1) */
+ffa017e2:	0d e1 00 04 	P5.L = 0x400;		/* (1024)	P5=0xffc00400(-4193280) */
+ffa017e6:	0a e1 14 04 	P2.L = 0x414;		/* (1044)	P2=0xffc00414(-4193260) */
+ffa017ea:	02 61       	R2 = 0x20 (X);		/*		R2=0x20( 32) */
+ffa017ec:	57 60       	R7 = 0xa (X);		/*		R7=0xa( 10) */
+ffa017ee:	6e 60       	R6 = 0xd (X);		/*		R6=0xd( 13) */
+ffa017f0:	29 e1 00 04 	P1 = 0x400 (X);		/*		P1=0x400(1024) */
+ffa017f4:	55 60       	R5 = 0xa (X);		/*		R5=0xa( 10) */
+ffa017f6:	b2 e0 19 10 	LSETUP(0xffa017fa <_uart_str+0x132>, 0xffa01828 <_uart_str+0x160>) LC1 = P1;
+ffa017fa:	29 08       	CC = R1 == R5;
+ffa017fc:	18 18       	IF CC JUMP 0xffa0182c <_uart_str+0x164>;
 ffa017fe:	00 00       	NOP;
-ffa01800:	20 9d       	R0.L = W[I0];
-ffa01802:	02 54       	R0 = R2 & R0;
-ffa01804:	00 0c       	CC = R0 == 0x0;
-ffa01806:	fb 1f       	IF CC JUMP 0xffa017fc <_uart_str+0x174> (BP);
-ffa01808:	90 32       	P2 = I0;
-ffa0180a:	2e 97       	W[P5] = R6;
-ffa0180c:	10 95       	R0 = W[P2] (Z);
-ffa0180e:	02 54       	R0 = R2 & R0;
-ffa01810:	00 0c       	CC = R0 == 0x0;
-ffa01812:	e7 13       	IF !CC JUMP 0xffa017e0 <_uart_str+0x158>;
+ffa01800:	00 43       	R0 = R0.B (X);
+ffa01802:	28 97       	W[P5] = R0;
+ffa01804:	10 95       	R0 = W[P2] (Z);
+ffa01806:	02 54       	R0 = R2 & R0;
+ffa01808:	00 0c       	CC = R0 == 0x0;
+ffa0180a:	0b 10       	IF !CC JUMP 0xffa01820 <_uart_str+0x158>;
+ffa0180c:	00 00       	NOP;
+ffa0180e:	00 00       	NOP;
+ffa01810:	42 34       	I0 = P2;
+ffa01812:	00 00       	NOP;
 ffa01814:	00 00       	NOP;
-ffa01816:	00 00       	NOP;
-ffa01818:	42 34       	I0 = P2;
-ffa0181a:	00 00       	NOP;
-ffa0181c:	00 00       	NOP;
-ffa0181e:	20 9d       	R0.L = W[I0];
-ffa01820:	02 54       	R0 = R2 & R0;
-ffa01822:	00 0c       	CC = R0 == 0x0;
-ffa01824:	fb 1f       	IF CC JUMP 0xffa0181a <_uart_str+0x192> (BP);
-ffa01826:	90 32       	P2 = I0;
-ffa01828:	dc 2f       	JUMP.S 0xffa017e0 <_uart_str+0x158>;
-ffa0182a:	d0 61       	R0 = 0x3a (X);		/*		R0=0x3a( 58) */
-ffa0182c:	07 08       	CC = R7 == R0;
-ffa0182e:	07 10       	IF !CC JUMP 0xffa0183c <_uart_str+0x1b4>;
-ffa01830:	20 e1 3a 02 	R0 = 0x23a (X);		/*		R0=0x23a(570) */
-ffa01834:	76 2f       	JUMP.S 0xffa01720 <_uart_str+0x98>;
-ffa01836:	54 32       	P2 = P4;
-ffa01838:	0a 6c       	P2 += 0x1;		/* (  1) */
-ffa0183a:	aa 2f       	JUMP.S 0xffa0178e <_uart_str+0x106>;
-ffa0183c:	71 61       	R1 = 0x2e (X);		/*		R1=0x2e( 46) */
-ffa0183e:	0f 08       	CC = R7 == R1;
-ffa01840:	91 13       	IF !CC JUMP 0xffa01762 <_uart_str+0xda>;
-ffa01842:	20 e1 2e 02 	R0 = 0x22e (X);		/*		R0=0x22e(558) */
-ffa01846:	6d 2f       	JUMP.S 0xffa01720 <_uart_str+0x98>;
+ffa01816:	20 9d       	R0.L = W[I0];
+ffa01818:	02 54       	R0 = R2 & R0;
+ffa0181a:	00 0c       	CC = R0 == 0x0;
+ffa0181c:	fb 1f       	IF CC JUMP 0xffa01812 <_uart_str+0x14a> (BP);
+ffa0181e:	90 32       	P2 = I0;
+ffa01820:	40 98       	R0 = B[P0++] (X);
+ffa01822:	01 43       	R1 = R0.B (X);
+ffa01824:	01 0c       	CC = R1 == 0x0;
+ffa01826:	61 1b       	IF CC JUMP 0xffa016e8 <_uart_str+0x20>;
+ffa01828:	00 00       	NOP;
+ffa0182a:	5f 2f       	JUMP.S 0xffa016e8 <_uart_str+0x20>;
+ffa0182c:	2f 97       	W[P5] = R7;
+ffa0182e:	10 95       	R0 = W[P2] (Z);
+ffa01830:	02 54       	R0 = R2 & R0;
+ffa01832:	00 0c       	CC = R0 == 0x0;
+ffa01834:	0b 10       	IF !CC JUMP 0xffa0184a <_uart_str+0x182>;
+ffa01836:	00 00       	NOP;
+ffa01838:	00 00       	NOP;
+ffa0183a:	42 34       	I0 = P2;
+ffa0183c:	00 00       	NOP;
+ffa0183e:	00 00       	NOP;
+ffa01840:	20 9d       	R0.L = W[I0];
+ffa01842:	02 54       	R0 = R2 & R0;
+ffa01844:	00 0c       	CC = R0 == 0x0;
+ffa01846:	fb 1f       	IF CC JUMP 0xffa0183c <_uart_str+0x174> (BP);
+ffa01848:	90 32       	P2 = I0;
+ffa0184a:	2e 97       	W[P5] = R6;
+ffa0184c:	10 95       	R0 = W[P2] (Z);
+ffa0184e:	02 54       	R0 = R2 & R0;
+ffa01850:	00 0c       	CC = R0 == 0x0;
+ffa01852:	e7 13       	IF !CC JUMP 0xffa01820 <_uart_str+0x158>;
+ffa01854:	00 00       	NOP;
+ffa01856:	00 00       	NOP;
+ffa01858:	42 34       	I0 = P2;
+ffa0185a:	00 00       	NOP;
+ffa0185c:	00 00       	NOP;
+ffa0185e:	20 9d       	R0.L = W[I0];
+ffa01860:	02 54       	R0 = R2 & R0;
+ffa01862:	00 0c       	CC = R0 == 0x0;
+ffa01864:	fb 1f       	IF CC JUMP 0xffa0185a <_uart_str+0x192> (BP);
+ffa01866:	90 32       	P2 = I0;
+ffa01868:	dc 2f       	JUMP.S 0xffa01820 <_uart_str+0x158>;
+ffa0186a:	d0 61       	R0 = 0x3a (X);		/*		R0=0x3a( 58) */
+ffa0186c:	07 08       	CC = R7 == R0;
+ffa0186e:	07 10       	IF !CC JUMP 0xffa0187c <_uart_str+0x1b4>;
+ffa01870:	20 e1 3a 02 	R0 = 0x23a (X);		/*		R0=0x23a(570) */
+ffa01874:	76 2f       	JUMP.S 0xffa01760 <_uart_str+0x98>;
+ffa01876:	54 32       	P2 = P4;
+ffa01878:	0a 6c       	P2 += 0x1;		/* (  1) */
+ffa0187a:	aa 2f       	JUMP.S 0xffa017ce <_uart_str+0x106>;
+ffa0187c:	71 61       	R1 = 0x2e (X);		/*		R1=0x2e( 46) */
+ffa0187e:	0f 08       	CC = R7 == R1;
+ffa01880:	91 13       	IF !CC JUMP 0xffa017a2 <_uart_str+0xda>;
+ffa01882:	20 e1 2e 02 	R0 = 0x22e (X);		/*		R0=0x22e(558) */
+ffa01886:	6d 2f       	JUMP.S 0xffa01760 <_uart_str+0x98>;
 
-ffa01848 <_printf_newline>:
-ffa01848:	00 e8 00 00 	LINK 0x0;		/* (0) */
-ffa0184c:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff90022e(-7339474) */
-ffa01850:	00 e1 9c 07 	R0.L = 0x79c;		/* (1948)	R0=0xff90079c(-7338084) */
-ffa01854:	01 e8 00 00 	UNLINK;
-ffa01858:	ff e2 18 ff 	JUMP.L 0xffa01688 <_uart_str>;
+ffa01888 <_printf_newline>:
+ffa01888:	00 e8 00 00 	LINK 0x0;		/* (0) */
+ffa0188c:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff90022e(-7339474) */
+ffa01890:	00 e1 20 08 	R0.L = 0x820;		/* (2080)	R0=0xff900820(-7337952) */
+ffa01894:	01 e8 00 00 	UNLINK;
+ffa01898:	ff e2 18 ff 	JUMP.L 0xffa016c8 <_uart_str>;
 
-ffa0185c <_printf_hex_byte>:
-ffa0185c:	fc 05       	[--SP] = (R7:7, P5:4);
-ffa0185e:	39 30       	R7 = R1;
-ffa01860:	00 e8 03 00 	LINK 0xc;		/* (12) */
-ffa01864:	28 32       	P5 = R0;
-ffa01866:	00 e3 c1 01 	CALL 0xffa01be8 <_strlen_>;
-ffa0186a:	08 30       	R1 = R0;
-ffa0186c:	20 e1 fb 03 	R0 = 0x3fb (X);		/*		R0=0x3fb(1019) */
-ffa01870:	01 09       	CC = R1 <= R0;
-ffa01872:	3d 10       	IF !CC JUMP 0xffa018ec <_printf_hex_byte+0x90>;
-ffa01874:	01 0d       	CC = R1 <= 0x0;
-ffa01876:	44 18       	IF CC JUMP 0xffa018fe <_printf_hex_byte+0xa2>;
-ffa01878:	4c e1 90 ff 	P4.H = 0xff90;		/* (-112)	P4=0xff900c0c <__bss_start> */
-ffa0187c:	00 68       	P0 = 0x0 (X);		/*		P0=0x0(  0) */
-ffa0187e:	0c e1 6c 0e 	P4.L = 0xe6c;		/* (3692)	P4=0xff900e6c <_printf_out> */
-ffa01882:	09 32       	P1 = R1;
-ffa01884:	b2 e0 06 10 	LSETUP(0xffa01888 <_printf_hex_byte+0x2c>, 0xffa01890 <_printf_hex_byte+0x34>) LC1 = P1;
-ffa01888:	62 91       	P2 = [P4];
-ffa0188a:	68 98       	R0 = B[P5++] (X);
-ffa0188c:	82 5a       	P2 = P2 + P0;
-ffa0188e:	10 9b       	B[P2] = R0;
-ffa01890:	08 6c       	P0 += 0x1;		/* (  1) */
-ffa01892:	09 32       	P1 = R1;
-ffa01894:	62 91       	P2 = [P4];
-ffa01896:	80 61       	R0 = 0x30 (X);		/*		R0=0x30( 48) */
-ffa01898:	79 43       	R1 = R7.B (Z);
-ffa0189a:	4a 60       	R2 = 0x9 (X);		/*		R2=0x9(  9) */
-ffa0189c:	8a 5a       	P2 = P2 + P1;
-ffa0189e:	10 9b       	B[P2] = R0;
-ffa018a0:	62 91       	P2 = [P4];
-ffa018a2:	09 6c       	P1 += 0x1;		/* (  1) */
-ffa018a4:	20 e1 78 00 	R0 = 0x78 (X);		/*		R0=0x78(120) */
-ffa018a8:	8a 5a       	P2 = P2 + P1;
-ffa018aa:	10 9b       	B[P2] = R0;
-ffa018ac:	82 c6 e1 81 	R0 = R1 >> 0x4;
-ffa018b0:	09 6c       	P1 += 0x1;		/* (  1) */
-ffa018b2:	10 09       	CC = R0 <= R2;
-ffa018b4:	23 14       	IF !CC JUMP 0xffa018fa <_printf_hex_byte+0x9e> (BP);
-ffa018b6:	80 65       	R0 += 0x30;		/* ( 48) */
-ffa018b8:	62 91       	P2 = [P4];
-ffa018ba:	8a 5a       	P2 = P2 + P1;
-ffa018bc:	10 9b       	B[P2] = R0;
-ffa018be:	78 60       	R0 = 0xf (X);		/*		R0=0xf( 15) */
-ffa018c0:	01 54       	R0 = R1 & R0;
-ffa018c2:	49 60       	R1 = 0x9 (X);		/*		R1=0x9(  9) */
-ffa018c4:	08 09       	CC = R0 <= R1;
-ffa018c6:	18 1c       	IF CC JUMP 0xffa018f6 <_printf_hex_byte+0x9a> (BP);
-ffa018c8:	b8 65       	R0 += 0x37;		/* ( 55) */
-ffa018ca:	62 91       	P2 = [P4];
-ffa018cc:	8a 5a       	P2 = P2 + P1;
-ffa018ce:	90 e6 01 00 	B[P2 + 0x1] = R0;
-ffa018d2:	62 91       	P2 = [P4];
-ffa018d4:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa018d6:	8a 5a       	P2 = P2 + P1;
-ffa018d8:	90 e6 02 00 	B[P2 + 0x2] = R0;
-ffa018dc:	20 91       	R0 = [P4];
-ffa018de:	ff e3 d5 fe 	CALL 0xffa01688 <_uart_str>;
-ffa018e2:	01 e8 00 00 	UNLINK;
-ffa018e6:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa018e8:	bc 05       	(R7:7, P5:4) = [SP++];
-ffa018ea:	10 00       	RTS;
-ffa018ec:	01 e8 00 00 	UNLINK;
-ffa018f0:	f8 63       	R0 = -0x1 (X);		/*		R0=0xffffffff( -1) */
-ffa018f2:	bc 05       	(R7:7, P5:4) = [SP++];
-ffa018f4:	10 00       	RTS;
+ffa0189c <_printf_hex_byte>:
+ffa0189c:	fc 05       	[--SP] = (R7:7, P5:4);
+ffa0189e:	39 30       	R7 = R1;
+ffa018a0:	00 e8 03 00 	LINK 0xc;		/* (12) */
+ffa018a4:	28 32       	P5 = R0;
+ffa018a6:	00 e3 c1 01 	CALL 0xffa01c28 <_strlen_>;
+ffa018aa:	08 30       	R1 = R0;
+ffa018ac:	20 e1 fb 03 	R0 = 0x3fb (X);		/*		R0=0x3fb(1019) */
+ffa018b0:	01 09       	CC = R1 <= R0;
+ffa018b2:	3d 10       	IF !CC JUMP 0xffa0192c <_printf_hex_byte+0x90>;
+ffa018b4:	01 0d       	CC = R1 <= 0x0;
+ffa018b6:	44 18       	IF CC JUMP 0xffa0193e <_printf_hex_byte+0xa2>;
+ffa018b8:	4c e1 90 ff 	P4.H = 0xff90;		/* (-112)	P4=0xff900c90 <__bss_start> */
+ffa018bc:	00 68       	P0 = 0x0 (X);		/*		P0=0x0(  0) */
+ffa018be:	0c e1 f0 0e 	P4.L = 0xef0;		/* (3824)	P4=0xff900ef0 <_printf_out> */
+ffa018c2:	09 32       	P1 = R1;
+ffa018c4:	b2 e0 06 10 	LSETUP(0xffa018c8 <_printf_hex_byte+0x2c>, 0xffa018d0 <_printf_hex_byte+0x34>) LC1 = P1;
+ffa018c8:	62 91       	P2 = [P4];
+ffa018ca:	68 98       	R0 = B[P5++] (X);
+ffa018cc:	82 5a       	P2 = P2 + P0;
+ffa018ce:	10 9b       	B[P2] = R0;
+ffa018d0:	08 6c       	P0 += 0x1;		/* (  1) */
+ffa018d2:	09 32       	P1 = R1;
+ffa018d4:	62 91       	P2 = [P4];
+ffa018d6:	80 61       	R0 = 0x30 (X);		/*		R0=0x30( 48) */
+ffa018d8:	79 43       	R1 = R7.B (Z);
+ffa018da:	4a 60       	R2 = 0x9 (X);		/*		R2=0x9(  9) */
+ffa018dc:	8a 5a       	P2 = P2 + P1;
+ffa018de:	10 9b       	B[P2] = R0;
+ffa018e0:	62 91       	P2 = [P4];
+ffa018e2:	09 6c       	P1 += 0x1;		/* (  1) */
+ffa018e4:	20 e1 78 00 	R0 = 0x78 (X);		/*		R0=0x78(120) */
+ffa018e8:	8a 5a       	P2 = P2 + P1;
+ffa018ea:	10 9b       	B[P2] = R0;
+ffa018ec:	82 c6 e1 81 	R0 = R1 >> 0x4;
+ffa018f0:	09 6c       	P1 += 0x1;		/* (  1) */
+ffa018f2:	10 09       	CC = R0 <= R2;
+ffa018f4:	23 14       	IF !CC JUMP 0xffa0193a <_printf_hex_byte+0x9e> (BP);
 ffa018f6:	80 65       	R0 += 0x30;		/* ( 48) */
-ffa018f8:	e9 2f       	JUMP.S 0xffa018ca <_printf_hex_byte+0x6e>;
-ffa018fa:	b8 65       	R0 += 0x37;		/* ( 55) */
-ffa018fc:	de 2f       	JUMP.S 0xffa018b8 <_printf_hex_byte+0x5c>;
-ffa018fe:	4c e1 90 ff 	P4.H = 0xff90;		/* (-112)	P4=0xff900e6c <_printf_out> */
-ffa01902:	0c e1 6c 0e 	P4.L = 0xe6c;		/* (3692)	P4=0xff900e6c <_printf_out> */
-ffa01906:	c6 2f       	JUMP.S 0xffa01892 <_printf_hex_byte+0x36>;
+ffa018f8:	62 91       	P2 = [P4];
+ffa018fa:	8a 5a       	P2 = P2 + P1;
+ffa018fc:	10 9b       	B[P2] = R0;
+ffa018fe:	78 60       	R0 = 0xf (X);		/*		R0=0xf( 15) */
+ffa01900:	01 54       	R0 = R1 & R0;
+ffa01902:	49 60       	R1 = 0x9 (X);		/*		R1=0x9(  9) */
+ffa01904:	08 09       	CC = R0 <= R1;
+ffa01906:	18 1c       	IF CC JUMP 0xffa01936 <_printf_hex_byte+0x9a> (BP);
+ffa01908:	b8 65       	R0 += 0x37;		/* ( 55) */
+ffa0190a:	62 91       	P2 = [P4];
+ffa0190c:	8a 5a       	P2 = P2 + P1;
+ffa0190e:	90 e6 01 00 	B[P2 + 0x1] = R0;
+ffa01912:	62 91       	P2 = [P4];
+ffa01914:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa01916:	8a 5a       	P2 = P2 + P1;
+ffa01918:	90 e6 02 00 	B[P2 + 0x2] = R0;
+ffa0191c:	20 91       	R0 = [P4];
+ffa0191e:	ff e3 d5 fe 	CALL 0xffa016c8 <_uart_str>;
+ffa01922:	01 e8 00 00 	UNLINK;
+ffa01926:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa01928:	bc 05       	(R7:7, P5:4) = [SP++];
+ffa0192a:	10 00       	RTS;
+ffa0192c:	01 e8 00 00 	UNLINK;
+ffa01930:	f8 63       	R0 = -0x1 (X);		/*		R0=0xffffffff( -1) */
+ffa01932:	bc 05       	(R7:7, P5:4) = [SP++];
+ffa01934:	10 00       	RTS;
+ffa01936:	80 65       	R0 += 0x30;		/* ( 48) */
+ffa01938:	e9 2f       	JUMP.S 0xffa0190a <_printf_hex_byte+0x6e>;
+ffa0193a:	b8 65       	R0 += 0x37;		/* ( 55) */
+ffa0193c:	de 2f       	JUMP.S 0xffa018f8 <_printf_hex_byte+0x5c>;
+ffa0193e:	4c e1 90 ff 	P4.H = 0xff90;		/* (-112)	P4=0xff900ef0 <_printf_out> */
+ffa01942:	0c e1 f0 0e 	P4.L = 0xef0;		/* (3824)	P4=0xff900ef0 <_printf_out> */
+ffa01946:	c6 2f       	JUMP.S 0xffa018d2 <_printf_hex_byte+0x36>;
 
-ffa01908 <_printf_hex>:
-ffa01908:	fb 05       	[--SP] = (R7:7, P5:3);
-ffa0190a:	39 30       	R7 = R1;
-ffa0190c:	00 e8 03 00 	LINK 0xc;		/* (12) */
-ffa01910:	28 32       	P5 = R0;
-ffa01912:	00 e3 6b 01 	CALL 0xffa01be8 <_strlen_>;
-ffa01916:	08 30       	R1 = R0;
-ffa01918:	20 e1 f5 03 	R0 = 0x3f5 (X);		/*		R0=0x3f5(1013) */
-ffa0191c:	01 09       	CC = R1 <= R0;
-ffa0191e:	46 10       	IF !CC JUMP 0xffa019aa <_printf_hex+0xa2>;
-ffa01920:	01 0d       	CC = R1 <= 0x0;
-ffa01922:	49 18       	IF CC JUMP 0xffa019b4 <_printf_hex+0xac>;
-ffa01924:	4c e1 90 ff 	P4.H = 0xff90;		/* (-112)	P4=0xff900e6c <_printf_out> */
-ffa01928:	00 68       	P0 = 0x0 (X);		/*		P0=0x0(  0) */
-ffa0192a:	0c e1 6c 0e 	P4.L = 0xe6c;		/* (3692)	P4=0xff900e6c <_printf_out> */
-ffa0192e:	09 32       	P1 = R1;
-ffa01930:	b2 e0 06 10 	LSETUP(0xffa01934 <_printf_hex+0x2c>, 0xffa0193c <_printf_hex+0x34>) LC1 = P1;
-ffa01934:	62 91       	P2 = [P4];
-ffa01936:	68 98       	R0 = B[P5++] (X);
-ffa01938:	82 5a       	P2 = P2 + P0;
-ffa0193a:	10 9b       	B[P2] = R0;
-ffa0193c:	08 6c       	P0 += 0x1;		/* (  1) */
-ffa0193e:	09 32       	P1 = R1;
-ffa01940:	62 91       	P2 = [P4];
-ffa01942:	80 61       	R0 = 0x30 (X);		/*		R0=0x30( 48) */
-ffa01944:	29 32       	P5 = R1;
-ffa01946:	e1 60       	R1 = 0x1c (X);		/*		R1=0x1c( 28) */
-ffa01948:	8a 5a       	P2 = P2 + P1;
-ffa0194a:	10 9b       	B[P2] = R0;
-ffa0194c:	62 91       	P2 = [P4];
-ffa0194e:	09 6c       	P1 += 0x1;		/* (  1) */
-ffa01950:	20 e1 78 00 	R0 = 0x78 (X);		/*		R0=0x78(120) */
-ffa01954:	15 6c       	P5 += 0x2;		/* (  2) */
-ffa01956:	8a 5a       	P2 = P2 + P1;
-ffa01958:	10 9b       	B[P2] = R0;
-ffa0195a:	7a 60       	R2 = 0xf (X);		/*		R2=0xf( 15) */
-ffa0195c:	40 68       	P0 = 0x8 (X);		/*		P0=0x8(  8) */
-ffa0195e:	4b 60       	R3 = 0x9 (X);		/*		R3=0x9(  9) */
-ffa01960:	b2 e0 10 00 	LSETUP(0xffa01964 <_printf_hex+0x5c>, 0xffa01980 <_printf_hex+0x78>) LC1 = P0;
-ffa01964:	07 30       	R0 = R7;
-ffa01966:	08 40       	R0 >>>= R1;
-ffa01968:	10 54       	R0 = R0 & R2;
-ffa0196a:	18 09       	CC = R0 <= R3;
-ffa0196c:	1d 1c       	IF CC JUMP 0xffa019a6 <_printf_hex+0x9e> (BP);
-ffa0196e:	b8 65       	R0 += 0x37;		/* ( 55) */
-ffa01970:	62 91       	P2 = [P4];
-ffa01972:	4b e1 90 ff 	P3.H = 0xff90;		/* (-112)	P3=0xff90ff80 */
-ffa01976:	0b e1 6c 0e 	P3.L = 0xe6c;		/* (3692)	P3=0xff900e6c <_printf_out> */
-ffa0197a:	e1 67       	R1 += -0x4;		/* ( -4) */
-ffa0197c:	aa 5a       	P2 = P2 + P5;
-ffa0197e:	10 9b       	B[P2] = R0;
-ffa01980:	0d 6c       	P5 += 0x1;		/* (  1) */
-ffa01982:	5a 91       	P2 = [P3];
-ffa01984:	49 6c       	P1 += 0x9;		/* (  9) */
-ffa01986:	50 60       	R0 = 0xa (X);		/*		R0=0xa( 10) */
+ffa01948 <_printf_hex>:
+ffa01948:	fb 05       	[--SP] = (R7:7, P5:3);
+ffa0194a:	39 30       	R7 = R1;
+ffa0194c:	00 e8 03 00 	LINK 0xc;		/* (12) */
+ffa01950:	28 32       	P5 = R0;
+ffa01952:	00 e3 6b 01 	CALL 0xffa01c28 <_strlen_>;
+ffa01956:	08 30       	R1 = R0;
+ffa01958:	20 e1 f5 03 	R0 = 0x3f5 (X);		/*		R0=0x3f5(1013) */
+ffa0195c:	01 09       	CC = R1 <= R0;
+ffa0195e:	46 10       	IF !CC JUMP 0xffa019ea <_printf_hex+0xa2>;
+ffa01960:	01 0d       	CC = R1 <= 0x0;
+ffa01962:	49 18       	IF CC JUMP 0xffa019f4 <_printf_hex+0xac>;
+ffa01964:	4c e1 90 ff 	P4.H = 0xff90;		/* (-112)	P4=0xff900ef0 <_printf_out> */
+ffa01968:	00 68       	P0 = 0x0 (X);		/*		P0=0x0(  0) */
+ffa0196a:	0c e1 f0 0e 	P4.L = 0xef0;		/* (3824)	P4=0xff900ef0 <_printf_out> */
+ffa0196e:	09 32       	P1 = R1;
+ffa01970:	b2 e0 06 10 	LSETUP(0xffa01974 <_printf_hex+0x2c>, 0xffa0197c <_printf_hex+0x34>) LC1 = P1;
+ffa01974:	62 91       	P2 = [P4];
+ffa01976:	68 98       	R0 = B[P5++] (X);
+ffa01978:	82 5a       	P2 = P2 + P0;
+ffa0197a:	10 9b       	B[P2] = R0;
+ffa0197c:	08 6c       	P0 += 0x1;		/* (  1) */
+ffa0197e:	09 32       	P1 = R1;
+ffa01980:	62 91       	P2 = [P4];
+ffa01982:	80 61       	R0 = 0x30 (X);		/*		R0=0x30( 48) */
+ffa01984:	29 32       	P5 = R1;
+ffa01986:	e1 60       	R1 = 0x1c (X);		/*		R1=0x1c( 28) */
 ffa01988:	8a 5a       	P2 = P2 + P1;
 ffa0198a:	10 9b       	B[P2] = R0;
-ffa0198c:	5a 91       	P2 = [P3];
-ffa0198e:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa01990:	8a 5a       	P2 = P2 + P1;
-ffa01992:	90 e6 01 00 	B[P2 + 0x1] = R0;
-ffa01996:	18 91       	R0 = [P3];
-ffa01998:	ff e3 78 fe 	CALL 0xffa01688 <_uart_str>;
-ffa0199c:	01 e8 00 00 	UNLINK;
-ffa019a0:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa019a2:	bb 05       	(R7:7, P5:3) = [SP++];
-ffa019a4:	10 00       	RTS;
-ffa019a6:	80 65       	R0 += 0x30;		/* ( 48) */
-ffa019a8:	e4 2f       	JUMP.S 0xffa01970 <_printf_hex+0x68>;
-ffa019aa:	01 e8 00 00 	UNLINK;
-ffa019ae:	f8 63       	R0 = -0x1 (X);		/*		R0=0xffffffff( -1) */
-ffa019b0:	bb 05       	(R7:7, P5:3) = [SP++];
-ffa019b2:	10 00       	RTS;
-ffa019b4:	4c e1 90 ff 	P4.H = 0xff90;		/* (-112)	P4=0xff900e6c <_printf_out> */
-ffa019b8:	0c e1 6c 0e 	P4.L = 0xe6c;		/* (3692)	P4=0xff900e6c <_printf_out> */
-ffa019bc:	c1 2f       	JUMP.S 0xffa0193e <_printf_hex+0x36>;
+ffa0198c:	62 91       	P2 = [P4];
+ffa0198e:	09 6c       	P1 += 0x1;		/* (  1) */
+ffa01990:	20 e1 78 00 	R0 = 0x78 (X);		/*		R0=0x78(120) */
+ffa01994:	15 6c       	P5 += 0x2;		/* (  2) */
+ffa01996:	8a 5a       	P2 = P2 + P1;
+ffa01998:	10 9b       	B[P2] = R0;
+ffa0199a:	7a 60       	R2 = 0xf (X);		/*		R2=0xf( 15) */
+ffa0199c:	40 68       	P0 = 0x8 (X);		/*		P0=0x8(  8) */
+ffa0199e:	4b 60       	R3 = 0x9 (X);		/*		R3=0x9(  9) */
+ffa019a0:	b2 e0 10 00 	LSETUP(0xffa019a4 <_printf_hex+0x5c>, 0xffa019c0 <_printf_hex+0x78>) LC1 = P0;
+ffa019a4:	07 30       	R0 = R7;
+ffa019a6:	08 40       	R0 >>>= R1;
+ffa019a8:	10 54       	R0 = R0 & R2;
+ffa019aa:	18 09       	CC = R0 <= R3;
+ffa019ac:	1d 1c       	IF CC JUMP 0xffa019e6 <_printf_hex+0x9e> (BP);
+ffa019ae:	b8 65       	R0 += 0x37;		/* ( 55) */
+ffa019b0:	62 91       	P2 = [P4];
+ffa019b2:	4b e1 90 ff 	P3.H = 0xff90;		/* (-112)	P3=0xff90ff80 */
+ffa019b6:	0b e1 f0 0e 	P3.L = 0xef0;		/* (3824)	P3=0xff900ef0 <_printf_out> */
+ffa019ba:	e1 67       	R1 += -0x4;		/* ( -4) */
+ffa019bc:	aa 5a       	P2 = P2 + P5;
+ffa019be:	10 9b       	B[P2] = R0;
+ffa019c0:	0d 6c       	P5 += 0x1;		/* (  1) */
+ffa019c2:	5a 91       	P2 = [P3];
+ffa019c4:	49 6c       	P1 += 0x9;		/* (  9) */
+ffa019c6:	50 60       	R0 = 0xa (X);		/*		R0=0xa( 10) */
+ffa019c8:	8a 5a       	P2 = P2 + P1;
+ffa019ca:	10 9b       	B[P2] = R0;
+ffa019cc:	5a 91       	P2 = [P3];
+ffa019ce:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa019d0:	8a 5a       	P2 = P2 + P1;
+ffa019d2:	90 e6 01 00 	B[P2 + 0x1] = R0;
+ffa019d6:	18 91       	R0 = [P3];
+ffa019d8:	ff e3 78 fe 	CALL 0xffa016c8 <_uart_str>;
+ffa019dc:	01 e8 00 00 	UNLINK;
+ffa019e0:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa019e2:	bb 05       	(R7:7, P5:3) = [SP++];
+ffa019e4:	10 00       	RTS;
+ffa019e6:	80 65       	R0 += 0x30;		/* ( 48) */
+ffa019e8:	e4 2f       	JUMP.S 0xffa019b0 <_printf_hex+0x68>;
+ffa019ea:	01 e8 00 00 	UNLINK;
+ffa019ee:	f8 63       	R0 = -0x1 (X);		/*		R0=0xffffffff( -1) */
+ffa019f0:	bb 05       	(R7:7, P5:3) = [SP++];
+ffa019f2:	10 00       	RTS;
+ffa019f4:	4c e1 90 ff 	P4.H = 0xff90;		/* (-112)	P4=0xff900ef0 <_printf_out> */
+ffa019f8:	0c e1 f0 0e 	P4.L = 0xef0;		/* (3824)	P4=0xff900ef0 <_printf_out> */
+ffa019fc:	c1 2f       	JUMP.S 0xffa0197e <_printf_hex+0x36>;
 	...
 
-ffa019c0 <_printf_int>:
-ffa019c0:	eb 05       	[--SP] = (R7:5, P5:3);
-ffa019c2:	00 e8 03 00 	LINK 0xc;		/* (12) */
-ffa019c6:	28 30       	R5 = R0;
-ffa019c8:	39 30       	R7 = R1;
-ffa019ca:	01 0c       	CC = R1 == 0x0;
-ffa019cc:	45 14       	IF !CC JUMP 0xffa01a56 <_printf_int+0x96> (BP);
-ffa019ce:	46 e1 90 ff 	R6.H = 0xff90;		/* (-112)	R6=0xff90000d(-7340019) */
-ffa019d2:	06 e1 68 0e 	R6.L = 0xe68;		/* (3688)	R6=0xff900e68 <_printf_temp>(-7336344) */
-ffa019d6:	06 32       	P0 = R6;
-ffa019d8:	80 61       	R0 = 0x30 (X);		/*		R0=0x30( 48) */
-ffa019da:	0c 68       	P4 = 0x1 (X);		/*		P4=0x1(  1) */
-ffa019dc:	42 91       	P2 = [P0];
-ffa019de:	10 9b       	B[P2] = R0;
-ffa019e0:	05 30       	R0 = R5;
-ffa019e2:	00 e3 03 01 	CALL 0xffa01be8 <_strlen_>;
-ffa019e6:	08 30       	R1 = R0;
-ffa019e8:	44 30       	R0 = P4;
-ffa019ea:	81 50       	R2 = R1 + R0;
-ffa019ec:	20 e1 ff 03 	R0 = 0x3ff (X);		/*		R0=0x3ff(1023) */
-ffa019f0:	02 09       	CC = R2 <= R0;
-ffa019f2:	50 10       	IF !CC JUMP 0xffa01a92 <_printf_int+0xd2>;
-ffa019f4:	01 0d       	CC = R1 <= 0x0;
-ffa019f6:	7d 18       	IF CC JUMP 0xffa01af0 <_printf_int+0x130>;
-ffa019f8:	4b e1 90 ff 	P3.H = 0xff90;		/* (-112)	P3=0xff900e6c <_printf_out> */
-ffa019fc:	00 68       	P0 = 0x0 (X);		/*		P0=0x0(  0) */
-ffa019fe:	0b e1 6c 0e 	P3.L = 0xe6c;		/* (3692)	P3=0xff900e6c <_printf_out> */
-ffa01a02:	09 32       	P1 = R1;
-ffa01a04:	b2 e0 08 10 	LSETUP(0xffa01a08 <_printf_int+0x48>, 0xffa01a14 <_printf_int+0x54>) LC1 = P1;
-ffa01a08:	2d 32       	P5 = R5;
-ffa01a0a:	5a 91       	P2 = [P3];
-ffa01a0c:	0d 64       	R5 += 0x1;		/* (  1) */
-ffa01a0e:	82 5a       	P2 = P2 + P0;
-ffa01a10:	68 98       	R0 = B[P5++] (X);
-ffa01a12:	10 9b       	B[P2] = R0;
-ffa01a14:	08 6c       	P0 += 0x1;		/* (  1) */
-ffa01a16:	44 32       	P0 = P4;
-ffa01a18:	29 32       	P5 = R1;
-ffa01a1a:	f8 6f       	P0 += -0x1;		/* ( -1) */
-ffa01a1c:	26 32       	P4 = R6;
-ffa01a1e:	5a 91       	P2 = [P3];
-ffa01a20:	41 e1 90 ff 	R1.H = 0xff90;		/* (-112)	R1=0xff90001c(-7340004) */
-ffa01a24:	01 e1 6c 0e 	R1.L = 0xe6c;		/* (3692)	R1=0xff900e6c <_printf_out>(-7336340) */
-ffa01a28:	61 91       	P1 = [P4];
-ffa01a2a:	aa 5a       	P2 = P2 + P5;
-ffa01a2c:	0d 6c       	P5 += 0x1;		/* (  1) */
-ffa01a2e:	41 5a       	P1 = P1 + P0;
-ffa01a30:	48 99       	R0 = B[P1] (X);
-ffa01a32:	f8 6f       	P0 += -0x1;		/* ( -1) */
-ffa01a34:	10 9b       	B[P2] = R0;
-ffa01a36:	78 0c       	CC = P0 == -0x1;
-ffa01a38:	f2 17       	IF !CC JUMP 0xffa01a1c <_printf_int+0x5c> (BP);
-ffa01a3a:	29 32       	P5 = R1;
-ffa01a3c:	02 32       	P0 = R2;
-ffa01a3e:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa01a40:	6a 91       	P2 = [P5];
-ffa01a42:	82 5a       	P2 = P2 + P0;
-ffa01a44:	10 9b       	B[P2] = R0;
-ffa01a46:	28 91       	R0 = [P5];
-ffa01a48:	ff e3 20 fe 	CALL 0xffa01688 <_uart_str>;
-ffa01a4c:	01 e8 00 00 	UNLINK;
-ffa01a50:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa01a52:	ab 05       	(R7:5, P5:3) = [SP++];
-ffa01a54:	10 00       	RTS;
-ffa01a56:	01 0d       	CC = R1 <= 0x0;
-ffa01a58:	22 18       	IF CC JUMP 0xffa01a9c <_printf_int+0xdc>;
-ffa01a5a:	46 e1 90 ff 	R6.H = 0xff90;		/* (-112)	R6=0xff900e68 <_printf_temp>(-7336344) */
-ffa01a5e:	04 68       	P4 = 0x0 (X);		/*		P4=0x0(  0) */
-ffa01a60:	06 e1 68 0e 	R6.L = 0xe68;		/* (3688)	R6=0xff900e68 <_printf_temp>(-7336344) */
-ffa01a64:	05 20       	JUMP.S 0xffa01a6e <_printf_int+0xae>;
-ffa01a66:	2a e1 80 00 	P2 = 0x80 (X);		/*		P2=0x80(128) */
-ffa01a6a:	54 08       	CC = P4 == P2;
-ffa01a6c:	ba 1b       	IF CC JUMP 0xffa019e0 <_printf_int+0x20>;
-ffa01a6e:	07 30       	R0 = R7;
-ffa01a70:	51 60       	R1 = 0xa (X);		/*		R1=0xa( 10) */
-ffa01a72:	00 e3 8b 00 	CALL 0xffa01b88 <_mod>;
-ffa01a76:	0e 32       	P1 = R6;
-ffa01a78:	80 65       	R0 += 0x30;		/* ( 48) */
-ffa01a7a:	51 60       	R1 = 0xa (X);		/*		R1=0xa( 10) */
-ffa01a7c:	4a 91       	P2 = [P1];
-ffa01a7e:	a2 5a       	P2 = P2 + P4;
-ffa01a80:	10 9b       	B[P2] = R0;
-ffa01a82:	07 30       	R0 = R7;
-ffa01a84:	00 e3 74 00 	CALL 0xffa01b6c <_div_>;
-ffa01a88:	0c 6c       	P4 += 0x1;		/* (  1) */
-ffa01a8a:	38 30       	R7 = R0;
-ffa01a8c:	00 0d       	CC = R0 <= 0x0;
-ffa01a8e:	ec 17       	IF !CC JUMP 0xffa01a66 <_printf_int+0xa6> (BP);
-ffa01a90:	a8 2f       	JUMP.S 0xffa019e0 <_printf_int+0x20>;
-ffa01a92:	01 e8 00 00 	UNLINK;
-ffa01a96:	f8 63       	R0 = -0x1 (X);		/*		R0=0xffffffff( -1) */
-ffa01a98:	ab 05       	(R7:5, P5:3) = [SP++];
-ffa01a9a:	10 00       	RTS;
-ffa01a9c:	f8 63       	R0 = -0x1 (X);		/*		R0=0xffffffff( -1) */
-ffa01a9e:	ff 4c       	BITCLR (R7, 0x1f);		/* bit 31 */
-ffa01aa0:	f8 4f       	R0 <<= 0x1f;
-ffa01aa2:	f8 53       	R7 = R0 - R7;
-ffa01aa4:	07 0d       	CC = R7 <= 0x0;
-ffa01aa6:	2e 18       	IF CC JUMP 0xffa01b02 <_printf_int+0x142>;
-ffa01aa8:	46 e1 90 ff 	R6.H = 0xff90;		/* (-112)	R6=0xff900e68 <_printf_temp>(-7336344) */
-ffa01aac:	05 68       	P5 = 0x0 (X);		/*		P5=0x0(  0) */
-ffa01aae:	06 e1 68 0e 	R6.L = 0xe68;		/* (3688)	R6=0xff900e68 <_printf_temp>(-7336344) */
-ffa01ab2:	05 20       	JUMP.S 0xffa01abc <_printf_int+0xfc>;
-ffa01ab4:	28 e1 80 00 	P0 = 0x80 (X);		/*		P0=0x80(128) */
-ffa01ab8:	45 08       	CC = P5 == P0;
-ffa01aba:	20 18       	IF CC JUMP 0xffa01afa <_printf_int+0x13a>;
-ffa01abc:	26 32       	P4 = R6;
-ffa01abe:	07 30       	R0 = R7;
-ffa01ac0:	51 60       	R1 = 0xa (X);		/*		R1=0xa( 10) */
-ffa01ac2:	00 e3 63 00 	CALL 0xffa01b88 <_mod>;
-ffa01ac6:	80 65       	R0 += 0x30;		/* ( 48) */
-ffa01ac8:	62 91       	P2 = [P4];
-ffa01aca:	51 60       	R1 = 0xa (X);		/*		R1=0xa( 10) */
-ffa01acc:	aa 5a       	P2 = P2 + P5;
-ffa01ace:	10 9b       	B[P2] = R0;
-ffa01ad0:	07 30       	R0 = R7;
-ffa01ad2:	00 e3 4d 00 	CALL 0xffa01b6c <_div_>;
-ffa01ad6:	0d 6c       	P5 += 0x1;		/* (  1) */
-ffa01ad8:	38 30       	R7 = R0;
-ffa01ada:	00 0d       	CC = R0 <= 0x0;
-ffa01adc:	ec 17       	IF !CC JUMP 0xffa01ab4 <_printf_int+0xf4> (BP);
-ffa01ade:	65 32       	P4 = P5;
-ffa01ae0:	4d 32       	P1 = P5;
-ffa01ae2:	0c 6c       	P4 += 0x1;		/* (  1) */
-ffa01ae4:	2e 32       	P5 = R6;
-ffa01ae6:	68 61       	R0 = 0x2d (X);		/*		R0=0x2d( 45) */
-ffa01ae8:	6a 91       	P2 = [P5];
-ffa01aea:	8a 5a       	P2 = P2 + P1;
-ffa01aec:	10 9b       	B[P2] = R0;
-ffa01aee:	79 2f       	JUMP.S 0xffa019e0 <_printf_int+0x20>;
-ffa01af0:	4b e1 90 ff 	P3.H = 0xff90;		/* (-112)	P3=0xff900e6c <_printf_out> */
-ffa01af4:	0b e1 6c 0e 	P3.L = 0xe6c;		/* (3692)	P3=0xff900e6c <_printf_out> */
-ffa01af8:	8f 2f       	JUMP.S 0xffa01a16 <_printf_int+0x56>;
-ffa01afa:	48 32       	P1 = P0;
-ffa01afc:	2c e1 81 00 	P4 = 0x81 (X);		/*		P4=0x81(129) */
-ffa01b00:	f2 2f       	JUMP.S 0xffa01ae4 <_printf_int+0x124>;
-ffa01b02:	46 e1 90 ff 	R6.H = 0xff90;		/* (-112)	R6=0xff900e68 <_printf_temp>(-7336344) */
-ffa01b06:	01 68       	P1 = 0x0 (X);		/*		P1=0x0(  0) */
-ffa01b08:	0c 68       	P4 = 0x1 (X);		/*		P4=0x1(  1) */
-ffa01b0a:	06 e1 68 0e 	R6.L = 0xe68;		/* (3688)	R6=0xff900e68 <_printf_temp>(-7336344) */
-ffa01b0e:	eb 2f       	JUMP.S 0xffa01ae4 <_printf_int+0x124>;
+ffa01a00 <_printf_int>:
+ffa01a00:	eb 05       	[--SP] = (R7:5, P5:3);
+ffa01a02:	00 e8 03 00 	LINK 0xc;		/* (12) */
+ffa01a06:	28 30       	R5 = R0;
+ffa01a08:	39 30       	R7 = R1;
+ffa01a0a:	01 0c       	CC = R1 == 0x0;
+ffa01a0c:	45 14       	IF !CC JUMP 0xffa01a96 <_printf_int+0x96> (BP);
+ffa01a0e:	46 e1 90 ff 	R6.H = 0xff90;		/* (-112)	R6=0xff90000d(-7340019) */
+ffa01a12:	06 e1 ec 0e 	R6.L = 0xeec;		/* (3820)	R6=0xff900eec <_printf_temp>(-7336212) */
+ffa01a16:	06 32       	P0 = R6;
+ffa01a18:	80 61       	R0 = 0x30 (X);		/*		R0=0x30( 48) */
+ffa01a1a:	0c 68       	P4 = 0x1 (X);		/*		P4=0x1(  1) */
+ffa01a1c:	42 91       	P2 = [P0];
+ffa01a1e:	10 9b       	B[P2] = R0;
+ffa01a20:	05 30       	R0 = R5;
+ffa01a22:	00 e3 03 01 	CALL 0xffa01c28 <_strlen_>;
+ffa01a26:	08 30       	R1 = R0;
+ffa01a28:	44 30       	R0 = P4;
+ffa01a2a:	81 50       	R2 = R1 + R0;
+ffa01a2c:	20 e1 ff 03 	R0 = 0x3ff (X);		/*		R0=0x3ff(1023) */
+ffa01a30:	02 09       	CC = R2 <= R0;
+ffa01a32:	50 10       	IF !CC JUMP 0xffa01ad2 <_printf_int+0xd2>;
+ffa01a34:	01 0d       	CC = R1 <= 0x0;
+ffa01a36:	7d 18       	IF CC JUMP 0xffa01b30 <_printf_int+0x130>;
+ffa01a38:	4b e1 90 ff 	P3.H = 0xff90;		/* (-112)	P3=0xff900ef0 <_printf_out> */
+ffa01a3c:	00 68       	P0 = 0x0 (X);		/*		P0=0x0(  0) */
+ffa01a3e:	0b e1 f0 0e 	P3.L = 0xef0;		/* (3824)	P3=0xff900ef0 <_printf_out> */
+ffa01a42:	09 32       	P1 = R1;
+ffa01a44:	b2 e0 08 10 	LSETUP(0xffa01a48 <_printf_int+0x48>, 0xffa01a54 <_printf_int+0x54>) LC1 = P1;
+ffa01a48:	2d 32       	P5 = R5;
+ffa01a4a:	5a 91       	P2 = [P3];
+ffa01a4c:	0d 64       	R5 += 0x1;		/* (  1) */
+ffa01a4e:	82 5a       	P2 = P2 + P0;
+ffa01a50:	68 98       	R0 = B[P5++] (X);
+ffa01a52:	10 9b       	B[P2] = R0;
+ffa01a54:	08 6c       	P0 += 0x1;		/* (  1) */
+ffa01a56:	44 32       	P0 = P4;
+ffa01a58:	29 32       	P5 = R1;
+ffa01a5a:	f8 6f       	P0 += -0x1;		/* ( -1) */
+ffa01a5c:	26 32       	P4 = R6;
+ffa01a5e:	5a 91       	P2 = [P3];
+ffa01a60:	41 e1 90 ff 	R1.H = 0xff90;		/* (-112)	R1=0xff90001c(-7340004) */
+ffa01a64:	01 e1 f0 0e 	R1.L = 0xef0;		/* (3824)	R1=0xff900ef0 <_printf_out>(-7336208) */
+ffa01a68:	61 91       	P1 = [P4];
+ffa01a6a:	aa 5a       	P2 = P2 + P5;
+ffa01a6c:	0d 6c       	P5 += 0x1;		/* (  1) */
+ffa01a6e:	41 5a       	P1 = P1 + P0;
+ffa01a70:	48 99       	R0 = B[P1] (X);
+ffa01a72:	f8 6f       	P0 += -0x1;		/* ( -1) */
+ffa01a74:	10 9b       	B[P2] = R0;
+ffa01a76:	78 0c       	CC = P0 == -0x1;
+ffa01a78:	f2 17       	IF !CC JUMP 0xffa01a5c <_printf_int+0x5c> (BP);
+ffa01a7a:	29 32       	P5 = R1;
+ffa01a7c:	02 32       	P0 = R2;
+ffa01a7e:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa01a80:	6a 91       	P2 = [P5];
+ffa01a82:	82 5a       	P2 = P2 + P0;
+ffa01a84:	10 9b       	B[P2] = R0;
+ffa01a86:	28 91       	R0 = [P5];
+ffa01a88:	ff e3 20 fe 	CALL 0xffa016c8 <_uart_str>;
+ffa01a8c:	01 e8 00 00 	UNLINK;
+ffa01a90:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa01a92:	ab 05       	(R7:5, P5:3) = [SP++];
+ffa01a94:	10 00       	RTS;
+ffa01a96:	01 0d       	CC = R1 <= 0x0;
+ffa01a98:	22 18       	IF CC JUMP 0xffa01adc <_printf_int+0xdc>;
+ffa01a9a:	46 e1 90 ff 	R6.H = 0xff90;		/* (-112)	R6=0xff900eec <_printf_temp>(-7336212) */
+ffa01a9e:	04 68       	P4 = 0x0 (X);		/*		P4=0x0(  0) */
+ffa01aa0:	06 e1 ec 0e 	R6.L = 0xeec;		/* (3820)	R6=0xff900eec <_printf_temp>(-7336212) */
+ffa01aa4:	05 20       	JUMP.S 0xffa01aae <_printf_int+0xae>;
+ffa01aa6:	2a e1 80 00 	P2 = 0x80 (X);		/*		P2=0x80(128) */
+ffa01aaa:	54 08       	CC = P4 == P2;
+ffa01aac:	ba 1b       	IF CC JUMP 0xffa01a20 <_printf_int+0x20>;
+ffa01aae:	07 30       	R0 = R7;
+ffa01ab0:	51 60       	R1 = 0xa (X);		/*		R1=0xa( 10) */
+ffa01ab2:	00 e3 8b 00 	CALL 0xffa01bc8 <_mod>;
+ffa01ab6:	0e 32       	P1 = R6;
+ffa01ab8:	80 65       	R0 += 0x30;		/* ( 48) */
+ffa01aba:	51 60       	R1 = 0xa (X);		/*		R1=0xa( 10) */
+ffa01abc:	4a 91       	P2 = [P1];
+ffa01abe:	a2 5a       	P2 = P2 + P4;
+ffa01ac0:	10 9b       	B[P2] = R0;
+ffa01ac2:	07 30       	R0 = R7;
+ffa01ac4:	00 e3 74 00 	CALL 0xffa01bac <_div_>;
+ffa01ac8:	0c 6c       	P4 += 0x1;		/* (  1) */
+ffa01aca:	38 30       	R7 = R0;
+ffa01acc:	00 0d       	CC = R0 <= 0x0;
+ffa01ace:	ec 17       	IF !CC JUMP 0xffa01aa6 <_printf_int+0xa6> (BP);
+ffa01ad0:	a8 2f       	JUMP.S 0xffa01a20 <_printf_int+0x20>;
+ffa01ad2:	01 e8 00 00 	UNLINK;
+ffa01ad6:	f8 63       	R0 = -0x1 (X);		/*		R0=0xffffffff( -1) */
+ffa01ad8:	ab 05       	(R7:5, P5:3) = [SP++];
+ffa01ada:	10 00       	RTS;
+ffa01adc:	f8 63       	R0 = -0x1 (X);		/*		R0=0xffffffff( -1) */
+ffa01ade:	ff 4c       	BITCLR (R7, 0x1f);		/* bit 31 */
+ffa01ae0:	f8 4f       	R0 <<= 0x1f;
+ffa01ae2:	f8 53       	R7 = R0 - R7;
+ffa01ae4:	07 0d       	CC = R7 <= 0x0;
+ffa01ae6:	2e 18       	IF CC JUMP 0xffa01b42 <_printf_int+0x142>;
+ffa01ae8:	46 e1 90 ff 	R6.H = 0xff90;		/* (-112)	R6=0xff900eec <_printf_temp>(-7336212) */
+ffa01aec:	05 68       	P5 = 0x0 (X);		/*		P5=0x0(  0) */
+ffa01aee:	06 e1 ec 0e 	R6.L = 0xeec;		/* (3820)	R6=0xff900eec <_printf_temp>(-7336212) */
+ffa01af2:	05 20       	JUMP.S 0xffa01afc <_printf_int+0xfc>;
+ffa01af4:	28 e1 80 00 	P0 = 0x80 (X);		/*		P0=0x80(128) */
+ffa01af8:	45 08       	CC = P5 == P0;
+ffa01afa:	20 18       	IF CC JUMP 0xffa01b3a <_printf_int+0x13a>;
+ffa01afc:	26 32       	P4 = R6;
+ffa01afe:	07 30       	R0 = R7;
+ffa01b00:	51 60       	R1 = 0xa (X);		/*		R1=0xa( 10) */
+ffa01b02:	00 e3 63 00 	CALL 0xffa01bc8 <_mod>;
+ffa01b06:	80 65       	R0 += 0x30;		/* ( 48) */
+ffa01b08:	62 91       	P2 = [P4];
+ffa01b0a:	51 60       	R1 = 0xa (X);		/*		R1=0xa( 10) */
+ffa01b0c:	aa 5a       	P2 = P2 + P5;
+ffa01b0e:	10 9b       	B[P2] = R0;
+ffa01b10:	07 30       	R0 = R7;
+ffa01b12:	00 e3 4d 00 	CALL 0xffa01bac <_div_>;
+ffa01b16:	0d 6c       	P5 += 0x1;		/* (  1) */
+ffa01b18:	38 30       	R7 = R0;
+ffa01b1a:	00 0d       	CC = R0 <= 0x0;
+ffa01b1c:	ec 17       	IF !CC JUMP 0xffa01af4 <_printf_int+0xf4> (BP);
+ffa01b1e:	65 32       	P4 = P5;
+ffa01b20:	4d 32       	P1 = P5;
+ffa01b22:	0c 6c       	P4 += 0x1;		/* (  1) */
+ffa01b24:	2e 32       	P5 = R6;
+ffa01b26:	68 61       	R0 = 0x2d (X);		/*		R0=0x2d( 45) */
+ffa01b28:	6a 91       	P2 = [P5];
+ffa01b2a:	8a 5a       	P2 = P2 + P1;
+ffa01b2c:	10 9b       	B[P2] = R0;
+ffa01b2e:	79 2f       	JUMP.S 0xffa01a20 <_printf_int+0x20>;
+ffa01b30:	4b e1 90 ff 	P3.H = 0xff90;		/* (-112)	P3=0xff900ef0 <_printf_out> */
+ffa01b34:	0b e1 f0 0e 	P3.L = 0xef0;		/* (3824)	P3=0xff900ef0 <_printf_out> */
+ffa01b38:	8f 2f       	JUMP.S 0xffa01a56 <_printf_int+0x56>;
+ffa01b3a:	48 32       	P1 = P0;
+ffa01b3c:	2c e1 81 00 	P4 = 0x81 (X);		/*		P4=0x81(129) */
+ffa01b40:	f2 2f       	JUMP.S 0xffa01b24 <_printf_int+0x124>;
+ffa01b42:	46 e1 90 ff 	R6.H = 0xff90;		/* (-112)	R6=0xff900eec <_printf_temp>(-7336212) */
+ffa01b46:	01 68       	P1 = 0x0 (X);		/*		P1=0x0(  0) */
+ffa01b48:	0c 68       	P4 = 0x1 (X);		/*		P4=0x1(  1) */
+ffa01b4a:	06 e1 ec 0e 	R6.L = 0xeec;		/* (3820)	R6=0xff900eec <_printf_temp>(-7336212) */
+ffa01b4e:	eb 2f       	JUMP.S 0xffa01b24 <_printf_int+0x124>;
 
-ffa01b10 <_printf_str>:
-ffa01b10:	00 e8 00 00 	LINK 0x0;		/* (0) */
-ffa01b14:	01 e8 00 00 	UNLINK;
-ffa01b18:	ff e2 b8 fd 	JUMP.L 0xffa01688 <_uart_str>;
+ffa01b50 <_printf_str>:
+ffa01b50:	00 e8 00 00 	LINK 0x0;		/* (0) */
+ffa01b54:	01 e8 00 00 	UNLINK;
+ffa01b58:	ff e2 b8 fd 	JUMP.L 0xffa016c8 <_uart_str>;
 
-ffa01b1c <_printf_ip>:
-ffa01b1c:	70 05       	[--SP] = (R7:6);
-ffa01b1e:	39 30       	R7 = R1;
-ffa01b20:	00 e8 03 00 	LINK 0xc;		/* (12) */
-ffa01b24:	49 43       	R1 = R1.B (Z);
-ffa01b26:	ff e3 4d ff 	CALL 0xffa019c0 <_printf_int>;
-ffa01b2a:	46 e1 90 ff 	R6.H = 0xff90;		/* (-112)	R6=0xff900e68 <_printf_temp>(-7336344) */
-ffa01b2e:	06 e1 f0 00 	R6.L = 0xf0;		/* (240)	R6=0xff9000f0(-7339792) */
-ffa01b32:	82 c6 c7 83 	R1 = R7 >> 0x8;
-ffa01b36:	49 43       	R1 = R1.B (Z);
-ffa01b38:	06 30       	R0 = R6;
-ffa01b3a:	ff e3 43 ff 	CALL 0xffa019c0 <_printf_int>;
-ffa01b3e:	82 c6 87 83 	R1 = R7 >> 0x10;
-ffa01b42:	49 43       	R1 = R1.B (Z);
-ffa01b44:	06 30       	R0 = R6;
-ffa01b46:	ff e3 3d ff 	CALL 0xffa019c0 <_printf_int>;
-ffa01b4a:	c7 4e       	R7 >>= 0x18;
-ffa01b4c:	0f 30       	R1 = R7;
-ffa01b4e:	06 30       	R0 = R6;
-ffa01b50:	ff e3 38 ff 	CALL 0xffa019c0 <_printf_int>;
-ffa01b54:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff90002d(-7339987) */
-ffa01b58:	00 e1 6c 05 	R0.L = 0x56c;		/* (1388)	R0=0xff90056c(-7338644) */
-ffa01b5c:	ff e3 96 fd 	CALL 0xffa01688 <_uart_str>;
-ffa01b60:	01 e8 00 00 	UNLINK;
-ffa01b64:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa01b66:	30 05       	(R7:6) = [SP++];
-ffa01b68:	10 00       	RTS;
-	...
-
-ffa01b6c <_div_>:
-ffa01b6c:	00 e8 00 00 	LINK 0x0;		/* (0) */
-ffa01b70:	08 4f       	R0 <<= 0x1;
-ffa01b72:	48 42       	DIVS (R0, R1);
-ffa01b74:	7a 68       	P2 = 0xf (X);		/*		P2=0xf( 15) */
-ffa01b76:	b2 e0 03 20 	LSETUP(0xffa01b7a <_div_+0xe>, 0xffa01b7c <_div_+0x10>) LC1 = P2;
-ffa01b7a:	08 42       	DIVQ (R0, R1);
-ffa01b7c:	00 00       	NOP;
-ffa01b7e:	80 42       	R0 = R0.L (X);
-ffa01b80:	01 e8 00 00 	UNLINK;
-ffa01b84:	10 00       	RTS;
-	...
-
-ffa01b88 <_mod>:
-ffa01b88:	18 30       	R3 = R0;
-ffa01b8a:	00 e8 00 00 	LINK 0x0;		/* (0) */
-ffa01b8e:	08 4f       	R0 <<= 0x1;
-ffa01b90:	11 30       	R2 = R1;
-ffa01b92:	50 42       	DIVS (R0, R2);
-ffa01b94:	7a 68       	P2 = 0xf (X);		/*		P2=0xf( 15) */
-ffa01b96:	b2 e0 03 20 	LSETUP(0xffa01b9a <_mod+0x12>, 0xffa01b9c <_mod+0x14>) LC1 = P2;
-ffa01b9a:	10 42       	DIVQ (R0, R2);
-ffa01b9c:	00 00       	NOP;
-ffa01b9e:	80 42       	R0 = R0.L (X);
-ffa01ba0:	c8 40       	R0 *= R1;
-ffa01ba2:	01 e8 00 00 	UNLINK;
-ffa01ba6:	03 52       	R0 = R3 - R0;
+ffa01b5c <_printf_ip>:
+ffa01b5c:	70 05       	[--SP] = (R7:6);
+ffa01b5e:	39 30       	R7 = R1;
+ffa01b60:	00 e8 03 00 	LINK 0xc;		/* (12) */
+ffa01b64:	49 43       	R1 = R1.B (Z);
+ffa01b66:	ff e3 4d ff 	CALL 0xffa01a00 <_printf_int>;
+ffa01b6a:	46 e1 90 ff 	R6.H = 0xff90;		/* (-112)	R6=0xff900eec <_printf_temp>(-7336212) */
+ffa01b6e:	06 e1 2c 01 	R6.L = 0x12c;		/* (300)	R6=0xff90012c(-7339732) */
+ffa01b72:	82 c6 c7 83 	R1 = R7 >> 0x8;
+ffa01b76:	49 43       	R1 = R1.B (Z);
+ffa01b78:	06 30       	R0 = R6;
+ffa01b7a:	ff e3 43 ff 	CALL 0xffa01a00 <_printf_int>;
+ffa01b7e:	82 c6 87 83 	R1 = R7 >> 0x10;
+ffa01b82:	49 43       	R1 = R1.B (Z);
+ffa01b84:	06 30       	R0 = R6;
+ffa01b86:	ff e3 3d ff 	CALL 0xffa01a00 <_printf_int>;
+ffa01b8a:	c7 4e       	R7 >>= 0x18;
+ffa01b8c:	0f 30       	R1 = R7;
+ffa01b8e:	06 30       	R0 = R6;
+ffa01b90:	ff e3 38 ff 	CALL 0xffa01a00 <_printf_int>;
+ffa01b94:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff90002d(-7339987) */
+ffa01b98:	00 e1 f0 05 	R0.L = 0x5f0;		/* (1520)	R0=0xff9005f0(-7338512) */
+ffa01b9c:	ff e3 96 fd 	CALL 0xffa016c8 <_uart_str>;
+ffa01ba0:	01 e8 00 00 	UNLINK;
+ffa01ba4:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa01ba6:	30 05       	(R7:6) = [SP++];
 ffa01ba8:	10 00       	RTS;
 	...
 
-ffa01bac <_memcpy_>:
+ffa01bac <_div_>:
 ffa01bac:	00 e8 00 00 	LINK 0x0;		/* (0) */
-ffa01bb0:	00 32       	P0 = R0;
-ffa01bb2:	09 32       	P1 = R1;
-ffa01bb4:	02 0d       	CC = R2 <= 0x0;
-ffa01bb6:	07 18       	IF CC JUMP 0xffa01bc4 <_memcpy_+0x18>;
-ffa01bb8:	00 00       	NOP;
-ffa01bba:	12 32       	P2 = R2;
-ffa01bbc:	b2 e0 03 20 	LSETUP(0xffa01bc0 <_memcpy_+0x14>, 0xffa01bc2 <_memcpy_+0x16>) LC1 = P2;
-ffa01bc0:	40 98       	R0 = B[P0++] (X);
-ffa01bc2:	08 9a       	B[P1++] = R0;
-ffa01bc4:	01 e8 00 00 	UNLINK;
-ffa01bc8:	10 00       	RTS;
+ffa01bb0:	08 4f       	R0 <<= 0x1;
+ffa01bb2:	48 42       	DIVS (R0, R1);
+ffa01bb4:	7a 68       	P2 = 0xf (X);		/*		P2=0xf( 15) */
+ffa01bb6:	b2 e0 03 20 	LSETUP(0xffa01bba <_div_+0xe>, 0xffa01bbc <_div_+0x10>) LC1 = P2;
+ffa01bba:	08 42       	DIVQ (R0, R1);
+ffa01bbc:	00 00       	NOP;
+ffa01bbe:	80 42       	R0 = R0.L (X);
+ffa01bc0:	01 e8 00 00 	UNLINK;
+ffa01bc4:	10 00       	RTS;
 	...
 
-ffa01bcc <_memset_>:
-ffa01bcc:	08 32       	P1 = R0;
-ffa01bce:	00 e8 00 00 	LINK 0x0;		/* (0) */
-ffa01bd2:	01 30       	R0 = R1;
-ffa01bd4:	02 0d       	CC = R2 <= 0x0;
-ffa01bd6:	05 18       	IF CC JUMP 0xffa01be0 <_memset_+0x14>;
-ffa01bd8:	12 32       	P2 = R2;
-ffa01bda:	b2 e0 02 20 	LSETUP(0xffa01bde <_memset_+0x12>, 0xffa01bde <_memset_+0x12>) LC1 = P2;
-ffa01bde:	08 9a       	B[P1++] = R0;
-ffa01be0:	01 e8 00 00 	UNLINK;
-ffa01be4:	10 00       	RTS;
+ffa01bc8 <_mod>:
+ffa01bc8:	18 30       	R3 = R0;
+ffa01bca:	00 e8 00 00 	LINK 0x0;		/* (0) */
+ffa01bce:	08 4f       	R0 <<= 0x1;
+ffa01bd0:	11 30       	R2 = R1;
+ffa01bd2:	50 42       	DIVS (R0, R2);
+ffa01bd4:	7a 68       	P2 = 0xf (X);		/*		P2=0xf( 15) */
+ffa01bd6:	b2 e0 03 20 	LSETUP(0xffa01bda <_mod+0x12>, 0xffa01bdc <_mod+0x14>) LC1 = P2;
+ffa01bda:	10 42       	DIVQ (R0, R2);
+ffa01bdc:	00 00       	NOP;
+ffa01bde:	80 42       	R0 = R0.L (X);
+ffa01be0:	c8 40       	R0 *= R1;
+ffa01be2:	01 e8 00 00 	UNLINK;
+ffa01be6:	03 52       	R0 = R3 - R0;
+ffa01be8:	10 00       	RTS;
 	...
 
-ffa01be8 <_strlen_>:
-ffa01be8:	00 e8 00 00 	LINK 0x0;		/* (0) */
-ffa01bec:	08 32       	P1 = R0;
-ffa01bee:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
-ffa01bf0:	2a e1 00 05 	P2 = 0x500 (X);		/*		P2=0x500(1280) */
-ffa01bf4:	b2 e0 05 20 	LSETUP(0xffa01bf8 <_strlen_+0x10>, 0xffa01bfe <_strlen_+0x16>) LC1 = P2;
-ffa01bf8:	48 98       	R0 = B[P1++] (X);
-ffa01bfa:	00 0c       	CC = R0 == 0x0;
-ffa01bfc:	03 18       	IF CC JUMP 0xffa01c02 <_strlen_+0x1a>;
-ffa01bfe:	09 64       	R1 += 0x1;		/* (  1) */
-ffa01c00:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
-ffa01c02:	01 30       	R0 = R1;
+ffa01bec <_memcpy_>:
+ffa01bec:	00 e8 00 00 	LINK 0x0;		/* (0) */
+ffa01bf0:	00 32       	P0 = R0;
+ffa01bf2:	09 32       	P1 = R1;
+ffa01bf4:	02 0d       	CC = R2 <= 0x0;
+ffa01bf6:	07 18       	IF CC JUMP 0xffa01c04 <_memcpy_+0x18>;
+ffa01bf8:	00 00       	NOP;
+ffa01bfa:	12 32       	P2 = R2;
+ffa01bfc:	b2 e0 03 20 	LSETUP(0xffa01c00 <_memcpy_+0x14>, 0xffa01c02 <_memcpy_+0x16>) LC1 = P2;
+ffa01c00:	40 98       	R0 = B[P0++] (X);
+ffa01c02:	08 9a       	B[P1++] = R0;
 ffa01c04:	01 e8 00 00 	UNLINK;
 ffa01c08:	10 00       	RTS;
 	...
 
-ffa01c0c <_strcpy_>:
-ffa01c0c:	12 32       	P2 = R2;
-ffa01c0e:	c5 04       	[--SP] = (P5:5);
-ffa01c10:	00 e8 00 00 	LINK 0x0;		/* (0) */
-ffa01c14:	29 32       	P5 = R1;
-ffa01c16:	00 32       	P0 = R0;
-ffa01c18:	51 99       	R1 = B[P2] (X);
-ffa01c1a:	08 43       	R0 = R1.B (X);
-ffa01c1c:	00 0c       	CC = R0 == 0x0;
-ffa01c1e:	19 18       	IF CC JUMP 0xffa01c50 <_strcpy_+0x44>;
-ffa01c20:	0a 32       	P1 = R2;
-ffa01c22:	02 60       	R2 = 0x0 (X);		/*		R2=0x0(  0) */
-ffa01c24:	2a e1 00 05 	P2 = 0x500 (X);		/*		P2=0x500(1280) */
-ffa01c28:	09 6c       	P1 += 0x1;		/* (  1) */
-ffa01c2a:	b2 e0 0a 20 	LSETUP(0xffa01c2e <_strcpy_+0x22>, 0xffa01c3e <_strcpy_+0x32>) LC1 = P2;
-ffa01c2e:	01 9a       	B[P0++] = R1;
-ffa01c30:	49 98       	R1 = B[P1++] (X);
-ffa01c32:	08 43       	R0 = R1.B (X);
-ffa01c34:	0a 64       	R2 += 0x1;		/* (  1) */
-ffa01c36:	00 0c       	CC = R0 == 0x0;
-ffa01c38:	04 18       	IF CC JUMP 0xffa01c40 <_strcpy_+0x34>;
-ffa01c3a:	00 00       	NOP;
-ffa01c3c:	00 00       	NOP;
-ffa01c3e:	00 00       	NOP;
-ffa01c40:	28 91       	R0 = [P5];
-ffa01c42:	10 50       	R0 = R0 + R2;
-ffa01c44:	28 93       	[P5] = R0;
-ffa01c46:	01 e8 00 00 	UNLINK;
-ffa01c4a:	40 30       	R0 = P0;
-ffa01c4c:	85 04       	(P5:5) = [SP++];
-ffa01c4e:	10 00       	RTS;
-ffa01c50:	02 60       	R2 = 0x0 (X);		/*		R2=0x0(  0) */
-ffa01c52:	f7 2f       	JUMP.S 0xffa01c40 <_strcpy_+0x34>;
+ffa01c0c <_memset_>:
+ffa01c0c:	08 32       	P1 = R0;
+ffa01c0e:	00 e8 00 00 	LINK 0x0;		/* (0) */
+ffa01c12:	01 30       	R0 = R1;
+ffa01c14:	02 0d       	CC = R2 <= 0x0;
+ffa01c16:	05 18       	IF CC JUMP 0xffa01c20 <_memset_+0x14>;
+ffa01c18:	12 32       	P2 = R2;
+ffa01c1a:	b2 e0 02 20 	LSETUP(0xffa01c1e <_memset_+0x12>, 0xffa01c1e <_memset_+0x12>) LC1 = P2;
+ffa01c1e:	08 9a       	B[P1++] = R0;
+ffa01c20:	01 e8 00 00 	UNLINK;
+ffa01c24:	10 00       	RTS;
+	...
 
-ffa01c54 <_strprepend>:
-ffa01c54:	c5 04       	[--SP] = (P5:5);
-ffa01c56:	02 32       	P0 = R2;
-ffa01c58:	0a 32       	P1 = R2;
-ffa01c5a:	00 e8 00 00 	LINK 0x0;		/* (0) */
-ffa01c5e:	18 30       	R3 = R0;
-ffa01c60:	29 32       	P5 = R1;
+ffa01c28 <_strlen_>:
+ffa01c28:	00 e8 00 00 	LINK 0x0;		/* (0) */
+ffa01c2c:	08 32       	P1 = R0;
+ffa01c2e:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
+ffa01c30:	2a e1 00 05 	P2 = 0x500 (X);		/*		P2=0x500(1280) */
+ffa01c34:	b2 e0 05 20 	LSETUP(0xffa01c38 <_strlen_+0x10>, 0xffa01c3e <_strlen_+0x16>) LC1 = P2;
+ffa01c38:	48 98       	R0 = B[P1++] (X);
+ffa01c3a:	00 0c       	CC = R0 == 0x0;
+ffa01c3c:	03 18       	IF CC JUMP 0xffa01c42 <_strlen_+0x1a>;
+ffa01c3e:	09 64       	R1 += 0x1;		/* (  1) */
+ffa01c40:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
+ffa01c42:	01 30       	R0 = R1;
+ffa01c44:	01 e8 00 00 	UNLINK;
+ffa01c48:	10 00       	RTS;
+	...
+
+ffa01c4c <_strcpy_>:
+ffa01c4c:	12 32       	P2 = R2;
+ffa01c4e:	c5 04       	[--SP] = (P5:5);
+ffa01c50:	00 e8 00 00 	LINK 0x0;		/* (0) */
+ffa01c54:	29 32       	P5 = R1;
+ffa01c56:	00 32       	P0 = R0;
+ffa01c58:	51 99       	R1 = B[P2] (X);
+ffa01c5a:	08 43       	R0 = R1.B (X);
+ffa01c5c:	00 0c       	CC = R0 == 0x0;
+ffa01c5e:	19 18       	IF CC JUMP 0xffa01c90 <_strcpy_+0x44>;
+ffa01c60:	0a 32       	P1 = R2;
 ffa01c62:	02 60       	R2 = 0x0 (X);		/*		R2=0x0(  0) */
 ffa01c64:	2a e1 00 05 	P2 = 0x500 (X);		/*		P2=0x500(1280) */
-ffa01c68:	b2 e0 07 20 	LSETUP(0xffa01c6c <_strprepend+0x18>, 0xffa01c76 <_strprepend+0x22>) LC1 = P2;
-ffa01c6c:	48 98       	R0 = B[P1++] (X);
-ffa01c6e:	00 0c       	CC = R0 == 0x0;
-ffa01c70:	0c 18       	IF CC JUMP 0xffa01c88 <_strprepend+0x34>;
-ffa01c72:	00 00       	NOP;
-ffa01c74:	00 00       	NOP;
-ffa01c76:	0a 64       	R2 += 0x1;		/* (  1) */
-ffa01c78:	28 91       	R0 = [P5];
-ffa01c7a:	c3 52       	R3 = R3 - R0;
-ffa01c7c:	0b 32       	P1 = R3;
-ffa01c7e:	01 e8 00 00 	UNLINK;
-ffa01c82:	41 30       	R0 = P1;
-ffa01c84:	85 04       	(P5:5) = [SP++];
-ffa01c86:	10 00       	RTS;
-ffa01c88:	28 91       	R0 = [P5];
-ffa01c8a:	03 52       	R0 = R3 - R0;
-ffa01c8c:	08 32       	P1 = R0;
-ffa01c8e:	02 0c       	CC = R2 == 0x0;
-ffa01c90:	f7 1b       	IF CC JUMP 0xffa01c7e <_strprepend+0x2a>;
-ffa01c92:	00 00       	NOP;
-ffa01c94:	12 32       	P2 = R2;
-ffa01c96:	b2 e0 03 20 	LSETUP(0xffa01c9a <_strprepend+0x46>, 0xffa01c9c <_strprepend+0x48>) LC1 = P2;
-ffa01c9a:	40 98       	R0 = B[P0++] (X);
-ffa01c9c:	08 9a       	B[P1++] = R0;
-ffa01c9e:	ed 2f       	JUMP.S 0xffa01c78 <_strprepend+0x24>;
+ffa01c68:	09 6c       	P1 += 0x1;		/* (  1) */
+ffa01c6a:	b2 e0 0a 20 	LSETUP(0xffa01c6e <_strcpy_+0x22>, 0xffa01c7e <_strcpy_+0x32>) LC1 = P2;
+ffa01c6e:	01 9a       	B[P0++] = R1;
+ffa01c70:	49 98       	R1 = B[P1++] (X);
+ffa01c72:	08 43       	R0 = R1.B (X);
+ffa01c74:	0a 64       	R2 += 0x1;		/* (  1) */
+ffa01c76:	00 0c       	CC = R0 == 0x0;
+ffa01c78:	04 18       	IF CC JUMP 0xffa01c80 <_strcpy_+0x34>;
+ffa01c7a:	00 00       	NOP;
+ffa01c7c:	00 00       	NOP;
+ffa01c7e:	00 00       	NOP;
+ffa01c80:	28 91       	R0 = [P5];
+ffa01c82:	10 50       	R0 = R0 + R2;
+ffa01c84:	28 93       	[P5] = R0;
+ffa01c86:	01 e8 00 00 	UNLINK;
+ffa01c8a:	40 30       	R0 = P0;
+ffa01c8c:	85 04       	(P5:5) = [SP++];
+ffa01c8e:	10 00       	RTS;
+ffa01c90:	02 60       	R2 = 0x0 (X);		/*		R2=0x0(  0) */
+ffa01c92:	f7 2f       	JUMP.S 0xffa01c80 <_strcpy_+0x34>;
 
-ffa01ca0 <_strcmp>:
-ffa01ca0:	10 32       	P2 = R0;
-ffa01ca2:	00 e8 00 00 	LINK 0x0;		/* (0) */
-ffa01ca6:	09 32       	P1 = R1;
-ffa01ca8:	51 99       	R1 = B[P2] (X);
-ffa01caa:	01 0c       	CC = R1 == 0x0;
-ffa01cac:	20 18       	IF CC JUMP 0xffa01cec <_strcmp+0x4c>;
-ffa01cae:	00 00       	NOP;
-ffa01cb0:	00 00       	NOP;
+ffa01c94 <_strprepend>:
+ffa01c94:	c5 04       	[--SP] = (P5:5);
+ffa01c96:	02 32       	P0 = R2;
+ffa01c98:	0a 32       	P1 = R2;
+ffa01c9a:	00 e8 00 00 	LINK 0x0;		/* (0) */
+ffa01c9e:	18 30       	R3 = R0;
+ffa01ca0:	29 32       	P5 = R1;
+ffa01ca2:	02 60       	R2 = 0x0 (X);		/*		R2=0x0(  0) */
+ffa01ca4:	2a e1 00 05 	P2 = 0x500 (X);		/*		P2=0x500(1280) */
+ffa01ca8:	b2 e0 07 20 	LSETUP(0xffa01cac <_strprepend+0x18>, 0xffa01cb6 <_strprepend+0x22>) LC1 = P2;
+ffa01cac:	48 98       	R0 = B[P1++] (X);
+ffa01cae:	00 0c       	CC = R0 == 0x0;
+ffa01cb0:	0c 18       	IF CC JUMP 0xffa01cc8 <_strprepend+0x34>;
 ffa01cb2:	00 00       	NOP;
-ffa01cb4:	48 99       	R0 = B[P1] (X);
-ffa01cb6:	00 0c       	CC = R0 == 0x0;
-ffa01cb8:	1a 18       	IF CC JUMP 0xffa01cec <_strcmp+0x4c>;
-ffa01cba:	01 08       	CC = R1 == R0;
-ffa01cbc:	1c 10       	IF !CC JUMP 0xffa01cf4 <_strcmp+0x54>;
-ffa01cbe:	42 32       	P0 = P2;
-ffa01cc0:	08 6c       	P0 += 0x1;		/* (  1) */
-ffa01cc2:	09 6c       	P1 += 0x1;		/* (  1) */
-ffa01cc4:	2a e1 00 05 	P2 = 0x500 (X);		/*		P2=0x500(1280) */
-ffa01cc8:	b3 e0 11 20 	LSETUP(0xffa01cce <_strcmp+0x2e>, 0xffa01cea <_strcmp+0x4a>) LC1 = P2;
-ffa01ccc:	06 20       	JUMP.S 0xffa01cd8 <_strcmp+0x38>;
-ffa01cce:	01 08       	CC = R1 == R0;
-ffa01cd0:	12 10       	IF !CC JUMP 0xffa01cf4 <_strcmp+0x54>;
+ffa01cb4:	00 00       	NOP;
+ffa01cb6:	0a 64       	R2 += 0x1;		/* (  1) */
+ffa01cb8:	28 91       	R0 = [P5];
+ffa01cba:	c3 52       	R3 = R3 - R0;
+ffa01cbc:	0b 32       	P1 = R3;
+ffa01cbe:	01 e8 00 00 	UNLINK;
+ffa01cc2:	41 30       	R0 = P1;
+ffa01cc4:	85 04       	(P5:5) = [SP++];
+ffa01cc6:	10 00       	RTS;
+ffa01cc8:	28 91       	R0 = [P5];
+ffa01cca:	03 52       	R0 = R3 - R0;
+ffa01ccc:	08 32       	P1 = R0;
+ffa01cce:	02 0c       	CC = R2 == 0x0;
+ffa01cd0:	f7 1b       	IF CC JUMP 0xffa01cbe <_strprepend+0x2a>;
 ffa01cd2:	00 00       	NOP;
-ffa01cd4:	00 00       	NOP;
-ffa01cd6:	00 00       	NOP;
-ffa01cd8:	41 98       	R1 = B[P0++] (X);
-ffa01cda:	01 0c       	CC = R1 == 0x0;
-ffa01cdc:	08 18       	IF CC JUMP 0xffa01cec <_strcmp+0x4c>;
-ffa01cde:	00 00       	NOP;
-ffa01ce0:	00 00       	NOP;
-ffa01ce2:	00 00       	NOP;
-ffa01ce4:	48 98       	R0 = B[P1++] (X);
-ffa01ce6:	00 0c       	CC = R0 == 0x0;
-ffa01ce8:	02 18       	IF CC JUMP 0xffa01cec <_strcmp+0x4c>;
-ffa01cea:	00 00       	NOP;
-ffa01cec:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
-ffa01cee:	01 e8 00 00 	UNLINK;
-ffa01cf2:	10 00       	RTS;
-ffa01cf4:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa01cf6:	01 e8 00 00 	UNLINK;
-ffa01cfa:	10 00       	RTS;
+ffa01cd4:	12 32       	P2 = R2;
+ffa01cd6:	b2 e0 03 20 	LSETUP(0xffa01cda <_strprepend+0x46>, 0xffa01cdc <_strprepend+0x48>) LC1 = P2;
+ffa01cda:	40 98       	R0 = B[P0++] (X);
+ffa01cdc:	08 9a       	B[P1++] = R0;
+ffa01cde:	ed 2f       	JUMP.S 0xffa01cb8 <_strprepend+0x24>;
 
-ffa01cfc <_substr>:
-ffa01cfc:	f4 05       	[--SP] = (R7:6, P5:4);
-ffa01cfe:	20 32       	P4 = R0;
-ffa01d00:	00 e8 00 00 	LINK 0x0;		/* (0) */
-ffa01d04:	32 30       	R6 = R2;
-ffa01d06:	11 32       	P2 = R1;
-ffa01d08:	62 99       	R2 = B[P4] (X);
-ffa01d0a:	02 0c       	CC = R2 == 0x0;
-ffa01d0c:	1a 18       	IF CC JUMP 0xffa01d40 <_substr+0x44>;
-ffa01d0e:	00 00       	NOP;
-ffa01d10:	00 00       	NOP;
+ffa01ce0 <_strcmp>:
+ffa01ce0:	10 32       	P2 = R0;
+ffa01ce2:	00 e8 00 00 	LINK 0x0;		/* (0) */
+ffa01ce6:	09 32       	P1 = R1;
+ffa01ce8:	51 99       	R1 = B[P2] (X);
+ffa01cea:	01 0c       	CC = R1 == 0x0;
+ffa01cec:	20 18       	IF CC JUMP 0xffa01d2c <_strcmp+0x4c>;
+ffa01cee:	00 00       	NOP;
+ffa01cf0:	00 00       	NOP;
+ffa01cf2:	00 00       	NOP;
+ffa01cf4:	48 99       	R0 = B[P1] (X);
+ffa01cf6:	00 0c       	CC = R0 == 0x0;
+ffa01cf8:	1a 18       	IF CC JUMP 0xffa01d2c <_strcmp+0x4c>;
+ffa01cfa:	01 08       	CC = R1 == R0;
+ffa01cfc:	1c 10       	IF !CC JUMP 0xffa01d34 <_strcmp+0x54>;
+ffa01cfe:	42 32       	P0 = P2;
+ffa01d00:	08 6c       	P0 += 0x1;		/* (  1) */
+ffa01d02:	09 6c       	P1 += 0x1;		/* (  1) */
+ffa01d04:	2a e1 00 05 	P2 = 0x500 (X);		/*		P2=0x500(1280) */
+ffa01d08:	b3 e0 11 20 	LSETUP(0xffa01d0e <_strcmp+0x2e>, 0xffa01d2a <_strcmp+0x4a>) LC1 = P2;
+ffa01d0c:	06 20       	JUMP.S 0xffa01d18 <_strcmp+0x38>;
+ffa01d0e:	01 08       	CC = R1 == R0;
+ffa01d10:	12 10       	IF !CC JUMP 0xffa01d34 <_strcmp+0x54>;
 ffa01d12:	00 00       	NOP;
-ffa01d14:	50 99       	R0 = B[P2] (X);
-ffa01d16:	00 0c       	CC = R0 == 0x0;
-ffa01d18:	14 18       	IF CC JUMP 0xffa01d40 <_substr+0x44>;
-ffa01d1a:	06 0d       	CC = R6 <= 0x0;
-ffa01d1c:	12 18       	IF CC JUMP 0xffa01d40 <_substr+0x44>;
-ffa01d1e:	29 32       	P5 = R1;
-ffa01d20:	7c 30       	R7 = P4;
-ffa01d22:	08 68       	P0 = 0x1 (X);		/*		P0=0x1(  1) */
-ffa01d24:	17 64       	R7 += 0x2;		/* (  2) */
-ffa01d26:	0d 6c       	P5 += 0x1;		/* (  1) */
-ffa01d28:	02 08       	CC = R2 == R0;
-ffa01d2a:	10 18       	IF CC JUMP 0xffa01d4a <_substr+0x4e>;
-ffa01d2c:	00 00       	NOP;
-ffa01d2e:	00 00       	NOP;
-ffa01d30:	48 30       	R1 = P0;
-ffa01d32:	68 99       	R0 = B[P5] (X);
-ffa01d34:	00 0c       	CC = R0 == 0x0;
-ffa01d36:	05 18       	IF CC JUMP 0xffa01d40 <_substr+0x44>;
-ffa01d38:	08 6c       	P0 += 0x1;		/* (  1) */
-ffa01d3a:	0d 6c       	P5 += 0x1;		/* (  1) */
-ffa01d3c:	0e 09       	CC = R6 <= R1;
-ffa01d3e:	f5 17       	IF !CC JUMP 0xffa01d28 <_substr+0x2c> (BP);
-ffa01d40:	01 e8 00 00 	UNLINK;
-ffa01d44:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa01d46:	b4 05       	(R7:6, P5:4) = [SP++];
-ffa01d48:	10 00       	RTS;
-ffa01d4a:	0f 32       	P1 = R7;
-ffa01d4c:	55 32       	P2 = P5;
-ffa01d4e:	40 30       	R0 = P0;
-ffa01d50:	a1 e5 01 00 	R1 = B[P4 + 0x1] (X);
-ffa01d54:	00 00       	NOP;
-ffa01d56:	53 98       	R3 = B[P2++] (X);
-ffa01d58:	0b 08       	CC = R3 == R1;
-ffa01d5a:	eb 13       	IF !CC JUMP 0xffa01d30 <_substr+0x34>;
-ffa01d5c:	03 0c       	CC = R3 == 0x0;
-ffa01d5e:	e9 1b       	IF CC JUMP 0xffa01d30 <_substr+0x34>;
-ffa01d60:	00 00       	NOP;
-ffa01d62:	00 00       	NOP;
-ffa01d64:	08 64       	R0 += 0x1;		/* (  1) */
-ffa01d66:	49 98       	R1 = B[P1++] (X);
-ffa01d68:	01 0c       	CC = R1 == 0x0;
-ffa01d6a:	f5 17       	IF !CC JUMP 0xffa01d54 <_substr+0x58> (BP);
-ffa01d6c:	01 e8 00 00 	UNLINK;
-ffa01d70:	b4 05       	(R7:6, P5:4) = [SP++];
-ffa01d72:	10 00       	RTS;
+ffa01d14:	00 00       	NOP;
+ffa01d16:	00 00       	NOP;
+ffa01d18:	41 98       	R1 = B[P0++] (X);
+ffa01d1a:	01 0c       	CC = R1 == 0x0;
+ffa01d1c:	08 18       	IF CC JUMP 0xffa01d2c <_strcmp+0x4c>;
+ffa01d1e:	00 00       	NOP;
+ffa01d20:	00 00       	NOP;
+ffa01d22:	00 00       	NOP;
+ffa01d24:	48 98       	R0 = B[P1++] (X);
+ffa01d26:	00 0c       	CC = R0 == 0x0;
+ffa01d28:	02 18       	IF CC JUMP 0xffa01d2c <_strcmp+0x4c>;
+ffa01d2a:	00 00       	NOP;
+ffa01d2c:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
+ffa01d2e:	01 e8 00 00 	UNLINK;
+ffa01d32:	10 00       	RTS;
+ffa01d34:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa01d36:	01 e8 00 00 	UNLINK;
+ffa01d3a:	10 00       	RTS;
 
-ffa01d74 <_sprintf_int>:
-ffa01d74:	f3 05       	[--SP] = (R7:6, P5:3);
-ffa01d76:	29 32       	P5 = R1;
-ffa01d78:	00 e8 03 00 	LINK 0xc;		/* (12) */
-ffa01d7c:	30 30       	R6 = R0;
-ffa01d7e:	45 0c       	CC = P5 == 0x0;
-ffa01d80:	1a 14       	IF !CC JUMP 0xffa01db4 <_sprintf_int+0x40> (BP);
-ffa01d82:	4c e1 90 ff 	P4.H = 0xff90;		/* (-112)	P4=0xff900001 */
-ffa01d86:	0c e1 68 0e 	P4.L = 0xe68;		/* (3688)	P4=0xff900e68 <_printf_temp> */
-ffa01d8a:	62 91       	P2 = [P4];
-ffa01d8c:	80 61       	R0 = 0x30 (X);		/*		R0=0x30( 48) */
-ffa01d8e:	0f 60       	R7 = 0x1 (X);		/*		R7=0x1(  1) */
-ffa01d90:	10 9b       	B[P2] = R0;
-ffa01d92:	0f 32       	P1 = R7;
-ffa01d94:	06 32       	P0 = R6;
-ffa01d96:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
-ffa01d98:	f9 6f       	P1 += -0x1;		/* ( -1) */
-ffa01d9a:	09 64       	R1 += 0x1;		/* (  1) */
-ffa01d9c:	62 91       	P2 = [P4];
-ffa01d9e:	b9 08       	CC = R1 < R7;
-ffa01da0:	8a 5a       	P2 = P2 + P1;
-ffa01da2:	50 99       	R0 = B[P2] (X);
-ffa01da4:	00 9a       	B[P0++] = R0;
-ffa01da6:	f9 6f       	P1 += -0x1;		/* ( -1) */
-ffa01da8:	f9 1f       	IF CC JUMP 0xffa01d9a <_sprintf_int+0x26> (BP);
-ffa01daa:	07 30       	R0 = R7;
+ffa01d3c <_substr>:
+ffa01d3c:	f4 05       	[--SP] = (R7:6, P5:4);
+ffa01d3e:	20 32       	P4 = R0;
+ffa01d40:	00 e8 00 00 	LINK 0x0;		/* (0) */
+ffa01d44:	32 30       	R6 = R2;
+ffa01d46:	11 32       	P2 = R1;
+ffa01d48:	62 99       	R2 = B[P4] (X);
+ffa01d4a:	02 0c       	CC = R2 == 0x0;
+ffa01d4c:	1a 18       	IF CC JUMP 0xffa01d80 <_substr+0x44>;
+ffa01d4e:	00 00       	NOP;
+ffa01d50:	00 00       	NOP;
+ffa01d52:	00 00       	NOP;
+ffa01d54:	50 99       	R0 = B[P2] (X);
+ffa01d56:	00 0c       	CC = R0 == 0x0;
+ffa01d58:	14 18       	IF CC JUMP 0xffa01d80 <_substr+0x44>;
+ffa01d5a:	06 0d       	CC = R6 <= 0x0;
+ffa01d5c:	12 18       	IF CC JUMP 0xffa01d80 <_substr+0x44>;
+ffa01d5e:	29 32       	P5 = R1;
+ffa01d60:	7c 30       	R7 = P4;
+ffa01d62:	08 68       	P0 = 0x1 (X);		/*		P0=0x1(  1) */
+ffa01d64:	17 64       	R7 += 0x2;		/* (  2) */
+ffa01d66:	0d 6c       	P5 += 0x1;		/* (  1) */
+ffa01d68:	02 08       	CC = R2 == R0;
+ffa01d6a:	10 18       	IF CC JUMP 0xffa01d8a <_substr+0x4e>;
+ffa01d6c:	00 00       	NOP;
+ffa01d6e:	00 00       	NOP;
+ffa01d70:	48 30       	R1 = P0;
+ffa01d72:	68 99       	R0 = B[P5] (X);
+ffa01d74:	00 0c       	CC = R0 == 0x0;
+ffa01d76:	05 18       	IF CC JUMP 0xffa01d80 <_substr+0x44>;
+ffa01d78:	08 6c       	P0 += 0x1;		/* (  1) */
+ffa01d7a:	0d 6c       	P5 += 0x1;		/* (  1) */
+ffa01d7c:	0e 09       	CC = R6 <= R1;
+ffa01d7e:	f5 17       	IF !CC JUMP 0xffa01d68 <_substr+0x2c> (BP);
+ffa01d80:	01 e8 00 00 	UNLINK;
+ffa01d84:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa01d86:	b4 05       	(R7:6, P5:4) = [SP++];
+ffa01d88:	10 00       	RTS;
+ffa01d8a:	0f 32       	P1 = R7;
+ffa01d8c:	55 32       	P2 = P5;
+ffa01d8e:	40 30       	R0 = P0;
+ffa01d90:	a1 e5 01 00 	R1 = B[P4 + 0x1] (X);
+ffa01d94:	00 00       	NOP;
+ffa01d96:	53 98       	R3 = B[P2++] (X);
+ffa01d98:	0b 08       	CC = R3 == R1;
+ffa01d9a:	eb 13       	IF !CC JUMP 0xffa01d70 <_substr+0x34>;
+ffa01d9c:	03 0c       	CC = R3 == 0x0;
+ffa01d9e:	e9 1b       	IF CC JUMP 0xffa01d70 <_substr+0x34>;
+ffa01da0:	00 00       	NOP;
+ffa01da2:	00 00       	NOP;
+ffa01da4:	08 64       	R0 += 0x1;		/* (  1) */
+ffa01da6:	49 98       	R1 = B[P1++] (X);
+ffa01da8:	01 0c       	CC = R1 == 0x0;
+ffa01daa:	f5 17       	IF !CC JUMP 0xffa01d94 <_substr+0x58> (BP);
 ffa01dac:	01 e8 00 00 	UNLINK;
-ffa01db0:	b3 05       	(R7:6, P5:3) = [SP++];
+ffa01db0:	b4 05       	(R7:6, P5:4) = [SP++];
 ffa01db2:	10 00       	RTS;
-ffa01db4:	45 0d       	CC = P5 <= 0x0;
-ffa01db6:	21 18       	IF CC JUMP 0xffa01df8 <_sprintf_int+0x84>;
-ffa01db8:	4c e1 90 ff 	P4.H = 0xff90;		/* (-112)	P4=0xff900e68 <_printf_temp> */
-ffa01dbc:	07 60       	R7 = 0x0 (X);		/*		R7=0x0(  0) */
-ffa01dbe:	0c e1 68 0e 	P4.L = 0xe68;		/* (3688)	P4=0xff900e68 <_printf_temp> */
-ffa01dc2:	51 60       	R1 = 0xa (X);		/*		R1=0xa( 10) */
-ffa01dc4:	45 30       	R0 = P5;
-ffa01dc6:	ff e3 df fb 	CALL 0xffa01584 <___divsi3>;
-ffa01dca:	17 32       	P2 = R7;
-ffa01dcc:	82 ce 00 c2 	R1 = ROT R0 BY 0x0 || P1 = [P4] || NOP;
-ffa01dd0:	61 91 00 00 
-ffa01dd4:	e8 4f       	R0 <<= 0x1d;
-ffa01dd6:	08 52       	R0 = R0 - R1;
-ffa01dd8:	10 4f       	R0 <<= 0x2;
-ffa01dda:	51 5a       	P1 = P1 + P2;
-ffa01ddc:	08 52       	R0 = R0 - R1;
-ffa01dde:	10 32       	P2 = R0;
-ffa01de0:	0f 64       	R7 += 0x1;		/* (  1) */
-ffa01de2:	01 0c       	CC = R1 == 0x0;
-ffa01de4:	95 5c       	P2 = P5 + (P2 << 0x1);
-ffa01de6:	42 30       	R0 = P2;
-ffa01de8:	80 65       	R0 += 0x30;		/* ( 48) */
-ffa01dea:	08 9b       	B[P1] = R0;
-ffa01dec:	d3 1b       	IF CC JUMP 0xffa01d92 <_sprintf_int+0x1e>;
-ffa01dee:	58 60       	R0 = 0xb (X);		/*		R0=0xb( 11) */
-ffa01df0:	29 32       	P5 = R1;
-ffa01df2:	07 08       	CC = R7 == R0;
-ffa01df4:	e7 17       	IF !CC JUMP 0xffa01dc2 <_sprintf_int+0x4e> (BP);
-ffa01df6:	ce 2f       	JUMP.S 0xffa01d92 <_sprintf_int+0x1e>;
-ffa01df8:	01 30       	R0 = R1;
-ffa01dfa:	f8 4c       	BITCLR (R0, 0x1f);		/* bit 31 */
-ffa01dfc:	28 32       	P5 = R0;
-ffa01dfe:	4a e1 00 80 	P2.H = 0x8000;		/* (-32768)	P2=0x80000500 */
-ffa01e02:	0a e1 00 00 	P2.L = 0x0;		/* (  0)	P2=0x80000000 */
-ffa01e06:	5a 32       	P3 = P2;
-ffa01e08:	2b 44       	P3 -= P5;
-ffa01e0a:	43 0d       	CC = P3 <= 0x0;
-ffa01e0c:	2a 18       	IF CC JUMP 0xffa01e60 <_sprintf_int+0xec>;
-ffa01e0e:	4c e1 90 ff 	P4.H = 0xff90;		/* (-112)	P4=0xff900e68 <_printf_temp> */
-ffa01e12:	05 68       	P5 = 0x0 (X);		/*		P5=0x0(  0) */
-ffa01e14:	0c e1 68 0e 	P4.L = 0xe68;		/* (3688)	P4=0xff900e68 <_printf_temp> */
-ffa01e18:	51 60       	R1 = 0xa (X);		/*		R1=0xa( 10) */
-ffa01e1a:	43 30       	R0 = P3;
-ffa01e1c:	ff e3 b4 fb 	CALL 0xffa01584 <___divsi3>;
-ffa01e20:	82 ce 00 c2 	R1 = ROT R0 BY 0x0 || P1 = [P4] || NOP;
-ffa01e24:	61 91 00 00 
-ffa01e28:	e8 4f       	R0 <<= 0x1d;
-ffa01e2a:	08 52       	R0 = R0 - R1;
-ffa01e2c:	10 4f       	R0 <<= 0x2;
-ffa01e2e:	08 52       	R0 = R0 - R1;
-ffa01e30:	10 32       	P2 = R0;
-ffa01e32:	69 5a       	P1 = P1 + P5;
-ffa01e34:	0d 6c       	P5 += 0x1;		/* (  1) */
-ffa01e36:	01 0c       	CC = R1 == 0x0;
-ffa01e38:	93 5c       	P2 = P3 + (P2 << 0x1);
-ffa01e3a:	42 30       	R0 = P2;
-ffa01e3c:	80 65       	R0 += 0x30;		/* ( 48) */
-ffa01e3e:	08 9b       	B[P1] = R0;
-ffa01e40:	0c 18       	IF CC JUMP 0xffa01e58 <_sprintf_int+0xe4>;
-ffa01e42:	5a 68       	P2 = 0xb (X);		/*		P2=0xb( 11) */
-ffa01e44:	19 32       	P3 = R1;
-ffa01e46:	55 08       	CC = P5 == P2;
-ffa01e48:	e8 17       	IF !CC JUMP 0xffa01e18 <_sprintf_int+0xa4> (BP);
-ffa01e4a:	59 68       	P1 = 0xb (X);		/*		P1=0xb( 11) */
-ffa01e4c:	67 60       	R7 = 0xc (X);		/*		R7=0xc( 12) */
-ffa01e4e:	62 91       	P2 = [P4];
-ffa01e50:	68 61       	R0 = 0x2d (X);		/*		R0=0x2d( 45) */
-ffa01e52:	8a 5a       	P2 = P2 + P1;
-ffa01e54:	10 9b       	B[P2] = R0;
-ffa01e56:	9e 2f       	JUMP.S 0xffa01d92 <_sprintf_int+0x1e>;
-ffa01e58:	7d 30       	R7 = P5;
-ffa01e5a:	4d 32       	P1 = P5;
-ffa01e5c:	0f 64       	R7 += 0x1;		/* (  1) */
-ffa01e5e:	f8 2f       	JUMP.S 0xffa01e4e <_sprintf_int+0xda>;
-ffa01e60:	4c e1 90 ff 	P4.H = 0xff90;		/* (-112)	P4=0xff900e68 <_printf_temp> */
-ffa01e64:	01 68       	P1 = 0x0 (X);		/*		P1=0x0(  0) */
-ffa01e66:	0f 60       	R7 = 0x1 (X);		/*		R7=0x1(  1) */
-ffa01e68:	0c e1 68 0e 	P4.L = 0xe68;		/* (3688)	P4=0xff900e68 <_printf_temp> */
-ffa01e6c:	f1 2f       	JUMP.S 0xffa01e4e <_sprintf_int+0xda>;
-	...
 
-ffa01e70 <_sprintf_hex>:
+ffa01db4 <_sprintf_int>:
+ffa01db4:	f3 05       	[--SP] = (R7:6, P5:3);
+ffa01db6:	29 32       	P5 = R1;
+ffa01db8:	00 e8 03 00 	LINK 0xc;		/* (12) */
+ffa01dbc:	30 30       	R6 = R0;
+ffa01dbe:	45 0c       	CC = P5 == 0x0;
+ffa01dc0:	1a 14       	IF !CC JUMP 0xffa01df4 <_sprintf_int+0x40> (BP);
+ffa01dc2:	4c e1 90 ff 	P4.H = 0xff90;		/* (-112)	P4=0xff900001 */
+ffa01dc6:	0c e1 ec 0e 	P4.L = 0xeec;		/* (3820)	P4=0xff900eec <_printf_temp> */
+ffa01dca:	62 91       	P2 = [P4];
+ffa01dcc:	80 61       	R0 = 0x30 (X);		/*		R0=0x30( 48) */
+ffa01dce:	0f 60       	R7 = 0x1 (X);		/*		R7=0x1(  1) */
+ffa01dd0:	10 9b       	B[P2] = R0;
+ffa01dd2:	0f 32       	P1 = R7;
+ffa01dd4:	06 32       	P0 = R6;
+ffa01dd6:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
+ffa01dd8:	f9 6f       	P1 += -0x1;		/* ( -1) */
+ffa01dda:	09 64       	R1 += 0x1;		/* (  1) */
+ffa01ddc:	62 91       	P2 = [P4];
+ffa01dde:	b9 08       	CC = R1 < R7;
+ffa01de0:	8a 5a       	P2 = P2 + P1;
+ffa01de2:	50 99       	R0 = B[P2] (X);
+ffa01de4:	00 9a       	B[P0++] = R0;
+ffa01de6:	f9 6f       	P1 += -0x1;		/* ( -1) */
+ffa01de8:	f9 1f       	IF CC JUMP 0xffa01dda <_sprintf_int+0x26> (BP);
+ffa01dea:	07 30       	R0 = R7;
+ffa01dec:	01 e8 00 00 	UNLINK;
+ffa01df0:	b3 05       	(R7:6, P5:3) = [SP++];
+ffa01df2:	10 00       	RTS;
+ffa01df4:	45 0d       	CC = P5 <= 0x0;
+ffa01df6:	21 18       	IF CC JUMP 0xffa01e38 <_sprintf_int+0x84>;
+ffa01df8:	4c e1 90 ff 	P4.H = 0xff90;		/* (-112)	P4=0xff900eec <_printf_temp> */
+ffa01dfc:	07 60       	R7 = 0x0 (X);		/*		R7=0x0(  0) */
+ffa01dfe:	0c e1 ec 0e 	P4.L = 0xeec;		/* (3820)	P4=0xff900eec <_printf_temp> */
+ffa01e02:	51 60       	R1 = 0xa (X);		/*		R1=0xa( 10) */
+ffa01e04:	45 30       	R0 = P5;
+ffa01e06:	ff e3 df fb 	CALL 0xffa015c4 <___divsi3>;
+ffa01e0a:	17 32       	P2 = R7;
+ffa01e0c:	82 ce 00 c2 	R1 = ROT R0 BY 0x0 || P1 = [P4] || NOP;
+ffa01e10:	61 91 00 00 
+ffa01e14:	e8 4f       	R0 <<= 0x1d;
+ffa01e16:	08 52       	R0 = R0 - R1;
+ffa01e18:	10 4f       	R0 <<= 0x2;
+ffa01e1a:	51 5a       	P1 = P1 + P2;
+ffa01e1c:	08 52       	R0 = R0 - R1;
+ffa01e1e:	10 32       	P2 = R0;
+ffa01e20:	0f 64       	R7 += 0x1;		/* (  1) */
+ffa01e22:	01 0c       	CC = R1 == 0x0;
+ffa01e24:	95 5c       	P2 = P5 + (P2 << 0x1);
+ffa01e26:	42 30       	R0 = P2;
+ffa01e28:	80 65       	R0 += 0x30;		/* ( 48) */
+ffa01e2a:	08 9b       	B[P1] = R0;
+ffa01e2c:	d3 1b       	IF CC JUMP 0xffa01dd2 <_sprintf_int+0x1e>;
+ffa01e2e:	58 60       	R0 = 0xb (X);		/*		R0=0xb( 11) */
+ffa01e30:	29 32       	P5 = R1;
+ffa01e32:	07 08       	CC = R7 == R0;
+ffa01e34:	e7 17       	IF !CC JUMP 0xffa01e02 <_sprintf_int+0x4e> (BP);
+ffa01e36:	ce 2f       	JUMP.S 0xffa01dd2 <_sprintf_int+0x1e>;
+ffa01e38:	01 30       	R0 = R1;
+ffa01e3a:	f8 4c       	BITCLR (R0, 0x1f);		/* bit 31 */
+ffa01e3c:	28 32       	P5 = R0;
+ffa01e3e:	4a e1 00 80 	P2.H = 0x8000;		/* (-32768)	P2=0x80000500 */
+ffa01e42:	0a e1 00 00 	P2.L = 0x0;		/* (  0)	P2=0x80000000 */
+ffa01e46:	5a 32       	P3 = P2;
+ffa01e48:	2b 44       	P3 -= P5;
+ffa01e4a:	43 0d       	CC = P3 <= 0x0;
+ffa01e4c:	2a 18       	IF CC JUMP 0xffa01ea0 <_sprintf_int+0xec>;
+ffa01e4e:	4c e1 90 ff 	P4.H = 0xff90;		/* (-112)	P4=0xff900eec <_printf_temp> */
+ffa01e52:	05 68       	P5 = 0x0 (X);		/*		P5=0x0(  0) */
+ffa01e54:	0c e1 ec 0e 	P4.L = 0xeec;		/* (3820)	P4=0xff900eec <_printf_temp> */
+ffa01e58:	51 60       	R1 = 0xa (X);		/*		R1=0xa( 10) */
+ffa01e5a:	43 30       	R0 = P3;
+ffa01e5c:	ff e3 b4 fb 	CALL 0xffa015c4 <___divsi3>;
+ffa01e60:	82 ce 00 c2 	R1 = ROT R0 BY 0x0 || P1 = [P4] || NOP;
+ffa01e64:	61 91 00 00 
+ffa01e68:	e8 4f       	R0 <<= 0x1d;
+ffa01e6a:	08 52       	R0 = R0 - R1;
+ffa01e6c:	10 4f       	R0 <<= 0x2;
+ffa01e6e:	08 52       	R0 = R0 - R1;
 ffa01e70:	10 32       	P2 = R0;
-ffa01e72:	78 05       	[--SP] = (R7:7);
-ffa01e74:	00 e8 00 00 	LINK 0x0;		/* (0) */
-ffa01e78:	80 61       	R0 = 0x30 (X);		/*		R0=0x30( 48) */
-ffa01e7a:	e2 60       	R2 = 0x1c (X);		/*		R2=0x1c( 28) */
-ffa01e7c:	10 9b       	B[P2] = R0;
-ffa01e7e:	20 e1 78 00 	R0 = 0x78 (X);		/*		R0=0x78(120) */
-ffa01e82:	90 e6 01 00 	B[P2 + 0x1] = R0;
-ffa01e86:	12 6c       	P2 += 0x2;		/* (  2) */
-ffa01e88:	7b 60       	R3 = 0xf (X);		/*		R3=0xf( 15) */
-ffa01e8a:	41 68       	P1 = 0x8 (X);		/*		P1=0x8(  8) */
-ffa01e8c:	4f 60       	R7 = 0x9 (X);		/*		R7=0x9(  9) */
-ffa01e8e:	b2 e0 09 10 	LSETUP(0xffa01e92 <_sprintf_hex+0x22>, 0xffa01ea0 <_sprintf_hex+0x30>) LC1 = P1;
-ffa01e92:	01 30       	R0 = R1;
-ffa01e94:	10 40       	R0 >>>= R2;
-ffa01e96:	18 54       	R0 = R0 & R3;
-ffa01e98:	38 09       	CC = R0 <= R7;
-ffa01e9a:	09 1c       	IF CC JUMP 0xffa01eac <_sprintf_hex+0x3c> (BP);
-ffa01e9c:	b8 65       	R0 += 0x37;		/* ( 55) */
-ffa01e9e:	10 9a       	B[P2++] = R0;
-ffa01ea0:	e2 67       	R2 += -0x4;		/* ( -4) */
-ffa01ea2:	01 e8 00 00 	UNLINK;
-ffa01ea6:	50 60       	R0 = 0xa (X);		/*		R0=0xa( 10) */
-ffa01ea8:	38 05       	(R7:7) = [SP++];
-ffa01eaa:	10 00       	RTS;
-ffa01eac:	80 65       	R0 += 0x30;		/* ( 48) */
-ffa01eae:	f8 2f       	JUMP.S 0xffa01e9e <_sprintf_hex+0x2e>;
-
-ffa01eb0 <_strprintf_int>:
-ffa01eb0:	fd 05       	[--SP] = (R7:7, P5:5);
-ffa01eb2:	29 32       	P5 = R1;
-ffa01eb4:	00 e8 03 00 	LINK 0xc;		/* (12) */
-ffa01eb8:	38 30       	R7 = R0;
-ffa01eba:	0a 30       	R1 = R2;
-ffa01ebc:	ff e3 5c ff 	CALL 0xffa01d74 <_sprintf_int>;
-ffa01ec0:	29 91       	R1 = [P5];
-ffa01ec2:	41 50       	R1 = R1 + R0;
-ffa01ec4:	04 cc 38 0e 	R7 = R7 + R0 (NS) || [P5] = R1 || NOP;
-ffa01ec8:	29 93 00 00 
-ffa01ecc:	07 30       	R0 = R7;
-ffa01ece:	01 e8 00 00 	UNLINK;
-ffa01ed2:	bd 05       	(R7:7, P5:5) = [SP++];
-ffa01ed4:	10 00       	RTS;
+ffa01e72:	69 5a       	P1 = P1 + P5;
+ffa01e74:	0d 6c       	P5 += 0x1;		/* (  1) */
+ffa01e76:	01 0c       	CC = R1 == 0x0;
+ffa01e78:	93 5c       	P2 = P3 + (P2 << 0x1);
+ffa01e7a:	42 30       	R0 = P2;
+ffa01e7c:	80 65       	R0 += 0x30;		/* ( 48) */
+ffa01e7e:	08 9b       	B[P1] = R0;
+ffa01e80:	0c 18       	IF CC JUMP 0xffa01e98 <_sprintf_int+0xe4>;
+ffa01e82:	5a 68       	P2 = 0xb (X);		/*		P2=0xb( 11) */
+ffa01e84:	19 32       	P3 = R1;
+ffa01e86:	55 08       	CC = P5 == P2;
+ffa01e88:	e8 17       	IF !CC JUMP 0xffa01e58 <_sprintf_int+0xa4> (BP);
+ffa01e8a:	59 68       	P1 = 0xb (X);		/*		P1=0xb( 11) */
+ffa01e8c:	67 60       	R7 = 0xc (X);		/*		R7=0xc( 12) */
+ffa01e8e:	62 91       	P2 = [P4];
+ffa01e90:	68 61       	R0 = 0x2d (X);		/*		R0=0x2d( 45) */
+ffa01e92:	8a 5a       	P2 = P2 + P1;
+ffa01e94:	10 9b       	B[P2] = R0;
+ffa01e96:	9e 2f       	JUMP.S 0xffa01dd2 <_sprintf_int+0x1e>;
+ffa01e98:	7d 30       	R7 = P5;
+ffa01e9a:	4d 32       	P1 = P5;
+ffa01e9c:	0f 64       	R7 += 0x1;		/* (  1) */
+ffa01e9e:	f8 2f       	JUMP.S 0xffa01e8e <_sprintf_int+0xda>;
+ffa01ea0:	4c e1 90 ff 	P4.H = 0xff90;		/* (-112)	P4=0xff900eec <_printf_temp> */
+ffa01ea4:	01 68       	P1 = 0x0 (X);		/*		P1=0x0(  0) */
+ffa01ea6:	0f 60       	R7 = 0x1 (X);		/*		R7=0x1(  1) */
+ffa01ea8:	0c e1 ec 0e 	P4.L = 0xeec;		/* (3820)	P4=0xff900eec <_printf_temp> */
+ffa01eac:	f1 2f       	JUMP.S 0xffa01e8e <_sprintf_int+0xda>;
 	...
 
-ffa01ed8 <_strprintf_hex>:
-ffa01ed8:	fd 05       	[--SP] = (R7:7, P5:5);
-ffa01eda:	29 32       	P5 = R1;
-ffa01edc:	00 e8 03 00 	LINK 0xc;		/* (12) */
-ffa01ee0:	38 30       	R7 = R0;
-ffa01ee2:	0a 30       	R1 = R2;
-ffa01ee4:	ff e3 c6 ff 	CALL 0xffa01e70 <_sprintf_hex>;
-ffa01ee8:	29 91       	R1 = [P5];
-ffa01eea:	41 50       	R1 = R1 + R0;
-ffa01eec:	04 cc 38 0e 	R7 = R7 + R0 (NS) || [P5] = R1 || NOP;
-ffa01ef0:	29 93 00 00 
-ffa01ef4:	07 30       	R0 = R7;
-ffa01ef6:	01 e8 00 00 	UNLINK;
-ffa01efa:	bd 05       	(R7:7, P5:5) = [SP++];
-ffa01efc:	10 00       	RTS;
+ffa01eb0 <_sprintf_hex>:
+ffa01eb0:	10 32       	P2 = R0;
+ffa01eb2:	78 05       	[--SP] = (R7:7);
+ffa01eb4:	00 e8 00 00 	LINK 0x0;		/* (0) */
+ffa01eb8:	80 61       	R0 = 0x30 (X);		/*		R0=0x30( 48) */
+ffa01eba:	e2 60       	R2 = 0x1c (X);		/*		R2=0x1c( 28) */
+ffa01ebc:	10 9b       	B[P2] = R0;
+ffa01ebe:	20 e1 78 00 	R0 = 0x78 (X);		/*		R0=0x78(120) */
+ffa01ec2:	90 e6 01 00 	B[P2 + 0x1] = R0;
+ffa01ec6:	12 6c       	P2 += 0x2;		/* (  2) */
+ffa01ec8:	7b 60       	R3 = 0xf (X);		/*		R3=0xf( 15) */
+ffa01eca:	41 68       	P1 = 0x8 (X);		/*		P1=0x8(  8) */
+ffa01ecc:	4f 60       	R7 = 0x9 (X);		/*		R7=0x9(  9) */
+ffa01ece:	b2 e0 09 10 	LSETUP(0xffa01ed2 <_sprintf_hex+0x22>, 0xffa01ee0 <_sprintf_hex+0x30>) LC1 = P1;
+ffa01ed2:	01 30       	R0 = R1;
+ffa01ed4:	10 40       	R0 >>>= R2;
+ffa01ed6:	18 54       	R0 = R0 & R3;
+ffa01ed8:	38 09       	CC = R0 <= R7;
+ffa01eda:	09 1c       	IF CC JUMP 0xffa01eec <_sprintf_hex+0x3c> (BP);
+ffa01edc:	b8 65       	R0 += 0x37;		/* ( 55) */
+ffa01ede:	10 9a       	B[P2++] = R0;
+ffa01ee0:	e2 67       	R2 += -0x4;		/* ( -4) */
+ffa01ee2:	01 e8 00 00 	UNLINK;
+ffa01ee6:	50 60       	R0 = 0xa (X);		/*		R0=0xa( 10) */
+ffa01ee8:	38 05       	(R7:7) = [SP++];
+ffa01eea:	10 00       	RTS;
+ffa01eec:	80 65       	R0 += 0x30;		/* ( 48) */
+ffa01eee:	f8 2f       	JUMP.S 0xffa01ede <_sprintf_hex+0x2e>;
+
+ffa01ef0 <_strprintf_int>:
+ffa01ef0:	fd 05       	[--SP] = (R7:7, P5:5);
+ffa01ef2:	29 32       	P5 = R1;
+ffa01ef4:	00 e8 03 00 	LINK 0xc;		/* (12) */
+ffa01ef8:	38 30       	R7 = R0;
+ffa01efa:	0a 30       	R1 = R2;
+ffa01efc:	ff e3 5c ff 	CALL 0xffa01db4 <_sprintf_int>;
+ffa01f00:	29 91       	R1 = [P5];
+ffa01f02:	41 50       	R1 = R1 + R0;
+ffa01f04:	04 cc 38 0e 	R7 = R7 + R0 (NS) || [P5] = R1 || NOP;
+ffa01f08:	29 93 00 00 
+ffa01f0c:	07 30       	R0 = R7;
+ffa01f0e:	01 e8 00 00 	UNLINK;
+ffa01f12:	bd 05       	(R7:7, P5:5) = [SP++];
+ffa01f14:	10 00       	RTS;
 	...
 
-ffa01f00 <_atoi_>:
-ffa01f00:	10 32       	P2 = R0;
-ffa01f02:	68 05       	[--SP] = (R7:5);
-ffa01f04:	00 e8 00 00 	LINK 0x0;		/* (0) */
-ffa01f08:	39 30       	R7 = R1;
-ffa01f0a:	6a 61       	R2 = 0x2d (X);		/*		R2=0x2d( 45) */
-ffa01f0c:	51 99       	R1 = B[P2] (X);
-ffa01f0e:	08 43       	R0 = R1.B (X);
-ffa01f10:	10 08       	CC = R0 == R2;
-ffa01f12:	28 18       	IF CC JUMP 0xffa01f62 <_atoi_+0x62>;
-ffa01f14:	03 60       	R3 = 0x0 (X);		/*		R3=0x0(  0) */
-ffa01f16:	0e 60       	R6 = 0x1 (X);		/*		R6=0x1(  1) */
-ffa01f18:	11 30       	R2 = R1;
-ffa01f1a:	82 66       	R2 += -0x30;		/* (-48) */
-ffa01f1c:	50 43       	R0 = R2.B (Z);
-ffa01f1e:	4a 32       	P1 = P2;
-ffa01f20:	4a 60       	R2 = 0x9 (X);		/*		R2=0x9(  9) */
-ffa01f22:	09 6c       	P1 += 0x1;		/* (  1) */
-ffa01f24:	02 68       	P2 = 0x0 (X);		/*		P2=0x0(  0) */
-ffa01f26:	10 0a       	CC = R0 <= R2 (IU);
-ffa01f28:	16 10       	IF !CC JUMP 0xffa01f54 <_atoi_+0x54>;
-ffa01f2a:	4d 60       	R5 = 0x9 (X);		/*		R5=0x9(  9) */
-ffa01f2c:	bb 08       	CC = R3 < R7;
-ffa01f2e:	13 10       	IF !CC JUMP 0xffa01f54 <_atoi_+0x54>;
-ffa01f30:	42 30       	R0 = P2;
-ffa01f32:	80 66       	R0 += -0x30;		/* (-48) */
-ffa01f34:	09 43       	R1 = R1.B (X);
-ffa01f36:	48 50       	R1 = R0 + R1;
-ffa01f38:	11 32       	P2 = R1;
-ffa01f3a:	49 98       	R1 = B[P1++] (X);
-ffa01f3c:	11 30       	R2 = R1;
-ffa01f3e:	82 66       	R2 += -0x30;		/* (-48) */
-ffa01f40:	50 43       	R0 = R2.B (Z);
-ffa01f42:	28 0a       	CC = R0 <= R5 (IU);
-ffa01f44:	03 14       	IF !CC JUMP 0xffa01f4a <_atoi_+0x4a> (BP);
-ffa01f46:	92 5e       	P2 = P2 + (P2 << 0x2);
-ffa01f48:	92 5a       	P2 = P2 << 0x1;
-ffa01f4a:	50 43       	R0 = R2.B (Z);
-ffa01f4c:	4a 60       	R2 = 0x9 (X);		/*		R2=0x9(  9) */
-ffa01f4e:	0b 64       	R3 += 0x1;		/* (  1) */
-ffa01f50:	10 0a       	CC = R0 <= R2 (IU);
-ffa01f52:	ed 1f       	IF CC JUMP 0xffa01f2c <_atoi_+0x2c> (BP);
-ffa01f54:	6a 30       	R5 = P2;
-ffa01f56:	f5 40       	R5 *= R6;
-ffa01f58:	01 e8 00 00 	UNLINK;
-ffa01f5c:	05 30       	R0 = R5;
-ffa01f5e:	28 05       	(R7:5) = [SP++];
-ffa01f60:	10 00       	RTS;
-ffa01f62:	0a 6c       	P2 += 0x1;		/* (  1) */
-ffa01f64:	51 99       	R1 = B[P2] (X);
-ffa01f66:	0b 60       	R3 = 0x1 (X);		/*		R3=0x1(  1) */
-ffa01f68:	fe 63       	R6 = -0x1 (X);		/*		R6=0xffffffff( -1) */
-ffa01f6a:	d7 2f       	JUMP.S 0xffa01f18 <_atoi_+0x18>;
-
-ffa01f6c <_udelay>:
-ffa01f6c:	00 e8 00 00 	LINK 0x0;		/* (0) */
-ffa01f70:	00 0d       	CC = R0 <= 0x0;
-ffa01f72:	0a 18       	IF CC JUMP 0xffa01f86 <_udelay+0x1a>;
-ffa01f74:	08 32       	P1 = R0;
-ffa01f76:	a2 e0 07 10 	LSETUP(0xffa01f7a <_udelay+0xe>, 0xffa01f84 <_udelay+0x18>) LC0 = P1;
-ffa01f7a:	2a e1 a0 00 	P2 = 0xa0 (X);		/*		P2=0xa0(160) */
-ffa01f7e:	b2 e0 03 20 	LSETUP(0xffa01f82 <_udelay+0x16>, 0xffa01f84 <_udelay+0x18>) LC1 = P2;
-ffa01f82:	00 00       	NOP;
-ffa01f84:	00 00       	NOP;
-ffa01f86:	01 e8 00 00 	UNLINK;
-ffa01f8a:	10 00       	RTS;
-
-ffa01f8c <_bfin_EMAC_send_check>:
-ffa01f8c:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc000a0(-4194144) */
-ffa01f90:	00 e8 00 00 	LINK 0x0;		/* (0) */
-ffa01f94:	0a e1 a8 0c 	P2.L = 0xca8;		/* (3240)	P2=0xffc00ca8(-4191064) */
-ffa01f98:	10 95       	R0 = W[P2] (Z);
-ffa01f9a:	c0 42       	R0 = R0.L (Z);
-ffa01f9c:	18 4e       	R0 >>= 0x3;
-ffa01f9e:	00 4b       	BITTGL (R0, 0x0);		/* bit  0 */
-ffa01fa0:	09 60       	R1 = 0x1 (X);		/*		R1=0x1(  1) */
-ffa01fa2:	08 54       	R0 = R0 & R1;
-ffa01fa4:	01 e8 00 00 	UNLINK;
-ffa01fa8:	10 00       	RTS;
+ffa01f18 <_strprintf_hex>:
+ffa01f18:	fd 05       	[--SP] = (R7:7, P5:5);
+ffa01f1a:	29 32       	P5 = R1;
+ffa01f1c:	00 e8 03 00 	LINK 0xc;		/* (12) */
+ffa01f20:	38 30       	R7 = R0;
+ffa01f22:	0a 30       	R1 = R2;
+ffa01f24:	ff e3 c6 ff 	CALL 0xffa01eb0 <_sprintf_hex>;
+ffa01f28:	29 91       	R1 = [P5];
+ffa01f2a:	41 50       	R1 = R1 + R0;
+ffa01f2c:	04 cc 38 0e 	R7 = R7 + R0 (NS) || [P5] = R1 || NOP;
+ffa01f30:	29 93 00 00 
+ffa01f34:	07 30       	R0 = R7;
+ffa01f36:	01 e8 00 00 	UNLINK;
+ffa01f3a:	bd 05       	(R7:7, P5:5) = [SP++];
+ffa01f3c:	10 00       	RTS;
 	...
 
-ffa01fac <_FormatIPAddress>:
+ffa01f40 <_atoi_>:
+ffa01f40:	10 32       	P2 = R0;
+ffa01f42:	68 05       	[--SP] = (R7:5);
+ffa01f44:	00 e8 00 00 	LINK 0x0;		/* (0) */
+ffa01f48:	39 30       	R7 = R1;
+ffa01f4a:	6a 61       	R2 = 0x2d (X);		/*		R2=0x2d( 45) */
+ffa01f4c:	51 99       	R1 = B[P2] (X);
+ffa01f4e:	08 43       	R0 = R1.B (X);
+ffa01f50:	10 08       	CC = R0 == R2;
+ffa01f52:	28 18       	IF CC JUMP 0xffa01fa2 <_atoi_+0x62>;
+ffa01f54:	03 60       	R3 = 0x0 (X);		/*		R3=0x0(  0) */
+ffa01f56:	0e 60       	R6 = 0x1 (X);		/*		R6=0x1(  1) */
+ffa01f58:	11 30       	R2 = R1;
+ffa01f5a:	82 66       	R2 += -0x30;		/* (-48) */
+ffa01f5c:	50 43       	R0 = R2.B (Z);
+ffa01f5e:	4a 32       	P1 = P2;
+ffa01f60:	4a 60       	R2 = 0x9 (X);		/*		R2=0x9(  9) */
+ffa01f62:	09 6c       	P1 += 0x1;		/* (  1) */
+ffa01f64:	02 68       	P2 = 0x0 (X);		/*		P2=0x0(  0) */
+ffa01f66:	10 0a       	CC = R0 <= R2 (IU);
+ffa01f68:	16 10       	IF !CC JUMP 0xffa01f94 <_atoi_+0x54>;
+ffa01f6a:	4d 60       	R5 = 0x9 (X);		/*		R5=0x9(  9) */
+ffa01f6c:	bb 08       	CC = R3 < R7;
+ffa01f6e:	13 10       	IF !CC JUMP 0xffa01f94 <_atoi_+0x54>;
+ffa01f70:	42 30       	R0 = P2;
+ffa01f72:	80 66       	R0 += -0x30;		/* (-48) */
+ffa01f74:	09 43       	R1 = R1.B (X);
+ffa01f76:	48 50       	R1 = R0 + R1;
+ffa01f78:	11 32       	P2 = R1;
+ffa01f7a:	49 98       	R1 = B[P1++] (X);
+ffa01f7c:	11 30       	R2 = R1;
+ffa01f7e:	82 66       	R2 += -0x30;		/* (-48) */
+ffa01f80:	50 43       	R0 = R2.B (Z);
+ffa01f82:	28 0a       	CC = R0 <= R5 (IU);
+ffa01f84:	03 14       	IF !CC JUMP 0xffa01f8a <_atoi_+0x4a> (BP);
+ffa01f86:	92 5e       	P2 = P2 + (P2 << 0x2);
+ffa01f88:	92 5a       	P2 = P2 << 0x1;
+ffa01f8a:	50 43       	R0 = R2.B (Z);
+ffa01f8c:	4a 60       	R2 = 0x9 (X);		/*		R2=0x9(  9) */
+ffa01f8e:	0b 64       	R3 += 0x1;		/* (  1) */
+ffa01f90:	10 0a       	CC = R0 <= R2 (IU);
+ffa01f92:	ed 1f       	IF CC JUMP 0xffa01f6c <_atoi_+0x2c> (BP);
+ffa01f94:	6a 30       	R5 = P2;
+ffa01f96:	f5 40       	R5 *= R6;
+ffa01f98:	01 e8 00 00 	UNLINK;
+ffa01f9c:	05 30       	R0 = R5;
+ffa01f9e:	28 05       	(R7:5) = [SP++];
+ffa01fa0:	10 00       	RTS;
+ffa01fa2:	0a 6c       	P2 += 0x1;		/* (  1) */
+ffa01fa4:	51 99       	R1 = B[P2] (X);
+ffa01fa6:	0b 60       	R3 = 0x1 (X);		/*		R3=0x1(  1) */
+ffa01fa8:	fe 63       	R6 = -0x1 (X);		/*		R6=0xffffffff( -1) */
+ffa01faa:	d7 2f       	JUMP.S 0xffa01f58 <_atoi_+0x18>;
+
+ffa01fac <_udelay>:
 ffa01fac:	00 e8 00 00 	LINK 0x0;		/* (0) */
-ffa01fb0:	18 30       	R3 = R0;
-ffa01fb2:	b8 e4 14 00 	R0 = B[FP + 0x14] (Z);
-ffa01fb6:	40 4f       	R0 <<= 0x8;
-ffa01fb8:	52 43       	R2 = R2.B (Z);
-ffa01fba:	10 56       	R0 = R0 | R2;
-ffa01fbc:	40 4f       	R0 <<= 0x8;
-ffa01fbe:	49 43       	R1 = R1.B (Z);
-ffa01fc0:	08 56       	R0 = R0 | R1;
-ffa01fc2:	40 4f       	R0 <<= 0x8;
-ffa01fc4:	5b 43       	R3 = R3.B (Z);
-ffa01fc6:	18 56       	R0 = R0 | R3;
-ffa01fc8:	01 e8 00 00 	UNLINK;
-ffa01fcc:	10 00       	RTS;
+ffa01fb0:	00 0d       	CC = R0 <= 0x0;
+ffa01fb2:	0a 18       	IF CC JUMP 0xffa01fc6 <_udelay+0x1a>;
+ffa01fb4:	08 32       	P1 = R0;
+ffa01fb6:	a2 e0 07 10 	LSETUP(0xffa01fba <_udelay+0xe>, 0xffa01fc4 <_udelay+0x18>) LC0 = P1;
+ffa01fba:	2a e1 a0 00 	P2 = 0xa0 (X);		/*		P2=0xa0(160) */
+ffa01fbe:	b2 e0 03 20 	LSETUP(0xffa01fc2 <_udelay+0x16>, 0xffa01fc4 <_udelay+0x18>) LC1 = P2;
+ffa01fc2:	00 00       	NOP;
+ffa01fc4:	00 00       	NOP;
+ffa01fc6:	01 e8 00 00 	UNLINK;
+ffa01fca:	10 00       	RTS;
+
+ffa01fcc <_bfin_EMAC_send_check>:
+ffa01fcc:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc000a0(-4194144) */
+ffa01fd0:	00 e8 00 00 	LINK 0x0;		/* (0) */
+ffa01fd4:	0a e1 a8 0c 	P2.L = 0xca8;		/* (3240)	P2=0xffc00ca8(-4191064) */
+ffa01fd8:	10 95       	R0 = W[P2] (Z);
+ffa01fda:	c0 42       	R0 = R0.L (Z);
+ffa01fdc:	18 4e       	R0 >>= 0x3;
+ffa01fde:	00 4b       	BITTGL (R0, 0x0);		/* bit  0 */
+ffa01fe0:	09 60       	R1 = 0x1 (X);		/*		R1=0x1(  1) */
+ffa01fe2:	08 54       	R0 = R0 & R1;
+ffa01fe4:	01 e8 00 00 	UNLINK;
+ffa01fe8:	10 00       	RTS;
 	...
 
-ffa01fd0 <_bfin_EMAC_halt>:
-ffa01fd0:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00ca8(-4191064) */
-ffa01fd4:	00 e8 00 00 	LINK 0x0;		/* (0) */
-ffa01fd8:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa01fda:	0a e1 00 30 	P2.L = 0x3000;		/* (12288)	P2=0xffc03000(-4182016) */
-ffa01fde:	10 93       	[P2] = R0;
-ffa01fe0:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc03000(-4182016) */
-ffa01fe4:	0a e1 48 0c 	P2.L = 0xc48;		/* (3144)	P2=0xffc00c48(-4191160) */
-ffa01fe8:	10 97       	W[P2] = R0;
-ffa01fea:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00c48(-4191160) */
-ffa01fee:	0a e1 88 0c 	P2.L = 0xc88;		/* (3208)	P2=0xffc00c88(-4191096) */
-ffa01ff2:	10 97       	W[P2] = R0;
-ffa01ff4:	01 e8 00 00 	UNLINK;
-ffa01ff8:	10 00       	RTS;
+ffa01fec <_FormatIPAddress>:
+ffa01fec:	00 e8 00 00 	LINK 0x0;		/* (0) */
+ffa01ff0:	18 30       	R3 = R0;
+ffa01ff2:	b8 e4 14 00 	R0 = B[FP + 0x14] (Z);
+ffa01ff6:	40 4f       	R0 <<= 0x8;
+ffa01ff8:	52 43       	R2 = R2.B (Z);
+ffa01ffa:	10 56       	R0 = R0 | R2;
+ffa01ffc:	40 4f       	R0 <<= 0x8;
+ffa01ffe:	49 43       	R1 = R1.B (Z);
+ffa02000:	08 56       	R0 = R0 | R1;
+ffa02002:	40 4f       	R0 <<= 0x8;
+ffa02004:	5b 43       	R3 = R3.B (Z);
+ffa02006:	18 56       	R0 = R0 | R3;
+ffa02008:	01 e8 00 00 	UNLINK;
+ffa0200c:	10 00       	RTS;
 	...
 
-ffa01ffc <_PollMdcDone>:
-ffa01ffc:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00c88(-4191096) */
-ffa02000:	00 e8 00 00 	LINK 0x0;		/* (0) */
-ffa02004:	0a e1 14 30 	P2.L = 0x3014;		/* (12308)	P2=0xffc03014(-4181996) */
-ffa02008:	10 91       	R0 = [P2];
-ffa0200a:	00 48       	CC = !BITTST (R0, 0x0);		/* bit  0 */
-ffa0200c:	09 18       	IF CC JUMP 0xffa0201e <_PollMdcDone+0x22>;
-ffa0200e:	00 00       	NOP;
-ffa02010:	00 00       	NOP;
-ffa02012:	42 34       	I0 = P2;
-ffa02014:	00 00       	NOP;
-ffa02016:	00 00       	NOP;
-ffa02018:	00 9d       	R0 = [I0];
-ffa0201a:	00 48       	CC = !BITTST (R0, 0x0);		/* bit  0 */
-ffa0201c:	fc 17       	IF !CC JUMP 0xffa02014 <_PollMdcDone+0x18> (BP);
-ffa0201e:	01 e8 00 00 	UNLINK;
-ffa02022:	10 00       	RTS;
+ffa02010 <_bfin_EMAC_halt>:
+ffa02010:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00ca8(-4191064) */
+ffa02014:	00 e8 00 00 	LINK 0x0;		/* (0) */
+ffa02018:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa0201a:	0a e1 00 30 	P2.L = 0x3000;		/* (12288)	P2=0xffc03000(-4182016) */
+ffa0201e:	10 93       	[P2] = R0;
+ffa02020:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc03000(-4182016) */
+ffa02024:	0a e1 48 0c 	P2.L = 0xc48;		/* (3144)	P2=0xffc00c48(-4191160) */
+ffa02028:	10 97       	W[P2] = R0;
+ffa0202a:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00c48(-4191160) */
+ffa0202e:	0a e1 88 0c 	P2.L = 0xc88;		/* (3208)	P2=0xffc00c88(-4191096) */
+ffa02032:	10 97       	W[P2] = R0;
+ffa02034:	01 e8 00 00 	UNLINK;
+ffa02038:	10 00       	RTS;
+	...
 
-ffa02024 <_WrPHYReg>:
-ffa02024:	78 05       	[--SP] = (R7:7);
-ffa02026:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc03014(-4181996) */
-ffa0202a:	00 e8 00 00 	LINK 0x0;		/* (0) */
-ffa0202e:	18 30       	R3 = R0;
-ffa02030:	0a e1 14 30 	P2.L = 0x3014;		/* (12308)	P2=0xffc03014(-4181996) */
-ffa02034:	39 30       	R7 = R1;
-ffa02036:	10 91       	R0 = [P2];
-ffa02038:	0a 30       	R1 = R2;
-ffa0203a:	00 48       	CC = !BITTST (R0, 0x0);		/* bit  0 */
-ffa0203c:	09 18       	IF CC JUMP 0xffa0204e <_WrPHYReg+0x2a>;
-ffa0203e:	00 00       	NOP;
-ffa02040:	00 00       	NOP;
-ffa02042:	42 34       	I0 = P2;
-ffa02044:	00 00       	NOP;
-ffa02046:	00 00       	NOP;
-ffa02048:	00 9d       	R0 = [I0];
+ffa0203c <_PollMdcDone>:
+ffa0203c:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00c88(-4191096) */
+ffa02040:	00 e8 00 00 	LINK 0x0;		/* (0) */
+ffa02044:	0a e1 14 30 	P2.L = 0x3014;		/* (12308)	P2=0xffc03014(-4181996) */
+ffa02048:	10 91       	R0 = [P2];
 ffa0204a:	00 48       	CC = !BITTST (R0, 0x0);		/* bit  0 */
-ffa0204c:	fc 17       	IF !CC JUMP 0xffa02044 <_WrPHYReg+0x20> (BP);
-ffa0204e:	c8 42       	R0 = R1.L (Z);
-ffa02050:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc03014(-4181996) */
-ffa02054:	0a e1 18 30 	P2.L = 0x3018;		/* (12312)	P2=0xffc03018(-4181992) */
-ffa02058:	d9 42       	R1 = R3.L (Z);
-ffa0205a:	10 93       	[P2] = R0;
-ffa0205c:	59 4f       	R1 <<= 0xb;
-ffa0205e:	18 60       	R0 = 0x3 (X);		/*		R0=0x3(  3) */
-ffa02060:	c9 42       	R1 = R1.L (Z);
-ffa02062:	41 56       	R1 = R1 | R0;
-ffa02064:	f8 60       	R0 = 0x1f (X);		/*		R0=0x1f( 31) */
-ffa02066:	38 54       	R0 = R0 & R7;
-ffa02068:	30 4f       	R0 <<= 0x6;
-ffa0206a:	41 56       	R1 = R1 | R0;
-ffa0206c:	e2 6f       	P2 += -0x4;		/* ( -4) */
-ffa0206e:	11 93       	[P2] = R1;
-ffa02070:	01 e8 00 00 	UNLINK;
-ffa02074:	38 05       	(R7:7) = [SP++];
-ffa02076:	10 00       	RTS;
+ffa0204c:	09 18       	IF CC JUMP 0xffa0205e <_PollMdcDone+0x22>;
+ffa0204e:	00 00       	NOP;
+ffa02050:	00 00       	NOP;
+ffa02052:	42 34       	I0 = P2;
+ffa02054:	00 00       	NOP;
+ffa02056:	00 00       	NOP;
+ffa02058:	00 9d       	R0 = [I0];
+ffa0205a:	00 48       	CC = !BITTST (R0, 0x0);		/* bit  0 */
+ffa0205c:	fc 17       	IF !CC JUMP 0xffa02054 <_PollMdcDone+0x18> (BP);
+ffa0205e:	01 e8 00 00 	UNLINK;
+ffa02062:	10 00       	RTS;
 
-ffa02078 <_RdPHYReg>:
-ffa02078:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc03018(-4181992) */
-ffa0207c:	00 e8 00 00 	LINK 0x0;		/* (0) */
-ffa02080:	10 30       	R2 = R0;
-ffa02082:	0a e1 14 30 	P2.L = 0x3014;		/* (12308)	P2=0xffc03014(-4181996) */
-ffa02086:	10 91       	R0 = [P2];
-ffa02088:	00 48       	CC = !BITTST (R0, 0x0);		/* bit  0 */
-ffa0208a:	09 18       	IF CC JUMP 0xffa0209c <_RdPHYReg+0x24>;
-ffa0208c:	00 00       	NOP;
-ffa0208e:	00 00       	NOP;
-ffa02090:	42 34       	I0 = P2;
-ffa02092:	00 00       	NOP;
-ffa02094:	00 00       	NOP;
-ffa02096:	00 9d       	R0 = [I0];
-ffa02098:	00 48       	CC = !BITTST (R0, 0x0);		/* bit  0 */
-ffa0209a:	fc 17       	IF !CC JUMP 0xffa02092 <_RdPHYReg+0x1a> (BP);
-ffa0209c:	cb 42       	R3 = R1.L (Z);
-ffa0209e:	d0 42       	R0 = R2.L (Z);
-ffa020a0:	58 4f       	R0 <<= 0xb;
-ffa020a2:	f9 60       	R1 = 0x1f (X);		/*		R1=0x1f( 31) */
-ffa020a4:	c0 42       	R0 = R0.L (Z);
-ffa020a6:	4b 54       	R1 = R3 & R1;
-ffa020a8:	00 4a       	BITSET (R0, 0x0);		/* bit  0 */
-ffa020aa:	31 4f       	R1 <<= 0x6;
-ffa020ac:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc03014(-4181996) */
-ffa020b0:	08 56       	R0 = R0 | R1;
-ffa020b2:	0a e1 14 30 	P2.L = 0x3014;		/* (12308)	P2=0xffc03014(-4181996) */
-ffa020b6:	10 93       	[P2] = R0;
-ffa020b8:	10 91       	R0 = [P2];
-ffa020ba:	00 48       	CC = !BITTST (R0, 0x0);		/* bit  0 */
-ffa020bc:	09 18       	IF CC JUMP 0xffa020ce <_RdPHYReg+0x56>;
-ffa020be:	00 00       	NOP;
-ffa020c0:	00 00       	NOP;
-ffa020c2:	42 34       	I0 = P2;
-ffa020c4:	00 00       	NOP;
-ffa020c6:	00 00       	NOP;
-ffa020c8:	00 9d       	R0 = [I0];
-ffa020ca:	00 48       	CC = !BITTST (R0, 0x0);		/* bit  0 */
-ffa020cc:	fc 17       	IF !CC JUMP 0xffa020c4 <_RdPHYReg+0x4c> (BP);
-ffa020ce:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc03014(-4181996) */
-ffa020d2:	0b 32       	P1 = R3;
-ffa020d4:	0a e1 18 30 	P2.L = 0x3018;		/* (12312)	P2=0xffc03018(-4181992) */
-ffa020d8:	10 91       	R0 = [P2];
-ffa020da:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff903018 */
-ffa020de:	0a e1 70 0e 	P2.L = 0xe70;		/* (3696)	P2=0xff900e70 <_PHYregs> */
-ffa020e2:	8a 5c       	P2 = P2 + (P1 << 0x1);
-ffa020e4:	10 97       	W[P2] = R0;
-ffa020e6:	01 e8 00 00 	UNLINK;
-ffa020ea:	10 00       	RTS;
+ffa02064 <_WrPHYReg>:
+ffa02064:	78 05       	[--SP] = (R7:7);
+ffa02066:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc03014(-4181996) */
+ffa0206a:	00 e8 00 00 	LINK 0x0;		/* (0) */
+ffa0206e:	18 30       	R3 = R0;
+ffa02070:	0a e1 14 30 	P2.L = 0x3014;		/* (12308)	P2=0xffc03014(-4181996) */
+ffa02074:	39 30       	R7 = R1;
+ffa02076:	10 91       	R0 = [P2];
+ffa02078:	0a 30       	R1 = R2;
+ffa0207a:	00 48       	CC = !BITTST (R0, 0x0);		/* bit  0 */
+ffa0207c:	09 18       	IF CC JUMP 0xffa0208e <_WrPHYReg+0x2a>;
+ffa0207e:	00 00       	NOP;
+ffa02080:	00 00       	NOP;
+ffa02082:	42 34       	I0 = P2;
+ffa02084:	00 00       	NOP;
+ffa02086:	00 00       	NOP;
+ffa02088:	00 9d       	R0 = [I0];
+ffa0208a:	00 48       	CC = !BITTST (R0, 0x0);		/* bit  0 */
+ffa0208c:	fc 17       	IF !CC JUMP 0xffa02084 <_WrPHYReg+0x20> (BP);
+ffa0208e:	c8 42       	R0 = R1.L (Z);
+ffa02090:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc03014(-4181996) */
+ffa02094:	0a e1 18 30 	P2.L = 0x3018;		/* (12312)	P2=0xffc03018(-4181992) */
+ffa02098:	d9 42       	R1 = R3.L (Z);
+ffa0209a:	10 93       	[P2] = R0;
+ffa0209c:	59 4f       	R1 <<= 0xb;
+ffa0209e:	18 60       	R0 = 0x3 (X);		/*		R0=0x3(  3) */
+ffa020a0:	c9 42       	R1 = R1.L (Z);
+ffa020a2:	41 56       	R1 = R1 | R0;
+ffa020a4:	f8 60       	R0 = 0x1f (X);		/*		R0=0x1f( 31) */
+ffa020a6:	38 54       	R0 = R0 & R7;
+ffa020a8:	30 4f       	R0 <<= 0x6;
+ffa020aa:	41 56       	R1 = R1 | R0;
+ffa020ac:	e2 6f       	P2 += -0x4;		/* ( -4) */
+ffa020ae:	11 93       	[P2] = R1;
+ffa020b0:	01 e8 00 00 	UNLINK;
+ffa020b4:	38 05       	(R7:7) = [SP++];
+ffa020b6:	10 00       	RTS;
 
-ffa020ec <_SoftResetPHY>:
-ffa020ec:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00e70(-4190608) */
-ffa020f0:	00 e8 03 00 	LINK 0xc;		/* (12) */
-ffa020f4:	0a e1 14 30 	P2.L = 0x3014;		/* (12308)	P2=0xffc03014(-4181996) */
+ffa020b8 <_RdPHYReg>:
+ffa020b8:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc03018(-4181992) */
+ffa020bc:	00 e8 00 00 	LINK 0x0;		/* (0) */
+ffa020c0:	10 30       	R2 = R0;
+ffa020c2:	0a e1 14 30 	P2.L = 0x3014;		/* (12308)	P2=0xffc03014(-4181996) */
+ffa020c6:	10 91       	R0 = [P2];
+ffa020c8:	00 48       	CC = !BITTST (R0, 0x0);		/* bit  0 */
+ffa020ca:	09 18       	IF CC JUMP 0xffa020dc <_RdPHYReg+0x24>;
+ffa020cc:	00 00       	NOP;
+ffa020ce:	00 00       	NOP;
+ffa020d0:	42 34       	I0 = P2;
+ffa020d2:	00 00       	NOP;
+ffa020d4:	00 00       	NOP;
+ffa020d6:	00 9d       	R0 = [I0];
+ffa020d8:	00 48       	CC = !BITTST (R0, 0x0);		/* bit  0 */
+ffa020da:	fc 17       	IF !CC JUMP 0xffa020d2 <_RdPHYReg+0x1a> (BP);
+ffa020dc:	cb 42       	R3 = R1.L (Z);
+ffa020de:	d0 42       	R0 = R2.L (Z);
+ffa020e0:	58 4f       	R0 <<= 0xb;
+ffa020e2:	f9 60       	R1 = 0x1f (X);		/*		R1=0x1f( 31) */
+ffa020e4:	c0 42       	R0 = R0.L (Z);
+ffa020e6:	4b 54       	R1 = R3 & R1;
+ffa020e8:	00 4a       	BITSET (R0, 0x0);		/* bit  0 */
+ffa020ea:	31 4f       	R1 <<= 0x6;
+ffa020ec:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc03014(-4181996) */
+ffa020f0:	08 56       	R0 = R0 | R1;
+ffa020f2:	0a e1 14 30 	P2.L = 0x3014;		/* (12308)	P2=0xffc03014(-4181996) */
+ffa020f6:	10 93       	[P2] = R0;
 ffa020f8:	10 91       	R0 = [P2];
 ffa020fa:	00 48       	CC = !BITTST (R0, 0x0);		/* bit  0 */
-ffa020fc:	09 18       	IF CC JUMP 0xffa0210e <_SoftResetPHY+0x22>;
+ffa020fc:	09 18       	IF CC JUMP 0xffa0210e <_RdPHYReg+0x56>;
 ffa020fe:	00 00       	NOP;
 ffa02100:	00 00       	NOP;
 ffa02102:	42 34       	I0 = P2;
@@ -3368,4326 +3359,4367 @@ ffa02104:	00 00       	NOP;
 ffa02106:	00 00       	NOP;
 ffa02108:	00 9d       	R0 = [I0];
 ffa0210a:	00 48       	CC = !BITTST (R0, 0x0);		/* bit  0 */
-ffa0210c:	fc 17       	IF !CC JUMP 0xffa02104 <_SoftResetPHY+0x18> (BP);
+ffa0210c:	fc 17       	IF !CC JUMP 0xffa02104 <_RdPHYReg+0x4c> (BP);
 ffa0210e:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc03014(-4181996) */
-ffa02112:	80 e1 00 80 	R0 = 0x8000 (Z);		/*		R0=0x8000(32768) */
-ffa02116:	0a e1 18 30 	P2.L = 0x3018;		/* (12312)	P2=0xffc03018(-4181992) */
-ffa0211a:	10 93       	[P2] = R0;
-ffa0211c:	e2 6f       	P2 += -0x4;		/* ( -4) */
-ffa0211e:	18 60       	R0 = 0x3 (X);		/*		R0=0x3(  3) */
-ffa02120:	10 93       	[P2] = R0;
-ffa02122:	10 91       	R0 = [P2];
-ffa02124:	00 48       	CC = !BITTST (R0, 0x0);		/* bit  0 */
-ffa02126:	09 18       	IF CC JUMP 0xffa02138 <_SoftResetPHY+0x4c>;
-ffa02128:	00 00       	NOP;
-ffa0212a:	00 00       	NOP;
-ffa0212c:	42 34       	I0 = P2;
-ffa0212e:	00 00       	NOP;
-ffa02130:	00 00       	NOP;
-ffa02132:	00 9d       	R0 = [I0];
-ffa02134:	00 48       	CC = !BITTST (R0, 0x0);		/* bit  0 */
-ffa02136:	fc 17       	IF !CC JUMP 0xffa0212e <_SoftResetPHY+0x42> (BP);
-ffa02138:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc03018(-4181992) */
-ffa0213c:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa0213e:	0a e1 18 30 	P2.L = 0x3018;		/* (12312)	P2=0xffc03018(-4181992) */
-ffa02142:	10 93       	[P2] = R0;
-ffa02144:	18 60       	R0 = 0x3 (X);		/*		R0=0x3(  3) */
-ffa02146:	e2 6f       	P2 += -0x4;		/* ( -4) */
-ffa02148:	10 93       	[P2] = R0;
-ffa0214a:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa0214c:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
-ffa0214e:	ff e3 95 ff 	CALL 0xffa02078 <_RdPHYReg>;
-ffa02152:	80 42       	R0 = R0.L (X);
-ffa02154:	80 0c       	CC = R0 < 0x0;
-ffa02156:	fa 1f       	IF CC JUMP 0xffa0214a <_SoftResetPHY+0x5e> (BP);
-ffa02158:	01 e8 00 00 	UNLINK;
-ffa0215c:	10 00       	RTS;
+ffa02112:	0b 32       	P1 = R3;
+ffa02114:	0a e1 18 30 	P2.L = 0x3018;		/* (12312)	P2=0xffc03018(-4181992) */
+ffa02118:	10 91       	R0 = [P2];
+ffa0211a:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff903018 */
+ffa0211e:	0a e1 f4 0e 	P2.L = 0xef4;		/* (3828)	P2=0xff900ef4 <_PHYregs> */
+ffa02122:	8a 5c       	P2 = P2 + (P1 << 0x1);
+ffa02124:	10 97       	W[P2] = R0;
+ffa02126:	01 e8 00 00 	UNLINK;
+ffa0212a:	10 00       	RTS;
+
+ffa0212c <_SoftResetPHY>:
+ffa0212c:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00ef4(-4190476) */
+ffa02130:	00 e8 03 00 	LINK 0xc;		/* (12) */
+ffa02134:	0a e1 14 30 	P2.L = 0x3014;		/* (12308)	P2=0xffc03014(-4181996) */
+ffa02138:	10 91       	R0 = [P2];
+ffa0213a:	00 48       	CC = !BITTST (R0, 0x0);		/* bit  0 */
+ffa0213c:	09 18       	IF CC JUMP 0xffa0214e <_SoftResetPHY+0x22>;
+ffa0213e:	00 00       	NOP;
+ffa02140:	00 00       	NOP;
+ffa02142:	42 34       	I0 = P2;
+ffa02144:	00 00       	NOP;
+ffa02146:	00 00       	NOP;
+ffa02148:	00 9d       	R0 = [I0];
+ffa0214a:	00 48       	CC = !BITTST (R0, 0x0);		/* bit  0 */
+ffa0214c:	fc 17       	IF !CC JUMP 0xffa02144 <_SoftResetPHY+0x18> (BP);
+ffa0214e:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc03014(-4181996) */
+ffa02152:	80 e1 00 80 	R0 = 0x8000 (Z);		/*		R0=0x8000(32768) */
+ffa02156:	0a e1 18 30 	P2.L = 0x3018;		/* (12312)	P2=0xffc03018(-4181992) */
+ffa0215a:	10 93       	[P2] = R0;
+ffa0215c:	e2 6f       	P2 += -0x4;		/* ( -4) */
+ffa0215e:	18 60       	R0 = 0x3 (X);		/*		R0=0x3(  3) */
+ffa02160:	10 93       	[P2] = R0;
+ffa02162:	10 91       	R0 = [P2];
+ffa02164:	00 48       	CC = !BITTST (R0, 0x0);		/* bit  0 */
+ffa02166:	09 18       	IF CC JUMP 0xffa02178 <_SoftResetPHY+0x4c>;
+ffa02168:	00 00       	NOP;
+ffa0216a:	00 00       	NOP;
+ffa0216c:	42 34       	I0 = P2;
+ffa0216e:	00 00       	NOP;
+ffa02170:	00 00       	NOP;
+ffa02172:	00 9d       	R0 = [I0];
+ffa02174:	00 48       	CC = !BITTST (R0, 0x0);		/* bit  0 */
+ffa02176:	fc 17       	IF !CC JUMP 0xffa0216e <_SoftResetPHY+0x42> (BP);
+ffa02178:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc03018(-4181992) */
+ffa0217c:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa0217e:	0a e1 18 30 	P2.L = 0x3018;		/* (12312)	P2=0xffc03018(-4181992) */
+ffa02182:	10 93       	[P2] = R0;
+ffa02184:	18 60       	R0 = 0x3 (X);		/*		R0=0x3(  3) */
+ffa02186:	e2 6f       	P2 += -0x4;		/* ( -4) */
+ffa02188:	10 93       	[P2] = R0;
+ffa0218a:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa0218c:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
+ffa0218e:	ff e3 95 ff 	CALL 0xffa020b8 <_RdPHYReg>;
+ffa02192:	80 42       	R0 = R0.L (X);
+ffa02194:	80 0c       	CC = R0 < 0x0;
+ffa02196:	fa 1f       	IF CC JUMP 0xffa0218a <_SoftResetPHY+0x5e> (BP);
+ffa02198:	01 e8 00 00 	UNLINK;
+ffa0219c:	10 00       	RTS;
 	...
 
-ffa02160 <_NetCksum>:
-ffa02160:	00 e8 00 00 	LINK 0x0;		/* (0) */
-ffa02164:	01 0d       	CC = R1 <= 0x0;
-ffa02166:	0f 18       	IF CC JUMP 0xffa02184 <_NetCksum+0x24>;
-ffa02168:	08 32       	P1 = R0;
-ffa0216a:	02 60       	R2 = 0x0 (X);		/*		R2=0x0(  0) */
-ffa0216c:	11 32       	P2 = R1;
-ffa0216e:	b2 e0 03 20 	LSETUP(0xffa02172 <_NetCksum+0x12>, 0xffa02174 <_NetCksum+0x14>) LC1 = P2;
-ffa02172:	08 94       	R0 = W[P1++] (Z);
-ffa02174:	82 50       	R2 = R2 + R0;
-ffa02176:	82 c6 82 81 	R0 = R2 >> 0x10;
-ffa0217a:	02 50       	R0 = R2 + R0;
-ffa0217c:	c0 42       	R0 = R0.L (Z);
-ffa0217e:	01 e8 00 00 	UNLINK;
-ffa02182:	10 00       	RTS;
-ffa02184:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa02186:	fc 2f       	JUMP.S 0xffa0217e <_NetCksum+0x1e>;
+ffa021a0 <_NetCksum>:
+ffa021a0:	00 e8 00 00 	LINK 0x0;		/* (0) */
+ffa021a4:	01 0d       	CC = R1 <= 0x0;
+ffa021a6:	0f 18       	IF CC JUMP 0xffa021c4 <_NetCksum+0x24>;
+ffa021a8:	08 32       	P1 = R0;
+ffa021aa:	02 60       	R2 = 0x0 (X);		/*		R2=0x0(  0) */
+ffa021ac:	11 32       	P2 = R1;
+ffa021ae:	b2 e0 03 20 	LSETUP(0xffa021b2 <_NetCksum+0x12>, 0xffa021b4 <_NetCksum+0x14>) LC1 = P2;
+ffa021b2:	08 94       	R0 = W[P1++] (Z);
+ffa021b4:	82 50       	R2 = R2 + R0;
+ffa021b6:	82 c6 82 81 	R0 = R2 >> 0x10;
+ffa021ba:	02 50       	R0 = R2 + R0;
+ffa021bc:	c0 42       	R0 = R0.L (Z);
+ffa021be:	01 e8 00 00 	UNLINK;
+ffa021c2:	10 00       	RTS;
+ffa021c4:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa021c6:	fc 2f       	JUMP.S 0xffa021be <_NetCksum+0x1e>;
 
-ffa02188 <_htons>:
-ffa02188:	c1 42       	R1 = R0.L (Z);
-ffa0218a:	00 e8 00 00 	LINK 0x0;		/* (0) */
-ffa0218e:	41 4e       	R1 >>= 0x8;
-ffa02190:	40 4f       	R0 <<= 0x8;
-ffa02192:	08 56       	R0 = R0 | R1;
-ffa02194:	01 e8 00 00 	UNLINK;
-ffa02198:	10 00       	RTS;
+ffa021c8 <_htons>:
+ffa021c8:	c1 42       	R1 = R0.L (Z);
+ffa021ca:	00 e8 00 00 	LINK 0x0;		/* (0) */
+ffa021ce:	41 4e       	R1 >>= 0x8;
+ffa021d0:	40 4f       	R0 <<= 0x8;
+ffa021d2:	08 56       	R0 = R0 | R1;
+ffa021d4:	01 e8 00 00 	UNLINK;
+ffa021d8:	10 00       	RTS;
 	...
 
-ffa0219c <_htonl>:
-ffa0219c:	10 30       	R2 = R0;
-ffa0219e:	41 43       	R1 = R0.B (Z);
-ffa021a0:	40 4e       	R0 >>= 0x8;
-ffa021a2:	41 4f       	R1 <<= 0x8;
-ffa021a4:	40 43       	R0 = R0.B (Z);
-ffa021a6:	08 56       	R0 = R0 | R1;
-ffa021a8:	82 c6 82 83 	R1 = R2 >> 0x10;
-ffa021ac:	40 4f       	R0 <<= 0x8;
-ffa021ae:	49 43       	R1 = R1.B (Z);
-ffa021b0:	08 56       	R0 = R0 | R1;
-ffa021b2:	00 e8 00 00 	LINK 0x0;		/* (0) */
-ffa021b6:	40 4f       	R0 <<= 0x8;
-ffa021b8:	c2 4e       	R2 >>= 0x18;
-ffa021ba:	10 56       	R0 = R0 | R2;
-ffa021bc:	01 e8 00 00 	UNLINK;
-ffa021c0:	10 00       	RTS;
+ffa021dc <_htonl>:
+ffa021dc:	10 30       	R2 = R0;
+ffa021de:	41 43       	R1 = R0.B (Z);
+ffa021e0:	40 4e       	R0 >>= 0x8;
+ffa021e2:	41 4f       	R1 <<= 0x8;
+ffa021e4:	40 43       	R0 = R0.B (Z);
+ffa021e6:	08 56       	R0 = R0 | R1;
+ffa021e8:	82 c6 82 83 	R1 = R2 >> 0x10;
+ffa021ec:	40 4f       	R0 <<= 0x8;
+ffa021ee:	49 43       	R1 = R1.B (Z);
+ffa021f0:	08 56       	R0 = R0 | R1;
+ffa021f2:	00 e8 00 00 	LINK 0x0;		/* (0) */
+ffa021f6:	40 4f       	R0 <<= 0x8;
+ffa021f8:	c2 4e       	R2 >>= 0x18;
+ffa021fa:	10 56       	R0 = R0 | R2;
+ffa021fc:	01 e8 00 00 	UNLINK;
+ffa02200:	10 00       	RTS;
 	...
 
-ffa021c4 <_pack4chars>:
-ffa021c4:	08 32       	P1 = R0;
-ffa021c6:	10 32       	P2 = R0;
-ffa021c8:	00 e8 00 00 	LINK 0x0;		/* (0) */
-ffa021cc:	01 e8 00 00 	UNLINK;
-ffa021d0:	88 e4 01 00 	R0 = B[P1 + 0x1] (Z);
-ffa021d4:	11 98       	R1 = B[P2++] (Z);
-ffa021d6:	40 4f       	R0 <<= 0x8;
-ffa021d8:	08 50       	R0 = R0 + R1;
-ffa021da:	91 e4 01 00 	R1 = B[P2 + 0x1] (Z);
-ffa021de:	81 4f       	R1 <<= 0x10;
-ffa021e0:	08 50       	R0 = R0 + R1;
-ffa021e2:	91 e4 02 00 	R1 = B[P2 + 0x2] (Z);
-ffa021e6:	c1 4f       	R1 <<= 0x18;
-ffa021e8:	08 50       	R0 = R0 + R1;
-ffa021ea:	10 00       	RTS;
+ffa02204 <_pack4chars>:
+ffa02204:	08 32       	P1 = R0;
+ffa02206:	10 32       	P2 = R0;
+ffa02208:	00 e8 00 00 	LINK 0x0;		/* (0) */
+ffa0220c:	01 e8 00 00 	UNLINK;
+ffa02210:	88 e4 01 00 	R0 = B[P1 + 0x1] (Z);
+ffa02214:	11 98       	R1 = B[P2++] (Z);
+ffa02216:	40 4f       	R0 <<= 0x8;
+ffa02218:	08 50       	R0 = R0 + R1;
+ffa0221a:	91 e4 01 00 	R1 = B[P2 + 0x1] (Z);
+ffa0221e:	81 4f       	R1 <<= 0x10;
+ffa02220:	08 50       	R0 = R0 + R1;
+ffa02222:	91 e4 02 00 	R1 = B[P2 + 0x2] (Z);
+ffa02226:	c1 4f       	R1 <<= 0x18;
+ffa02228:	08 50       	R0 = R0 + R1;
+ffa0222a:	10 00       	RTS;
 
-ffa021ec <_ip_header_setup>:
-ffa021ec:	00 32       	P0 = R0;
-ffa021ee:	11 32       	P2 = R1;
-ffa021f0:	20 e1 45 00 	R0 = 0x45 (X);		/*		R0=0x45( 69) */
-ffa021f4:	00 e8 00 00 	LINK 0x0;		/* (0) */
-ffa021f8:	00 9b       	B[P0] = R0;
-ffa021fa:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa021fc:	80 e6 01 00 	B[P0 + 0x1] = R0;
-ffa02200:	11 91       	R1 = [P2];
-ffa02202:	82 c6 41 80 	R0 = R1 << 0x8;
-ffa02206:	93 e4 01 00 	R3 = B[P2 + 0x1] (Z);
-ffa0220a:	61 67       	R1 += -0x14;		/* (-20) */
-ffa0220c:	11 93       	[P2] = R1;
-ffa0220e:	18 56       	R0 = R0 | R3;
-ffa02210:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff903018 */
-ffa02214:	0a e1 ba 0e 	P2.L = 0xeba;		/* (3770)	P2=0xff900eba <_NetIPID> */
-ffa02218:	40 b4       	W[P0 + 0x2] = R0;
-ffa0221a:	10 95       	R0 = W[P2] (Z);
-ffa0221c:	08 30       	R1 = R0;
-ffa0221e:	09 64       	R1 += 0x1;		/* (  1) */
-ffa02220:	11 97       	W[P2] = R1;
-ffa02222:	c1 42       	R1 = R0.L (Z);
-ffa02224:	41 4e       	R1 >>= 0x8;
-ffa02226:	40 4f       	R0 <<= 0x8;
-ffa02228:	08 56       	R0 = R0 | R1;
-ffa0222a:	80 b4       	W[P0 + 0x4] = R0;
-ffa0222c:	82 c6 42 01 	R0 = R2 >>> 0x18;
-ffa02230:	c0 4f       	R0 <<= 0x18;
-ffa02232:	21 e1 40 00 	R1 = 0x40 (X);		/*		R1=0x40( 64) */
-ffa02236:	00 0c       	CC = R0 == 0x0;
-ffa02238:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
-ffa0223a:	c1 b4       	W[P0 + 0x6] = R1;
-ffa0223c:	08 07       	IF CC R1 = R0;
-ffa0223e:	b8 e5 14 00 	R0 = B[FP + 0x14] (X);
-ffa02242:	80 e6 09 00 	B[P0 + 0x9] = R0;
-ffa02246:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa02248:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900eba <_NetIPID> */
-ffa0224c:	81 e6 08 00 	B[P0 + 0x8] = R1;
-ffa02250:	0a e1 ec 0e 	P2.L = 0xeec;		/* (3820)	P2=0xff900eec <_NetOurIP> */
-ffa02254:	40 b5       	W[P0 + 0xa] = R0;
-ffa02256:	10 91       	R0 = [P2];
-ffa02258:	02 b1       	[P0 + 0x10] = R2;
-ffa0225a:	50 30       	R2 = P0;
-ffa0225c:	c0 b0       	[P0 + 0xc] = R0;
-ffa0225e:	48 32       	P1 = P0;
-ffa02260:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
-ffa02262:	a2 64       	R2 += 0x14;		/* ( 20) */
-ffa02264:	52 68       	P2 = 0xa (X);		/*		P2=0xa( 10) */
-ffa02266:	b2 e0 03 20 	LSETUP(0xffa0226a <_ip_header_setup+0x7e>, 0xffa0226c <_ip_header_setup+0x80>) LC1 = P2;
-ffa0226a:	08 94       	R0 = W[P1++] (Z);
-ffa0226c:	41 50       	R1 = R1 + R0;
-ffa0226e:	82 c6 81 81 	R0 = R1 >> 0x10;
-ffa02272:	01 50       	R0 = R1 + R0;
-ffa02274:	c0 42       	R0 = R0.L (Z);
-ffa02276:	c0 43       	R0 =~ R0;
-ffa02278:	40 b5       	W[P0 + 0xa] = R0;
-ffa0227a:	02 30       	R0 = R2;
-ffa0227c:	01 e8 00 00 	UNLINK;
-ffa02280:	10 00       	RTS;
+ffa0222c <_ip_header_setup>:
+ffa0222c:	00 32       	P0 = R0;
+ffa0222e:	11 32       	P2 = R1;
+ffa02230:	20 e1 45 00 	R0 = 0x45 (X);		/*		R0=0x45( 69) */
+ffa02234:	00 e8 00 00 	LINK 0x0;		/* (0) */
+ffa02238:	00 9b       	B[P0] = R0;
+ffa0223a:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa0223c:	80 e6 01 00 	B[P0 + 0x1] = R0;
+ffa02240:	11 91       	R1 = [P2];
+ffa02242:	82 c6 41 80 	R0 = R1 << 0x8;
+ffa02246:	93 e4 01 00 	R3 = B[P2 + 0x1] (Z);
+ffa0224a:	61 67       	R1 += -0x14;		/* (-20) */
+ffa0224c:	11 93       	[P2] = R1;
+ffa0224e:	18 56       	R0 = R0 | R3;
+ffa02250:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff903018 */
+ffa02254:	0a e1 3e 0f 	P2.L = 0xf3e;		/* (3902)	P2=0xff900f3e <_NetIPID> */
+ffa02258:	40 b4       	W[P0 + 0x2] = R0;
+ffa0225a:	10 95       	R0 = W[P2] (Z);
+ffa0225c:	08 30       	R1 = R0;
+ffa0225e:	09 64       	R1 += 0x1;		/* (  1) */
+ffa02260:	11 97       	W[P2] = R1;
+ffa02262:	c1 42       	R1 = R0.L (Z);
+ffa02264:	41 4e       	R1 >>= 0x8;
+ffa02266:	40 4f       	R0 <<= 0x8;
+ffa02268:	08 56       	R0 = R0 | R1;
+ffa0226a:	80 b4       	W[P0 + 0x4] = R0;
+ffa0226c:	82 c6 42 01 	R0 = R2 >>> 0x18;
+ffa02270:	c0 4f       	R0 <<= 0x18;
+ffa02272:	21 e1 40 00 	R1 = 0x40 (X);		/*		R1=0x40( 64) */
+ffa02276:	00 0c       	CC = R0 == 0x0;
+ffa02278:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
+ffa0227a:	c1 b4       	W[P0 + 0x6] = R1;
+ffa0227c:	08 07       	IF CC R1 = R0;
+ffa0227e:	b8 e5 14 00 	R0 = B[FP + 0x14] (X);
+ffa02282:	80 e6 09 00 	B[P0 + 0x9] = R0;
+ffa02286:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa02288:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900f3e <_NetIPID> */
+ffa0228c:	81 e6 08 00 	B[P0 + 0x8] = R1;
+ffa02290:	0a e1 70 0f 	P2.L = 0xf70;		/* (3952)	P2=0xff900f70 <_NetOurIP> */
+ffa02294:	40 b5       	W[P0 + 0xa] = R0;
+ffa02296:	10 91       	R0 = [P2];
+ffa02298:	02 b1       	[P0 + 0x10] = R2;
+ffa0229a:	50 30       	R2 = P0;
+ffa0229c:	c0 b0       	[P0 + 0xc] = R0;
+ffa0229e:	48 32       	P1 = P0;
+ffa022a0:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
+ffa022a2:	a2 64       	R2 += 0x14;		/* ( 20) */
+ffa022a4:	52 68       	P2 = 0xa (X);		/*		P2=0xa( 10) */
+ffa022a6:	b2 e0 03 20 	LSETUP(0xffa022aa <_ip_header_setup+0x7e>, 0xffa022ac <_ip_header_setup+0x80>) LC1 = P2;
+ffa022aa:	08 94       	R0 = W[P1++] (Z);
+ffa022ac:	41 50       	R1 = R1 + R0;
+ffa022ae:	82 c6 81 81 	R0 = R1 >> 0x10;
+ffa022b2:	01 50       	R0 = R1 + R0;
+ffa022b4:	c0 42       	R0 = R0.L (Z);
+ffa022b6:	c0 43       	R0 =~ R0;
+ffa022b8:	40 b5       	W[P0 + 0xa] = R0;
+ffa022ba:	02 30       	R0 = R2;
+ffa022bc:	01 e8 00 00 	UNLINK;
+ffa022c0:	10 00       	RTS;
 	...
 
-ffa02284 <_ip_header_checksum>:
-ffa02284:	00 e8 00 00 	LINK 0x0;		/* (0) */
-ffa02288:	08 32       	P1 = R0;
-ffa0228a:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
-ffa0228c:	a2 68       	P2 = 0x14 (X);		/*		P2=0x14( 20) */
-ffa0228e:	b2 e0 03 20 	LSETUP(0xffa02292 <_ip_header_checksum+0xe>, 0xffa02294 <_ip_header_checksum+0x10>) LC1 = P2;
-ffa02292:	08 94       	R0 = W[P1++] (Z);
-ffa02294:	41 50       	R1 = R1 + R0;
-ffa02296:	82 c6 81 81 	R0 = R1 >> 0x10;
-ffa0229a:	01 50       	R0 = R1 + R0;
-ffa0229c:	c0 42       	R0 = R0.L (Z);
-ffa0229e:	08 02       	CC = R0;
-ffa022a0:	00 02       	R0 = CC;
-ffa022a2:	01 e8 00 00 	UNLINK;
-ffa022a6:	10 00       	RTS;
-
-ffa022a8 <_icmp_header_setup>:
-ffa022a8:	00 32       	P0 = R0;
-ffa022aa:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa022ac:	c5 04       	[--SP] = (P5:5);
-ffa022ae:	00 e8 00 00 	LINK 0x0;		/* (0) */
-ffa022b2:	29 32       	P5 = R1;
-ffa022b4:	80 e6 01 00 	B[P0 + 0x1] = R0;
-ffa022b8:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa022ba:	40 b4       	W[P0 + 0x2] = R0;
-ffa022bc:	38 ab       	R0 = W[FP + 0x18] (X);
-ffa022be:	02 9b       	B[P0] = R2;
-ffa022c0:	80 b4       	W[P0 + 0x4] = R0;
-ffa022c2:	b8 ab       	R0 = W[FP + 0x1c] (X);
-ffa022c4:	50 30       	R2 = P0;
-ffa022c6:	c0 b4       	W[P0 + 0x6] = R0;
-ffa022c8:	48 32       	P1 = P0;
+ffa022c4 <_ip_header_checksum>:
+ffa022c4:	00 e8 00 00 	LINK 0x0;		/* (0) */
+ffa022c8:	08 32       	P1 = R0;
 ffa022ca:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
-ffa022cc:	42 64       	R2 += 0x8;		/* (  8) */
-ffa022ce:	22 68       	P2 = 0x4 (X);		/*		P2=0x4(  4) */
-ffa022d0:	b2 e0 03 20 	LSETUP(0xffa022d4 <_icmp_header_setup+0x2c>, 0xffa022d6 <_icmp_header_setup+0x2e>) LC1 = P2;
-ffa022d4:	08 94       	R0 = W[P1++] (Z);
-ffa022d6:	41 50       	R1 = R1 + R0;
-ffa022d8:	c8 42       	R0 = R1.L (Z);
-ffa022da:	81 4e       	R1 >>= 0x10;
-ffa022dc:	41 50       	R1 = R1 + R0;
-ffa022de:	28 91       	R0 = [P5];
-ffa022e0:	c0 67       	R0 += -0x8;		/* ( -8) */
-ffa022e2:	28 93       	[P5] = R0;
-ffa022e4:	c9 43       	R1 =~ R1;
-ffa022e6:	01 e8 00 00 	UNLINK;
-ffa022ea:	82 ce 02 c0 	R0 = ROT R2 BY 0x0 || W[P0 + 0x2] = R1 || NOP;
-ffa022ee:	41 b4 00 00 
-ffa022f2:	85 04       	(P5:5) = [SP++];
-ffa022f4:	10 00       	RTS;
-	...
+ffa022cc:	a2 68       	P2 = 0x14 (X);		/*		P2=0x14( 20) */
+ffa022ce:	b2 e0 03 20 	LSETUP(0xffa022d2 <_ip_header_checksum+0xe>, 0xffa022d4 <_ip_header_checksum+0x10>) LC1 = P2;
+ffa022d2:	08 94       	R0 = W[P1++] (Z);
+ffa022d4:	41 50       	R1 = R1 + R0;
+ffa022d6:	82 c6 81 81 	R0 = R1 >> 0x10;
+ffa022da:	01 50       	R0 = R1 + R0;
+ffa022dc:	c0 42       	R0 = R0.L (Z);
+ffa022de:	08 02       	CC = R0;
+ffa022e0:	00 02       	R0 = CC;
+ffa022e2:	01 e8 00 00 	UNLINK;
+ffa022e6:	10 00       	RTS;
 
-ffa022f8 <_udp_header_setup>:
-ffa022f8:	10 32       	P2 = R0;
-ffa022fa:	d0 42       	R0 = R2.L (Z);
-ffa022fc:	09 32       	P1 = R1;
-ffa022fe:	00 e8 00 00 	LINK 0x0;		/* (0) */
-ffa02302:	40 4e       	R0 >>= 0x8;
-ffa02304:	42 4f       	R2 <<= 0x8;
-ffa02306:	79 a1       	R1 = [FP + 0x14];
-ffa02308:	82 56       	R2 = R2 | R0;
-ffa0230a:	c8 42       	R0 = R1.L (Z);
-ffa0230c:	40 4e       	R0 >>= 0x8;
-ffa0230e:	41 4f       	R1 <<= 0x8;
-ffa02310:	41 56       	R1 = R1 | R0;
-ffa02312:	51 b4       	W[P2 + 0x2] = R1;
-ffa02314:	09 91       	R1 = [P1];
-ffa02316:	12 97       	W[P2] = R2;
-ffa02318:	8a e4 01 00 	R2 = B[P1 + 0x1] (Z);
-ffa0231c:	82 c6 41 80 	R0 = R1 << 0x8;
-ffa02320:	10 56       	R0 = R0 | R2;
-ffa02322:	90 b4       	W[P2 + 0x4] = R0;
-ffa02324:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa02326:	d0 b4       	W[P2 + 0x6] = R0;
-ffa02328:	c1 67       	R1 += -0x8;		/* ( -8) */
-ffa0232a:	42 6c       	P2 += 0x8;		/* (  8) */
-ffa0232c:	42 30       	R0 = P2;
-ffa0232e:	09 93       	[P1] = R1;
-ffa02330:	01 e8 00 00 	UNLINK;
+ffa022e8 <_icmp_header_setup>:
+ffa022e8:	00 32       	P0 = R0;
+ffa022ea:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa022ec:	c5 04       	[--SP] = (P5:5);
+ffa022ee:	00 e8 00 00 	LINK 0x0;		/* (0) */
+ffa022f2:	29 32       	P5 = R1;
+ffa022f4:	80 e6 01 00 	B[P0 + 0x1] = R0;
+ffa022f8:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa022fa:	40 b4       	W[P0 + 0x2] = R0;
+ffa022fc:	38 ab       	R0 = W[FP + 0x18] (X);
+ffa022fe:	02 9b       	B[P0] = R2;
+ffa02300:	80 b4       	W[P0 + 0x4] = R0;
+ffa02302:	b8 ab       	R0 = W[FP + 0x1c] (X);
+ffa02304:	50 30       	R2 = P0;
+ffa02306:	c0 b4       	W[P0 + 0x6] = R0;
+ffa02308:	48 32       	P1 = P0;
+ffa0230a:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
+ffa0230c:	42 64       	R2 += 0x8;		/* (  8) */
+ffa0230e:	22 68       	P2 = 0x4 (X);		/*		P2=0x4(  4) */
+ffa02310:	b2 e0 03 20 	LSETUP(0xffa02314 <_icmp_header_setup+0x2c>, 0xffa02316 <_icmp_header_setup+0x2e>) LC1 = P2;
+ffa02314:	08 94       	R0 = W[P1++] (Z);
+ffa02316:	41 50       	R1 = R1 + R0;
+ffa02318:	c8 42       	R0 = R1.L (Z);
+ffa0231a:	81 4e       	R1 >>= 0x10;
+ffa0231c:	41 50       	R1 = R1 + R0;
+ffa0231e:	28 91       	R0 = [P5];
+ffa02320:	c0 67       	R0 += -0x8;		/* ( -8) */
+ffa02322:	28 93       	[P5] = R0;
+ffa02324:	c9 43       	R1 =~ R1;
+ffa02326:	01 e8 00 00 	UNLINK;
+ffa0232a:	82 ce 02 c0 	R0 = ROT R2 BY 0x0 || W[P0 + 0x2] = R1 || NOP;
+ffa0232e:	41 b4 00 00 
+ffa02332:	85 04       	(P5:5) = [SP++];
 ffa02334:	10 00       	RTS;
 	...
 
-ffa02338 <_tcp_header_setup>:
-ffa02338:	08 32       	P1 = R0;
-ffa0233a:	20 e1 00 50 	R0 = 0x5000 (X);		/*		R0=0x5000(20480) */
-ffa0233e:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900004 */
-ffa02342:	78 05       	[--SP] = (R7:7);
-ffa02344:	0a e1 dc 0f 	P2.L = 0xfdc;		/* (4060)	P2=0xff900fdc <_TcpClientPort> */
-ffa02348:	08 97       	W[P1] = R0;
-ffa0234a:	10 95       	R0 = W[P2] (Z);
-ffa0234c:	00 e8 00 00 	LINK 0x0;		/* (0) */
-ffa02350:	bb a1       	R3 = [FP + 0x18];
-ffa02352:	01 32       	P0 = R1;
-ffa02354:	48 b4       	W[P1 + 0x2] = R0;
-ffa02356:	59 43       	R1 = R3.B (Z);
-ffa02358:	82 ce c3 81 	R0 = R3 >> 0x8 || R7 = [FP + 0x1c] || NOP;
-ffa0235c:	ff a1 00 00 
-ffa02360:	41 4f       	R1 <<= 0x8;
-ffa02362:	40 43       	R0 = R0.B (Z);
-ffa02364:	08 56       	R0 = R0 | R1;
-ffa02366:	82 c6 83 83 	R1 = R3 >> 0x10;
-ffa0236a:	49 43       	R1 = R1.B (Z);
-ffa0236c:	40 4f       	R0 <<= 0x8;
-ffa0236e:	08 56       	R0 = R0 | R1;
-ffa02370:	40 4f       	R0 <<= 0x8;
-ffa02372:	c3 4e       	R3 >>= 0x18;
-ffa02374:	18 56       	R0 = R0 | R3;
-ffa02376:	48 b0       	[P1 + 0x4] = R0;
-ffa02378:	79 43       	R1 = R7.B (Z);
-ffa0237a:	82 c6 c7 81 	R0 = R7 >> 0x8;
-ffa0237e:	41 4f       	R1 <<= 0x8;
-ffa02380:	40 43       	R0 = R0.B (Z);
-ffa02382:	08 56       	R0 = R0 | R1;
-ffa02384:	82 c6 87 83 	R1 = R7 >> 0x10;
-ffa02388:	40 4f       	R0 <<= 0x8;
-ffa0238a:	49 43       	R1 = R1.B (Z);
-ffa0238c:	08 56       	R0 = R0 | R1;
-ffa0238e:	c7 4e       	R7 >>= 0x18;
-ffa02390:	40 4f       	R0 <<= 0x8;
-ffa02392:	38 56       	R0 = R0 | R7;
-ffa02394:	88 b0       	[P1 + 0x8] = R0;
-ffa02396:	20 e1 50 00 	R0 = 0x50 (X);		/*		R0=0x50( 80) */
-ffa0239a:	88 e6 0c 00 	B[P1 + 0xc] = R0;
-ffa0239e:	20 60       	R0 = 0x4 (X);		/*		R0=0x4(  4) */
-ffa023a0:	c8 b5       	W[P1 + 0xe] = R0;
-ffa023a2:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa023a4:	8a e6 0d 00 	B[P1 + 0xd] = R2;
-ffa023a8:	08 b6       	W[P1 + 0x10] = R0;
-ffa023aa:	48 b6       	W[P1 + 0x12] = R0;
-ffa023ac:	00 91       	R0 = [P0];
-ffa023ae:	60 67       	R0 += -0x14;		/* (-20) */
-ffa023b0:	00 93       	[P0] = R0;
-ffa023b2:	a1 6c       	P1 += 0x14;		/* ( 20) */
-ffa023b4:	01 e8 00 00 	UNLINK;
-ffa023b8:	41 30       	R0 = P1;
-ffa023ba:	38 05       	(R7:7) = [SP++];
-ffa023bc:	10 00       	RTS;
+ffa02338 <_udp_header_setup>:
+ffa02338:	10 32       	P2 = R0;
+ffa0233a:	d0 42       	R0 = R2.L (Z);
+ffa0233c:	09 32       	P1 = R1;
+ffa0233e:	00 e8 00 00 	LINK 0x0;		/* (0) */
+ffa02342:	40 4e       	R0 >>= 0x8;
+ffa02344:	42 4f       	R2 <<= 0x8;
+ffa02346:	79 a1       	R1 = [FP + 0x14];
+ffa02348:	82 56       	R2 = R2 | R0;
+ffa0234a:	c8 42       	R0 = R1.L (Z);
+ffa0234c:	40 4e       	R0 >>= 0x8;
+ffa0234e:	41 4f       	R1 <<= 0x8;
+ffa02350:	41 56       	R1 = R1 | R0;
+ffa02352:	51 b4       	W[P2 + 0x2] = R1;
+ffa02354:	09 91       	R1 = [P1];
+ffa02356:	12 97       	W[P2] = R2;
+ffa02358:	8a e4 01 00 	R2 = B[P1 + 0x1] (Z);
+ffa0235c:	82 c6 41 80 	R0 = R1 << 0x8;
+ffa02360:	10 56       	R0 = R0 | R2;
+ffa02362:	90 b4       	W[P2 + 0x4] = R0;
+ffa02364:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa02366:	d0 b4       	W[P2 + 0x6] = R0;
+ffa02368:	c1 67       	R1 += -0x8;		/* ( -8) */
+ffa0236a:	42 6c       	P2 += 0x8;		/* (  8) */
+ffa0236c:	42 30       	R0 = P2;
+ffa0236e:	09 93       	[P1] = R1;
+ffa02370:	01 e8 00 00 	UNLINK;
+ffa02374:	10 00       	RTS;
 	...
 
-ffa023c0 <_bfin_EMAC_send_nocopy>:
-ffa023c0:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00fdc(-4190244) */
-ffa023c4:	00 e8 03 00 	LINK 0xc;		/* (12) */
-ffa023c8:	00 61       	R0 = 0x20 (X);		/*		R0=0x20( 32) */
-ffa023ca:	0a e1 08 07 	P2.L = 0x708;		/* (1800)	P2=0xffc00708(-4192504) */
-ffa023ce:	10 97       	W[P2] = R0;
-ffa023d0:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00708(-4192504) */
-ffa023d4:	0a e1 a8 0c 	P2.L = 0xca8;		/* (3240)	P2=0xffc00ca8(-4191064) */
-ffa023d8:	10 95       	R0 = W[P2] (Z);
-ffa023da:	08 48       	CC = !BITTST (R0, 0x1);		/* bit  1 */
-ffa023dc:	55 10       	IF !CC JUMP 0xffa02486 <_bfin_EMAC_send_nocopy+0xc6>;
-ffa023de:	00 00       	NOP;
-ffa023e0:	00 00       	NOP;
-ffa023e2:	00 00       	NOP;
-ffa023e4:	10 95       	R0 = W[P2] (Z);
-ffa023e6:	18 48       	CC = !BITTST (R0, 0x3);		/* bit  3 */
-ffa023e8:	16 18       	IF CC JUMP 0xffa02414 <_bfin_EMAC_send_nocopy+0x54>;
-ffa023ea:	4a 32       	P1 = P2;
-ffa023ec:	4a e1 0f 00 	P2.H = 0xf;		/* ( 15)	P2=0xf0ca8 */
-ffa023f0:	41 60       	R1 = 0x8 (X);		/*		R1=0x8(  8) */
-ffa023f2:	0a e1 41 42 	P2.L = 0x4241;		/* (16961)	P2=0xf4241 */
-ffa023f6:	41 34       	I0 = P1;
-ffa023f8:	b2 e0 06 20 	LSETUP(0xffa023fc <_bfin_EMAC_send_nocopy+0x3c>, 0xffa02404 <_bfin_EMAC_send_nocopy+0x44>) LC1 = P2;
-ffa023fc:	20 9d       	R0.L = W[I0];
-ffa023fe:	01 54       	R0 = R1 & R0;
-ffa02400:	00 0c       	CC = R0 == 0x0;
-ffa02402:	09 18       	IF CC JUMP 0xffa02414 <_bfin_EMAC_send_nocopy+0x54>;
-ffa02404:	00 00       	NOP;
-ffa02406:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900020(-7340000) */
-ffa0240a:	00 e1 0c 01 	R0.L = 0x10c;		/* (268)	R0=0xff90010c(-7339764) */
-ffa0240e:	ff e3 81 fb 	CALL 0xffa01b10 <_printf_str>;
-ffa02412:	2d 20       	JUMP.S 0xffa0246c <_bfin_EMAC_send_nocopy+0xac>;
-ffa02414:	48 e1 90 ff 	P0.H = 0xff90;		/* (-112)	P0=0xff900001 */
-ffa02418:	08 e1 b8 0e 	P0.L = 0xeb8;		/* (3768)	P0=0xff900eb8 <_txIdx> */
-ffa0241c:	02 95       	R2 = W[P0] (Z);
-ffa0241e:	d1 42       	R1 = R2.L (Z);
-ffa02420:	09 32       	P1 = R1;
-ffa02422:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff904241 */
-ffa02426:	0a e1 bc 0e 	P2.L = 0xebc;		/* (3772)	P2=0xff900ebc <_txbuf> */
-ffa0242a:	11 0d       	CC = R1 <= 0x2;
-ffa0242c:	8a 5e       	P2 = P2 + (P1 << 0x2);
-ffa0242e:	51 91       	P1 = [P2];
-ffa02430:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00ebc(-4190532) */
-ffa02434:	0a e1 80 0c 	P2.L = 0xc80;		/* (3200)	P2=0xffc00c80(-4191104) */
-ffa02438:	88 a1       	R0 = [P1 + 0x18];
-ffa0243a:	48 b0       	[P1 + 0x4] = R0;
-ffa0243c:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa0243e:	88 b2       	[P1 + 0x28] = R0;
-ffa02440:	51 93       	[P2] = P1;
-ffa02442:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900c80 */
-ffa02446:	0a e1 fe 04 	P2.L = 0x4fe;		/* (1278)	P2=0xff9004fe <_txdmacfg> */
-ffa0244a:	10 95       	R0 = W[P2] (Z);
-ffa0244c:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc004fe(-4193026) */
-ffa02450:	0a e1 88 0c 	P2.L = 0xc88;		/* (3208)	P2=0xffc00c88(-4191096) */
-ffa02454:	10 97       	W[P2] = R0;
-ffa02456:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00c88(-4191096) */
-ffa0245a:	0a e1 00 30 	P2.L = 0x3000;		/* (12288)	P2=0xffc03000(-4182016) */
-ffa0245e:	10 91       	R0 = [P2];
-ffa02460:	80 4a       	BITSET (R0, 0x10);		/* bit 16 */
-ffa02462:	10 93       	[P2] = R0;
-ffa02464:	0e 10       	IF !CC JUMP 0xffa02480 <_bfin_EMAC_send_nocopy+0xc0>;
-ffa02466:	02 30       	R0 = R2;
-ffa02468:	08 64       	R0 += 0x1;		/* (  1) */
-ffa0246a:	00 97       	W[P0] = R0;
-ffa0246c:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc03000(-4182016) */
-ffa02470:	00 61       	R0 = 0x20 (X);		/*		R0=0x20( 32) */
-ffa02472:	0a e1 04 07 	P2.L = 0x704;		/* (1796)	P2=0xffc00704(-4192508) */
-ffa02476:	10 97       	W[P2] = R0;
-ffa02478:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa0247a:	01 e8 00 00 	UNLINK;
-ffa0247e:	10 00       	RTS;
-ffa02480:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa02482:	00 97       	W[P0] = R0;
-ffa02484:	f4 2f       	JUMP.S 0xffa0246c <_bfin_EMAC_send_nocopy+0xac>;
-ffa02486:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900000 <_l1_data_a>(-7340032) */
-ffa0248a:	00 e1 f4 00 	R0.L = 0xf4;		/* (244)	R0=0xff9000f4(-7339788) */
-ffa0248e:	ff e3 41 fb 	CALL 0xffa01b10 <_printf_str>;
-ffa02492:	ed 2f       	JUMP.S 0xffa0246c <_bfin_EMAC_send_nocopy+0xac>;
+ffa02378 <_tcp_header_setup>:
+ffa02378:	08 32       	P1 = R0;
+ffa0237a:	20 e1 00 50 	R0 = 0x5000 (X);		/*		R0=0x5000(20480) */
+ffa0237e:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900004 */
+ffa02382:	78 05       	[--SP] = (R7:7);
+ffa02384:	0a e1 60 10 	P2.L = 0x1060;		/* (4192)	P2=0xff901060 <_TcpClientPort> */
+ffa02388:	08 97       	W[P1] = R0;
+ffa0238a:	10 95       	R0 = W[P2] (Z);
+ffa0238c:	00 e8 00 00 	LINK 0x0;		/* (0) */
+ffa02390:	bb a1       	R3 = [FP + 0x18];
+ffa02392:	01 32       	P0 = R1;
+ffa02394:	48 b4       	W[P1 + 0x2] = R0;
+ffa02396:	59 43       	R1 = R3.B (Z);
+ffa02398:	82 ce c3 81 	R0 = R3 >> 0x8 || R7 = [FP + 0x1c] || NOP;
+ffa0239c:	ff a1 00 00 
+ffa023a0:	41 4f       	R1 <<= 0x8;
+ffa023a2:	40 43       	R0 = R0.B (Z);
+ffa023a4:	08 56       	R0 = R0 | R1;
+ffa023a6:	82 c6 83 83 	R1 = R3 >> 0x10;
+ffa023aa:	49 43       	R1 = R1.B (Z);
+ffa023ac:	40 4f       	R0 <<= 0x8;
+ffa023ae:	08 56       	R0 = R0 | R1;
+ffa023b0:	40 4f       	R0 <<= 0x8;
+ffa023b2:	c3 4e       	R3 >>= 0x18;
+ffa023b4:	18 56       	R0 = R0 | R3;
+ffa023b6:	48 b0       	[P1 + 0x4] = R0;
+ffa023b8:	79 43       	R1 = R7.B (Z);
+ffa023ba:	82 c6 c7 81 	R0 = R7 >> 0x8;
+ffa023be:	41 4f       	R1 <<= 0x8;
+ffa023c0:	40 43       	R0 = R0.B (Z);
+ffa023c2:	08 56       	R0 = R0 | R1;
+ffa023c4:	82 c6 87 83 	R1 = R7 >> 0x10;
+ffa023c8:	40 4f       	R0 <<= 0x8;
+ffa023ca:	49 43       	R1 = R1.B (Z);
+ffa023cc:	08 56       	R0 = R0 | R1;
+ffa023ce:	c7 4e       	R7 >>= 0x18;
+ffa023d0:	40 4f       	R0 <<= 0x8;
+ffa023d2:	38 56       	R0 = R0 | R7;
+ffa023d4:	88 b0       	[P1 + 0x8] = R0;
+ffa023d6:	20 e1 50 00 	R0 = 0x50 (X);		/*		R0=0x50( 80) */
+ffa023da:	88 e6 0c 00 	B[P1 + 0xc] = R0;
+ffa023de:	20 60       	R0 = 0x4 (X);		/*		R0=0x4(  4) */
+ffa023e0:	c8 b5       	W[P1 + 0xe] = R0;
+ffa023e2:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa023e4:	8a e6 0d 00 	B[P1 + 0xd] = R2;
+ffa023e8:	08 b6       	W[P1 + 0x10] = R0;
+ffa023ea:	48 b6       	W[P1 + 0x12] = R0;
+ffa023ec:	00 91       	R0 = [P0];
+ffa023ee:	60 67       	R0 += -0x14;		/* (-20) */
+ffa023f0:	00 93       	[P0] = R0;
+ffa023f2:	a1 6c       	P1 += 0x14;		/* ( 20) */
+ffa023f4:	01 e8 00 00 	UNLINK;
+ffa023f8:	41 30       	R0 = P1;
+ffa023fa:	38 05       	(R7:7) = [SP++];
+ffa023fc:	10 00       	RTS;
+	...
 
-ffa02494 <_DHCP_tx>:
-ffa02494:	60 05       	[--SP] = (R7:4);
-ffa02496:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900704 */
-ffa0249a:	00 e8 03 00 	LINK 0xc;		/* (12) */
-ffa0249e:	38 30       	R7 = R0;
-ffa024a0:	0a e1 b8 0e 	P2.L = 0xeb8;		/* (3768)	P2=0xff900eb8 <_txIdx> */
-ffa024a4:	10 95       	R0 = W[P2] (Z);
-ffa024a6:	10 32       	P2 = R0;
-ffa024a8:	49 e1 90 ff 	P1.H = 0xff90;		/* (-112)	P1=0xff900008 */
-ffa024ac:	09 e1 bc 0e 	P1.L = 0xebc;		/* (3772)	P1=0xff900ebc <_txbuf> */
-ffa024b0:	20 e1 1a 01 	R0 = 0x11a (X);		/*		R0=0x11a(282) */
-ffa024b4:	fb 63       	R3 = -0x1 (X);		/*		R3=0xffffffff( -1) */
-ffa024b6:	91 5e       	P2 = P1 + (P2 << 0x2);
-ffa024b8:	52 91       	P2 = [P2];
-ffa024ba:	07 50       	R0 = R7 + R0;
-ffa024bc:	19 34       	I3 = R1;
-ffa024be:	90 ad       	P0 = [P2 + 0x18];
-ffa024c0:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900eb8 <_txIdx> */
-ffa024c4:	0a e1 e0 0e 	P2.L = 0xee0;		/* (3808)	P2=0xff900ee0 <_NetOurMAC> */
-ffa024c8:	00 97       	W[P0] = R0;
-ffa024ca:	83 e6 02 00 	B[P0 + 0x2] = R3;
-ffa024ce:	83 e6 03 00 	B[P0 + 0x3] = R3;
-ffa024d2:	83 e6 04 00 	B[P0 + 0x4] = R3;
-ffa024d6:	83 e6 05 00 	B[P0 + 0x5] = R3;
-ffa024da:	83 e6 06 00 	B[P0 + 0x6] = R3;
-ffa024de:	83 e6 07 00 	B[P0 + 0x7] = R3;
-ffa024e2:	50 99       	R0 = B[P2] (X);
-ffa024e4:	80 e6 08 00 	B[P0 + 0x8] = R0;
-ffa024e8:	08 34       	I1 = R0;
-ffa024ea:	90 e5 01 00 	R0 = B[P2 + 0x1] (X);
-ffa024ee:	80 e6 09 00 	B[P0 + 0x9] = R0;
-ffa024f2:	94 e5 02 00 	R4 = B[P2 + 0x2] (X);
-ffa024f6:	84 e6 0a 00 	B[P0 + 0xa] = R4;
-ffa024fa:	95 e5 03 00 	R5 = B[P2 + 0x3] (X);
-ffa024fe:	85 e6 0b 00 	B[P0 + 0xb] = R5;
-ffa02502:	96 e5 04 00 	R6 = B[P2 + 0x4] (X);
-ffa02506:	86 e6 0c 00 	B[P0 + 0xc] = R6;
-ffa0250a:	00 34       	I0 = R0;
-ffa0250c:	90 e5 05 00 	R0 = B[P2 + 0x5] (X);
-ffa02510:	80 e6 0d 00 	B[P0 + 0xd] = R0;
-ffa02514:	10 34       	I2 = R0;
-ffa02516:	40 60       	R0 = 0x8 (X);		/*		R0=0x8(  8) */
-ffa02518:	c0 b5       	W[P0 + 0xe] = R0;
-ffa0251a:	20 e1 45 00 	R0 = 0x45 (X);		/*		R0=0x45( 69) */
-ffa0251e:	80 e6 10 00 	B[P0 + 0x10] = R0;
-ffa02522:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa02524:	80 e6 11 00 	B[P0 + 0x11] = R0;
-ffa02528:	20 e1 0c 01 	R0 = 0x10c (X);		/*		R0=0x10c(268) */
-ffa0252c:	07 50       	R0 = R7 + R0;
-ffa0252e:	c1 42       	R1 = R0.L (Z);
-ffa02530:	41 4e       	R1 >>= 0x8;
-ffa02532:	40 4f       	R0 <<= 0x8;
-ffa02534:	08 56       	R0 = R0 | R1;
-ffa02536:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900ee0 <_NetOurMAC> */
-ffa0253a:	0a e1 ba 0e 	P2.L = 0xeba;		/* (3770)	P2=0xff900eba <_NetIPID> */
-ffa0253e:	40 b6       	W[P0 + 0x12] = R0;
-ffa02540:	10 95       	R0 = W[P2] (Z);
-ffa02542:	08 30       	R1 = R0;
-ffa02544:	09 64       	R1 += 0x1;		/* (  1) */
-ffa02546:	11 97       	W[P2] = R1;
-ffa02548:	c1 42       	R1 = R0.L (Z);
-ffa0254a:	41 4e       	R1 >>= 0x8;
-ffa0254c:	40 4f       	R0 <<= 0x8;
-ffa0254e:	08 56       	R0 = R0 | R1;
-ffa02550:	80 b6       	W[P0 + 0x14] = R0;
-ffa02552:	20 e1 40 00 	R0 = 0x40 (X);		/*		R0=0x40( 64) */
-ffa02556:	c0 b6       	W[P0 + 0x16] = R0;
-ffa02558:	88 60       	R0 = 0x11 (X);		/*		R0=0x11( 17) */
-ffa0255a:	80 e6 19 00 	B[P0 + 0x19] = R0;
-ffa0255e:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa02560:	40 b7       	W[P0 + 0x1a] = R0;
-ffa02562:	00 cc 00 c0 	R0 = R0 -|- R0 || [P0 + 0x20] = R2 || NOP;
-ffa02566:	02 b2 00 00 
-ffa0256a:	48 32       	P1 = P0;
-ffa0256c:	83 e6 18 00 	B[P0 + 0x18] = R3;
-ffa02570:	c0 b1       	[P0 + 0x1c] = R0;
-ffa02572:	81 6c       	P1 += 0x10;		/* ( 16) */
-ffa02574:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
-ffa02576:	52 68       	P2 = 0xa (X);		/*		P2=0xa( 10) */
-ffa02578:	b2 e0 03 20 	LSETUP(0xffa0257c <_DHCP_tx+0xe8>, 0xffa0257e <_DHCP_tx+0xea>) LC1 = P2;
-ffa0257c:	08 94       	R0 = W[P1++] (Z);
-ffa0257e:	41 50       	R1 = R1 + R0;
-ffa02580:	82 c6 81 81 	R0 = R1 >> 0x10;
-ffa02584:	01 50       	R0 = R1 + R0;
-ffa02586:	c0 42       	R0 = R0.L (Z);
-ffa02588:	c0 43       	R0 =~ R0;
-ffa0258a:	40 b7       	W[P0 + 0x1a] = R0;
-ffa0258c:	20 e1 00 44 	R0 = 0x4400 (X);		/*		R0=0x4400(17408) */
-ffa02590:	40 e6 12 00 	W[P0 + 0x24] = R0;
-ffa02594:	20 e1 00 43 	R0 = 0x4300 (X);		/*		R0=0x4300(17152) */
-ffa02598:	40 e6 13 00 	W[P0 + 0x26] = R0;
-ffa0259c:	20 e1 f8 00 	R0 = 0xf8 (X);		/*		R0=0xf8(248) */
-ffa025a0:	07 50       	R0 = R7 + R0;
-ffa025a2:	c1 42       	R1 = R0.L (Z);
-ffa025a4:	41 4e       	R1 >>= 0x8;
-ffa025a6:	40 4f       	R0 <<= 0x8;
-ffa025a8:	08 56       	R0 = R0 | R1;
-ffa025aa:	40 e6 14 00 	W[P0 + 0x28] = R0;
-ffa025ae:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
-ffa025b0:	80 e6 2c 00 	B[P0 + 0x2c] = R0;
-ffa025b4:	80 e6 2d 00 	B[P0 + 0x2d] = R0;
-ffa025b8:	30 60       	R0 = 0x6 (X);		/*		R0=0x6(  6) */
-ffa025ba:	80 e6 2e 00 	B[P0 + 0x2e] = R0;
-ffa025be:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa025c0:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc0000a(-4194294) */
-ffa025c4:	0a e1 04 30 	P2.L = 0x3004;		/* (12292)	P2=0xffc03004(-4182012) */
-ffa025c8:	80 e6 2f 00 	B[P0 + 0x2f] = R0;
-ffa025cc:	10 91       	R0 = [P2];
-ffa025ce:	00 b3       	[P0 + 0x30] = R0;
-ffa025d0:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa025d2:	80 b3       	[P0 + 0x38] = R0;
-ffa025d4:	c0 b3       	[P0 + 0x3c] = R0;
-ffa025d6:	00 e6 10 00 	[P0 + 0x40] = R0;
-ffa025da:	00 e6 11 00 	[P0 + 0x44] = R0;
-ffa025de:	40 e1 53 63 	R0.H = 0x6353;		/* (25427)	R0=0x63530000(1666383872) */
-ffa025e2:	00 e1 63 82 	R0.L = 0x8263;		/* (-32157)	R0=0x63538263(1666417251) */
-ffa025e6:	00 e6 46 00 	[P0 + 0x118] = R0;
-ffa025ea:	81 30       	R0 = I1;
-ffa025ec:	80 e6 48 00 	B[P0 + 0x48] = R0;
-ffa025f0:	80 30       	R0 = I0;
-ffa025f2:	80 e6 49 00 	B[P0 + 0x49] = R0;
-ffa025f6:	82 30       	R0 = I2;
-ffa025f8:	2a e1 4e 00 	P2 = 0x4e (X);		/*		P2=0x4e( 78) */
-ffa025fc:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
-ffa025fe:	80 e6 4d 00 	B[P0 + 0x4d] = R0;
-ffa02602:	50 5a       	P1 = P0 + P2;
-ffa02604:	41 e6 15 00 	W[P0 + 0x2a] = R1;
-ffa02608:	41 e6 1a 00 	W[P0 + 0x34] = R1;
-ffa0260c:	41 e6 1b 00 	W[P0 + 0x36] = R1;
-ffa02610:	84 e6 4a 00 	B[P0 + 0x4a] = R4;
-ffa02614:	85 e6 4b 00 	B[P0 + 0x4b] = R5;
-ffa02618:	86 e6 4c 00 	B[P0 + 0x4c] = R6;
-ffa0261c:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa0261e:	52 68       	P2 = 0xa (X);		/*		P2=0xa( 10) */
-ffa02620:	b2 e0 02 20 	LSETUP(0xffa02624 <_DHCP_tx+0x190>, 0xffa02624 <_DHCP_tx+0x190>) LC1 = P2;
-ffa02624:	08 9a       	B[P1++] = R0;
-ffa02626:	2a e1 58 00 	P2 = 0x58 (X);		/*		P2=0x58( 88) */
-ffa0262a:	50 5a       	P1 = P0 + P2;
-ffa0262c:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa0262e:	82 68       	P2 = 0x10 (X);		/*		P2=0x10( 16) */
-ffa02630:	b2 e0 02 20 	LSETUP(0xffa02634 <_DHCP_tx+0x1a0>, 0xffa02634 <_DHCP_tx+0x1a0>) LC1 = P2;
-ffa02634:	08 92       	[P1++] = R0;
-ffa02636:	2a e1 98 00 	P2 = 0x98 (X);		/*		P2=0x98(152) */
-ffa0263a:	50 5a       	P1 = P0 + P2;
-ffa0263c:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa0263e:	02 69       	P2 = 0x20 (X);		/*		P2=0x20( 32) */
-ffa02640:	b2 e0 02 20 	LSETUP(0xffa02644 <_DHCP_tx+0x1b0>, 0xffa02644 <_DHCP_tx+0x1b0>) LC1 = P2;
-ffa02644:	08 92       	[P1++] = R0;
-ffa02646:	40 30       	R0 = P0;
-ffa02648:	21 e1 1c 01 	R1 = 0x11c (X);		/*		R1=0x11c(284) */
-ffa0264c:	48 50       	R1 = R0 + R1;
-ffa0264e:	17 30       	R2 = R7;
-ffa02650:	83 30       	R0 = I3;
-ffa02652:	ff e3 ad fa 	CALL 0xffa01bac <_memcpy_>;
-ffa02656:	01 e8 00 00 	UNLINK;
-ffa0265a:	20 05       	(R7:4) = [SP++];
-ffa0265c:	ff e2 b2 fe 	JUMP.L 0xffa023c0 <_bfin_EMAC_send_nocopy>;
+ffa02400 <_bfin_EMAC_send_nocopy>:
+ffa02400:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc01060(-4190112) */
+ffa02404:	00 e8 03 00 	LINK 0xc;		/* (12) */
+ffa02408:	00 61       	R0 = 0x20 (X);		/*		R0=0x20( 32) */
+ffa0240a:	0a e1 08 07 	P2.L = 0x708;		/* (1800)	P2=0xffc00708(-4192504) */
+ffa0240e:	10 97       	W[P2] = R0;
+ffa02410:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00708(-4192504) */
+ffa02414:	0a e1 a8 0c 	P2.L = 0xca8;		/* (3240)	P2=0xffc00ca8(-4191064) */
+ffa02418:	10 95       	R0 = W[P2] (Z);
+ffa0241a:	08 48       	CC = !BITTST (R0, 0x1);		/* bit  1 */
+ffa0241c:	55 10       	IF !CC JUMP 0xffa024c6 <_bfin_EMAC_send_nocopy+0xc6>;
+ffa0241e:	00 00       	NOP;
+ffa02420:	00 00       	NOP;
+ffa02422:	00 00       	NOP;
+ffa02424:	10 95       	R0 = W[P2] (Z);
+ffa02426:	18 48       	CC = !BITTST (R0, 0x3);		/* bit  3 */
+ffa02428:	16 18       	IF CC JUMP 0xffa02454 <_bfin_EMAC_send_nocopy+0x54>;
+ffa0242a:	4a 32       	P1 = P2;
+ffa0242c:	4a e1 0f 00 	P2.H = 0xf;		/* ( 15)	P2=0xf0ca8 */
+ffa02430:	41 60       	R1 = 0x8 (X);		/*		R1=0x8(  8) */
+ffa02432:	0a e1 41 42 	P2.L = 0x4241;		/* (16961)	P2=0xf4241 */
+ffa02436:	41 34       	I0 = P1;
+ffa02438:	b2 e0 06 20 	LSETUP(0xffa0243c <_bfin_EMAC_send_nocopy+0x3c>, 0xffa02444 <_bfin_EMAC_send_nocopy+0x44>) LC1 = P2;
+ffa0243c:	20 9d       	R0.L = W[I0];
+ffa0243e:	01 54       	R0 = R1 & R0;
+ffa02440:	00 0c       	CC = R0 == 0x0;
+ffa02442:	09 18       	IF CC JUMP 0xffa02454 <_bfin_EMAC_send_nocopy+0x54>;
+ffa02444:	00 00       	NOP;
+ffa02446:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900020(-7340000) */
+ffa0244a:	00 e1 48 01 	R0.L = 0x148;		/* (328)	R0=0xff900148(-7339704) */
+ffa0244e:	ff e3 81 fb 	CALL 0xffa01b50 <_printf_str>;
+ffa02452:	2d 20       	JUMP.S 0xffa024ac <_bfin_EMAC_send_nocopy+0xac>;
+ffa02454:	48 e1 90 ff 	P0.H = 0xff90;		/* (-112)	P0=0xff900001 */
+ffa02458:	08 e1 3c 0f 	P0.L = 0xf3c;		/* (3900)	P0=0xff900f3c <_txIdx> */
+ffa0245c:	02 95       	R2 = W[P0] (Z);
+ffa0245e:	d1 42       	R1 = R2.L (Z);
+ffa02460:	09 32       	P1 = R1;
+ffa02462:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff904241 */
+ffa02466:	0a e1 40 0f 	P2.L = 0xf40;		/* (3904)	P2=0xff900f40 <_txbuf> */
+ffa0246a:	11 0d       	CC = R1 <= 0x2;
+ffa0246c:	8a 5e       	P2 = P2 + (P1 << 0x2);
+ffa0246e:	51 91       	P1 = [P2];
+ffa02470:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00f40(-4190400) */
+ffa02474:	0a e1 80 0c 	P2.L = 0xc80;		/* (3200)	P2=0xffc00c80(-4191104) */
+ffa02478:	88 a1       	R0 = [P1 + 0x18];
+ffa0247a:	48 b0       	[P1 + 0x4] = R0;
+ffa0247c:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa0247e:	88 b2       	[P1 + 0x28] = R0;
+ffa02480:	51 93       	[P2] = P1;
+ffa02482:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900c80 */
+ffa02486:	0a e1 82 05 	P2.L = 0x582;		/* (1410)	P2=0xff900582 <_txdmacfg> */
+ffa0248a:	10 95       	R0 = W[P2] (Z);
+ffa0248c:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00582(-4192894) */
+ffa02490:	0a e1 88 0c 	P2.L = 0xc88;		/* (3208)	P2=0xffc00c88(-4191096) */
+ffa02494:	10 97       	W[P2] = R0;
+ffa02496:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00c88(-4191096) */
+ffa0249a:	0a e1 00 30 	P2.L = 0x3000;		/* (12288)	P2=0xffc03000(-4182016) */
+ffa0249e:	10 91       	R0 = [P2];
+ffa024a0:	80 4a       	BITSET (R0, 0x10);		/* bit 16 */
+ffa024a2:	10 93       	[P2] = R0;
+ffa024a4:	0e 10       	IF !CC JUMP 0xffa024c0 <_bfin_EMAC_send_nocopy+0xc0>;
+ffa024a6:	02 30       	R0 = R2;
+ffa024a8:	08 64       	R0 += 0x1;		/* (  1) */
+ffa024aa:	00 97       	W[P0] = R0;
+ffa024ac:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc03000(-4182016) */
+ffa024b0:	00 61       	R0 = 0x20 (X);		/*		R0=0x20( 32) */
+ffa024b2:	0a e1 04 07 	P2.L = 0x704;		/* (1796)	P2=0xffc00704(-4192508) */
+ffa024b6:	10 97       	W[P2] = R0;
+ffa024b8:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa024ba:	01 e8 00 00 	UNLINK;
+ffa024be:	10 00       	RTS;
+ffa024c0:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa024c2:	00 97       	W[P0] = R0;
+ffa024c4:	f4 2f       	JUMP.S 0xffa024ac <_bfin_EMAC_send_nocopy+0xac>;
+ffa024c6:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900000 <_l1_data_a>(-7340032) */
+ffa024ca:	00 e1 30 01 	R0.L = 0x130;		/* (304)	R0=0xff900130(-7339728) */
+ffa024ce:	ff e3 41 fb 	CALL 0xffa01b50 <_printf_str>;
+ffa024d2:	ed 2f       	JUMP.S 0xffa024ac <_bfin_EMAC_send_nocopy+0xac>;
 
-ffa02660 <_DHCP_tx_discover>:
-ffa02660:	c5 04       	[--SP] = (P5:5);
-ffa02662:	4d e1 90 ff 	P5.H = 0xff90;		/* (-112)	P5=0xff900000 <_l1_data_a> */
-ffa02666:	0d e1 b4 0e 	P5.L = 0xeb4;		/* (3764)	P5=0xff900eb4 <_NetDHCPserv> */
-ffa0266a:	f8 63       	R0 = -0x1 (X);		/*		R0=0xffffffff( -1) */
-ffa0266c:	28 93       	[P5] = R0;
-ffa0266e:	00 e8 04 00 	LINK 0x10;		/* (16) */
-ffa02672:	a8 61       	R0 = 0x35 (X);		/*		R0=0x35( 53) */
-ffa02674:	b8 e6 fc ff 	B[FP + -0x4] = R0;
-ffa02678:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
-ffa0267a:	b8 e6 fd ff 	B[FP + -0x3] = R0;
-ffa0267e:	b8 e6 fe ff 	B[FP + -0x2] = R0;
-ffa02682:	f8 63       	R0 = -0x1 (X);		/*		R0=0xffffffff( -1) */
-ffa02684:	b8 e6 ff ff 	B[FP + -0x1] = R0;
-ffa02688:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff90ffff(-7274497) */
-ffa0268c:	00 e1 24 01 	R0.L = 0x124;		/* (292)	R0=0xff900124(-7339740) */
-ffa02690:	ff e3 40 fa 	CALL 0xffa01b10 <_printf_str>;
-ffa02694:	4f 30       	R1 = FP;
-ffa02696:	2a 91       	R2 = [P5];
-ffa02698:	20 60       	R0 = 0x4 (X);		/*		R0=0x4(  4) */
-ffa0269a:	e1 67       	R1 += -0x4;		/* ( -4) */
-ffa0269c:	ff e3 fc fe 	CALL 0xffa02494 <_DHCP_tx>;
-ffa026a0:	01 e8 00 00 	UNLINK;
-ffa026a4:	85 04       	(P5:5) = [SP++];
-ffa026a6:	10 00       	RTS;
+ffa024d4 <_DHCP_tx>:
+ffa024d4:	60 05       	[--SP] = (R7:4);
+ffa024d6:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900704 */
+ffa024da:	00 e8 03 00 	LINK 0xc;		/* (12) */
+ffa024de:	38 30       	R7 = R0;
+ffa024e0:	0a e1 3c 0f 	P2.L = 0xf3c;		/* (3900)	P2=0xff900f3c <_txIdx> */
+ffa024e4:	10 95       	R0 = W[P2] (Z);
+ffa024e6:	10 32       	P2 = R0;
+ffa024e8:	49 e1 90 ff 	P1.H = 0xff90;		/* (-112)	P1=0xff900008 */
+ffa024ec:	09 e1 40 0f 	P1.L = 0xf40;		/* (3904)	P1=0xff900f40 <_txbuf> */
+ffa024f0:	20 e1 1a 01 	R0 = 0x11a (X);		/*		R0=0x11a(282) */
+ffa024f4:	fb 63       	R3 = -0x1 (X);		/*		R3=0xffffffff( -1) */
+ffa024f6:	91 5e       	P2 = P1 + (P2 << 0x2);
+ffa024f8:	52 91       	P2 = [P2];
+ffa024fa:	07 50       	R0 = R7 + R0;
+ffa024fc:	19 34       	I3 = R1;
+ffa024fe:	90 ad       	P0 = [P2 + 0x18];
+ffa02500:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900f3c <_txIdx> */
+ffa02504:	0a e1 64 0f 	P2.L = 0xf64;		/* (3940)	P2=0xff900f64 <_NetOurMAC> */
+ffa02508:	00 97       	W[P0] = R0;
+ffa0250a:	83 e6 02 00 	B[P0 + 0x2] = R3;
+ffa0250e:	83 e6 03 00 	B[P0 + 0x3] = R3;
+ffa02512:	83 e6 04 00 	B[P0 + 0x4] = R3;
+ffa02516:	83 e6 05 00 	B[P0 + 0x5] = R3;
+ffa0251a:	83 e6 06 00 	B[P0 + 0x6] = R3;
+ffa0251e:	83 e6 07 00 	B[P0 + 0x7] = R3;
+ffa02522:	50 99       	R0 = B[P2] (X);
+ffa02524:	80 e6 08 00 	B[P0 + 0x8] = R0;
+ffa02528:	08 34       	I1 = R0;
+ffa0252a:	90 e5 01 00 	R0 = B[P2 + 0x1] (X);
+ffa0252e:	80 e6 09 00 	B[P0 + 0x9] = R0;
+ffa02532:	94 e5 02 00 	R4 = B[P2 + 0x2] (X);
+ffa02536:	84 e6 0a 00 	B[P0 + 0xa] = R4;
+ffa0253a:	95 e5 03 00 	R5 = B[P2 + 0x3] (X);
+ffa0253e:	85 e6 0b 00 	B[P0 + 0xb] = R5;
+ffa02542:	96 e5 04 00 	R6 = B[P2 + 0x4] (X);
+ffa02546:	86 e6 0c 00 	B[P0 + 0xc] = R6;
+ffa0254a:	00 34       	I0 = R0;
+ffa0254c:	90 e5 05 00 	R0 = B[P2 + 0x5] (X);
+ffa02550:	80 e6 0d 00 	B[P0 + 0xd] = R0;
+ffa02554:	10 34       	I2 = R0;
+ffa02556:	40 60       	R0 = 0x8 (X);		/*		R0=0x8(  8) */
+ffa02558:	c0 b5       	W[P0 + 0xe] = R0;
+ffa0255a:	20 e1 45 00 	R0 = 0x45 (X);		/*		R0=0x45( 69) */
+ffa0255e:	80 e6 10 00 	B[P0 + 0x10] = R0;
+ffa02562:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa02564:	80 e6 11 00 	B[P0 + 0x11] = R0;
+ffa02568:	20 e1 0c 01 	R0 = 0x10c (X);		/*		R0=0x10c(268) */
+ffa0256c:	07 50       	R0 = R7 + R0;
+ffa0256e:	c1 42       	R1 = R0.L (Z);
+ffa02570:	41 4e       	R1 >>= 0x8;
+ffa02572:	40 4f       	R0 <<= 0x8;
+ffa02574:	08 56       	R0 = R0 | R1;
+ffa02576:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900f64 <_NetOurMAC> */
+ffa0257a:	0a e1 3e 0f 	P2.L = 0xf3e;		/* (3902)	P2=0xff900f3e <_NetIPID> */
+ffa0257e:	40 b6       	W[P0 + 0x12] = R0;
+ffa02580:	10 95       	R0 = W[P2] (Z);
+ffa02582:	08 30       	R1 = R0;
+ffa02584:	09 64       	R1 += 0x1;		/* (  1) */
+ffa02586:	11 97       	W[P2] = R1;
+ffa02588:	c1 42       	R1 = R0.L (Z);
+ffa0258a:	41 4e       	R1 >>= 0x8;
+ffa0258c:	40 4f       	R0 <<= 0x8;
+ffa0258e:	08 56       	R0 = R0 | R1;
+ffa02590:	80 b6       	W[P0 + 0x14] = R0;
+ffa02592:	20 e1 40 00 	R0 = 0x40 (X);		/*		R0=0x40( 64) */
+ffa02596:	c0 b6       	W[P0 + 0x16] = R0;
+ffa02598:	88 60       	R0 = 0x11 (X);		/*		R0=0x11( 17) */
+ffa0259a:	80 e6 19 00 	B[P0 + 0x19] = R0;
+ffa0259e:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa025a0:	40 b7       	W[P0 + 0x1a] = R0;
+ffa025a2:	00 cc 00 c0 	R0 = R0 -|- R0 || [P0 + 0x20] = R2 || NOP;
+ffa025a6:	02 b2 00 00 
+ffa025aa:	48 32       	P1 = P0;
+ffa025ac:	83 e6 18 00 	B[P0 + 0x18] = R3;
+ffa025b0:	c0 b1       	[P0 + 0x1c] = R0;
+ffa025b2:	81 6c       	P1 += 0x10;		/* ( 16) */
+ffa025b4:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
+ffa025b6:	52 68       	P2 = 0xa (X);		/*		P2=0xa( 10) */
+ffa025b8:	b2 e0 03 20 	LSETUP(0xffa025bc <_DHCP_tx+0xe8>, 0xffa025be <_DHCP_tx+0xea>) LC1 = P2;
+ffa025bc:	08 94       	R0 = W[P1++] (Z);
+ffa025be:	41 50       	R1 = R1 + R0;
+ffa025c0:	82 c6 81 81 	R0 = R1 >> 0x10;
+ffa025c4:	01 50       	R0 = R1 + R0;
+ffa025c6:	c0 42       	R0 = R0.L (Z);
+ffa025c8:	c0 43       	R0 =~ R0;
+ffa025ca:	40 b7       	W[P0 + 0x1a] = R0;
+ffa025cc:	20 e1 00 44 	R0 = 0x4400 (X);		/*		R0=0x4400(17408) */
+ffa025d0:	40 e6 12 00 	W[P0 + 0x24] = R0;
+ffa025d4:	20 e1 00 43 	R0 = 0x4300 (X);		/*		R0=0x4300(17152) */
+ffa025d8:	40 e6 13 00 	W[P0 + 0x26] = R0;
+ffa025dc:	20 e1 f8 00 	R0 = 0xf8 (X);		/*		R0=0xf8(248) */
+ffa025e0:	07 50       	R0 = R7 + R0;
+ffa025e2:	c1 42       	R1 = R0.L (Z);
+ffa025e4:	41 4e       	R1 >>= 0x8;
+ffa025e6:	40 4f       	R0 <<= 0x8;
+ffa025e8:	08 56       	R0 = R0 | R1;
+ffa025ea:	40 e6 14 00 	W[P0 + 0x28] = R0;
+ffa025ee:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
+ffa025f0:	80 e6 2c 00 	B[P0 + 0x2c] = R0;
+ffa025f4:	80 e6 2d 00 	B[P0 + 0x2d] = R0;
+ffa025f8:	30 60       	R0 = 0x6 (X);		/*		R0=0x6(  6) */
+ffa025fa:	80 e6 2e 00 	B[P0 + 0x2e] = R0;
+ffa025fe:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa02600:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc0000a(-4194294) */
+ffa02604:	0a e1 04 30 	P2.L = 0x3004;		/* (12292)	P2=0xffc03004(-4182012) */
+ffa02608:	80 e6 2f 00 	B[P0 + 0x2f] = R0;
+ffa0260c:	10 91       	R0 = [P2];
+ffa0260e:	00 b3       	[P0 + 0x30] = R0;
+ffa02610:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa02612:	80 b3       	[P0 + 0x38] = R0;
+ffa02614:	c0 b3       	[P0 + 0x3c] = R0;
+ffa02616:	00 e6 10 00 	[P0 + 0x40] = R0;
+ffa0261a:	00 e6 11 00 	[P0 + 0x44] = R0;
+ffa0261e:	40 e1 53 63 	R0.H = 0x6353;		/* (25427)	R0=0x63530000(1666383872) */
+ffa02622:	00 e1 63 82 	R0.L = 0x8263;		/* (-32157)	R0=0x63538263(1666417251) */
+ffa02626:	00 e6 46 00 	[P0 + 0x118] = R0;
+ffa0262a:	81 30       	R0 = I1;
+ffa0262c:	80 e6 48 00 	B[P0 + 0x48] = R0;
+ffa02630:	80 30       	R0 = I0;
+ffa02632:	80 e6 49 00 	B[P0 + 0x49] = R0;
+ffa02636:	82 30       	R0 = I2;
+ffa02638:	2a e1 4e 00 	P2 = 0x4e (X);		/*		P2=0x4e( 78) */
+ffa0263c:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
+ffa0263e:	80 e6 4d 00 	B[P0 + 0x4d] = R0;
+ffa02642:	50 5a       	P1 = P0 + P2;
+ffa02644:	41 e6 15 00 	W[P0 + 0x2a] = R1;
+ffa02648:	41 e6 1a 00 	W[P0 + 0x34] = R1;
+ffa0264c:	41 e6 1b 00 	W[P0 + 0x36] = R1;
+ffa02650:	84 e6 4a 00 	B[P0 + 0x4a] = R4;
+ffa02654:	85 e6 4b 00 	B[P0 + 0x4b] = R5;
+ffa02658:	86 e6 4c 00 	B[P0 + 0x4c] = R6;
+ffa0265c:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa0265e:	52 68       	P2 = 0xa (X);		/*		P2=0xa( 10) */
+ffa02660:	b2 e0 02 20 	LSETUP(0xffa02664 <_DHCP_tx+0x190>, 0xffa02664 <_DHCP_tx+0x190>) LC1 = P2;
+ffa02664:	08 9a       	B[P1++] = R0;
+ffa02666:	2a e1 58 00 	P2 = 0x58 (X);		/*		P2=0x58( 88) */
+ffa0266a:	50 5a       	P1 = P0 + P2;
+ffa0266c:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa0266e:	82 68       	P2 = 0x10 (X);		/*		P2=0x10( 16) */
+ffa02670:	b2 e0 02 20 	LSETUP(0xffa02674 <_DHCP_tx+0x1a0>, 0xffa02674 <_DHCP_tx+0x1a0>) LC1 = P2;
+ffa02674:	08 92       	[P1++] = R0;
+ffa02676:	2a e1 98 00 	P2 = 0x98 (X);		/*		P2=0x98(152) */
+ffa0267a:	50 5a       	P1 = P0 + P2;
+ffa0267c:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa0267e:	02 69       	P2 = 0x20 (X);		/*		P2=0x20( 32) */
+ffa02680:	b2 e0 02 20 	LSETUP(0xffa02684 <_DHCP_tx+0x1b0>, 0xffa02684 <_DHCP_tx+0x1b0>) LC1 = P2;
+ffa02684:	08 92       	[P1++] = R0;
+ffa02686:	40 30       	R0 = P0;
+ffa02688:	21 e1 1c 01 	R1 = 0x11c (X);		/*		R1=0x11c(284) */
+ffa0268c:	48 50       	R1 = R0 + R1;
+ffa0268e:	17 30       	R2 = R7;
+ffa02690:	83 30       	R0 = I3;
+ffa02692:	ff e3 ad fa 	CALL 0xffa01bec <_memcpy_>;
+ffa02696:	01 e8 00 00 	UNLINK;
+ffa0269a:	20 05       	(R7:4) = [SP++];
+ffa0269c:	ff e2 b2 fe 	JUMP.L 0xffa02400 <_bfin_EMAC_send_nocopy>;
 
-ffa026a8 <_DHCP_parse>:
-ffa026a8:	eb 05       	[--SP] = (R7:5, P5:3);
-ffa026aa:	4d e1 90 ff 	P5.H = 0xff90;		/* (-112)	P5=0xff900eb4 <_NetDHCPserv> */
-ffa026ae:	4c e1 90 ff 	P4.H = 0xff90;		/* (-112)	P4=0xff900e68 <_printf_temp> */
-ffa026b2:	4b e1 90 ff 	P3.H = 0xff90;		/* (-112)	P3=0xff900e6c <_printf_out> */
-ffa026b6:	00 e8 03 00 	LINK 0xc;		/* (12) */
-ffa026ba:	10 30       	R2 = R0;
-ffa026bc:	0d e1 0c 04 	P5.L = 0x40c;		/* (1036)	P5=0xff90040c */
-ffa026c0:	0c e1 b4 0e 	P4.L = 0xeb4;		/* (3764)	P4=0xff900eb4 <_NetDHCPserv> */
-ffa026c4:	0b e1 e8 0e 	P3.L = 0xee8;		/* (3816)	P3=0xff900ee8 <_NetSubnetMask> */
-ffa026c8:	09 0d       	CC = R1 <= 0x1;
-ffa026ca:	0b 18       	IF CC JUMP 0xffa026e0 <_DHCP_parse+0x38>;
-ffa026cc:	12 32       	P2 = R2;
-ffa026ce:	31 30       	R6 = R1;
-ffa026d0:	fe 67       	R6 += -0x1;		/* ( -1) */
-ffa026d2:	11 98       	R1 = B[P2++] (Z);
-ffa026d4:	01 0c       	CC = R1 == 0x0;
-ffa026d6:	0d 10       	IF !CC JUMP 0xffa026f0 <_DHCP_parse+0x48>;
-ffa026d8:	0e 32       	P1 = R6;
-ffa026da:	f9 6f       	P1 += -0x1;		/* ( -1) */
-ffa026dc:	41 0c       	CC = P1 == 0x0;
-ffa026de:	05 10       	IF !CC JUMP 0xffa026e8 <_DHCP_parse+0x40>;
+ffa026a0 <_DHCP_tx_discover>:
+ffa026a0:	c5 04       	[--SP] = (P5:5);
+ffa026a2:	4d e1 90 ff 	P5.H = 0xff90;		/* (-112)	P5=0xff900000 <_l1_data_a> */
+ffa026a6:	0d e1 38 0f 	P5.L = 0xf38;		/* (3896)	P5=0xff900f38 <_NetDHCPserv> */
+ffa026aa:	f8 63       	R0 = -0x1 (X);		/*		R0=0xffffffff( -1) */
+ffa026ac:	28 93       	[P5] = R0;
+ffa026ae:	00 e8 04 00 	LINK 0x10;		/* (16) */
+ffa026b2:	a8 61       	R0 = 0x35 (X);		/*		R0=0x35( 53) */
+ffa026b4:	b8 e6 fc ff 	B[FP + -0x4] = R0;
+ffa026b8:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
+ffa026ba:	b8 e6 fd ff 	B[FP + -0x3] = R0;
+ffa026be:	b8 e6 fe ff 	B[FP + -0x2] = R0;
+ffa026c2:	f8 63       	R0 = -0x1 (X);		/*		R0=0xffffffff( -1) */
+ffa026c4:	b8 e6 ff ff 	B[FP + -0x1] = R0;
+ffa026c8:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff90ffff(-7274497) */
+ffa026cc:	00 e1 60 01 	R0.L = 0x160;		/* (352)	R0=0xff900160(-7339680) */
+ffa026d0:	ff e3 40 fa 	CALL 0xffa01b50 <_printf_str>;
+ffa026d4:	4f 30       	R1 = FP;
+ffa026d6:	2a 91       	R2 = [P5];
+ffa026d8:	20 60       	R0 = 0x4 (X);		/*		R0=0x4(  4) */
+ffa026da:	e1 67       	R1 += -0x4;		/* ( -4) */
+ffa026dc:	ff e3 fc fe 	CALL 0xffa024d4 <_DHCP_tx>;
 ffa026e0:	01 e8 00 00 	UNLINK;
-ffa026e4:	ab 05       	(R7:5, P5:3) = [SP++];
+ffa026e4:	85 04       	(P5:5) = [SP++];
 ffa026e6:	10 00       	RTS;
-ffa026e8:	11 98       	R1 = B[P2++] (Z);
-ffa026ea:	fe 67       	R6 += -0x1;		/* ( -1) */
-ffa026ec:	01 0c       	CC = R1 == 0x0;
-ffa026ee:	f6 1f       	IF CC JUMP 0xffa026da <_DHCP_parse+0x32> (BP);
-ffa026f0:	20 e1 ff 00 	R0 = 0xff (X);		/*		R0=0xff(255) */
-ffa026f4:	57 99       	R7 = B[P2] (X);
-ffa026f6:	01 08       	CC = R1 == R0;
-ffa026f8:	f4 1b       	IF CC JUMP 0xffa026e0 <_DHCP_parse+0x38>;
-ffa026fa:	6a 30       	R5 = P2;
-ffa026fc:	d8 61       	R0 = 0x3b (X);		/*		R0=0x3b( 59) */
-ffa026fe:	0d 64       	R5 += 0x1;		/* (  1) */
-ffa02700:	01 0a       	CC = R1 <= R0 (IU);
-ffa02702:	19 1c       	IF CC JUMP 0xffa02734 <_DHCP_parse+0x8c> (BP);
-ffa02704:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff90003b(-7339973) */
-ffa02708:	00 e1 e0 01 	R0.L = 0x1e0;		/* (480)	R0=0xff9001e0(-7339552) */
-ffa0270c:	ff e3 5a f9 	CALL 0xffa019c0 <_printf_int>;
-ffa02710:	7f 43       	R7 = R7.B (Z);
-ffa02712:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff9001e0(-7339552) */
-ffa02716:	00 e1 f4 01 	R0.L = 0x1f4;		/* (500)	R0=0xff9001f4(-7339532) */
-ffa0271a:	0f 30       	R1 = R7;
-ffa0271c:	ff e3 52 f9 	CALL 0xffa019c0 <_printf_int>;
-ffa02720:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff9001f4(-7339532) */
-ffa02724:	00 e1 9c 07 	R0.L = 0x79c;		/* (1948)	R0=0xff90079c(-7338084) */
-ffa02728:	ff e3 f4 f9 	CALL 0xffa01b10 <_printf_str>;
-ffa0272c:	f8 43       	R0 =~ R7;
-ffa0272e:	bd 50       	R2 = R5 + R7;
-ffa02730:	70 50       	R1 = R0 + R6;
-ffa02732:	cb 2f       	JUMP.S 0xffa026c8 <_DHCP_parse+0x20>;
-ffa02734:	09 32       	P1 = R1;
-ffa02736:	8d 5e       	P2 = P5 + (P1 << 0x2);
-ffa02738:	52 91       	P2 = [P2];
-ffa0273a:	52 00       	JUMP (P2);
-ffa0273c:	0d 32       	P1 = R5;
-ffa0273e:	15 32       	P2 = R5;
-ffa02740:	7f 43       	R7 = R7.B (Z);
-ffa02742:	8a e4 01 00 	R2 = B[P1 + 0x1] (Z);
-ffa02746:	10 98       	R0 = B[P2++] (Z);
-ffa02748:	42 4f       	R2 <<= 0x8;
-ffa0274a:	82 50       	R2 = R2 + R0;
-ffa0274c:	90 e4 01 00 	R0 = B[P2 + 0x1] (Z);
-ffa02750:	80 4f       	R0 <<= 0x10;
-ffa02752:	82 50       	R2 = R2 + R0;
-ffa02754:	90 e4 02 00 	R0 = B[P2 + 0x2] (Z);
-ffa02758:	c0 4f       	R0 <<= 0x18;
-ffa0275a:	82 50       	R2 = R2 + R0;
-ffa0275c:	50 43       	R0 = R2.B (Z);
-ffa0275e:	82 c6 c2 83 	R1 = R2 >> 0x8;
-ffa02762:	40 4f       	R0 <<= 0x8;
-ffa02764:	49 43       	R1 = R1.B (Z);
-ffa02766:	41 56       	R1 = R1 | R0;
-ffa02768:	82 c6 82 81 	R0 = R2 >> 0x10;
-ffa0276c:	40 43       	R0 = R0.B (Z);
-ffa0276e:	41 4f       	R1 <<= 0x8;
-ffa02770:	41 56       	R1 = R1 | R0;
-ffa02772:	c2 4e       	R2 >>= 0x18;
-ffa02774:	41 4f       	R1 <<= 0x8;
-ffa02776:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff90079c(-7338084) */
-ffa0277a:	51 56       	R1 = R1 | R2;
-ffa0277c:	00 e1 c8 01 	R0.L = 0x1c8;		/* (456)	R0=0xff9001c8(-7339576) */
-ffa02780:	ff e3 20 f9 	CALL 0xffa019c0 <_printf_int>;
-ffa02784:	ce 2f       	JUMP.S 0xffa02720 <_DHCP_parse+0x78>;
-ffa02786:	0d 32       	P1 = R5;
-ffa02788:	15 32       	P2 = R5;
-ffa0278a:	7f 43       	R7 = R7.B (Z);
-ffa0278c:	8a e4 01 00 	R2 = B[P1 + 0x1] (Z);
-ffa02790:	10 98       	R0 = B[P2++] (Z);
-ffa02792:	42 4f       	R2 <<= 0x8;
-ffa02794:	82 50       	R2 = R2 + R0;
-ffa02796:	90 e4 01 00 	R0 = B[P2 + 0x1] (Z);
-ffa0279a:	80 4f       	R0 <<= 0x10;
-ffa0279c:	82 50       	R2 = R2 + R0;
-ffa0279e:	90 e4 02 00 	R0 = B[P2 + 0x2] (Z);
-ffa027a2:	c0 4f       	R0 <<= 0x18;
-ffa027a4:	82 50       	R2 = R2 + R0;
-ffa027a6:	50 43       	R0 = R2.B (Z);
-ffa027a8:	82 c6 c2 83 	R1 = R2 >> 0x8;
-ffa027ac:	40 4f       	R0 <<= 0x8;
-ffa027ae:	49 43       	R1 = R1.B (Z);
+
+ffa026e8 <_DHCP_parse>:
+ffa026e8:	eb 05       	[--SP] = (R7:5, P5:3);
+ffa026ea:	4d e1 90 ff 	P5.H = 0xff90;		/* (-112)	P5=0xff900f38 <_NetDHCPserv> */
+ffa026ee:	4c e1 90 ff 	P4.H = 0xff90;		/* (-112)	P4=0xff900eec <_printf_temp> */
+ffa026f2:	4b e1 90 ff 	P3.H = 0xff90;		/* (-112)	P3=0xff900ef0 <_printf_out> */
+ffa026f6:	00 e8 03 00 	LINK 0xc;		/* (12) */
+ffa026fa:	10 30       	R2 = R0;
+ffa026fc:	0d e1 90 04 	P5.L = 0x490;		/* (1168)	P5=0xff900490 */
+ffa02700:	0c e1 38 0f 	P4.L = 0xf38;		/* (3896)	P4=0xff900f38 <_NetDHCPserv> */
+ffa02704:	0b e1 6c 0f 	P3.L = 0xf6c;		/* (3948)	P3=0xff900f6c <_NetSubnetMask> */
+ffa02708:	09 0d       	CC = R1 <= 0x1;
+ffa0270a:	0b 18       	IF CC JUMP 0xffa02720 <_DHCP_parse+0x38>;
+ffa0270c:	12 32       	P2 = R2;
+ffa0270e:	31 30       	R6 = R1;
+ffa02710:	fe 67       	R6 += -0x1;		/* ( -1) */
+ffa02712:	11 98       	R1 = B[P2++] (Z);
+ffa02714:	01 0c       	CC = R1 == 0x0;
+ffa02716:	0d 10       	IF !CC JUMP 0xffa02730 <_DHCP_parse+0x48>;
+ffa02718:	0e 32       	P1 = R6;
+ffa0271a:	f9 6f       	P1 += -0x1;		/* ( -1) */
+ffa0271c:	41 0c       	CC = P1 == 0x0;
+ffa0271e:	05 10       	IF !CC JUMP 0xffa02728 <_DHCP_parse+0x40>;
+ffa02720:	01 e8 00 00 	UNLINK;
+ffa02724:	ab 05       	(R7:5, P5:3) = [SP++];
+ffa02726:	10 00       	RTS;
+ffa02728:	11 98       	R1 = B[P2++] (Z);
+ffa0272a:	fe 67       	R6 += -0x1;		/* ( -1) */
+ffa0272c:	01 0c       	CC = R1 == 0x0;
+ffa0272e:	f6 1f       	IF CC JUMP 0xffa0271a <_DHCP_parse+0x32> (BP);
+ffa02730:	20 e1 ff 00 	R0 = 0xff (X);		/*		R0=0xff(255) */
+ffa02734:	57 99       	R7 = B[P2] (X);
+ffa02736:	01 08       	CC = R1 == R0;
+ffa02738:	f4 1b       	IF CC JUMP 0xffa02720 <_DHCP_parse+0x38>;
+ffa0273a:	6a 30       	R5 = P2;
+ffa0273c:	d8 61       	R0 = 0x3b (X);		/*		R0=0x3b( 59) */
+ffa0273e:	0d 64       	R5 += 0x1;		/* (  1) */
+ffa02740:	01 0a       	CC = R1 <= R0 (IU);
+ffa02742:	19 1c       	IF CC JUMP 0xffa02774 <_DHCP_parse+0x8c> (BP);
+ffa02744:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff90003b(-7339973) */
+ffa02748:	00 e1 1c 02 	R0.L = 0x21c;		/* (540)	R0=0xff90021c(-7339492) */
+ffa0274c:	ff e3 5a f9 	CALL 0xffa01a00 <_printf_int>;
+ffa02750:	7f 43       	R7 = R7.B (Z);
+ffa02752:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff90021c(-7339492) */
+ffa02756:	00 e1 e0 03 	R0.L = 0x3e0;		/* (992)	R0=0xff9003e0(-7339040) */
+ffa0275a:	0f 30       	R1 = R7;
+ffa0275c:	ff e3 52 f9 	CALL 0xffa01a00 <_printf_int>;
+ffa02760:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff9003e0(-7339040) */
+ffa02764:	00 e1 20 08 	R0.L = 0x820;		/* (2080)	R0=0xff900820(-7337952) */
+ffa02768:	ff e3 f4 f9 	CALL 0xffa01b50 <_printf_str>;
+ffa0276c:	f8 43       	R0 =~ R7;
+ffa0276e:	bd 50       	R2 = R5 + R7;
+ffa02770:	70 50       	R1 = R0 + R6;
+ffa02772:	cb 2f       	JUMP.S 0xffa02708 <_DHCP_parse+0x20>;
+ffa02774:	09 32       	P1 = R1;
+ffa02776:	8d 5e       	P2 = P5 + (P1 << 0x2);
+ffa02778:	52 91       	P2 = [P2];
+ffa0277a:	52 00       	JUMP (P2);
+ffa0277c:	0d 32       	P1 = R5;
+ffa0277e:	15 32       	P2 = R5;
+ffa02780:	7f 43       	R7 = R7.B (Z);
+ffa02782:	8a e4 01 00 	R2 = B[P1 + 0x1] (Z);
+ffa02786:	10 98       	R0 = B[P2++] (Z);
+ffa02788:	42 4f       	R2 <<= 0x8;
+ffa0278a:	82 50       	R2 = R2 + R0;
+ffa0278c:	90 e4 01 00 	R0 = B[P2 + 0x1] (Z);
+ffa02790:	80 4f       	R0 <<= 0x10;
+ffa02792:	82 50       	R2 = R2 + R0;
+ffa02794:	90 e4 02 00 	R0 = B[P2 + 0x2] (Z);
+ffa02798:	c0 4f       	R0 <<= 0x18;
+ffa0279a:	82 50       	R2 = R2 + R0;
+ffa0279c:	50 43       	R0 = R2.B (Z);
+ffa0279e:	82 c6 c2 83 	R1 = R2 >> 0x8;
+ffa027a2:	40 4f       	R0 <<= 0x8;
+ffa027a4:	49 43       	R1 = R1.B (Z);
+ffa027a6:	41 56       	R1 = R1 | R0;
+ffa027a8:	82 c6 82 81 	R0 = R2 >> 0x10;
+ffa027ac:	40 43       	R0 = R0.B (Z);
+ffa027ae:	41 4f       	R1 <<= 0x8;
 ffa027b0:	41 56       	R1 = R1 | R0;
-ffa027b2:	82 c6 82 81 	R0 = R2 >> 0x10;
-ffa027b6:	40 43       	R0 = R0.B (Z);
-ffa027b8:	41 4f       	R1 <<= 0x8;
-ffa027ba:	41 56       	R1 = R1 | R0;
-ffa027bc:	c2 4e       	R2 >>= 0x18;
-ffa027be:	41 4f       	R1 <<= 0x8;
-ffa027c0:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff9001c8(-7339576) */
-ffa027c4:	51 56       	R1 = R1 | R2;
-ffa027c6:	00 e1 b4 01 	R0.L = 0x1b4;		/* (436)	R0=0xff9001b4(-7339596) */
-ffa027ca:	ff e3 fb f8 	CALL 0xffa019c0 <_printf_int>;
-ffa027ce:	a9 2f       	JUMP.S 0xffa02720 <_DHCP_parse+0x78>;
-ffa027d0:	0d 32       	P1 = R5;
-ffa027d2:	15 32       	P2 = R5;
-ffa027d4:	7f 43       	R7 = R7.B (Z);
-ffa027d6:	89 e4 01 00 	R1 = B[P1 + 0x1] (Z);
-ffa027da:	10 98       	R0 = B[P2++] (Z);
-ffa027dc:	41 4f       	R1 <<= 0x8;
-ffa027de:	41 50       	R1 = R1 + R0;
-ffa027e0:	90 e4 01 00 	R0 = B[P2 + 0x1] (Z);
-ffa027e4:	80 4f       	R0 <<= 0x10;
-ffa027e6:	41 50       	R1 = R1 + R0;
-ffa027e8:	90 e4 02 00 	R0 = B[P2 + 0x2] (Z);
-ffa027ec:	c0 4f       	R0 <<= 0x18;
-ffa027ee:	41 50       	R1 = R1 + R0;
-ffa027f0:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff9001b4(-7339596) */
-ffa027f4:	21 93       	[P4] = R1;
-ffa027f6:	00 e1 a0 01 	R0.L = 0x1a0;		/* (416)	R0=0xff9001a0(-7339616) */
-ffa027fa:	ff e3 91 f9 	CALL 0xffa01b1c <_printf_ip>;
-ffa027fe:	91 2f       	JUMP.S 0xffa02720 <_DHCP_parse+0x78>;
-ffa02800:	15 32       	P2 = R5;
-ffa02802:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff9001a0(-7339616) */
-ffa02806:	00 e1 8c 01 	R0.L = 0x18c;		/* (396)	R0=0xff90018c(-7339636) */
-ffa0280a:	7f 43       	R7 = R7.B (Z);
-ffa0280c:	11 99       	R1 = B[P2] (Z);
-ffa0280e:	ff e3 d9 f8 	CALL 0xffa019c0 <_printf_int>;
-ffa02812:	87 2f       	JUMP.S 0xffa02720 <_DHCP_parse+0x78>;
-ffa02814:	0d 32       	P1 = R5;
-ffa02816:	15 32       	P2 = R5;
-ffa02818:	7f 43       	R7 = R7.B (Z);
-ffa0281a:	8a e4 01 00 	R2 = B[P1 + 0x1] (Z);
-ffa0281e:	10 98       	R0 = B[P2++] (Z);
-ffa02820:	42 4f       	R2 <<= 0x8;
-ffa02822:	82 50       	R2 = R2 + R0;
-ffa02824:	90 e4 01 00 	R0 = B[P2 + 0x1] (Z);
-ffa02828:	80 4f       	R0 <<= 0x10;
-ffa0282a:	82 50       	R2 = R2 + R0;
-ffa0282c:	90 e4 02 00 	R0 = B[P2 + 0x2] (Z);
-ffa02830:	c0 4f       	R0 <<= 0x18;
-ffa02832:	82 50       	R2 = R2 + R0;
-ffa02834:	50 43       	R0 = R2.B (Z);
-ffa02836:	82 c6 c2 83 	R1 = R2 >> 0x8;
-ffa0283a:	40 4f       	R0 <<= 0x8;
-ffa0283c:	49 43       	R1 = R1.B (Z);
-ffa0283e:	41 56       	R1 = R1 | R0;
-ffa02840:	82 c6 82 81 	R0 = R2 >> 0x10;
-ffa02844:	40 43       	R0 = R0.B (Z);
-ffa02846:	41 4f       	R1 <<= 0x8;
-ffa02848:	41 56       	R1 = R1 | R0;
-ffa0284a:	c2 4e       	R2 >>= 0x18;
-ffa0284c:	41 4f       	R1 <<= 0x8;
-ffa0284e:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff90018c(-7339636) */
-ffa02852:	51 56       	R1 = R1 | R2;
-ffa02854:	00 e1 78 01 	R0.L = 0x178;		/* (376)	R0=0xff900178(-7339656) */
-ffa02858:	ff e3 b4 f8 	CALL 0xffa019c0 <_printf_int>;
-ffa0285c:	62 2f       	JUMP.S 0xffa02720 <_DHCP_parse+0x78>;
-ffa0285e:	0d 32       	P1 = R5;
-ffa02860:	15 32       	P2 = R5;
-ffa02862:	7f 43       	R7 = R7.B (Z);
-ffa02864:	89 e4 01 00 	R1 = B[P1 + 0x1] (Z);
-ffa02868:	10 98       	R0 = B[P2++] (Z);
-ffa0286a:	41 4f       	R1 <<= 0x8;
-ffa0286c:	41 50       	R1 = R1 + R0;
-ffa0286e:	90 e4 01 00 	R0 = B[P2 + 0x1] (Z);
-ffa02872:	80 4f       	R0 <<= 0x10;
-ffa02874:	41 50       	R1 = R1 + R0;
-ffa02876:	90 e4 02 00 	R0 = B[P2 + 0x2] (Z);
-ffa0287a:	c0 4f       	R0 <<= 0x18;
-ffa0287c:	41 50       	R1 = R1 + R0;
-ffa0287e:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900178(-7339656) */
-ffa02882:	00 e1 68 01 	R0.L = 0x168;		/* (360)	R0=0xff900168(-7339672) */
-ffa02886:	ff e3 4b f9 	CALL 0xffa01b1c <_printf_ip>;
-ffa0288a:	4b 2f       	JUMP.S 0xffa02720 <_DHCP_parse+0x78>;
-ffa0288c:	0d 32       	P1 = R5;
-ffa0288e:	15 32       	P2 = R5;
-ffa02890:	7f 43       	R7 = R7.B (Z);
-ffa02892:	89 e4 01 00 	R1 = B[P1 + 0x1] (Z);
-ffa02896:	10 98       	R0 = B[P2++] (Z);
-ffa02898:	41 4f       	R1 <<= 0x8;
-ffa0289a:	41 50       	R1 = R1 + R0;
-ffa0289c:	90 e4 01 00 	R0 = B[P2 + 0x1] (Z);
-ffa028a0:	80 4f       	R0 <<= 0x10;
-ffa028a2:	41 50       	R1 = R1 + R0;
-ffa028a4:	90 e4 02 00 	R0 = B[P2 + 0x2] (Z);
-ffa028a8:	c0 4f       	R0 <<= 0x18;
-ffa028aa:	41 50       	R1 = R1 + R0;
-ffa028ac:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900168(-7339672) */
-ffa028b0:	00 e1 58 01 	R0.L = 0x158;		/* (344)	R0=0xff900158(-7339688) */
-ffa028b4:	ff e3 34 f9 	CALL 0xffa01b1c <_printf_ip>;
-ffa028b8:	34 2f       	JUMP.S 0xffa02720 <_DHCP_parse+0x78>;
-ffa028ba:	0d 32       	P1 = R5;
-ffa028bc:	15 32       	P2 = R5;
-ffa028be:	7f 43       	R7 = R7.B (Z);
-ffa028c0:	89 e4 01 00 	R1 = B[P1 + 0x1] (Z);
-ffa028c4:	10 98       	R0 = B[P2++] (Z);
-ffa028c6:	41 4f       	R1 <<= 0x8;
-ffa028c8:	41 50       	R1 = R1 + R0;
-ffa028ca:	90 e4 01 00 	R0 = B[P2 + 0x1] (Z);
-ffa028ce:	80 4f       	R0 <<= 0x10;
-ffa028d0:	41 50       	R1 = R1 + R0;
-ffa028d2:	90 e4 02 00 	R0 = B[P2 + 0x2] (Z);
-ffa028d6:	c0 4f       	R0 <<= 0x18;
-ffa028d8:	41 50       	R1 = R1 + R0;
-ffa028da:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900158(-7339688) */
-ffa028de:	00 e1 48 01 	R0.L = 0x148;		/* (328)	R0=0xff900148(-7339704) */
-ffa028e2:	ff e3 1d f9 	CALL 0xffa01b1c <_printf_ip>;
-ffa028e6:	1d 2f       	JUMP.S 0xffa02720 <_DHCP_parse+0x78>;
-ffa028e8:	0d 32       	P1 = R5;
-ffa028ea:	15 32       	P2 = R5;
-ffa028ec:	7f 43       	R7 = R7.B (Z);
-ffa028ee:	89 e4 01 00 	R1 = B[P1 + 0x1] (Z);
-ffa028f2:	10 98       	R0 = B[P2++] (Z);
-ffa028f4:	41 4f       	R1 <<= 0x8;
-ffa028f6:	41 50       	R1 = R1 + R0;
-ffa028f8:	90 e4 01 00 	R0 = B[P2 + 0x1] (Z);
-ffa028fc:	80 4f       	R0 <<= 0x10;
-ffa028fe:	41 50       	R1 = R1 + R0;
-ffa02900:	90 e4 02 00 	R0 = B[P2 + 0x2] (Z);
-ffa02904:	c0 4f       	R0 <<= 0x18;
-ffa02906:	41 50       	R1 = R1 + R0;
-ffa02908:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900148(-7339704) */
-ffa0290c:	19 93       	[P3] = R1;
-ffa0290e:	00 e1 38 01 	R0.L = 0x138;		/* (312)	R0=0xff900138(-7339720) */
-ffa02912:	ff e3 05 f9 	CALL 0xffa01b1c <_printf_ip>;
-ffa02916:	05 2f       	JUMP.S 0xffa02720 <_DHCP_parse+0x78>;
+ffa027b2:	c2 4e       	R2 >>= 0x18;
+ffa027b4:	41 4f       	R1 <<= 0x8;
+ffa027b6:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900820(-7337952) */
+ffa027ba:	51 56       	R1 = R1 | R2;
+ffa027bc:	00 e1 04 02 	R0.L = 0x204;		/* (516)	R0=0xff900204(-7339516) */
+ffa027c0:	ff e3 20 f9 	CALL 0xffa01a00 <_printf_int>;
+ffa027c4:	ce 2f       	JUMP.S 0xffa02760 <_DHCP_parse+0x78>;
+ffa027c6:	0d 32       	P1 = R5;
+ffa027c8:	15 32       	P2 = R5;
+ffa027ca:	7f 43       	R7 = R7.B (Z);
+ffa027cc:	8a e4 01 00 	R2 = B[P1 + 0x1] (Z);
+ffa027d0:	10 98       	R0 = B[P2++] (Z);
+ffa027d2:	42 4f       	R2 <<= 0x8;
+ffa027d4:	82 50       	R2 = R2 + R0;
+ffa027d6:	90 e4 01 00 	R0 = B[P2 + 0x1] (Z);
+ffa027da:	80 4f       	R0 <<= 0x10;
+ffa027dc:	82 50       	R2 = R2 + R0;
+ffa027de:	90 e4 02 00 	R0 = B[P2 + 0x2] (Z);
+ffa027e2:	c0 4f       	R0 <<= 0x18;
+ffa027e4:	82 50       	R2 = R2 + R0;
+ffa027e6:	50 43       	R0 = R2.B (Z);
+ffa027e8:	82 c6 c2 83 	R1 = R2 >> 0x8;
+ffa027ec:	40 4f       	R0 <<= 0x8;
+ffa027ee:	49 43       	R1 = R1.B (Z);
+ffa027f0:	41 56       	R1 = R1 | R0;
+ffa027f2:	82 c6 82 81 	R0 = R2 >> 0x10;
+ffa027f6:	40 43       	R0 = R0.B (Z);
+ffa027f8:	41 4f       	R1 <<= 0x8;
+ffa027fa:	41 56       	R1 = R1 | R0;
+ffa027fc:	c2 4e       	R2 >>= 0x18;
+ffa027fe:	41 4f       	R1 <<= 0x8;
+ffa02800:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900204(-7339516) */
+ffa02804:	51 56       	R1 = R1 | R2;
+ffa02806:	00 e1 f0 01 	R0.L = 0x1f0;		/* (496)	R0=0xff9001f0(-7339536) */
+ffa0280a:	ff e3 fb f8 	CALL 0xffa01a00 <_printf_int>;
+ffa0280e:	a9 2f       	JUMP.S 0xffa02760 <_DHCP_parse+0x78>;
+ffa02810:	0d 32       	P1 = R5;
+ffa02812:	15 32       	P2 = R5;
+ffa02814:	7f 43       	R7 = R7.B (Z);
+ffa02816:	89 e4 01 00 	R1 = B[P1 + 0x1] (Z);
+ffa0281a:	10 98       	R0 = B[P2++] (Z);
+ffa0281c:	41 4f       	R1 <<= 0x8;
+ffa0281e:	41 50       	R1 = R1 + R0;
+ffa02820:	90 e4 01 00 	R0 = B[P2 + 0x1] (Z);
+ffa02824:	80 4f       	R0 <<= 0x10;
+ffa02826:	41 50       	R1 = R1 + R0;
+ffa02828:	90 e4 02 00 	R0 = B[P2 + 0x2] (Z);
+ffa0282c:	c0 4f       	R0 <<= 0x18;
+ffa0282e:	41 50       	R1 = R1 + R0;
+ffa02830:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff9001f0(-7339536) */
+ffa02834:	21 93       	[P4] = R1;
+ffa02836:	00 e1 dc 01 	R0.L = 0x1dc;		/* (476)	R0=0xff9001dc(-7339556) */
+ffa0283a:	ff e3 91 f9 	CALL 0xffa01b5c <_printf_ip>;
+ffa0283e:	91 2f       	JUMP.S 0xffa02760 <_DHCP_parse+0x78>;
+ffa02840:	15 32       	P2 = R5;
+ffa02842:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff9001dc(-7339556) */
+ffa02846:	00 e1 c8 01 	R0.L = 0x1c8;		/* (456)	R0=0xff9001c8(-7339576) */
+ffa0284a:	7f 43       	R7 = R7.B (Z);
+ffa0284c:	11 99       	R1 = B[P2] (Z);
+ffa0284e:	ff e3 d9 f8 	CALL 0xffa01a00 <_printf_int>;
+ffa02852:	87 2f       	JUMP.S 0xffa02760 <_DHCP_parse+0x78>;
+ffa02854:	0d 32       	P1 = R5;
+ffa02856:	15 32       	P2 = R5;
+ffa02858:	7f 43       	R7 = R7.B (Z);
+ffa0285a:	8a e4 01 00 	R2 = B[P1 + 0x1] (Z);
+ffa0285e:	10 98       	R0 = B[P2++] (Z);
+ffa02860:	42 4f       	R2 <<= 0x8;
+ffa02862:	82 50       	R2 = R2 + R0;
+ffa02864:	90 e4 01 00 	R0 = B[P2 + 0x1] (Z);
+ffa02868:	80 4f       	R0 <<= 0x10;
+ffa0286a:	82 50       	R2 = R2 + R0;
+ffa0286c:	90 e4 02 00 	R0 = B[P2 + 0x2] (Z);
+ffa02870:	c0 4f       	R0 <<= 0x18;
+ffa02872:	82 50       	R2 = R2 + R0;
+ffa02874:	50 43       	R0 = R2.B (Z);
+ffa02876:	82 c6 c2 83 	R1 = R2 >> 0x8;
+ffa0287a:	40 4f       	R0 <<= 0x8;
+ffa0287c:	49 43       	R1 = R1.B (Z);
+ffa0287e:	41 56       	R1 = R1 | R0;
+ffa02880:	82 c6 82 81 	R0 = R2 >> 0x10;
+ffa02884:	40 43       	R0 = R0.B (Z);
+ffa02886:	41 4f       	R1 <<= 0x8;
+ffa02888:	41 56       	R1 = R1 | R0;
+ffa0288a:	c2 4e       	R2 >>= 0x18;
+ffa0288c:	41 4f       	R1 <<= 0x8;
+ffa0288e:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff9001c8(-7339576) */
+ffa02892:	51 56       	R1 = R1 | R2;
+ffa02894:	00 e1 b4 01 	R0.L = 0x1b4;		/* (436)	R0=0xff9001b4(-7339596) */
+ffa02898:	ff e3 b4 f8 	CALL 0xffa01a00 <_printf_int>;
+ffa0289c:	62 2f       	JUMP.S 0xffa02760 <_DHCP_parse+0x78>;
+ffa0289e:	0d 32       	P1 = R5;
+ffa028a0:	15 32       	P2 = R5;
+ffa028a2:	7f 43       	R7 = R7.B (Z);
+ffa028a4:	89 e4 01 00 	R1 = B[P1 + 0x1] (Z);
+ffa028a8:	10 98       	R0 = B[P2++] (Z);
+ffa028aa:	41 4f       	R1 <<= 0x8;
+ffa028ac:	41 50       	R1 = R1 + R0;
+ffa028ae:	90 e4 01 00 	R0 = B[P2 + 0x1] (Z);
+ffa028b2:	80 4f       	R0 <<= 0x10;
+ffa028b4:	41 50       	R1 = R1 + R0;
+ffa028b6:	90 e4 02 00 	R0 = B[P2 + 0x2] (Z);
+ffa028ba:	c0 4f       	R0 <<= 0x18;
+ffa028bc:	41 50       	R1 = R1 + R0;
+ffa028be:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff9001b4(-7339596) */
+ffa028c2:	00 e1 a4 01 	R0.L = 0x1a4;		/* (420)	R0=0xff9001a4(-7339612) */
+ffa028c6:	ff e3 4b f9 	CALL 0xffa01b5c <_printf_ip>;
+ffa028ca:	4b 2f       	JUMP.S 0xffa02760 <_DHCP_parse+0x78>;
+ffa028cc:	0d 32       	P1 = R5;
+ffa028ce:	15 32       	P2 = R5;
+ffa028d0:	7f 43       	R7 = R7.B (Z);
+ffa028d2:	89 e4 01 00 	R1 = B[P1 + 0x1] (Z);
+ffa028d6:	10 98       	R0 = B[P2++] (Z);
+ffa028d8:	41 4f       	R1 <<= 0x8;
+ffa028da:	41 50       	R1 = R1 + R0;
+ffa028dc:	90 e4 01 00 	R0 = B[P2 + 0x1] (Z);
+ffa028e0:	80 4f       	R0 <<= 0x10;
+ffa028e2:	41 50       	R1 = R1 + R0;
+ffa028e4:	90 e4 02 00 	R0 = B[P2 + 0x2] (Z);
+ffa028e8:	c0 4f       	R0 <<= 0x18;
+ffa028ea:	41 50       	R1 = R1 + R0;
+ffa028ec:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff9001a4(-7339612) */
+ffa028f0:	00 e1 94 01 	R0.L = 0x194;		/* (404)	R0=0xff900194(-7339628) */
+ffa028f4:	ff e3 34 f9 	CALL 0xffa01b5c <_printf_ip>;
+ffa028f8:	34 2f       	JUMP.S 0xffa02760 <_DHCP_parse+0x78>;
+ffa028fa:	0d 32       	P1 = R5;
+ffa028fc:	15 32       	P2 = R5;
+ffa028fe:	7f 43       	R7 = R7.B (Z);
+ffa02900:	89 e4 01 00 	R1 = B[P1 + 0x1] (Z);
+ffa02904:	10 98       	R0 = B[P2++] (Z);
+ffa02906:	41 4f       	R1 <<= 0x8;
+ffa02908:	41 50       	R1 = R1 + R0;
+ffa0290a:	90 e4 01 00 	R0 = B[P2 + 0x1] (Z);
+ffa0290e:	80 4f       	R0 <<= 0x10;
+ffa02910:	41 50       	R1 = R1 + R0;
+ffa02912:	90 e4 02 00 	R0 = B[P2 + 0x2] (Z);
+ffa02916:	c0 4f       	R0 <<= 0x18;
+ffa02918:	41 50       	R1 = R1 + R0;
+ffa0291a:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900194(-7339628) */
+ffa0291e:	00 e1 84 01 	R0.L = 0x184;		/* (388)	R0=0xff900184(-7339644) */
+ffa02922:	ff e3 1d f9 	CALL 0xffa01b5c <_printf_ip>;
+ffa02926:	1d 2f       	JUMP.S 0xffa02760 <_DHCP_parse+0x78>;
+ffa02928:	0d 32       	P1 = R5;
+ffa0292a:	15 32       	P2 = R5;
+ffa0292c:	7f 43       	R7 = R7.B (Z);
+ffa0292e:	89 e4 01 00 	R1 = B[P1 + 0x1] (Z);
+ffa02932:	10 98       	R0 = B[P2++] (Z);
+ffa02934:	41 4f       	R1 <<= 0x8;
+ffa02936:	41 50       	R1 = R1 + R0;
+ffa02938:	90 e4 01 00 	R0 = B[P2 + 0x1] (Z);
+ffa0293c:	80 4f       	R0 <<= 0x10;
+ffa0293e:	41 50       	R1 = R1 + R0;
+ffa02940:	90 e4 02 00 	R0 = B[P2 + 0x2] (Z);
+ffa02944:	c0 4f       	R0 <<= 0x18;
+ffa02946:	41 50       	R1 = R1 + R0;
+ffa02948:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900184(-7339644) */
+ffa0294c:	19 93       	[P3] = R1;
+ffa0294e:	00 e1 74 01 	R0.L = 0x174;		/* (372)	R0=0xff900174(-7339660) */
+ffa02952:	ff e3 05 f9 	CALL 0xffa01b5c <_printf_ip>;
+ffa02956:	05 2f       	JUMP.S 0xffa02760 <_DHCP_parse+0x78>;
 
-ffa02918 <_bfin_EMAC_send>:
-ffa02918:	c4 04       	[--SP] = (P5:4);
-ffa0291a:	00 e8 03 00 	LINK 0xc;		/* (12) */
-ffa0291e:	18 30       	R3 = R0;
-ffa02920:	11 30       	R2 = R1;
-ffa02922:	01 0d       	CC = R1 <= 0x0;
-ffa02924:	86 18       	IF CC JUMP 0xffa02a30 <_bfin_EMAC_send+0x118>;
-ffa02926:	00 00       	NOP;
-ffa02928:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00020(-4194272) */
-ffa0292c:	0a e1 a8 0c 	P2.L = 0xca8;		/* (3240)	P2=0xffc00ca8(-4191064) */
-ffa02930:	10 95       	R0 = W[P2] (Z);
-ffa02932:	08 48       	CC = !BITTST (R0, 0x1);		/* bit  1 */
-ffa02934:	72 10       	IF !CC JUMP 0xffa02a18 <_bfin_EMAC_send+0x100>;
-ffa02936:	00 00       	NOP;
-ffa02938:	00 00       	NOP;
-ffa0293a:	00 00       	NOP;
-ffa0293c:	10 95       	R0 = W[P2] (Z);
-ffa0293e:	18 48       	CC = !BITTST (R0, 0x3);		/* bit  3 */
-ffa02940:	1b 18       	IF CC JUMP 0xffa02976 <_bfin_EMAC_send+0x5e>;
-ffa02942:	4a 32       	P1 = P2;
-ffa02944:	4a e1 0f 00 	P2.H = 0xf;		/* ( 15)	P2=0xf0ca8 */
-ffa02948:	41 60       	R1 = 0x8 (X);		/*		R1=0x8(  8) */
-ffa0294a:	0a e1 41 42 	P2.L = 0x4241;		/* (16961)	P2=0xf4241 */
-ffa0294e:	41 34       	I0 = P1;
-ffa02950:	b2 e0 06 20 	LSETUP(0xffa02954 <_bfin_EMAC_send+0x3c>, 0xffa0295c <_bfin_EMAC_send+0x44>) LC1 = P2;
-ffa02954:	20 9d       	R0.L = W[I0];
-ffa02956:	01 54       	R0 = R1 & R0;
-ffa02958:	00 0c       	CC = R0 == 0x0;
-ffa0295a:	0e 18       	IF CC JUMP 0xffa02976 <_bfin_EMAC_send+0x5e>;
-ffa0295c:	00 00       	NOP;
-ffa0295e:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900138(-7339720) */
-ffa02962:	00 e1 18 02 	R0.L = 0x218;		/* (536)	R0=0xff900218(-7339496) */
-ffa02966:	ff e3 d5 f8 	CALL 0xffa01b10 <_printf_str>;
-ffa0296a:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
-ffa0296c:	01 e8 00 00 	UNLINK;
-ffa02970:	01 30       	R0 = R1;
-ffa02972:	84 04       	(P5:4) = [SP++];
-ffa02974:	10 00       	RTS;
-ffa02976:	4c e1 90 ff 	P4.H = 0xff90;		/* (-112)	P4=0xff900eb4 <_NetDHCPserv> */
-ffa0297a:	0c e1 b8 0e 	P4.L = 0xeb8;		/* (3768)	P4=0xff900eb8 <_txIdx> */
-ffa0297e:	20 95       	R0 = W[P4] (Z);
-ffa02980:	10 32       	P2 = R0;
-ffa02982:	4d e1 90 ff 	P5.H = 0xff90;		/* (-112)	P5=0xff90040c */
-ffa02986:	0d e1 bc 0e 	P5.L = 0xebc;		/* (3772)	P5=0xff900ebc <_txbuf> */
-ffa0298a:	0b 30       	R1 = R3;
-ffa0298c:	95 5e       	P2 = P5 + (P2 << 0x2);
-ffa0298e:	52 91       	P2 = [P2];
-ffa02990:	92 ad       	P2 = [P2 + 0x18];
-ffa02992:	12 96       	W[P2++] = R2;
-ffa02994:	42 30       	R0 = P2;
-ffa02996:	ff e3 0b f9 	CALL 0xffa01bac <_memcpy_>;
-ffa0299a:	23 95       	R3 = W[P4] (Z);
-ffa0299c:	da 42       	R2 = R3.L (Z);
-ffa0299e:	12 32       	P2 = R2;
-ffa029a0:	55 5f       	P5 = P5 + (P2 << 0x2);
-ffa029a2:	6d 91       	P5 = [P5];
-ffa029a4:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc04241(-4177343) */
-ffa029a8:	0a e1 80 0c 	P2.L = 0xc80;		/* (3200)	P2=0xffc00c80(-4191104) */
-ffa029ac:	55 93       	[P2] = P5;
-ffa029ae:	a8 a1       	R0 = [P5 + 0x18];
-ffa029b0:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900c80 */
-ffa029b4:	0a e1 fe 04 	P2.L = 0x4fe;		/* (1278)	P2=0xff9004fe <_txdmacfg> */
-ffa029b8:	68 b0       	[P5 + 0x4] = R0;
-ffa029ba:	10 95       	R0 = W[P2] (Z);
-ffa029bc:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc004fe(-4193026) */
-ffa029c0:	0a e1 88 0c 	P2.L = 0xc88;		/* (3208)	P2=0xffc00c88(-4191096) */
-ffa029c4:	10 97       	W[P2] = R0;
-ffa029c6:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00c88(-4191096) */
-ffa029ca:	0a e1 00 30 	P2.L = 0x3000;		/* (12288)	P2=0xffc03000(-4182016) */
-ffa029ce:	10 91       	R0 = [P2];
-ffa029d0:	80 4a       	BITSET (R0, 0x10);		/* bit 16 */
-ffa029d2:	10 93       	[P2] = R0;
-ffa029d4:	a8 a2       	R0 = [P5 + 0x28];
-ffa029d6:	00 48       	CC = !BITTST (R0, 0x0);		/* bit  0 */
-ffa029d8:	13 10       	IF !CC JUMP 0xffa029fe <_bfin_EMAC_send+0xe6>;
-ffa029da:	4a e1 0f 00 	P2.H = 0xf;		/* ( 15)	P2=0xf3000 */
-ffa029de:	0a e1 41 42 	P2.L = 0x4241;		/* (16961)	P2=0xf4241 */
-ffa029e2:	b2 e0 05 20 	LSETUP(0xffa029e6 <_bfin_EMAC_send+0xce>, 0xffa029ec <_bfin_EMAC_send+0xd4>) LC1 = P2;
-ffa029e6:	a8 a2       	R0 = [P5 + 0x28];
-ffa029e8:	00 48       	CC = !BITTST (R0, 0x0);		/* bit  0 */
-ffa029ea:	0a 10       	IF !CC JUMP 0xffa029fe <_bfin_EMAC_send+0xe6>;
-ffa029ec:	00 00       	NOP;
-ffa029ee:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900218(-7339496) */
-ffa029f2:	00 e1 30 02 	R0.L = 0x230;		/* (560)	R0=0xff900230(-7339472) */
-ffa029f6:	ff e3 8d f8 	CALL 0xffa01b10 <_printf_str>;
-ffa029fa:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
-ffa029fc:	09 20       	JUMP.S 0xffa02a0e <_bfin_EMAC_send+0xf6>;
-ffa029fe:	a9 a2       	R1 = [P5 + 0x28];
-ffa02a00:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa02a02:	a8 b2       	[P5 + 0x28] = R0;
-ffa02a04:	12 0d       	CC = R2 <= 0x2;
-ffa02a06:	03 10       	IF !CC JUMP 0xffa02a0c <_bfin_EMAC_send+0xf4>;
-ffa02a08:	03 30       	R0 = R3;
-ffa02a0a:	08 64       	R0 += 0x1;		/* (  1) */
-ffa02a0c:	20 97       	W[P4] = R0;
-ffa02a0e:	01 e8 00 00 	UNLINK;
-ffa02a12:	01 30       	R0 = R1;
-ffa02a14:	84 04       	(P5:4) = [SP++];
-ffa02a16:	10 00       	RTS;
-ffa02a18:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900000 <_l1_data_a>(-7340032) */
-ffa02a1c:	00 e1 f4 00 	R0.L = 0xf4;		/* (244)	R0=0xff9000f4(-7339788) */
-ffa02a20:	ff e3 78 f8 	CALL 0xffa01b10 <_printf_str>;
-ffa02a24:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
-ffa02a26:	01 e8 00 00 	UNLINK;
-ffa02a2a:	01 30       	R0 = R1;
-ffa02a2c:	84 04       	(P5:4) = [SP++];
-ffa02a2e:	10 00       	RTS;
-ffa02a30:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff9000f4(-7339788) */
-ffa02a34:	00 e1 fc 01 	R0.L = 0x1fc;		/* (508)	R0=0xff9001fc(-7339524) */
-ffa02a38:	ff e3 c4 f7 	CALL 0xffa019c0 <_printf_int>;
-ffa02a3c:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
-ffa02a3e:	01 e8 00 00 	UNLINK;
-ffa02a42:	01 30       	R0 = R1;
-ffa02a44:	84 04       	(P5:4) = [SP++];
-ffa02a46:	10 00       	RTS;
+ffa02958 <_bfin_EMAC_send>:
+ffa02958:	c4 04       	[--SP] = (P5:4);
+ffa0295a:	00 e8 03 00 	LINK 0xc;		/* (12) */
+ffa0295e:	18 30       	R3 = R0;
+ffa02960:	11 30       	R2 = R1;
+ffa02962:	01 0d       	CC = R1 <= 0x0;
+ffa02964:	86 18       	IF CC JUMP 0xffa02a70 <_bfin_EMAC_send+0x118>;
+ffa02966:	00 00       	NOP;
+ffa02968:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00020(-4194272) */
+ffa0296c:	0a e1 a8 0c 	P2.L = 0xca8;		/* (3240)	P2=0xffc00ca8(-4191064) */
+ffa02970:	10 95       	R0 = W[P2] (Z);
+ffa02972:	08 48       	CC = !BITTST (R0, 0x1);		/* bit  1 */
+ffa02974:	72 10       	IF !CC JUMP 0xffa02a58 <_bfin_EMAC_send+0x100>;
+ffa02976:	00 00       	NOP;
+ffa02978:	00 00       	NOP;
+ffa0297a:	00 00       	NOP;
+ffa0297c:	10 95       	R0 = W[P2] (Z);
+ffa0297e:	18 48       	CC = !BITTST (R0, 0x3);		/* bit  3 */
+ffa02980:	1b 18       	IF CC JUMP 0xffa029b6 <_bfin_EMAC_send+0x5e>;
+ffa02982:	4a 32       	P1 = P2;
+ffa02984:	4a e1 0f 00 	P2.H = 0xf;		/* ( 15)	P2=0xf0ca8 */
+ffa02988:	41 60       	R1 = 0x8 (X);		/*		R1=0x8(  8) */
+ffa0298a:	0a e1 41 42 	P2.L = 0x4241;		/* (16961)	P2=0xf4241 */
+ffa0298e:	41 34       	I0 = P1;
+ffa02990:	b2 e0 06 20 	LSETUP(0xffa02994 <_bfin_EMAC_send+0x3c>, 0xffa0299c <_bfin_EMAC_send+0x44>) LC1 = P2;
+ffa02994:	20 9d       	R0.L = W[I0];
+ffa02996:	01 54       	R0 = R1 & R0;
+ffa02998:	00 0c       	CC = R0 == 0x0;
+ffa0299a:	0e 18       	IF CC JUMP 0xffa029b6 <_bfin_EMAC_send+0x5e>;
+ffa0299c:	00 00       	NOP;
+ffa0299e:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900174(-7339660) */
+ffa029a2:	00 e1 4c 02 	R0.L = 0x24c;		/* (588)	R0=0xff90024c(-7339444) */
+ffa029a6:	ff e3 d5 f8 	CALL 0xffa01b50 <_printf_str>;
+ffa029aa:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
+ffa029ac:	01 e8 00 00 	UNLINK;
+ffa029b0:	01 30       	R0 = R1;
+ffa029b2:	84 04       	(P5:4) = [SP++];
+ffa029b4:	10 00       	RTS;
+ffa029b6:	4c e1 90 ff 	P4.H = 0xff90;		/* (-112)	P4=0xff900f38 <_NetDHCPserv> */
+ffa029ba:	0c e1 3c 0f 	P4.L = 0xf3c;		/* (3900)	P4=0xff900f3c <_txIdx> */
+ffa029be:	20 95       	R0 = W[P4] (Z);
+ffa029c0:	10 32       	P2 = R0;
+ffa029c2:	4d e1 90 ff 	P5.H = 0xff90;		/* (-112)	P5=0xff900490 */
+ffa029c6:	0d e1 40 0f 	P5.L = 0xf40;		/* (3904)	P5=0xff900f40 <_txbuf> */
+ffa029ca:	0b 30       	R1 = R3;
+ffa029cc:	95 5e       	P2 = P5 + (P2 << 0x2);
+ffa029ce:	52 91       	P2 = [P2];
+ffa029d0:	92 ad       	P2 = [P2 + 0x18];
+ffa029d2:	12 96       	W[P2++] = R2;
+ffa029d4:	42 30       	R0 = P2;
+ffa029d6:	ff e3 0b f9 	CALL 0xffa01bec <_memcpy_>;
+ffa029da:	23 95       	R3 = W[P4] (Z);
+ffa029dc:	da 42       	R2 = R3.L (Z);
+ffa029de:	12 32       	P2 = R2;
+ffa029e0:	55 5f       	P5 = P5 + (P2 << 0x2);
+ffa029e2:	6d 91       	P5 = [P5];
+ffa029e4:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc04241(-4177343) */
+ffa029e8:	0a e1 80 0c 	P2.L = 0xc80;		/* (3200)	P2=0xffc00c80(-4191104) */
+ffa029ec:	55 93       	[P2] = P5;
+ffa029ee:	a8 a1       	R0 = [P5 + 0x18];
+ffa029f0:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900c80 */
+ffa029f4:	0a e1 82 05 	P2.L = 0x582;		/* (1410)	P2=0xff900582 <_txdmacfg> */
+ffa029f8:	68 b0       	[P5 + 0x4] = R0;
+ffa029fa:	10 95       	R0 = W[P2] (Z);
+ffa029fc:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00582(-4192894) */
+ffa02a00:	0a e1 88 0c 	P2.L = 0xc88;		/* (3208)	P2=0xffc00c88(-4191096) */
+ffa02a04:	10 97       	W[P2] = R0;
+ffa02a06:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00c88(-4191096) */
+ffa02a0a:	0a e1 00 30 	P2.L = 0x3000;		/* (12288)	P2=0xffc03000(-4182016) */
+ffa02a0e:	10 91       	R0 = [P2];
+ffa02a10:	80 4a       	BITSET (R0, 0x10);		/* bit 16 */
+ffa02a12:	10 93       	[P2] = R0;
+ffa02a14:	a8 a2       	R0 = [P5 + 0x28];
+ffa02a16:	00 48       	CC = !BITTST (R0, 0x0);		/* bit  0 */
+ffa02a18:	13 10       	IF !CC JUMP 0xffa02a3e <_bfin_EMAC_send+0xe6>;
+ffa02a1a:	4a e1 0f 00 	P2.H = 0xf;		/* ( 15)	P2=0xf3000 */
+ffa02a1e:	0a e1 41 42 	P2.L = 0x4241;		/* (16961)	P2=0xf4241 */
+ffa02a22:	b2 e0 05 20 	LSETUP(0xffa02a26 <_bfin_EMAC_send+0xce>, 0xffa02a2c <_bfin_EMAC_send+0xd4>) LC1 = P2;
+ffa02a26:	a8 a2       	R0 = [P5 + 0x28];
+ffa02a28:	00 48       	CC = !BITTST (R0, 0x0);		/* bit  0 */
+ffa02a2a:	0a 10       	IF !CC JUMP 0xffa02a3e <_bfin_EMAC_send+0xe6>;
+ffa02a2c:	00 00       	NOP;
+ffa02a2e:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff90024c(-7339444) */
+ffa02a32:	00 e1 64 02 	R0.L = 0x264;		/* (612)	R0=0xff900264(-7339420) */
+ffa02a36:	ff e3 8d f8 	CALL 0xffa01b50 <_printf_str>;
+ffa02a3a:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
+ffa02a3c:	09 20       	JUMP.S 0xffa02a4e <_bfin_EMAC_send+0xf6>;
+ffa02a3e:	a9 a2       	R1 = [P5 + 0x28];
+ffa02a40:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa02a42:	a8 b2       	[P5 + 0x28] = R0;
+ffa02a44:	12 0d       	CC = R2 <= 0x2;
+ffa02a46:	03 10       	IF !CC JUMP 0xffa02a4c <_bfin_EMAC_send+0xf4>;
+ffa02a48:	03 30       	R0 = R3;
+ffa02a4a:	08 64       	R0 += 0x1;		/* (  1) */
+ffa02a4c:	20 97       	W[P4] = R0;
+ffa02a4e:	01 e8 00 00 	UNLINK;
+ffa02a52:	01 30       	R0 = R1;
+ffa02a54:	84 04       	(P5:4) = [SP++];
+ffa02a56:	10 00       	RTS;
+ffa02a58:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900000 <_l1_data_a>(-7340032) */
+ffa02a5c:	00 e1 30 01 	R0.L = 0x130;		/* (304)	R0=0xff900130(-7339728) */
+ffa02a60:	ff e3 78 f8 	CALL 0xffa01b50 <_printf_str>;
+ffa02a64:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
+ffa02a66:	01 e8 00 00 	UNLINK;
+ffa02a6a:	01 30       	R0 = R1;
+ffa02a6c:	84 04       	(P5:4) = [SP++];
+ffa02a6e:	10 00       	RTS;
+ffa02a70:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900130(-7339728) */
+ffa02a74:	00 e1 30 02 	R0.L = 0x230;		/* (560)	R0=0xff900230(-7339472) */
+ffa02a78:	ff e3 c4 f7 	CALL 0xffa01a00 <_printf_int>;
+ffa02a7c:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
+ffa02a7e:	01 e8 00 00 	UNLINK;
+ffa02a82:	01 30       	R0 = R1;
+ffa02a84:	84 04       	(P5:4) = [SP++];
+ffa02a86:	10 00       	RTS;
 
-ffa02a48 <_ether_testUDP>:
-ffa02a48:	c5 04       	[--SP] = (P5:5);
-ffa02a4a:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff904241 */
-ffa02a4e:	00 e8 03 00 	LINK 0xc;		/* (12) */
-ffa02a52:	0a e1 b8 0e 	P2.L = 0xeb8;		/* (3768)	P2=0xff900eb8 <_txIdx> */
-ffa02a56:	11 95       	R1 = W[P2] (Z);
-ffa02a58:	11 32       	P2 = R1;
-ffa02a5a:	49 e1 90 ff 	P1.H = 0xff90;		/* (-112)	P1=0xff900ebc <_txbuf> */
-ffa02a5e:	09 e1 bc 0e 	P1.L = 0xebc;		/* (3772)	P1=0xff900ebc <_txbuf> */
-ffa02a62:	21 e1 42 00 	R1 = 0x42 (X);		/*		R1=0x42( 66) */
-ffa02a66:	91 5e       	P2 = P1 + (P2 << 0x2);
-ffa02a68:	52 91       	P2 = [P2];
-ffa02a6a:	95 ad       	P5 = [P2 + 0x18];
-ffa02a6c:	55 32       	P2 = P5;
-ffa02a6e:	11 96       	W[P2++] = R1;
-ffa02a70:	4a 30       	R1 = P2;
-ffa02a72:	00 e3 11 09 	CALL 0xffa03c94 <_ARP_req>;
-ffa02a76:	00 0c       	CC = R0 == 0x0;
-ffa02a78:	7e 18       	IF CC JUMP 0xffa02b74 <_ether_testUDP+0x12c>;
-ffa02a7a:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900eb8 <_txIdx> */
-ffa02a7e:	0a e1 e0 0e 	P2.L = 0xee0;		/* (3808)	P2=0xff900ee0 <_NetOurMAC> */
-ffa02a82:	4d 32       	P1 = P5;
-ffa02a84:	50 99       	R0 = B[P2] (X);
-ffa02a86:	a8 e6 08 00 	B[P5 + 0x8] = R0;
-ffa02a8a:	90 e5 01 00 	R0 = B[P2 + 0x1] (X);
-ffa02a8e:	a8 e6 09 00 	B[P5 + 0x9] = R0;
-ffa02a92:	90 e5 02 00 	R0 = B[P2 + 0x2] (X);
-ffa02a96:	a8 e6 0a 00 	B[P5 + 0xa] = R0;
-ffa02a9a:	90 e5 03 00 	R0 = B[P2 + 0x3] (X);
-ffa02a9e:	a8 e6 0b 00 	B[P5 + 0xb] = R0;
-ffa02aa2:	90 e5 04 00 	R0 = B[P2 + 0x4] (X);
-ffa02aa6:	a8 e6 0c 00 	B[P5 + 0xc] = R0;
-ffa02aaa:	90 e5 05 00 	R0 = B[P2 + 0x5] (X);
-ffa02aae:	a8 e6 0d 00 	B[P5 + 0xd] = R0;
-ffa02ab2:	40 60       	R0 = 0x8 (X);		/*		R0=0x8(  8) */
-ffa02ab4:	e8 b5       	W[P5 + 0xe] = R0;
-ffa02ab6:	20 e1 45 00 	R0 = 0x45 (X);		/*		R0=0x45( 69) */
-ffa02aba:	a8 e6 10 00 	B[P5 + 0x10] = R0;
-ffa02abe:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa02ac0:	a8 e6 11 00 	B[P5 + 0x11] = R0;
-ffa02ac4:	20 e1 00 32 	R0 = 0x3200 (X);		/*		R0=0x3200(12800) */
-ffa02ac8:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900ee0 <_NetOurMAC> */
-ffa02acc:	0a e1 ba 0e 	P2.L = 0xeba;		/* (3770)	P2=0xff900eba <_NetIPID> */
-ffa02ad0:	68 b6       	W[P5 + 0x12] = R0;
-ffa02ad2:	10 95       	R0 = W[P2] (Z);
-ffa02ad4:	08 30       	R1 = R0;
-ffa02ad6:	09 64       	R1 += 0x1;		/* (  1) */
-ffa02ad8:	11 97       	W[P2] = R1;
-ffa02ada:	c1 42       	R1 = R0.L (Z);
-ffa02adc:	41 4e       	R1 >>= 0x8;
-ffa02ade:	40 4f       	R0 <<= 0x8;
-ffa02ae0:	08 56       	R0 = R0 | R1;
-ffa02ae2:	a8 b6       	W[P5 + 0x14] = R0;
-ffa02ae4:	20 e1 40 00 	R0 = 0x40 (X);		/*		R0=0x40( 64) */
-ffa02ae8:	e8 b6       	W[P5 + 0x16] = R0;
-ffa02aea:	f8 63       	R0 = -0x1 (X);		/*		R0=0xffffffff( -1) */
-ffa02aec:	a8 e6 18 00 	B[P5 + 0x18] = R0;
-ffa02af0:	88 60       	R0 = 0x11 (X);		/*		R0=0x11( 17) */
-ffa02af2:	a8 e6 19 00 	B[P5 + 0x19] = R0;
-ffa02af6:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa02af8:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900eba <_NetIPID> */
-ffa02afc:	0a e1 ec 0e 	P2.L = 0xeec;		/* (3820)	P2=0xff900eec <_NetOurIP> */
-ffa02b00:	68 b7       	W[P5 + 0x1a] = R0;
-ffa02b02:	10 91       	R0 = [P2];
-ffa02b04:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900eec <_NetOurIP> */
-ffa02b08:	0a e1 b0 0e 	P2.L = 0xeb0;		/* (3760)	P2=0xff900eb0 <_NetDestIP> */
-ffa02b0c:	e8 b1       	[P5 + 0x1c] = R0;
-ffa02b0e:	10 91       	R0 = [P2];
-ffa02b10:	28 b2       	[P5 + 0x20] = R0;
-ffa02b12:	81 6c       	P1 += 0x10;		/* ( 16) */
-ffa02b14:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
-ffa02b16:	52 68       	P2 = 0xa (X);		/*		P2=0xa( 10) */
-ffa02b18:	b2 e0 03 20 	LSETUP(0xffa02b1c <_ether_testUDP+0xd4>, 0xffa02b1e <_ether_testUDP+0xd6>) LC1 = P2;
-ffa02b1c:	08 94       	R0 = W[P1++] (Z);
-ffa02b1e:	41 50       	R1 = R1 + R0;
-ffa02b20:	82 c6 81 81 	R0 = R1 >> 0x10;
-ffa02b24:	01 50       	R0 = R1 + R0;
-ffa02b26:	c0 42       	R0 = R0.L (Z);
-ffa02b28:	c0 43       	R0 =~ R0;
-ffa02b2a:	68 b7       	W[P5 + 0x1a] = R0;
-ffa02b2c:	20 e1 10 f5 	R0 = -0xaf0 (X);		/*		R0=0xfffff510(-2800) */
-ffa02b30:	68 e6 12 00 	W[P5 + 0x24] = R0;
-ffa02b34:	20 e1 09 64 	R0 = 0x6409 (X);		/*		R0=0x6409(25609) */
-ffa02b38:	68 e6 13 00 	W[P5 + 0x26] = R0;
-ffa02b3c:	20 e1 00 1e 	R0 = 0x1e00 (X);		/*		R0=0x1e00(7680) */
-ffa02b40:	68 e6 14 00 	W[P5 + 0x28] = R0;
-ffa02b44:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa02b46:	55 32       	P2 = P5;
-ffa02b48:	68 e6 15 00 	W[P5 + 0x2a] = R0;
-ffa02b4c:	62 6d       	P2 += 0x2c;		/* ( 44) */
-ffa02b4e:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
-ffa02b50:	b1 68       	P1 = 0x16 (X);		/*		P1=0x16( 22) */
-ffa02b52:	b2 e0 03 10 	LSETUP(0xffa02b56 <_ether_testUDP+0x10e>, 0xffa02b58 <_ether_testUDP+0x110>) LC1 = P1;
-ffa02b56:	11 9a       	B[P2++] = R1;
-ffa02b58:	09 64       	R1 += 0x1;		/* (  1) */
-ffa02b5a:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900000 <_l1_data_a>(-7340032) */
-ffa02b5e:	00 e1 44 02 	R0.L = 0x244;		/* (580)	R0=0xff900244(-7339452) */
-ffa02b62:	ff e3 d7 f7 	CALL 0xffa01b10 <_printf_str>;
-ffa02b66:	ff e3 2d fc 	CALL 0xffa023c0 <_bfin_EMAC_send_nocopy>;
-ffa02b6a:	01 e8 00 00 	UNLINK;
-ffa02b6e:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa02b70:	85 04       	(P5:5) = [SP++];
-ffa02b72:	10 00       	RTS;
-ffa02b74:	01 e8 00 00 	UNLINK;
-ffa02b78:	f8 63       	R0 = -0x1 (X);		/*		R0=0xffffffff( -1) */
-ffa02b7a:	85 04       	(P5:5) = [SP++];
-ffa02b7c:	10 00       	RTS;
+ffa02a88 <_ether_testUDP>:
+ffa02a88:	c5 04       	[--SP] = (P5:5);
+ffa02a8a:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff904241 */
+ffa02a8e:	00 e8 03 00 	LINK 0xc;		/* (12) */
+ffa02a92:	0a e1 3c 0f 	P2.L = 0xf3c;		/* (3900)	P2=0xff900f3c <_txIdx> */
+ffa02a96:	11 95       	R1 = W[P2] (Z);
+ffa02a98:	11 32       	P2 = R1;
+ffa02a9a:	49 e1 90 ff 	P1.H = 0xff90;		/* (-112)	P1=0xff900f40 <_txbuf> */
+ffa02a9e:	09 e1 40 0f 	P1.L = 0xf40;		/* (3904)	P1=0xff900f40 <_txbuf> */
+ffa02aa2:	21 e1 42 00 	R1 = 0x42 (X);		/*		R1=0x42( 66) */
+ffa02aa6:	91 5e       	P2 = P1 + (P2 << 0x2);
+ffa02aa8:	52 91       	P2 = [P2];
+ffa02aaa:	95 ad       	P5 = [P2 + 0x18];
+ffa02aac:	55 32       	P2 = P5;
+ffa02aae:	11 96       	W[P2++] = R1;
+ffa02ab0:	4a 30       	R1 = P2;
+ffa02ab2:	00 e3 2f 09 	CALL 0xffa03d10 <_ARP_req>;
+ffa02ab6:	00 0c       	CC = R0 == 0x0;
+ffa02ab8:	7e 18       	IF CC JUMP 0xffa02bb4 <_ether_testUDP+0x12c>;
+ffa02aba:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900f3c <_txIdx> */
+ffa02abe:	0a e1 64 0f 	P2.L = 0xf64;		/* (3940)	P2=0xff900f64 <_NetOurMAC> */
+ffa02ac2:	4d 32       	P1 = P5;
+ffa02ac4:	50 99       	R0 = B[P2] (X);
+ffa02ac6:	a8 e6 08 00 	B[P5 + 0x8] = R0;
+ffa02aca:	90 e5 01 00 	R0 = B[P2 + 0x1] (X);
+ffa02ace:	a8 e6 09 00 	B[P5 + 0x9] = R0;
+ffa02ad2:	90 e5 02 00 	R0 = B[P2 + 0x2] (X);
+ffa02ad6:	a8 e6 0a 00 	B[P5 + 0xa] = R0;
+ffa02ada:	90 e5 03 00 	R0 = B[P2 + 0x3] (X);
+ffa02ade:	a8 e6 0b 00 	B[P5 + 0xb] = R0;
+ffa02ae2:	90 e5 04 00 	R0 = B[P2 + 0x4] (X);
+ffa02ae6:	a8 e6 0c 00 	B[P5 + 0xc] = R0;
+ffa02aea:	90 e5 05 00 	R0 = B[P2 + 0x5] (X);
+ffa02aee:	a8 e6 0d 00 	B[P5 + 0xd] = R0;
+ffa02af2:	40 60       	R0 = 0x8 (X);		/*		R0=0x8(  8) */
+ffa02af4:	e8 b5       	W[P5 + 0xe] = R0;
+ffa02af6:	20 e1 45 00 	R0 = 0x45 (X);		/*		R0=0x45( 69) */
+ffa02afa:	a8 e6 10 00 	B[P5 + 0x10] = R0;
+ffa02afe:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa02b00:	a8 e6 11 00 	B[P5 + 0x11] = R0;
+ffa02b04:	20 e1 00 32 	R0 = 0x3200 (X);		/*		R0=0x3200(12800) */
+ffa02b08:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900f64 <_NetOurMAC> */
+ffa02b0c:	0a e1 3e 0f 	P2.L = 0xf3e;		/* (3902)	P2=0xff900f3e <_NetIPID> */
+ffa02b10:	68 b6       	W[P5 + 0x12] = R0;
+ffa02b12:	10 95       	R0 = W[P2] (Z);
+ffa02b14:	08 30       	R1 = R0;
+ffa02b16:	09 64       	R1 += 0x1;		/* (  1) */
+ffa02b18:	11 97       	W[P2] = R1;
+ffa02b1a:	c1 42       	R1 = R0.L (Z);
+ffa02b1c:	41 4e       	R1 >>= 0x8;
+ffa02b1e:	40 4f       	R0 <<= 0x8;
+ffa02b20:	08 56       	R0 = R0 | R1;
+ffa02b22:	a8 b6       	W[P5 + 0x14] = R0;
+ffa02b24:	20 e1 40 00 	R0 = 0x40 (X);		/*		R0=0x40( 64) */
+ffa02b28:	e8 b6       	W[P5 + 0x16] = R0;
+ffa02b2a:	f8 63       	R0 = -0x1 (X);		/*		R0=0xffffffff( -1) */
+ffa02b2c:	a8 e6 18 00 	B[P5 + 0x18] = R0;
+ffa02b30:	88 60       	R0 = 0x11 (X);		/*		R0=0x11( 17) */
+ffa02b32:	a8 e6 19 00 	B[P5 + 0x19] = R0;
+ffa02b36:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa02b38:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900f3e <_NetIPID> */
+ffa02b3c:	0a e1 70 0f 	P2.L = 0xf70;		/* (3952)	P2=0xff900f70 <_NetOurIP> */
+ffa02b40:	68 b7       	W[P5 + 0x1a] = R0;
+ffa02b42:	10 91       	R0 = [P2];
+ffa02b44:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900f70 <_NetOurIP> */
+ffa02b48:	0a e1 34 0f 	P2.L = 0xf34;		/* (3892)	P2=0xff900f34 <_NetDestIP> */
+ffa02b4c:	e8 b1       	[P5 + 0x1c] = R0;
+ffa02b4e:	10 91       	R0 = [P2];
+ffa02b50:	28 b2       	[P5 + 0x20] = R0;
+ffa02b52:	81 6c       	P1 += 0x10;		/* ( 16) */
+ffa02b54:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
+ffa02b56:	52 68       	P2 = 0xa (X);		/*		P2=0xa( 10) */
+ffa02b58:	b2 e0 03 20 	LSETUP(0xffa02b5c <_ether_testUDP+0xd4>, 0xffa02b5e <_ether_testUDP+0xd6>) LC1 = P2;
+ffa02b5c:	08 94       	R0 = W[P1++] (Z);
+ffa02b5e:	41 50       	R1 = R1 + R0;
+ffa02b60:	82 c6 81 81 	R0 = R1 >> 0x10;
+ffa02b64:	01 50       	R0 = R1 + R0;
+ffa02b66:	c0 42       	R0 = R0.L (Z);
+ffa02b68:	c0 43       	R0 =~ R0;
+ffa02b6a:	68 b7       	W[P5 + 0x1a] = R0;
+ffa02b6c:	20 e1 10 f5 	R0 = -0xaf0 (X);		/*		R0=0xfffff510(-2800) */
+ffa02b70:	68 e6 12 00 	W[P5 + 0x24] = R0;
+ffa02b74:	20 e1 09 64 	R0 = 0x6409 (X);		/*		R0=0x6409(25609) */
+ffa02b78:	68 e6 13 00 	W[P5 + 0x26] = R0;
+ffa02b7c:	20 e1 00 1e 	R0 = 0x1e00 (X);		/*		R0=0x1e00(7680) */
+ffa02b80:	68 e6 14 00 	W[P5 + 0x28] = R0;
+ffa02b84:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa02b86:	55 32       	P2 = P5;
+ffa02b88:	68 e6 15 00 	W[P5 + 0x2a] = R0;
+ffa02b8c:	62 6d       	P2 += 0x2c;		/* ( 44) */
+ffa02b8e:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
+ffa02b90:	b1 68       	P1 = 0x16 (X);		/*		P1=0x16( 22) */
+ffa02b92:	b2 e0 03 10 	LSETUP(0xffa02b96 <_ether_testUDP+0x10e>, 0xffa02b98 <_ether_testUDP+0x110>) LC1 = P1;
+ffa02b96:	11 9a       	B[P2++] = R1;
+ffa02b98:	09 64       	R1 += 0x1;		/* (  1) */
+ffa02b9a:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900000 <_l1_data_a>(-7340032) */
+ffa02b9e:	00 e1 78 02 	R0.L = 0x278;		/* (632)	R0=0xff900278(-7339400) */
+ffa02ba2:	ff e3 d7 f7 	CALL 0xffa01b50 <_printf_str>;
+ffa02ba6:	ff e3 2d fc 	CALL 0xffa02400 <_bfin_EMAC_send_nocopy>;
+ffa02baa:	01 e8 00 00 	UNLINK;
+ffa02bae:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa02bb0:	85 04       	(P5:5) = [SP++];
+ffa02bb2:	10 00       	RTS;
+ffa02bb4:	01 e8 00 00 	UNLINK;
+ffa02bb8:	f8 63       	R0 = -0x1 (X);		/*		R0=0xffffffff( -1) */
+ffa02bba:	85 04       	(P5:5) = [SP++];
+ffa02bbc:	10 00       	RTS;
 	...
 
-ffa02b80 <_eth_header_setup>:
-ffa02b80:	c4 04       	[--SP] = (P5:4);
-ffa02b82:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff90000a */
-ffa02b86:	00 e8 03 00 	LINK 0xc;		/* (12) */
-ffa02b8a:	00 32       	P0 = R0;
-ffa02b8c:	0a e1 b8 0e 	P2.L = 0xeb8;		/* (3768)	P2=0xff900eb8 <_txIdx> */
-ffa02b90:	10 95       	R0 = W[P2] (Z);
-ffa02b92:	10 32       	P2 = R0;
-ffa02b94:	49 e1 90 ff 	P1.H = 0xff90;		/* (-112)	P1=0xff900016 */
-ffa02b98:	09 e1 bc 0e 	P1.L = 0xebc;		/* (3772)	P1=0xff900ebc <_txbuf> */
-ffa02b9c:	00 91       	R0 = [P0];
-ffa02b9e:	21 32       	P4 = R1;
-ffa02ba0:	91 5e       	P2 = P1 + (P2 << 0x2);
-ffa02ba2:	52 91       	P2 = [P2];
-ffa02ba4:	08 30       	R1 = R0;
-ffa02ba6:	80 67       	R0 += -0x10;		/* (-16) */
-ffa02ba8:	00 93       	[P0] = R0;
-ffa02baa:	95 ad       	P5 = [P2 + 0x18];
-ffa02bac:	82 c6 42 01 	R0 = R2 >>> 0x18;
-ffa02bb0:	f1 67       	R1 += -0x2;		/* ( -2) */
-ffa02bb2:	c0 4f       	R0 <<= 0x18;
-ffa02bb4:	29 97       	W[P5] = R1;
-ffa02bb6:	00 0c       	CC = R0 == 0x0;
-ffa02bb8:	39 10       	IF !CC JUMP 0xffa02c2a <_eth_header_setup+0xaa>;
-ffa02bba:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
-ffa02bbc:	a8 e6 02 00 	B[P5 + 0x2] = R0;
-ffa02bc0:	20 e1 5e 00 	R0 = 0x5e (X);		/*		R0=0x5e( 94) */
-ffa02bc4:	a8 e6 04 00 	B[P5 + 0x4] = R0;
-ffa02bc8:	68 60       	R0 = 0xd (X);		/*		R0=0xd( 13) */
-ffa02bca:	a8 e6 06 00 	B[P5 + 0x6] = R0;
-ffa02bce:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
-ffa02bd0:	d8 63       	R0 = -0x5 (X);		/*		R0=0xfffffffb( -5) */
-ffa02bd2:	a9 e6 03 00 	B[P5 + 0x3] = R1;
-ffa02bd6:	a9 e6 05 00 	B[P5 + 0x5] = R1;
-ffa02bda:	a8 e6 07 00 	B[P5 + 0x7] = R0;
-ffa02bde:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900eb8 <_txIdx> */
-ffa02be2:	0a e1 e0 0e 	P2.L = 0xee0;		/* (3808)	P2=0xff900ee0 <_NetOurMAC> */
-ffa02be6:	50 99       	R0 = B[P2] (X);
-ffa02be8:	a8 e6 08 00 	B[P5 + 0x8] = R0;
-ffa02bec:	90 e5 01 00 	R0 = B[P2 + 0x1] (X);
-ffa02bf0:	a8 e6 09 00 	B[P5 + 0x9] = R0;
-ffa02bf4:	90 e5 02 00 	R0 = B[P2 + 0x2] (X);
-ffa02bf8:	a8 e6 0a 00 	B[P5 + 0xa] = R0;
-ffa02bfc:	90 e5 03 00 	R0 = B[P2 + 0x3] (X);
-ffa02c00:	a8 e6 0b 00 	B[P5 + 0xb] = R0;
-ffa02c04:	90 e5 04 00 	R0 = B[P2 + 0x4] (X);
-ffa02c08:	a8 e6 0c 00 	B[P5 + 0xc] = R0;
-ffa02c0c:	90 e5 05 00 	R0 = B[P2 + 0x5] (X);
-ffa02c10:	a8 e6 0d 00 	B[P5 + 0xd] = R0;
-ffa02c14:	40 60       	R0 = 0x8 (X);		/*		R0=0x8(  8) */
-ffa02c16:	e8 b5       	W[P5 + 0xe] = R0;
-ffa02c18:	4d 30       	R1 = P5;
-ffa02c1a:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
-ffa02c1c:	81 64       	R1 += 0x10;		/* ( 16) */
-ffa02c1e:	20 9b       	B[P4] = R0;
-ffa02c20:	01 e8 00 00 	UNLINK;
-ffa02c24:	01 30       	R0 = R1;
-ffa02c26:	84 04       	(P5:4) = [SP++];
-ffa02c28:	10 00       	RTS;
-ffa02c2a:	4d 30       	R1 = P5;
-ffa02c2c:	11 64       	R1 += 0x2;		/* (  2) */
-ffa02c2e:	02 30       	R0 = R2;
-ffa02c30:	00 e3 32 08 	CALL 0xffa03c94 <_ARP_req>;
-ffa02c34:	00 0c       	CC = R0 == 0x0;
-ffa02c36:	d4 17       	IF !CC JUMP 0xffa02bde <_eth_header_setup+0x5e> (BP);
-ffa02c38:	f8 63       	R0 = -0x1 (X);		/*		R0=0xffffffff( -1) */
-ffa02c3a:	20 9b       	B[P4] = R0;
-ffa02c3c:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
-ffa02c3e:	f1 2f       	JUMP.S 0xffa02c20 <_eth_header_setup+0xa0>;
+ffa02bc0 <_eth_header_setup>:
+ffa02bc0:	c4 04       	[--SP] = (P5:4);
+ffa02bc2:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff90000a */
+ffa02bc6:	00 e8 03 00 	LINK 0xc;		/* (12) */
+ffa02bca:	00 32       	P0 = R0;
+ffa02bcc:	0a e1 3c 0f 	P2.L = 0xf3c;		/* (3900)	P2=0xff900f3c <_txIdx> */
+ffa02bd0:	10 95       	R0 = W[P2] (Z);
+ffa02bd2:	10 32       	P2 = R0;
+ffa02bd4:	49 e1 90 ff 	P1.H = 0xff90;		/* (-112)	P1=0xff900016 */
+ffa02bd8:	09 e1 40 0f 	P1.L = 0xf40;		/* (3904)	P1=0xff900f40 <_txbuf> */
+ffa02bdc:	00 91       	R0 = [P0];
+ffa02bde:	21 32       	P4 = R1;
+ffa02be0:	91 5e       	P2 = P1 + (P2 << 0x2);
+ffa02be2:	52 91       	P2 = [P2];
+ffa02be4:	08 30       	R1 = R0;
+ffa02be6:	80 67       	R0 += -0x10;		/* (-16) */
+ffa02be8:	00 93       	[P0] = R0;
+ffa02bea:	95 ad       	P5 = [P2 + 0x18];
+ffa02bec:	82 c6 42 01 	R0 = R2 >>> 0x18;
+ffa02bf0:	f1 67       	R1 += -0x2;		/* ( -2) */
+ffa02bf2:	c0 4f       	R0 <<= 0x18;
+ffa02bf4:	29 97       	W[P5] = R1;
+ffa02bf6:	00 0c       	CC = R0 == 0x0;
+ffa02bf8:	39 10       	IF !CC JUMP 0xffa02c6a <_eth_header_setup+0xaa>;
+ffa02bfa:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
+ffa02bfc:	a8 e6 02 00 	B[P5 + 0x2] = R0;
+ffa02c00:	20 e1 5e 00 	R0 = 0x5e (X);		/*		R0=0x5e( 94) */
+ffa02c04:	a8 e6 04 00 	B[P5 + 0x4] = R0;
+ffa02c08:	68 60       	R0 = 0xd (X);		/*		R0=0xd( 13) */
+ffa02c0a:	a8 e6 06 00 	B[P5 + 0x6] = R0;
+ffa02c0e:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
+ffa02c10:	d8 63       	R0 = -0x5 (X);		/*		R0=0xfffffffb( -5) */
+ffa02c12:	a9 e6 03 00 	B[P5 + 0x3] = R1;
+ffa02c16:	a9 e6 05 00 	B[P5 + 0x5] = R1;
+ffa02c1a:	a8 e6 07 00 	B[P5 + 0x7] = R0;
+ffa02c1e:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900f3c <_txIdx> */
+ffa02c22:	0a e1 64 0f 	P2.L = 0xf64;		/* (3940)	P2=0xff900f64 <_NetOurMAC> */
+ffa02c26:	50 99       	R0 = B[P2] (X);
+ffa02c28:	a8 e6 08 00 	B[P5 + 0x8] = R0;
+ffa02c2c:	90 e5 01 00 	R0 = B[P2 + 0x1] (X);
+ffa02c30:	a8 e6 09 00 	B[P5 + 0x9] = R0;
+ffa02c34:	90 e5 02 00 	R0 = B[P2 + 0x2] (X);
+ffa02c38:	a8 e6 0a 00 	B[P5 + 0xa] = R0;
+ffa02c3c:	90 e5 03 00 	R0 = B[P2 + 0x3] (X);
+ffa02c40:	a8 e6 0b 00 	B[P5 + 0xb] = R0;
+ffa02c44:	90 e5 04 00 	R0 = B[P2 + 0x4] (X);
+ffa02c48:	a8 e6 0c 00 	B[P5 + 0xc] = R0;
+ffa02c4c:	90 e5 05 00 	R0 = B[P2 + 0x5] (X);
+ffa02c50:	a8 e6 0d 00 	B[P5 + 0xd] = R0;
+ffa02c54:	40 60       	R0 = 0x8 (X);		/*		R0=0x8(  8) */
+ffa02c56:	e8 b5       	W[P5 + 0xe] = R0;
+ffa02c58:	4d 30       	R1 = P5;
+ffa02c5a:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
+ffa02c5c:	81 64       	R1 += 0x10;		/* ( 16) */
+ffa02c5e:	20 9b       	B[P4] = R0;
+ffa02c60:	01 e8 00 00 	UNLINK;
+ffa02c64:	01 30       	R0 = R1;
+ffa02c66:	84 04       	(P5:4) = [SP++];
+ffa02c68:	10 00       	RTS;
+ffa02c6a:	4d 30       	R1 = P5;
+ffa02c6c:	11 64       	R1 += 0x2;		/* (  2) */
+ffa02c6e:	02 30       	R0 = R2;
+ffa02c70:	00 e3 50 08 	CALL 0xffa03d10 <_ARP_req>;
+ffa02c74:	00 0c       	CC = R0 == 0x0;
+ffa02c76:	d4 17       	IF !CC JUMP 0xffa02c1e <_eth_header_setup+0x5e> (BP);
+ffa02c78:	f8 63       	R0 = -0x1 (X);		/*		R0=0xffffffff( -1) */
+ffa02c7a:	20 9b       	B[P4] = R0;
+ffa02c7c:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
+ffa02c7e:	f1 2f       	JUMP.S 0xffa02c60 <_eth_header_setup+0xa0>;
 
-ffa02c40 <_icmp_packet_setup>:
-ffa02c40:	e4 05       	[--SP] = (R7:4, P5:4);
-ffa02c42:	00 e8 06 00 	LINK 0x18;		/* (24) */
-ffa02c46:	29 32       	P5 = R1;
-ffa02c48:	60 65       	R0 += 0x2c;		/* ( 44) */
-ffa02c4a:	7f 30       	R7 = FP;
-ffa02c4c:	f0 bb       	[FP -0x4] = R0;
-ffa02c4e:	e7 67       	R7 += -0x4;		/* ( -4) */
-ffa02c50:	22 32       	P4 = R2;
-ffa02c52:	be e5 2c 00 	R6 = B[FP + 0x2c] (X);
-ffa02c56:	7d e5 18 00 	R5 = W[FP + 0x30] (X);
-ffa02c5a:	7c e5 1a 00 	R4 = W[FP + 0x34] (X);
-ffa02c5e:	07 30       	R0 = R7;
-ffa02c60:	ff e3 90 ff 	CALL 0xffa02b80 <_eth_header_setup>;
-ffa02c64:	08 30       	R1 = R0;
-ffa02c66:	68 99       	R0 = B[P5] (X);
-ffa02c68:	80 0c       	CC = R0 < 0x0;
-ffa02c6a:	14 18       	IF CC JUMP 0xffa02c92 <_icmp_packet_setup+0x52>;
-ffa02c6c:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
-ffa02c6e:	f0 b0       	[SP + 0xc] = R0;
-ffa02c70:	01 30       	R0 = R1;
-ffa02c72:	0f 30       	R1 = R7;
-ffa02c74:	54 30       	R2 = P4;
-ffa02c76:	ff e3 bb fa 	CALL 0xffa021ec <_ip_header_setup>;
-ffa02c7a:	e9 42       	R1 = R5.L (Z);
-ffa02c7c:	f1 b0       	[SP + 0xc] = R1;
-ffa02c7e:	e1 42       	R1 = R4.L (Z);
-ffa02c80:	31 b1       	[SP + 0x10] = R1;
-ffa02c82:	72 43       	R2 = R6.B (Z);
-ffa02c84:	0f 30       	R1 = R7;
-ffa02c86:	ff e3 11 fb 	CALL 0xffa022a8 <_icmp_header_setup>;
-ffa02c8a:	01 e8 00 00 	UNLINK;
-ffa02c8e:	a4 05       	(R7:4, P5:4) = [SP++];
-ffa02c90:	10 00       	RTS;
-ffa02c92:	01 e8 00 00 	UNLINK;
-ffa02c96:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa02c98:	a4 05       	(R7:4, P5:4) = [SP++];
-ffa02c9a:	10 00       	RTS;
+ffa02c80 <_icmp_packet_setup>:
+ffa02c80:	e4 05       	[--SP] = (R7:4, P5:4);
+ffa02c82:	00 e8 06 00 	LINK 0x18;		/* (24) */
+ffa02c86:	29 32       	P5 = R1;
+ffa02c88:	60 65       	R0 += 0x2c;		/* ( 44) */
+ffa02c8a:	7f 30       	R7 = FP;
+ffa02c8c:	f0 bb       	[FP -0x4] = R0;
+ffa02c8e:	e7 67       	R7 += -0x4;		/* ( -4) */
+ffa02c90:	22 32       	P4 = R2;
+ffa02c92:	be e5 2c 00 	R6 = B[FP + 0x2c] (X);
+ffa02c96:	7d e5 18 00 	R5 = W[FP + 0x30] (X);
+ffa02c9a:	7c e5 1a 00 	R4 = W[FP + 0x34] (X);
+ffa02c9e:	07 30       	R0 = R7;
+ffa02ca0:	ff e3 90 ff 	CALL 0xffa02bc0 <_eth_header_setup>;
+ffa02ca4:	08 30       	R1 = R0;
+ffa02ca6:	68 99       	R0 = B[P5] (X);
+ffa02ca8:	80 0c       	CC = R0 < 0x0;
+ffa02caa:	14 18       	IF CC JUMP 0xffa02cd2 <_icmp_packet_setup+0x52>;
+ffa02cac:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
+ffa02cae:	f0 b0       	[SP + 0xc] = R0;
+ffa02cb0:	01 30       	R0 = R1;
+ffa02cb2:	0f 30       	R1 = R7;
+ffa02cb4:	54 30       	R2 = P4;
+ffa02cb6:	ff e3 bb fa 	CALL 0xffa0222c <_ip_header_setup>;
+ffa02cba:	e9 42       	R1 = R5.L (Z);
+ffa02cbc:	f1 b0       	[SP + 0xc] = R1;
+ffa02cbe:	e1 42       	R1 = R4.L (Z);
+ffa02cc0:	31 b1       	[SP + 0x10] = R1;
+ffa02cc2:	72 43       	R2 = R6.B (Z);
+ffa02cc4:	0f 30       	R1 = R7;
+ffa02cc6:	ff e3 11 fb 	CALL 0xffa022e8 <_icmp_header_setup>;
+ffa02cca:	01 e8 00 00 	UNLINK;
+ffa02cce:	a4 05       	(R7:4, P5:4) = [SP++];
+ffa02cd0:	10 00       	RTS;
+ffa02cd2:	01 e8 00 00 	UNLINK;
+ffa02cd6:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa02cd8:	a4 05       	(R7:4, P5:4) = [SP++];
+ffa02cda:	10 00       	RTS;
 
-ffa02c9c <_icmp_rx>:
-ffa02c9c:	fd 05       	[--SP] = (R7:7, P5:5);
-ffa02c9e:	28 32       	P5 = R0;
-ffa02ca0:	39 30       	R7 = R1;
-ffa02ca2:	41 60       	R1 = 0x8 (X);		/*		R1=0x8(  8) */
-ffa02ca4:	00 e8 07 00 	LINK 0x1c;		/* (28) */
-ffa02ca8:	e8 a5       	R0 = W[P5 + 0xe] (Z);
-ffa02caa:	08 08       	CC = R0 == R1;
-ffa02cac:	06 18       	IF CC JUMP 0xffa02cb8 <_icmp_rx+0x1c>;
-ffa02cae:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa02cb0:	01 e8 00 00 	UNLINK;
-ffa02cb4:	bd 05       	(R7:7, P5:5) = [SP++];
-ffa02cb6:	10 00       	RTS;
-ffa02cb8:	58 61       	R0 = 0x2b (X);		/*		R0=0x2b( 43) */
-ffa02cba:	07 0a       	CC = R7 <= R0 (IU);
-ffa02cbc:	f9 1b       	IF CC JUMP 0xffa02cae <_icmp_rx+0x12>;
-ffa02cbe:	00 00       	NOP;
-ffa02cc0:	00 00       	NOP;
-ffa02cc2:	00 00       	NOP;
-ffa02cc4:	a8 e4 19 00 	R0 = B[P5 + 0x19] (Z);
-ffa02cc8:	08 0c       	CC = R0 == 0x1;
-ffa02cca:	f2 17       	IF !CC JUMP 0xffa02cae <_icmp_rx+0x12> (BP);
-ffa02ccc:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900ee0 <_NetOurMAC> */
-ffa02cd0:	0a e1 ec 0e 	P2.L = 0xeec;		/* (3820)	P2=0xff900eec <_NetOurIP> */
-ffa02cd4:	28 a2       	R0 = [P5 + 0x20];
-ffa02cd6:	11 91       	R1 = [P2];
-ffa02cd8:	08 08       	CC = R0 == R1;
-ffa02cda:	ea 17       	IF !CC JUMP 0xffa02cae <_icmp_rx+0x12> (BP);
-ffa02cdc:	68 e4 12 00 	R0 = W[P5 + 0x24] (Z);
-ffa02ce0:	21 e1 03 03 	R1 = 0x303 (X);		/*		R1=0x303(771) */
-ffa02ce4:	08 08       	CC = R0 == R1;
-ffa02ce6:	3e 18       	IF CC JUMP 0xffa02d62 <_icmp_rx+0xc6>;
-ffa02ce8:	00 00       	NOP;
-ffa02cea:	00 00       	NOP;
-ffa02cec:	41 60       	R1 = 0x8 (X);		/*		R1=0x8(  8) */
-ffa02cee:	a8 e4 24 00 	R0 = B[P5 + 0x24] (Z);
-ffa02cf2:	08 08       	CC = R0 == R1;
-ffa02cf4:	dd 17       	IF !CC JUMP 0xffa02cae <_icmp_rx+0x12> (BP);
-ffa02cf6:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff90002b(-7339989) */
-ffa02cfa:	e9 a1       	R1 = [P5 + 0x1c];
-ffa02cfc:	00 e1 5c 02 	R0.L = 0x25c;		/* (604)	R0=0xff90025c(-7339428) */
-ffa02d00:	ff e3 0e f7 	CALL 0xffa01b1c <_printf_ip>;
-ffa02d04:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900eec <_NetOurIP> */
-ffa02d08:	0a e1 b0 0e 	P2.L = 0xeb0;		/* (3760)	P2=0xff900eb0 <_NetDestIP> */
-ffa02d0c:	e8 a1       	R0 = [P5 + 0x1c];
-ffa02d0e:	4d 30       	R1 = P5;
-ffa02d10:	10 93       	[P2] = R0;
-ffa02d12:	41 64       	R1 += 0x8;		/* (  8) */
-ffa02d14:	00 e3 ae 05 	CALL 0xffa03870 <_ARP_lut_add>;
-ffa02d18:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff90025c(-7339428) */
-ffa02d1c:	00 e1 9c 07 	R0.L = 0x79c;		/* (1948)	R0=0xff90079c(-7338084) */
-ffa02d20:	ff e3 f8 f6 	CALL 0xffa01b10 <_printf_str>;
-ffa02d24:	00 cc 00 c0 	R0 = R0 -|- R0 || R2 = [P5 + 0x1c] || NOP;
-ffa02d28:	ea a1 00 00 
-ffa02d2c:	f0 b0       	[SP + 0xc] = R0;
-ffa02d2e:	68 e4 14 00 	R0 = W[P5 + 0x28] (Z);
-ffa02d32:	30 b1       	[SP + 0x10] = R0;
-ffa02d34:	68 e4 15 00 	R0 = W[P5 + 0x2a] (Z);
-ffa02d38:	70 b1       	[SP + 0x14] = R0;
-ffa02d3a:	b7 66       	R7 += -0x2a;		/* (-42) */
-ffa02d3c:	4f 30       	R1 = FP;
-ffa02d3e:	f9 67       	R1 += -0x1;		/* ( -1) */
-ffa02d40:	07 30       	R0 = R7;
-ffa02d42:	ff e3 7f ff 	CALL 0xffa02c40 <_icmp_packet_setup>;
-ffa02d46:	08 30       	R1 = R0;
-ffa02d48:	b8 e5 ff ff 	R0 = B[FP + -0x1] (X);
-ffa02d4c:	00 0d       	CC = R0 <= 0x0;
-ffa02d4e:	b0 1b       	IF CC JUMP 0xffa02cae <_icmp_rx+0x12>;
-ffa02d50:	65 6d       	P5 += 0x2c;		/* ( 44) */
-ffa02d52:	45 30       	R0 = P5;
-ffa02d54:	17 30       	R2 = R7;
-ffa02d56:	ff e3 2b f7 	CALL 0xffa01bac <_memcpy_>;
-ffa02d5a:	ff e3 33 fb 	CALL 0xffa023c0 <_bfin_EMAC_send_nocopy>;
-ffa02d5e:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
-ffa02d60:	a8 2f       	JUMP.S 0xffa02cb0 <_icmp_rx+0x14>;
-ffa02d62:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900eb0 <_NetDestIP> */
-ffa02d66:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa02d68:	0a e1 40 0c 	P2.L = 0xc40;		/* (3136)	P2=0xff900c40 <_g_streamEnabled> */
-ffa02d6c:	10 9b       	B[P2] = R0;
-ffa02d6e:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
-ffa02d70:	a0 2f       	JUMP.S 0xffa02cb0 <_icmp_rx+0x14>;
+ffa02cdc <_icmp_rx>:
+ffa02cdc:	fd 05       	[--SP] = (R7:7, P5:5);
+ffa02cde:	28 32       	P5 = R0;
+ffa02ce0:	39 30       	R7 = R1;
+ffa02ce2:	41 60       	R1 = 0x8 (X);		/*		R1=0x8(  8) */
+ffa02ce4:	00 e8 07 00 	LINK 0x1c;		/* (28) */
+ffa02ce8:	e8 a5       	R0 = W[P5 + 0xe] (Z);
+ffa02cea:	08 08       	CC = R0 == R1;
+ffa02cec:	06 18       	IF CC JUMP 0xffa02cf8 <_icmp_rx+0x1c>;
+ffa02cee:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa02cf0:	01 e8 00 00 	UNLINK;
+ffa02cf4:	bd 05       	(R7:7, P5:5) = [SP++];
+ffa02cf6:	10 00       	RTS;
+ffa02cf8:	58 61       	R0 = 0x2b (X);		/*		R0=0x2b( 43) */
+ffa02cfa:	07 0a       	CC = R7 <= R0 (IU);
+ffa02cfc:	f9 1b       	IF CC JUMP 0xffa02cee <_icmp_rx+0x12>;
+ffa02cfe:	00 00       	NOP;
+ffa02d00:	00 00       	NOP;
+ffa02d02:	00 00       	NOP;
+ffa02d04:	a8 e4 19 00 	R0 = B[P5 + 0x19] (Z);
+ffa02d08:	08 0c       	CC = R0 == 0x1;
+ffa02d0a:	f2 17       	IF !CC JUMP 0xffa02cee <_icmp_rx+0x12> (BP);
+ffa02d0c:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900f64 <_NetOurMAC> */
+ffa02d10:	0a e1 70 0f 	P2.L = 0xf70;		/* (3952)	P2=0xff900f70 <_NetOurIP> */
+ffa02d14:	28 a2       	R0 = [P5 + 0x20];
+ffa02d16:	11 91       	R1 = [P2];
+ffa02d18:	08 08       	CC = R0 == R1;
+ffa02d1a:	ea 17       	IF !CC JUMP 0xffa02cee <_icmp_rx+0x12> (BP);
+ffa02d1c:	68 e4 12 00 	R0 = W[P5 + 0x24] (Z);
+ffa02d20:	21 e1 03 03 	R1 = 0x303 (X);		/*		R1=0x303(771) */
+ffa02d24:	08 08       	CC = R0 == R1;
+ffa02d26:	3e 18       	IF CC JUMP 0xffa02da2 <_icmp_rx+0xc6>;
+ffa02d28:	00 00       	NOP;
+ffa02d2a:	00 00       	NOP;
+ffa02d2c:	41 60       	R1 = 0x8 (X);		/*		R1=0x8(  8) */
+ffa02d2e:	a8 e4 24 00 	R0 = B[P5 + 0x24] (Z);
+ffa02d32:	08 08       	CC = R0 == R1;
+ffa02d34:	dd 17       	IF !CC JUMP 0xffa02cee <_icmp_rx+0x12> (BP);
+ffa02d36:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff90002b(-7339989) */
+ffa02d3a:	e9 a1       	R1 = [P5 + 0x1c];
+ffa02d3c:	00 e1 90 02 	R0.L = 0x290;		/* (656)	R0=0xff900290(-7339376) */
+ffa02d40:	ff e3 0e f7 	CALL 0xffa01b5c <_printf_ip>;
+ffa02d44:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900f70 <_NetOurIP> */
+ffa02d48:	0a e1 34 0f 	P2.L = 0xf34;		/* (3892)	P2=0xff900f34 <_NetDestIP> */
+ffa02d4c:	e8 a1       	R0 = [P5 + 0x1c];
+ffa02d4e:	4d 30       	R1 = P5;
+ffa02d50:	10 93       	[P2] = R0;
+ffa02d52:	41 64       	R1 += 0x8;		/* (  8) */
+ffa02d54:	00 e3 cc 05 	CALL 0xffa038ec <_ARP_lut_add>;
+ffa02d58:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900290(-7339376) */
+ffa02d5c:	00 e1 20 08 	R0.L = 0x820;		/* (2080)	R0=0xff900820(-7337952) */
+ffa02d60:	ff e3 f8 f6 	CALL 0xffa01b50 <_printf_str>;
+ffa02d64:	00 cc 00 c0 	R0 = R0 -|- R0 || R2 = [P5 + 0x1c] || NOP;
+ffa02d68:	ea a1 00 00 
+ffa02d6c:	f0 b0       	[SP + 0xc] = R0;
+ffa02d6e:	68 e4 14 00 	R0 = W[P5 + 0x28] (Z);
+ffa02d72:	30 b1       	[SP + 0x10] = R0;
+ffa02d74:	68 e4 15 00 	R0 = W[P5 + 0x2a] (Z);
+ffa02d78:	70 b1       	[SP + 0x14] = R0;
+ffa02d7a:	b7 66       	R7 += -0x2a;		/* (-42) */
+ffa02d7c:	4f 30       	R1 = FP;
+ffa02d7e:	f9 67       	R1 += -0x1;		/* ( -1) */
+ffa02d80:	07 30       	R0 = R7;
+ffa02d82:	ff e3 7f ff 	CALL 0xffa02c80 <_icmp_packet_setup>;
+ffa02d86:	08 30       	R1 = R0;
+ffa02d88:	b8 e5 ff ff 	R0 = B[FP + -0x1] (X);
+ffa02d8c:	00 0d       	CC = R0 <= 0x0;
+ffa02d8e:	b0 1b       	IF CC JUMP 0xffa02cee <_icmp_rx+0x12>;
+ffa02d90:	65 6d       	P5 += 0x2c;		/* ( 44) */
+ffa02d92:	45 30       	R0 = P5;
+ffa02d94:	17 30       	R2 = R7;
+ffa02d96:	ff e3 2b f7 	CALL 0xffa01bec <_memcpy_>;
+ffa02d9a:	ff e3 33 fb 	CALL 0xffa02400 <_bfin_EMAC_send_nocopy>;
+ffa02d9e:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
+ffa02da0:	a8 2f       	JUMP.S 0xffa02cf0 <_icmp_rx+0x14>;
+ffa02da2:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900f34 <_NetDestIP> */
+ffa02da6:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa02da8:	0a e1 c4 0c 	P2.L = 0xcc4;		/* (3268)	P2=0xff900cc4 <_g_streamEnabled> */
+ffa02dac:	10 9b       	B[P2] = R0;
+ffa02dae:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
+ffa02db0:	a0 2f       	JUMP.S 0xffa02cf0 <_icmp_rx+0x14>;
 	...
 
-ffa02d74 <_udp_packet_setup>:
-ffa02d74:	ec 05       	[--SP] = (R7:5, P5:4);
-ffa02d76:	00 e8 05 00 	LINK 0x14;		/* (20) */
-ffa02d7a:	29 32       	P5 = R1;
-ffa02d7c:	60 65       	R0 += 0x2c;		/* ( 44) */
-ffa02d7e:	77 30       	R6 = FP;
-ffa02d80:	4c e1 90 ff 	P4.H = 0xff90;		/* (-112)	P4=0xff900eb8 <_txIdx> */
-ffa02d84:	f0 bb       	[FP -0x4] = R0;
-ffa02d86:	3a 30       	R7 = R2;
-ffa02d88:	e6 67       	R6 += -0x4;		/* ( -4) */
-ffa02d8a:	0c e1 f0 0e 	P4.L = 0xef0;		/* (3824)	P4=0xff900ef0 <_NetDataDestIP> */
-ffa02d8e:	82 ce 06 c0 	R0 = ROT R6 BY 0x0 || R2 = [P4] || NOP;
-ffa02d92:	22 91 00 00 
-ffa02d96:	ff e3 f5 fe 	CALL 0xffa02b80 <_eth_header_setup>;
-ffa02d9a:	08 30       	R1 = R0;
-ffa02d9c:	68 99       	R0 = B[P5] (X);
-ffa02d9e:	80 0c       	CC = R0 < 0x0;
-ffa02da0:	22 18       	IF CC JUMP 0xffa02de4 <_udp_packet_setup+0x70>;
-ffa02da2:	88 60       	R0 = 0x11 (X);		/*		R0=0x11( 17) */
-ffa02da4:	f0 b0       	[SP + 0xc] = R0;
-ffa02da6:	01 30       	R0 = R1;
-ffa02da8:	82 ce 06 c2 	R1 = ROT R6 BY 0x0 || R2 = [P4] || NOP;
-ffa02dac:	22 91 00 00 
-ffa02db0:	ff e3 1e fa 	CALL 0xffa021ec <_ip_header_setup>;
-ffa02db4:	10 32       	P2 = R0;
-ffa02db6:	20 e1 10 f5 	R0 = -0xaf0 (X);		/*		R0=0xfffff510(-2800) */
-ffa02dba:	f9 42       	R1 = R7.L (Z);
-ffa02dbc:	41 4e       	R1 >>= 0x8;
-ffa02dbe:	10 97       	W[P2] = R0;
-ffa02dc0:	82 c6 47 80 	R0 = R7 << 0x8;
-ffa02dc4:	08 56       	R0 = R0 | R1;
-ffa02dc6:	50 b4       	W[P2 + 0x2] = R0;
-ffa02dc8:	f0 b9       	R0 = [FP -0x4];
-ffa02dca:	b9 e4 fd ff 	R1 = B[FP + -0x3] (Z);
-ffa02dce:	40 4f       	R0 <<= 0x8;
-ffa02dd0:	08 56       	R0 = R0 | R1;
-ffa02dd2:	90 b4       	W[P2 + 0x4] = R0;
-ffa02dd4:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa02dd6:	d0 b4       	W[P2 + 0x6] = R0;
-ffa02dd8:	42 30       	R0 = P2;
-ffa02dda:	01 e8 00 00 	UNLINK;
-ffa02dde:	40 64       	R0 += 0x8;		/* (  8) */
-ffa02de0:	ac 05       	(R7:5, P5:4) = [SP++];
-ffa02de2:	10 00       	RTS;
-ffa02de4:	01 e8 00 00 	UNLINK;
-ffa02de8:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa02dea:	ac 05       	(R7:5, P5:4) = [SP++];
-ffa02dec:	10 00       	RTS;
+ffa02db4 <_udp_packet_setup>:
+ffa02db4:	ec 05       	[--SP] = (R7:5, P5:4);
+ffa02db6:	00 e8 05 00 	LINK 0x14;		/* (20) */
+ffa02dba:	29 32       	P5 = R1;
+ffa02dbc:	60 65       	R0 += 0x2c;		/* ( 44) */
+ffa02dbe:	77 30       	R6 = FP;
+ffa02dc0:	4c e1 90 ff 	P4.H = 0xff90;		/* (-112)	P4=0xff900f3c <_txIdx> */
+ffa02dc4:	f0 bb       	[FP -0x4] = R0;
+ffa02dc6:	3a 30       	R7 = R2;
+ffa02dc8:	e6 67       	R6 += -0x4;		/* ( -4) */
+ffa02dca:	0c e1 74 0f 	P4.L = 0xf74;		/* (3956)	P4=0xff900f74 <_NetDataDestIP> */
+ffa02dce:	82 ce 06 c0 	R0 = ROT R6 BY 0x0 || R2 = [P4] || NOP;
+ffa02dd2:	22 91 00 00 
+ffa02dd6:	ff e3 f5 fe 	CALL 0xffa02bc0 <_eth_header_setup>;
+ffa02dda:	08 30       	R1 = R0;
+ffa02ddc:	68 99       	R0 = B[P5] (X);
+ffa02dde:	80 0c       	CC = R0 < 0x0;
+ffa02de0:	22 18       	IF CC JUMP 0xffa02e24 <_udp_packet_setup+0x70>;
+ffa02de2:	88 60       	R0 = 0x11 (X);		/*		R0=0x11( 17) */
+ffa02de4:	f0 b0       	[SP + 0xc] = R0;
+ffa02de6:	01 30       	R0 = R1;
+ffa02de8:	82 ce 06 c2 	R1 = ROT R6 BY 0x0 || R2 = [P4] || NOP;
+ffa02dec:	22 91 00 00 
+ffa02df0:	ff e3 1e fa 	CALL 0xffa0222c <_ip_header_setup>;
+ffa02df4:	10 32       	P2 = R0;
+ffa02df6:	20 e1 10 f5 	R0 = -0xaf0 (X);		/*		R0=0xfffff510(-2800) */
+ffa02dfa:	f9 42       	R1 = R7.L (Z);
+ffa02dfc:	41 4e       	R1 >>= 0x8;
+ffa02dfe:	10 97       	W[P2] = R0;
+ffa02e00:	82 c6 47 80 	R0 = R7 << 0x8;
+ffa02e04:	08 56       	R0 = R0 | R1;
+ffa02e06:	50 b4       	W[P2 + 0x2] = R0;
+ffa02e08:	f0 b9       	R0 = [FP -0x4];
+ffa02e0a:	b9 e4 fd ff 	R1 = B[FP + -0x3] (Z);
+ffa02e0e:	40 4f       	R0 <<= 0x8;
+ffa02e10:	08 56       	R0 = R0 | R1;
+ffa02e12:	90 b4       	W[P2 + 0x4] = R0;
+ffa02e14:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa02e16:	d0 b4       	W[P2 + 0x6] = R0;
+ffa02e18:	42 30       	R0 = P2;
+ffa02e1a:	01 e8 00 00 	UNLINK;
+ffa02e1e:	40 64       	R0 += 0x8;		/* (  8) */
+ffa02e20:	ac 05       	(R7:5, P5:4) = [SP++];
+ffa02e22:	10 00       	RTS;
+ffa02e24:	01 e8 00 00 	UNLINK;
+ffa02e28:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa02e2a:	ac 05       	(R7:5, P5:4) = [SP++];
+ffa02e2c:	10 00       	RTS;
 	...
 
-ffa02df0 <_SetupTxBuffer>:
-ffa02df0:	fd 05       	[--SP] = (R7:7, P5:5);
-ffa02df2:	38 30       	R7 = R0;
-ffa02df4:	20 e1 3c 06 	R0 = 0x63c (X);		/*		R0=0x63c(1596) */
-ffa02df8:	c7 40       	R7 *= R0;
-ffa02dfa:	17 32       	P2 = R7;
-ffa02dfc:	4d e1 80 ff 	P5.H = 0xff80;		/* (-128)	P5=0xff800ebc */
-ffa02e00:	40 e1 80 ff 	R0.H = 0xff80;		/* (-128)	R0=0xff80063c(-8387012) */
-ffa02e04:	00 e1 2c 30 	R0.L = 0x302c;		/* (12332)	R0=0xff80302c(-8376276) */
-ffa02e08:	0d e1 00 30 	P5.L = 0x3000;		/* (12288)	P5=0xff803000 */
-ffa02e0c:	6a 5b       	P5 = P2 + P5;
-ffa02e0e:	c7 51       	R7 = R7 + R0;
-ffa02e10:	00 e8 03 00 	LINK 0xc;		/* (12) */
-ffa02e14:	45 30       	R0 = P5;
-ffa02e16:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
-ffa02e18:	62 61       	R2 = 0x2c (X);		/*		R2=0x2c( 44) */
-ffa02e1a:	ff e3 d9 f6 	CALL 0xffa01bcc <_memset_>;
-ffa02e1e:	82 ce 07 c0 	R0 = ROT R7 BY 0x0 || [P5 + 0x18] = R7 || NOP;
-ffa02e22:	af b1 00 00 
-ffa02e26:	21 e1 aa 00 	R1 = 0xaa (X);		/*		R1=0xaa(170) */
-ffa02e2a:	22 e1 10 06 	R2 = 0x610 (X);		/*		R2=0x610(1552) */
-ffa02e2e:	ff e3 cf f6 	CALL 0xffa01bcc <_memset_>;
-ffa02e32:	45 30       	R0 = P5;
-ffa02e34:	60 64       	R0 += 0xc;		/* ( 12) */
-ffa02e36:	28 93       	[P5] = R0;
-ffa02e38:	a8 a1       	R0 = [P5 + 0x18];
-ffa02e3a:	68 b0       	[P5 + 0x4] = R0;
-ffa02e3c:	a8 e5 08 00 	R0 = B[P5 + 0x8] (X);
-ffa02e40:	00 4a       	BITSET (R0, 0x0);		/* bit  0 */
-ffa02e42:	9a 63       	R2 = -0xd (X);		/*		R2=0xfffffff3(-13) */
-ffa02e44:	08 4c       	BITCLR (R0, 0x1);		/* bit  1 */
-ffa02e46:	10 54       	R0 = R0 & R2;
-ffa02e48:	18 4a       	BITSET (R0, 0x3);		/* bit  3 */
-ffa02e4a:	a8 e6 08 00 	B[P5 + 0x8] = R0;
-ffa02e4e:	a8 e5 09 00 	R0 = B[P5 + 0x9] (X);
-ffa02e52:	83 63       	R3 = -0x10 (X);		/*		R3=0xfffffff0(-16) */
-ffa02e54:	29 60       	R1 = 0x5 (X);		/*		R1=0x5(  5) */
-ffa02e56:	18 54       	R0 = R0 & R3;
-ffa02e58:	08 56       	R0 = R0 | R1;
-ffa02e5a:	21 e1 70 00 	R1 = 0x70 (X);		/*		R1=0x70(112) */
-ffa02e5e:	08 56       	R0 = R0 | R1;
-ffa02e60:	a8 e6 09 00 	B[P5 + 0x9] = R0;
-ffa02e64:	45 30       	R0 = P5;
-ffa02e66:	40 65       	R0 += 0x28;		/* ( 40) */
-ffa02e68:	28 b1       	[P5 + 0x10] = R0;
-ffa02e6a:	a8 e5 14 00 	R0 = B[P5 + 0x14] (X);
-ffa02e6e:	00 4a       	BITSET (R0, 0x0);		/* bit  0 */
-ffa02e70:	08 4a       	BITSET (R0, 0x1);		/* bit  1 */
-ffa02e72:	21 e1 88 ff 	R1 = -0x78 (X);		/*		R1=0xffffff88(-120) */
-ffa02e76:	10 54       	R0 = R0 & R2;
-ffa02e78:	08 56       	R0 = R0 | R1;
-ffa02e7a:	a8 e6 14 00 	B[P5 + 0x14] = R0;
-ffa02e7e:	a8 e5 15 00 	R0 = B[P5 + 0x15] (X);
-ffa02e82:	18 54       	R0 = R0 & R3;
-ffa02e84:	39 64       	R1 += 0x7;		/* (  7) */
-ffa02e86:	08 54       	R0 = R0 & R1;
-ffa02e88:	a8 e6 15 00 	B[P5 + 0x15] = R0;
-ffa02e8c:	ed bc       	[P5 + 0xc] = P5;
-ffa02e8e:	45 30       	R0 = P5;
-ffa02e90:	01 e8 00 00 	UNLINK;
-ffa02e94:	bd 05       	(R7:7, P5:5) = [SP++];
-ffa02e96:	10 00       	RTS;
+ffa02e30 <_SetupTxBuffer>:
+ffa02e30:	fd 05       	[--SP] = (R7:7, P5:5);
+ffa02e32:	38 30       	R7 = R0;
+ffa02e34:	20 e1 3c 06 	R0 = 0x63c (X);		/*		R0=0x63c(1596) */
+ffa02e38:	c7 40       	R7 *= R0;
+ffa02e3a:	17 32       	P2 = R7;
+ffa02e3c:	4d e1 80 ff 	P5.H = 0xff80;		/* (-128)	P5=0xff800f40 */
+ffa02e40:	40 e1 80 ff 	R0.H = 0xff80;		/* (-128)	R0=0xff80063c(-8387012) */
+ffa02e44:	00 e1 2c 30 	R0.L = 0x302c;		/* (12332)	R0=0xff80302c(-8376276) */
+ffa02e48:	0d e1 00 30 	P5.L = 0x3000;		/* (12288)	P5=0xff803000 */
+ffa02e4c:	6a 5b       	P5 = P2 + P5;
+ffa02e4e:	c7 51       	R7 = R7 + R0;
+ffa02e50:	00 e8 03 00 	LINK 0xc;		/* (12) */
+ffa02e54:	45 30       	R0 = P5;
+ffa02e56:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
+ffa02e58:	62 61       	R2 = 0x2c (X);		/*		R2=0x2c( 44) */
+ffa02e5a:	ff e3 d9 f6 	CALL 0xffa01c0c <_memset_>;
+ffa02e5e:	82 ce 07 c0 	R0 = ROT R7 BY 0x0 || [P5 + 0x18] = R7 || NOP;
+ffa02e62:	af b1 00 00 
+ffa02e66:	21 e1 aa 00 	R1 = 0xaa (X);		/*		R1=0xaa(170) */
+ffa02e6a:	22 e1 10 06 	R2 = 0x610 (X);		/*		R2=0x610(1552) */
+ffa02e6e:	ff e3 cf f6 	CALL 0xffa01c0c <_memset_>;
+ffa02e72:	45 30       	R0 = P5;
+ffa02e74:	60 64       	R0 += 0xc;		/* ( 12) */
+ffa02e76:	28 93       	[P5] = R0;
+ffa02e78:	a8 a1       	R0 = [P5 + 0x18];
+ffa02e7a:	68 b0       	[P5 + 0x4] = R0;
+ffa02e7c:	a8 e5 08 00 	R0 = B[P5 + 0x8] (X);
+ffa02e80:	00 4a       	BITSET (R0, 0x0);		/* bit  0 */
+ffa02e82:	9a 63       	R2 = -0xd (X);		/*		R2=0xfffffff3(-13) */
+ffa02e84:	08 4c       	BITCLR (R0, 0x1);		/* bit  1 */
+ffa02e86:	10 54       	R0 = R0 & R2;
+ffa02e88:	18 4a       	BITSET (R0, 0x3);		/* bit  3 */
+ffa02e8a:	a8 e6 08 00 	B[P5 + 0x8] = R0;
+ffa02e8e:	a8 e5 09 00 	R0 = B[P5 + 0x9] (X);
+ffa02e92:	83 63       	R3 = -0x10 (X);		/*		R3=0xfffffff0(-16) */
+ffa02e94:	29 60       	R1 = 0x5 (X);		/*		R1=0x5(  5) */
+ffa02e96:	18 54       	R0 = R0 & R3;
+ffa02e98:	08 56       	R0 = R0 | R1;
+ffa02e9a:	21 e1 70 00 	R1 = 0x70 (X);		/*		R1=0x70(112) */
+ffa02e9e:	08 56       	R0 = R0 | R1;
+ffa02ea0:	a8 e6 09 00 	B[P5 + 0x9] = R0;
+ffa02ea4:	45 30       	R0 = P5;
+ffa02ea6:	40 65       	R0 += 0x28;		/* ( 40) */
+ffa02ea8:	28 b1       	[P5 + 0x10] = R0;
+ffa02eaa:	a8 e5 14 00 	R0 = B[P5 + 0x14] (X);
+ffa02eae:	00 4a       	BITSET (R0, 0x0);		/* bit  0 */
+ffa02eb0:	08 4a       	BITSET (R0, 0x1);		/* bit  1 */
+ffa02eb2:	21 e1 88 ff 	R1 = -0x78 (X);		/*		R1=0xffffff88(-120) */
+ffa02eb6:	10 54       	R0 = R0 & R2;
+ffa02eb8:	08 56       	R0 = R0 | R1;
+ffa02eba:	a8 e6 14 00 	B[P5 + 0x14] = R0;
+ffa02ebe:	a8 e5 15 00 	R0 = B[P5 + 0x15] (X);
+ffa02ec2:	18 54       	R0 = R0 & R3;
+ffa02ec4:	39 64       	R1 += 0x7;		/* (  7) */
+ffa02ec6:	08 54       	R0 = R0 & R1;
+ffa02ec8:	a8 e6 15 00 	B[P5 + 0x15] = R0;
+ffa02ecc:	ed bc       	[P5 + 0xc] = P5;
+ffa02ece:	45 30       	R0 = P5;
+ffa02ed0:	01 e8 00 00 	UNLINK;
+ffa02ed4:	bd 05       	(R7:7, P5:5) = [SP++];
+ffa02ed6:	10 00       	RTS;
 
-ffa02e98 <_SetupRxBuffer>:
-ffa02e98:	fd 05       	[--SP] = (R7:7, P5:5);
-ffa02e9a:	38 30       	R7 = R0;
-ffa02e9c:	20 e1 3c 06 	R0 = 0x63c (X);		/*		R0=0x63c(1596) */
-ffa02ea0:	c7 40       	R7 *= R0;
-ffa02ea2:	17 32       	P2 = R7;
-ffa02ea4:	4d e1 80 ff 	P5.H = 0xff80;		/* (-128)	P5=0xff803000 */
-ffa02ea8:	40 e1 80 ff 	R0.H = 0xff80;		/* (-128)	R0=0xff80063c(-8387012) */
-ffa02eac:	00 e1 2c 10 	R0.L = 0x102c;		/* (4140)	R0=0xff80102c(-8384468) */
-ffa02eb0:	0d e1 00 10 	P5.L = 0x1000;		/* (4096)	P5=0xff801000 */
-ffa02eb4:	6a 5b       	P5 = P2 + P5;
-ffa02eb6:	c7 51       	R7 = R7 + R0;
-ffa02eb8:	00 e8 03 00 	LINK 0xc;		/* (12) */
-ffa02ebc:	45 30       	R0 = P5;
-ffa02ebe:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
-ffa02ec0:	62 61       	R2 = 0x2c (X);		/*		R2=0x2c( 44) */
-ffa02ec2:	ff e3 85 f6 	CALL 0xffa01bcc <_memset_>;
-ffa02ec6:	af b1       	[P5 + 0x18] = R7;
-ffa02ec8:	07 30       	R0 = R7;
-ffa02eca:	21 e1 fe 00 	R1 = 0xfe (X);		/*		R1=0xfe(254) */
-ffa02ece:	22 e1 10 06 	R2 = 0x610 (X);		/*		R2=0x610(1552) */
-ffa02ed2:	ff e3 7d f6 	CALL 0xffa01bcc <_memset_>;
-ffa02ed6:	45 30       	R0 = P5;
-ffa02ed8:	60 64       	R0 += 0xc;		/* ( 12) */
-ffa02eda:	28 93       	[P5] = R0;
-ffa02edc:	a8 a1       	R0 = [P5 + 0x18];
-ffa02ede:	68 b0       	[P5 + 0x4] = R0;
-ffa02ee0:	a8 e5 08 00 	R0 = B[P5 + 0x8] (X);
-ffa02ee4:	00 4a       	BITSET (R0, 0x0);		/* bit  0 */
-ffa02ee6:	99 63       	R1 = -0xd (X);		/*		R1=0xfffffff3(-13) */
-ffa02ee8:	08 4a       	BITSET (R0, 0x1);		/* bit  1 */
-ffa02eea:	08 54       	R0 = R0 & R1;
-ffa02eec:	18 4a       	BITSET (R0, 0x3);		/* bit  3 */
-ffa02eee:	a8 e6 08 00 	B[P5 + 0x8] = R0;
-ffa02ef2:	a8 e5 09 00 	R0 = B[P5 + 0x9] (X);
-ffa02ef6:	87 63       	R7 = -0x10 (X);		/*		R7=0xfffffff0(-16) */
-ffa02ef8:	38 54       	R0 = R0 & R7;
-ffa02efa:	2b 60       	R3 = 0x5 (X);		/*		R3=0x5(  5) */
-ffa02efc:	22 e1 70 00 	R2 = 0x70 (X);		/*		R2=0x70(112) */
-ffa02f00:	18 56       	R0 = R0 | R3;
-ffa02f02:	10 56       	R0 = R0 | R2;
-ffa02f04:	a8 e6 09 00 	B[P5 + 0x9] = R0;
-ffa02f08:	45 30       	R0 = P5;
-ffa02f0a:	20 65       	R0 += 0x24;		/* ( 36) */
-ffa02f0c:	28 b1       	[P5 + 0x10] = R0;
-ffa02f0e:	a8 e5 14 00 	R0 = B[P5 + 0x14] (X);
-ffa02f12:	00 4a       	BITSET (R0, 0x0);		/* bit  0 */
-ffa02f14:	08 4a       	BITSET (R0, 0x1);		/* bit  1 */
-ffa02f16:	08 54       	R0 = R0 & R1;
-ffa02f18:	21 e1 88 ff 	R1 = -0x78 (X);		/*		R1=0xffffff88(-120) */
-ffa02f1c:	08 56       	R0 = R0 | R1;
-ffa02f1e:	a8 e6 14 00 	B[P5 + 0x14] = R0;
-ffa02f22:	a8 e5 15 00 	R0 = B[P5 + 0x15] (X);
-ffa02f26:	38 54       	R0 = R0 & R7;
-ffa02f28:	18 56       	R0 = R0 | R3;
-ffa02f2a:	10 56       	R0 = R0 | R2;
-ffa02f2c:	a8 e6 15 00 	B[P5 + 0x15] = R0;
-ffa02f30:	ed bc       	[P5 + 0xc] = P5;
-ffa02f32:	45 30       	R0 = P5;
-ffa02f34:	01 e8 00 00 	UNLINK;
-ffa02f38:	bd 05       	(R7:7, P5:5) = [SP++];
-ffa02f3a:	10 00       	RTS;
+ffa02ed8 <_SetupRxBuffer>:
+ffa02ed8:	fd 05       	[--SP] = (R7:7, P5:5);
+ffa02eda:	38 30       	R7 = R0;
+ffa02edc:	20 e1 3c 06 	R0 = 0x63c (X);		/*		R0=0x63c(1596) */
+ffa02ee0:	c7 40       	R7 *= R0;
+ffa02ee2:	17 32       	P2 = R7;
+ffa02ee4:	4d e1 80 ff 	P5.H = 0xff80;		/* (-128)	P5=0xff803000 */
+ffa02ee8:	40 e1 80 ff 	R0.H = 0xff80;		/* (-128)	R0=0xff80063c(-8387012) */
+ffa02eec:	00 e1 2c 10 	R0.L = 0x102c;		/* (4140)	R0=0xff80102c(-8384468) */
+ffa02ef0:	0d e1 00 10 	P5.L = 0x1000;		/* (4096)	P5=0xff801000 */
+ffa02ef4:	6a 5b       	P5 = P2 + P5;
+ffa02ef6:	c7 51       	R7 = R7 + R0;
+ffa02ef8:	00 e8 03 00 	LINK 0xc;		/* (12) */
+ffa02efc:	45 30       	R0 = P5;
+ffa02efe:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
+ffa02f00:	62 61       	R2 = 0x2c (X);		/*		R2=0x2c( 44) */
+ffa02f02:	ff e3 85 f6 	CALL 0xffa01c0c <_memset_>;
+ffa02f06:	af b1       	[P5 + 0x18] = R7;
+ffa02f08:	07 30       	R0 = R7;
+ffa02f0a:	21 e1 fe 00 	R1 = 0xfe (X);		/*		R1=0xfe(254) */
+ffa02f0e:	22 e1 10 06 	R2 = 0x610 (X);		/*		R2=0x610(1552) */
+ffa02f12:	ff e3 7d f6 	CALL 0xffa01c0c <_memset_>;
+ffa02f16:	45 30       	R0 = P5;
+ffa02f18:	60 64       	R0 += 0xc;		/* ( 12) */
+ffa02f1a:	28 93       	[P5] = R0;
+ffa02f1c:	a8 a1       	R0 = [P5 + 0x18];
+ffa02f1e:	68 b0       	[P5 + 0x4] = R0;
+ffa02f20:	a8 e5 08 00 	R0 = B[P5 + 0x8] (X);
+ffa02f24:	00 4a       	BITSET (R0, 0x0);		/* bit  0 */
+ffa02f26:	99 63       	R1 = -0xd (X);		/*		R1=0xfffffff3(-13) */
+ffa02f28:	08 4a       	BITSET (R0, 0x1);		/* bit  1 */
+ffa02f2a:	08 54       	R0 = R0 & R1;
+ffa02f2c:	18 4a       	BITSET (R0, 0x3);		/* bit  3 */
+ffa02f2e:	a8 e6 08 00 	B[P5 + 0x8] = R0;
+ffa02f32:	a8 e5 09 00 	R0 = B[P5 + 0x9] (X);
+ffa02f36:	87 63       	R7 = -0x10 (X);		/*		R7=0xfffffff0(-16) */
+ffa02f38:	38 54       	R0 = R0 & R7;
+ffa02f3a:	2b 60       	R3 = 0x5 (X);		/*		R3=0x5(  5) */
+ffa02f3c:	22 e1 70 00 	R2 = 0x70 (X);		/*		R2=0x70(112) */
+ffa02f40:	18 56       	R0 = R0 | R3;
+ffa02f42:	10 56       	R0 = R0 | R2;
+ffa02f44:	a8 e6 09 00 	B[P5 + 0x9] = R0;
+ffa02f48:	45 30       	R0 = P5;
+ffa02f4a:	20 65       	R0 += 0x24;		/* ( 36) */
+ffa02f4c:	28 b1       	[P5 + 0x10] = R0;
+ffa02f4e:	a8 e5 14 00 	R0 = B[P5 + 0x14] (X);
+ffa02f52:	00 4a       	BITSET (R0, 0x0);		/* bit  0 */
+ffa02f54:	08 4a       	BITSET (R0, 0x1);		/* bit  1 */
+ffa02f56:	08 54       	R0 = R0 & R1;
+ffa02f58:	21 e1 88 ff 	R1 = -0x78 (X);		/*		R1=0xffffff88(-120) */
+ffa02f5c:	08 56       	R0 = R0 | R1;
+ffa02f5e:	a8 e6 14 00 	B[P5 + 0x14] = R0;
+ffa02f62:	a8 e5 15 00 	R0 = B[P5 + 0x15] (X);
+ffa02f66:	38 54       	R0 = R0 & R7;
+ffa02f68:	18 56       	R0 = R0 | R3;
+ffa02f6a:	10 56       	R0 = R0 | R2;
+ffa02f6c:	a8 e6 15 00 	B[P5 + 0x15] = R0;
+ffa02f70:	ed bc       	[P5 + 0xc] = P5;
+ffa02f72:	45 30       	R0 = P5;
+ffa02f74:	01 e8 00 00 	UNLINK;
+ffa02f78:	bd 05       	(R7:7, P5:5) = [SP++];
+ffa02f7a:	10 00       	RTS;
 
-ffa02f3c <_SetupSystemRegs>:
-ffa02f3c:	f5 05       	[--SP] = (R7:6, P5:5);
-ffa02f3e:	28 32       	P5 = R0;
-ffa02f40:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff90102c(-7335892) */
-ffa02f44:	00 e8 03 00 	LINK 0xc;		/* (12) */
-ffa02f48:	00 e1 78 02 	R0.L = 0x278;		/* (632)	R0=0xff900278(-7339400) */
-ffa02f4c:	ff e3 e2 f5 	CALL 0xffa01b10 <_printf_str>;
-ffa02f50:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00c40(-4191168) */
-ffa02f54:	0a e1 14 32 	P2.L = 0x3214;		/* (12820)	P2=0xffc03214(-4181484) */
-ffa02f58:	11 95       	R1 = W[P2] (Z);
-ffa02f5a:	20 e1 ff cf 	R0 = -0x3001 (X);		/*		R0=0xffffcfff(-12289) */
-ffa02f5e:	08 54       	R0 = R0 & R1;
-ffa02f60:	10 97       	W[P2] = R0;
-ffa02f62:	10 95       	R0 = W[P2] (Z);
-ffa02f64:	60 4a       	BITSET (R0, 0xc);		/* bit 12 */
-ffa02f66:	10 97       	W[P2] = R0;
-ffa02f68:	82 6f       	P2 += -0x10;		/* (-16) */
-ffa02f6a:	11 95       	R1 = W[P2] (Z);
-ffa02f6c:	20 e1 00 c0 	R0 = -0x4000 (X);		/*		R0=0xffffc000(-16384) */
-ffa02f70:	08 56       	R0 = R0 | R1;
-ffa02f72:	10 97       	W[P2] = R0;
-ffa02f74:	f8 63       	R0 = -0x1 (X);		/*		R0=0xffffffff( -1) */
-ffa02f76:	22 6c       	P2 += 0x4;		/* (  4) */
-ffa02f78:	10 97       	W[P2] = R0;
-ffa02f7a:	a8 60       	R0 = 0x15 (X);		/*		R0=0x15( 21) */
-ffa02f7c:	82 6c       	P2 += 0x10;		/* ( 16) */
-ffa02f7e:	10 97       	W[P2] = R0;
-ffa02f80:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc03214(-4181484) */
-ffa02f84:	0a e1 08 00 	P2.L = 0x8;		/* (  8)	P2=0xffc00008(-4194296) */
-ffa02f88:	10 95       	R0 = W[P2] (Z);
-ffa02f8a:	70 4a       	BITSET (R0, 0xe);		/* bit 14 */
-ffa02f8c:	10 97       	W[P2] = R0;
-ffa02f8e:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00008(-4194296) */
-ffa02f92:	20 e1 06 18 	R0 = 0x1806 (X);		/*		R0=0x1806(6150) */
-ffa02f96:	0a e1 60 30 	P2.L = 0x3060;		/* (12384)	P2=0xffc03060(-4181920) */
-ffa02f9a:	10 93       	[P2] = R0;
-ffa02f9c:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc03060(-4181920) */
-ffa02fa0:	0a e1 14 30 	P2.L = 0x3014;		/* (12308)	P2=0xffc03014(-4181996) */
-ffa02fa4:	10 91       	R0 = [P2];
-ffa02fa6:	00 48       	CC = !BITTST (R0, 0x0);		/* bit  0 */
-ffa02fa8:	09 18       	IF CC JUMP 0xffa02fba <_SetupSystemRegs+0x7e>;
-ffa02faa:	00 00       	NOP;
-ffa02fac:	00 00       	NOP;
-ffa02fae:	42 34       	I0 = P2;
-ffa02fb0:	00 00       	NOP;
-ffa02fb2:	00 00       	NOP;
-ffa02fb4:	00 9d       	R0 = [I0];
-ffa02fb6:	00 48       	CC = !BITTST (R0, 0x0);		/* bit  0 */
-ffa02fb8:	fc 17       	IF !CC JUMP 0xffa02fb0 <_SetupSystemRegs+0x74> (BP);
-ffa02fba:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc03014(-4181996) */
-ffa02fbe:	20 e1 00 31 	R0 = 0x3100 (X);		/*		R0=0x3100(12544) */
-ffa02fc2:	0a e1 18 30 	P2.L = 0x3018;		/* (12312)	P2=0xffc03018(-4181992) */
-ffa02fc6:	10 93       	[P2] = R0;
-ffa02fc8:	e2 6f       	P2 += -0x4;		/* ( -4) */
-ffa02fca:	18 60       	R0 = 0x3 (X);		/*		R0=0x3(  3) */
-ffa02fcc:	10 93       	[P2] = R0;
-ffa02fce:	20 e1 e8 03 	R0 = 0x3e8 (X);		/*		R0=0x3e8(1000) */
-ffa02fd2:	ff e3 cd f7 	CALL 0xffa01f6c <_udelay>;
-ffa02fd6:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa02fd8:	09 60       	R1 = 0x1 (X);		/*		R1=0x1(  1) */
-ffa02fda:	ff e3 4f f8 	CALL 0xffa02078 <_RdPHYReg>;
-ffa02fde:	07 60       	R7 = 0x0 (X);		/*		R7=0x0(  0) */
-ffa02fe0:	26 60       	R6 = 0x4 (X);		/*		R6=0x4(  4) */
-ffa02fe2:	0e 20       	JUMP.S 0xffa02ffe <_SetupSystemRegs+0xc2>;
-ffa02fe4:	20 e1 e8 03 	R0 = 0x3e8 (X);		/*		R0=0x3e8(1000) */
-ffa02fe8:	ff e3 c2 f7 	CALL 0xffa01f6c <_udelay>;
-ffa02fec:	09 60       	R1 = 0x1 (X);		/*		R1=0x1(  1) */
-ffa02fee:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa02ff0:	ff e3 44 f8 	CALL 0xffa02078 <_RdPHYReg>;
-ffa02ff4:	0f 64       	R7 += 0x1;		/* (  1) */
-ffa02ff6:	21 e1 b9 0b 	R1 = 0xbb9 (X);		/*		R1=0xbb9(3001) */
-ffa02ffa:	0f 08       	CC = R7 == R1;
-ffa02ffc:	36 18       	IF CC JUMP 0xffa03068 <_SetupSystemRegs+0x12c>;
-ffa02ffe:	06 54       	R0 = R6 & R0;
-ffa03000:	00 0c       	CC = R0 == 0x0;
-ffa03002:	f1 1f       	IF CC JUMP 0xffa02fe4 <_SetupSystemRegs+0xa8> (BP);
-ffa03004:	29 60       	R1 = 0x5 (X);		/*		R1=0x5(  5) */
-ffa03006:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa03008:	ff e3 38 f8 	CALL 0xffa02078 <_RdPHYReg>;
-ffa0300c:	21 e1 40 01 	R1 = 0x140 (X);		/*		R1=0x140(320) */
-ffa03010:	41 54       	R1 = R1 & R0;
-ffa03012:	01 0c       	CC = R1 == 0x0;
-ffa03014:	26 14       	IF !CC JUMP 0xffa03060 <_SetupSystemRegs+0x124> (BP);
+ffa02f7c <_SetupSystemRegs>:
+ffa02f7c:	f5 05       	[--SP] = (R7:6, P5:5);
+ffa02f7e:	28 32       	P5 = R0;
+ffa02f80:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff90102c(-7335892) */
+ffa02f84:	00 e8 03 00 	LINK 0xc;		/* (12) */
+ffa02f88:	00 e1 ac 02 	R0.L = 0x2ac;		/* (684)	R0=0xff9002ac(-7339348) */
+ffa02f8c:	ff e3 e2 f5 	CALL 0xffa01b50 <_printf_str>;
+ffa02f90:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00cc4(-4191036) */
+ffa02f94:	0a e1 14 32 	P2.L = 0x3214;		/* (12820)	P2=0xffc03214(-4181484) */
+ffa02f98:	11 95       	R1 = W[P2] (Z);
+ffa02f9a:	20 e1 ff cf 	R0 = -0x3001 (X);		/*		R0=0xffffcfff(-12289) */
+ffa02f9e:	08 54       	R0 = R0 & R1;
+ffa02fa0:	10 97       	W[P2] = R0;
+ffa02fa2:	10 95       	R0 = W[P2] (Z);
+ffa02fa4:	60 4a       	BITSET (R0, 0xc);		/* bit 12 */
+ffa02fa6:	10 97       	W[P2] = R0;
+ffa02fa8:	82 6f       	P2 += -0x10;		/* (-16) */
+ffa02faa:	11 95       	R1 = W[P2] (Z);
+ffa02fac:	20 e1 00 c0 	R0 = -0x4000 (X);		/*		R0=0xffffc000(-16384) */
+ffa02fb0:	08 56       	R0 = R0 | R1;
+ffa02fb2:	10 97       	W[P2] = R0;
+ffa02fb4:	f8 63       	R0 = -0x1 (X);		/*		R0=0xffffffff( -1) */
+ffa02fb6:	22 6c       	P2 += 0x4;		/* (  4) */
+ffa02fb8:	10 97       	W[P2] = R0;
+ffa02fba:	a8 60       	R0 = 0x15 (X);		/*		R0=0x15( 21) */
+ffa02fbc:	82 6c       	P2 += 0x10;		/* ( 16) */
+ffa02fbe:	10 97       	W[P2] = R0;
+ffa02fc0:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc03214(-4181484) */
+ffa02fc4:	0a e1 08 00 	P2.L = 0x8;		/* (  8)	P2=0xffc00008(-4194296) */
+ffa02fc8:	10 95       	R0 = W[P2] (Z);
+ffa02fca:	70 4a       	BITSET (R0, 0xe);		/* bit 14 */
+ffa02fcc:	10 97       	W[P2] = R0;
+ffa02fce:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00008(-4194296) */
+ffa02fd2:	20 e1 06 18 	R0 = 0x1806 (X);		/*		R0=0x1806(6150) */
+ffa02fd6:	0a e1 60 30 	P2.L = 0x3060;		/* (12384)	P2=0xffc03060(-4181920) */
+ffa02fda:	10 93       	[P2] = R0;
+ffa02fdc:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc03060(-4181920) */
+ffa02fe0:	0a e1 14 30 	P2.L = 0x3014;		/* (12308)	P2=0xffc03014(-4181996) */
+ffa02fe4:	10 91       	R0 = [P2];
+ffa02fe6:	00 48       	CC = !BITTST (R0, 0x0);		/* bit  0 */
+ffa02fe8:	09 18       	IF CC JUMP 0xffa02ffa <_SetupSystemRegs+0x7e>;
+ffa02fea:	00 00       	NOP;
+ffa02fec:	00 00       	NOP;
+ffa02fee:	42 34       	I0 = P2;
+ffa02ff0:	00 00       	NOP;
+ffa02ff2:	00 00       	NOP;
+ffa02ff4:	00 9d       	R0 = [I0];
+ffa02ff6:	00 48       	CC = !BITTST (R0, 0x0);		/* bit  0 */
+ffa02ff8:	fc 17       	IF !CC JUMP 0xffa02ff0 <_SetupSystemRegs+0x74> (BP);
+ffa02ffa:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc03014(-4181996) */
+ffa02ffe:	20 e1 00 31 	R0 = 0x3100 (X);		/*		R0=0x3100(12544) */
+ffa03002:	0a e1 18 30 	P2.L = 0x3018;		/* (12312)	P2=0xffc03018(-4181992) */
+ffa03006:	10 93       	[P2] = R0;
+ffa03008:	e2 6f       	P2 += -0x4;		/* ( -4) */
+ffa0300a:	18 60       	R0 = 0x3 (X);		/*		R0=0x3(  3) */
+ffa0300c:	10 93       	[P2] = R0;
+ffa0300e:	20 e1 e8 03 	R0 = 0x3e8 (X);		/*		R0=0x3e8(1000) */
+ffa03012:	ff e3 cd f7 	CALL 0xffa01fac <_udelay>;
 ffa03016:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa03018:	28 93       	[P5] = R0;
-ffa0301a:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc03018(-4181992) */
-ffa0301e:	18 60       	R0 = 0x3 (X);		/*		R0=0x3(  3) */
-ffa03020:	0a e1 80 30 	P2.L = 0x3080;		/* (12416)	P2=0xffc03080(-4181888) */
-ffa03024:	10 93       	[P2] = R0;
-ffa03026:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc03080(-4181888) */
-ffa0302a:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa0302c:	0a e1 90 0c 	P2.L = 0xc90;		/* (3216)	P2=0xffc00c90(-4191088) */
-ffa03030:	10 97       	W[P2] = R0;
-ffa03032:	21 60       	R1 = 0x4 (X);		/*		R1=0x4(  4) */
-ffa03034:	22 6c       	P2 += 0x4;		/* (  4) */
-ffa03036:	11 97       	W[P2] = R1;
-ffa03038:	22 6c       	P2 += 0x4;		/* (  4) */
-ffa0303a:	10 97       	W[P2] = R0;
-ffa0303c:	22 6c       	P2 += 0x4;		/* (  4) */
-ffa0303e:	10 97       	W[P2] = R0;
-ffa03040:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00c90(-4191088) */
-ffa03044:	0a e1 50 0c 	P2.L = 0xc50;		/* (3152)	P2=0xffc00c50(-4191152) */
-ffa03048:	10 97       	W[P2] = R0;
-ffa0304a:	22 6c       	P2 += 0x4;		/* (  4) */
-ffa0304c:	11 97       	W[P2] = R1;
-ffa0304e:	22 6c       	P2 += 0x4;		/* (  4) */
-ffa03050:	10 97       	W[P2] = R0;
-ffa03052:	22 6c       	P2 += 0x4;		/* (  4) */
-ffa03054:	10 97       	W[P2] = R0;
+ffa03018:	09 60       	R1 = 0x1 (X);		/*		R1=0x1(  1) */
+ffa0301a:	ff e3 4f f8 	CALL 0xffa020b8 <_RdPHYReg>;
+ffa0301e:	07 60       	R7 = 0x0 (X);		/*		R7=0x0(  0) */
+ffa03020:	26 60       	R6 = 0x4 (X);		/*		R6=0x4(  4) */
+ffa03022:	0e 20       	JUMP.S 0xffa0303e <_SetupSystemRegs+0xc2>;
+ffa03024:	20 e1 e8 03 	R0 = 0x3e8 (X);		/*		R0=0x3e8(1000) */
+ffa03028:	ff e3 c2 f7 	CALL 0xffa01fac <_udelay>;
+ffa0302c:	09 60       	R1 = 0x1 (X);		/*		R1=0x1(  1) */
+ffa0302e:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa03030:	ff e3 44 f8 	CALL 0xffa020b8 <_RdPHYReg>;
+ffa03034:	0f 64       	R7 += 0x1;		/* (  1) */
+ffa03036:	21 e1 b9 0b 	R1 = 0xbb9 (X);		/*		R1=0xbb9(3001) */
+ffa0303a:	0f 08       	CC = R7 == R1;
+ffa0303c:	36 18       	IF CC JUMP 0xffa030a8 <_SetupSystemRegs+0x12c>;
+ffa0303e:	06 54       	R0 = R6 & R0;
+ffa03040:	00 0c       	CC = R0 == 0x0;
+ffa03042:	f1 1f       	IF CC JUMP 0xffa03024 <_SetupSystemRegs+0xa8> (BP);
+ffa03044:	29 60       	R1 = 0x5 (X);		/*		R1=0x5(  5) */
+ffa03046:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa03048:	ff e3 38 f8 	CALL 0xffa020b8 <_RdPHYReg>;
+ffa0304c:	21 e1 40 01 	R1 = 0x140 (X);		/*		R1=0x140(320) */
+ffa03050:	41 54       	R1 = R1 & R0;
+ffa03052:	01 0c       	CC = R1 == 0x0;
+ffa03054:	26 14       	IF !CC JUMP 0xffa030a0 <_SetupSystemRegs+0x124> (BP);
 ffa03056:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa03058:	01 e8 00 00 	UNLINK;
-ffa0305c:	b5 05       	(R7:6, P5:5) = [SP++];
-ffa0305e:	10 00       	RTS;
-ffa03060:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
-ffa03062:	d0 4f       	R0 <<= 0x1a;
-ffa03064:	28 93       	[P5] = R0;
-ffa03066:	da 2f       	JUMP.S 0xffa0301a <_SetupSystemRegs+0xde>;
-ffa03068:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900001(-7340031) */
-ffa0306c:	00 e1 90 02 	R0.L = 0x290;		/* (656)	R0=0xff900290(-7339376) */
-ffa03070:	ff e3 50 f5 	CALL 0xffa01b10 <_printf_str>;
-ffa03074:	f8 63       	R0 = -0x1 (X);		/*		R0=0xffffffff( -1) */
-ffa03076:	f1 2f       	JUMP.S 0xffa03058 <_SetupSystemRegs+0x11c>;
+ffa03058:	28 93       	[P5] = R0;
+ffa0305a:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc03018(-4181992) */
+ffa0305e:	18 60       	R0 = 0x3 (X);		/*		R0=0x3(  3) */
+ffa03060:	0a e1 80 30 	P2.L = 0x3080;		/* (12416)	P2=0xffc03080(-4181888) */
+ffa03064:	10 93       	[P2] = R0;
+ffa03066:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc03080(-4181888) */
+ffa0306a:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa0306c:	0a e1 90 0c 	P2.L = 0xc90;		/* (3216)	P2=0xffc00c90(-4191088) */
+ffa03070:	10 97       	W[P2] = R0;
+ffa03072:	21 60       	R1 = 0x4 (X);		/*		R1=0x4(  4) */
+ffa03074:	22 6c       	P2 += 0x4;		/* (  4) */
+ffa03076:	11 97       	W[P2] = R1;
+ffa03078:	22 6c       	P2 += 0x4;		/* (  4) */
+ffa0307a:	10 97       	W[P2] = R0;
+ffa0307c:	22 6c       	P2 += 0x4;		/* (  4) */
+ffa0307e:	10 97       	W[P2] = R0;
+ffa03080:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00c90(-4191088) */
+ffa03084:	0a e1 50 0c 	P2.L = 0xc50;		/* (3152)	P2=0xffc00c50(-4191152) */
+ffa03088:	10 97       	W[P2] = R0;
+ffa0308a:	22 6c       	P2 += 0x4;		/* (  4) */
+ffa0308c:	11 97       	W[P2] = R1;
+ffa0308e:	22 6c       	P2 += 0x4;		/* (  4) */
+ffa03090:	10 97       	W[P2] = R0;
+ffa03092:	22 6c       	P2 += 0x4;		/* (  4) */
+ffa03094:	10 97       	W[P2] = R0;
+ffa03096:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa03098:	01 e8 00 00 	UNLINK;
+ffa0309c:	b5 05       	(R7:6, P5:5) = [SP++];
+ffa0309e:	10 00       	RTS;
+ffa030a0:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
+ffa030a2:	d0 4f       	R0 <<= 0x1a;
+ffa030a4:	28 93       	[P5] = R0;
+ffa030a6:	da 2f       	JUMP.S 0xffa0305a <_SetupSystemRegs+0xde>;
+ffa030a8:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900001(-7340031) */
+ffa030ac:	00 e1 c4 02 	R0.L = 0x2c4;		/* (708)	R0=0xff9002c4(-7339324) */
+ffa030b0:	ff e3 50 f5 	CALL 0xffa01b50 <_printf_str>;
+ffa030b4:	f8 63       	R0 = -0x1 (X);		/*		R0=0xffffffff( -1) */
+ffa030b6:	f1 2f       	JUMP.S 0xffa03098 <_SetupSystemRegs+0x11c>;
 
-ffa03078 <_SetupMacAddr>:
-ffa03078:	10 32       	P2 = R0;
-ffa0307a:	fd 05       	[--SP] = (R7:7, P5:5);
-ffa0307c:	00 e8 03 00 	LINK 0xc;		/* (12) */
-ffa03080:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa03082:	01 63       	R1 = -0x20 (X);		/*		R1=0xffffffe0(-32) */
-ffa03084:	10 9b       	B[P2] = R0;
-ffa03086:	10 61       	R0 = 0x22 (X);		/*		R0=0x22( 34) */
-ffa03088:	90 e6 02 00 	B[P2 + 0x2] = R0;
-ffa0308c:	f0 63       	R0 = -0x2 (X);		/*		R0=0xfffffffe( -2) */
-ffa0308e:	90 e6 03 00 	B[P2 + 0x3] = R0;
-ffa03092:	20 e1 51 00 	R0 = 0x51 (X);		/*		R0=0x51( 81) */
-ffa03096:	90 e6 04 00 	B[P2 + 0x4] = R0;
-ffa0309a:	60 60       	R0 = 0xc (X);		/*		R0=0xc( 12) */
-ffa0309c:	91 e6 01 00 	B[P2 + 0x1] = R1;
-ffa030a0:	90 e6 05 00 	B[P2 + 0x5] = R0;
-ffa030a4:	90 e4 02 00 	R0 = B[P2 + 0x2] (Z);
-ffa030a8:	49 43       	R1 = R1.B (Z);
-ffa030aa:	80 4f       	R0 <<= 0x10;
-ffa030ac:	41 4f       	R1 <<= 0x8;
-ffa030ae:	41 56       	R1 = R1 | R0;
-ffa030b0:	10 99       	R0 = B[P2] (Z);
-ffa030b2:	41 56       	R1 = R1 | R0;
-ffa030b4:	90 e4 03 00 	R0 = B[P2 + 0x3] (Z);
-ffa030b8:	c0 4f       	R0 <<= 0x18;
-ffa030ba:	49 e1 c0 ff 	P1.H = 0xffc0;		/* (-64)	P1=0xffc00ebc(-4190532) */
-ffa030be:	09 e1 04 30 	P1.L = 0x3004;		/* (12292)	P1=0xffc03004(-4182012) */
-ffa030c2:	41 56       	R1 = R1 | R0;
-ffa030c4:	09 93       	[P1] = R1;
-ffa030c6:	90 e4 04 00 	R0 = B[P2 + 0x4] (Z);
-ffa030ca:	21 e1 00 0c 	R1 = 0xc00 (X);		/*		R1=0xc00(3072) */
-ffa030ce:	4d e1 c0 ff 	P5.H = 0xffc0;		/* (-64)	P5=0xffc01000(-4190208) */
-ffa030d2:	08 56       	R0 = R0 | R1;
-ffa030d4:	0d e1 08 30 	P5.L = 0x3008;		/* (12296)	P5=0xffc03008(-4182008) */
-ffa030d8:	28 93       	[P5] = R0;
-ffa030da:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff90000c(-7340020) */
-ffa030de:	09 91       	R1 = [P1];
-ffa030e0:	00 e1 c4 02 	R0.L = 0x2c4;		/* (708)	R0=0xff9002c4(-7339324) */
-ffa030e4:	47 e1 90 ff 	R7.H = 0xff90;		/* (-112)	R7=0xff900000 <_l1_data_a>(-7340032) */
-ffa030e8:	ff e3 10 f4 	CALL 0xffa01908 <_printf_hex>;
-ffa030ec:	07 e1 9c 07 	R7.L = 0x79c;		/* (1948)	R7=0xff90079c(-7338084) */
-ffa030f0:	07 30       	R0 = R7;
-ffa030f2:	ff e3 0f f5 	CALL 0xffa01b10 <_printf_str>;
-ffa030f6:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff9002c4(-7339324) */
-ffa030fa:	29 91       	R1 = [P5];
-ffa030fc:	00 e1 d0 02 	R0.L = 0x2d0;		/* (720)	R0=0xff9002d0(-7339312) */
-ffa03100:	ff e3 04 f4 	CALL 0xffa01908 <_printf_hex>;
-ffa03104:	07 30       	R0 = R7;
-ffa03106:	01 e8 00 00 	UNLINK;
-ffa0310a:	bd 05       	(R7:7, P5:5) = [SP++];
-ffa0310c:	ff e2 02 f5 	JUMP.L 0xffa01b10 <_printf_str>;
+ffa030b8 <_SetupMacAddr>:
+ffa030b8:	10 32       	P2 = R0;
+ffa030ba:	fd 05       	[--SP] = (R7:7, P5:5);
+ffa030bc:	00 e8 03 00 	LINK 0xc;		/* (12) */
+ffa030c0:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa030c2:	01 63       	R1 = -0x20 (X);		/*		R1=0xffffffe0(-32) */
+ffa030c4:	10 9b       	B[P2] = R0;
+ffa030c6:	10 61       	R0 = 0x22 (X);		/*		R0=0x22( 34) */
+ffa030c8:	90 e6 02 00 	B[P2 + 0x2] = R0;
+ffa030cc:	f0 63       	R0 = -0x2 (X);		/*		R0=0xfffffffe( -2) */
+ffa030ce:	90 e6 03 00 	B[P2 + 0x3] = R0;
+ffa030d2:	20 e1 51 00 	R0 = 0x51 (X);		/*		R0=0x51( 81) */
+ffa030d6:	90 e6 04 00 	B[P2 + 0x4] = R0;
+ffa030da:	60 60       	R0 = 0xc (X);		/*		R0=0xc( 12) */
+ffa030dc:	91 e6 01 00 	B[P2 + 0x1] = R1;
+ffa030e0:	90 e6 05 00 	B[P2 + 0x5] = R0;
+ffa030e4:	90 e4 02 00 	R0 = B[P2 + 0x2] (Z);
+ffa030e8:	49 43       	R1 = R1.B (Z);
+ffa030ea:	80 4f       	R0 <<= 0x10;
+ffa030ec:	41 4f       	R1 <<= 0x8;
+ffa030ee:	41 56       	R1 = R1 | R0;
+ffa030f0:	10 99       	R0 = B[P2] (Z);
+ffa030f2:	41 56       	R1 = R1 | R0;
+ffa030f4:	90 e4 03 00 	R0 = B[P2 + 0x3] (Z);
+ffa030f8:	c0 4f       	R0 <<= 0x18;
+ffa030fa:	49 e1 c0 ff 	P1.H = 0xffc0;		/* (-64)	P1=0xffc00f40(-4190400) */
+ffa030fe:	09 e1 04 30 	P1.L = 0x3004;		/* (12292)	P1=0xffc03004(-4182012) */
+ffa03102:	41 56       	R1 = R1 | R0;
+ffa03104:	09 93       	[P1] = R1;
+ffa03106:	90 e4 04 00 	R0 = B[P2 + 0x4] (Z);
+ffa0310a:	21 e1 00 0c 	R1 = 0xc00 (X);		/*		R1=0xc00(3072) */
+ffa0310e:	4d e1 c0 ff 	P5.H = 0xffc0;		/* (-64)	P5=0xffc01000(-4190208) */
+ffa03112:	08 56       	R0 = R0 | R1;
+ffa03114:	0d e1 08 30 	P5.L = 0x3008;		/* (12296)	P5=0xffc03008(-4182008) */
+ffa03118:	28 93       	[P5] = R0;
+ffa0311a:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff90000c(-7340020) */
+ffa0311e:	09 91       	R1 = [P1];
+ffa03120:	00 e1 f8 02 	R0.L = 0x2f8;		/* (760)	R0=0xff9002f8(-7339272) */
+ffa03124:	47 e1 90 ff 	R7.H = 0xff90;		/* (-112)	R7=0xff900000 <_l1_data_a>(-7340032) */
+ffa03128:	ff e3 10 f4 	CALL 0xffa01948 <_printf_hex>;
+ffa0312c:	07 e1 20 08 	R7.L = 0x820;		/* (2080)	R7=0xff900820(-7337952) */
+ffa03130:	07 30       	R0 = R7;
+ffa03132:	ff e3 0f f5 	CALL 0xffa01b50 <_printf_str>;
+ffa03136:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff9002f8(-7339272) */
+ffa0313a:	29 91       	R1 = [P5];
+ffa0313c:	00 e1 04 03 	R0.L = 0x304;		/* (772)	R0=0xff900304(-7339260) */
+ffa03140:	ff e3 04 f4 	CALL 0xffa01948 <_printf_hex>;
+ffa03144:	07 30       	R0 = R7;
+ffa03146:	01 e8 00 00 	UNLINK;
+ffa0314a:	bd 05       	(R7:7, P5:5) = [SP++];
+ffa0314c:	ff e2 02 f5 	JUMP.L 0xffa01b50 <_printf_str>;
 
-ffa03110 <_bfin_EMAC_init>:
-ffa03110:	fb 05       	[--SP] = (R7:7, P5:3);
-ffa03112:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff9002d0(-7339312) */
-ffa03116:	00 e8 04 00 	LINK 0x10;		/* (16) */
-ffa0311a:	00 e1 dc 02 	R0.L = 0x2dc;		/* (732)	R0=0xff9002dc(-7339300) */
-ffa0311e:	ff e3 f9 f4 	CALL 0xffa01b10 <_printf_str>;
-ffa03122:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900c50 */
-ffa03126:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
-ffa03128:	0a e1 b8 0e 	P2.L = 0xeb8;		/* (3768)	P2=0xff900eb8 <_txIdx> */
-ffa0312c:	11 97       	W[P2] = R1;
-ffa0312e:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900eb8 <_txIdx> */
-ffa03132:	0a e1 cc 0e 	P2.L = 0xecc;		/* (3788)	P2=0xff900ecc <_rxIdx> */
-ffa03136:	11 97       	W[P2] = R1;
-ffa03138:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900ecc <_rxIdx> */
-ffa0313c:	0a e1 ba 0e 	P2.L = 0xeba;		/* (3770)	P2=0xff900eba <_NetIPID> */
-ffa03140:	11 97       	W[P2] = R1;
-ffa03142:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900eba <_NetIPID> */
-ffa03146:	07 60       	R7 = 0x0 (X);		/*		R7=0x0(  0) */
-ffa03148:	0a e1 e8 0e 	P2.L = 0xee8;		/* (3816)	P2=0xff900ee8 <_NetSubnetMask> */
-ffa0314c:	17 93       	[P2] = R7;
-ffa0314e:	40 e1 00 09 	R0.H = 0x900;		/* (2304)	R0=0x90002dc(150995676) */
-ffa03152:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900ee8 <_NetSubnetMask> */
-ffa03156:	00 e1 c0 a8 	R0.L = 0xa8c0;		/* (-22336)	R0=0x900a8c0(151038144) */
-ffa0315a:	0a e1 ec 0e 	P2.L = 0xeec;		/* (3820)	P2=0xff900eec <_NetOurIP> */
-ffa0315e:	10 93       	[P2] = R0;
-ffa03160:	80 e1 c0 a8 	R0 = 0xa8c0 (Z);		/*		R0=0xa8c0(43200) */
-ffa03164:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900eec <_NetOurIP> */
-ffa03168:	c0 4a       	BITSET (R0, 0x18);		/* bit 24 */
-ffa0316a:	0a e1 b0 0e 	P2.L = 0xeb0;		/* (3760)	P2=0xff900eb0 <_NetDestIP> */
-ffa0316e:	10 93       	[P2] = R0;
-ffa03170:	40 e1 e5 36 	R0.H = 0x36e5;		/* (14053)	R0=0x36e5a8c0(921020608) */
-ffa03174:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900eb0 <_NetDestIP> */
-ffa03178:	00 e1 98 10 	R0.L = 0x1098;		/* (4248)	R0=0x36e51098(920981656) */
-ffa0317c:	0a e1 f0 0e 	P2.L = 0xef0;		/* (3824)	P2=0xff900ef0 <_NetDataDestIP> */
-ffa03180:	10 93       	[P2] = R0;
-ffa03182:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900ef0 <_NetDataDestIP> */
-ffa03186:	0a e1 d0 0f 	P2.L = 0xfd0;		/* (4048)	P2=0xff900fd0 <_TcpState> */
-ffa0318a:	17 93       	[P2] = R7;
-ffa0318c:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900fd0 <_TcpState> */
-ffa03190:	0a e1 c8 0f 	P2.L = 0xfc8;		/* (4040)	P2=0xff900fc8 <_TcpSeqClient> */
-ffa03194:	17 93       	[P2] = R7;
-ffa03196:	40 e1 da 09 	R0.H = 0x9da;		/* (2522)	R0=0x9da1098(165286040) */
-ffa0319a:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900fc8 <_TcpSeqClient> */
-ffa0319e:	00 e1 b5 24 	R0.L = 0x24b5;		/* (9397)	R0=0x9da24b5(165291189) */
-ffa031a2:	0a e1 c4 0f 	P2.L = 0xfc4;		/* (4036)	P2=0xff900fc4 <_TcpSeqHost> */
-ffa031a6:	10 93       	[P2] = R0;
-ffa031a8:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900fc4 <_TcpSeqHost> */
-ffa031ac:	0a e1 dc 0f 	P2.L = 0xfdc;		/* (4060)	P2=0xff900fdc <_TcpClientPort> */
-ffa031b0:	11 97       	W[P2] = R1;
-ffa031b2:	00 e3 0f 03 	CALL 0xffa037d0 <_ARP_init>;
-ffa031b6:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00fdc(-4190244) */
-ffa031ba:	0a e1 00 30 	P2.L = 0x3000;		/* (12288)	P2=0xffc03000(-4182016) */
-ffa031be:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff9024b5(-7330635) */
-ffa031c2:	17 93       	[P2] = R7;
-ffa031c4:	00 e1 e0 0e 	R0.L = 0xee0;		/* (3808)	R0=0xff900ee0 <_NetOurMAC>(-7336224) */
-ffa031c8:	ff e3 58 ff 	CALL 0xffa03078 <_SetupMacAddr>;
-ffa031cc:	47 30       	R0 = FP;
-ffa031ce:	e0 67       	R0 += -0x4;		/* ( -4) */
-ffa031d0:	ff e3 b6 fe 	CALL 0xffa02f3c <_SetupSystemRegs>;
-ffa031d4:	80 0c       	CC = R0 < 0x0;
-ffa031d6:	79 18       	IF CC JUMP 0xffa032c8 <_bfin_EMAC_init+0x1b8>;
-ffa031d8:	4b e1 90 ff 	P3.H = 0xff90;		/* (-112)	P3=0xff900ee8 <_NetSubnetMask> */
-ffa031dc:	0b e1 d0 0e 	P3.L = 0xed0;		/* (3792)	P3=0xff900ed0 <_rxbuf> */
-ffa031e0:	05 68       	P5 = 0x0 (X);		/*		P5=0x0(  0) */
-ffa031e2:	63 32       	P4 = P3;
-ffa031e4:	45 30       	R0 = P5;
-ffa031e6:	ff e3 59 fe 	CALL 0xffa02e98 <_SetupRxBuffer>;
-ffa031ea:	49 e1 90 ff 	P1.H = 0xff90;		/* (-112)	P1=0xff903004 */
-ffa031ee:	ab 5e       	P2 = P3 + (P5 << 0x2);
-ffa031f0:	09 e1 d0 0e 	P1.L = 0xed0;		/* (3792)	P1=0xff900ed0 <_rxbuf> */
-ffa031f4:	10 93       	[P2] = R0;
-ffa031f6:	45 0c       	CC = P5 == 0x0;
-ffa031f8:	5e 18       	IF CC JUMP 0xffa032b4 <_bfin_EMAC_init+0x1a4>;
-ffa031fa:	00 00       	NOP;
-ffa031fc:	ac 5e       	P2 = P4 + (P5 << 0x2);
-ffa031fe:	5d 0c       	CC = P5 == 0x3;
-ffa03200:	12 e5 ff ff 	P2 = [P2 + -0x4];
-ffa03204:	d0 b0       	[P2 + 0xc] = R0;
-ffa03206:	5d 18       	IF CC JUMP 0xffa032c0 <_bfin_EMAC_init+0x1b0>;
-ffa03208:	0d 6c       	P5 += 0x1;		/* (  1) */
-ffa0320a:	5d 0d       	CC = P5 <= 0x3;
-ffa0320c:	ec 1f       	IF CC JUMP 0xffa031e4 <_bfin_EMAC_init+0xd4> (BP);
-ffa0320e:	4c e1 90 ff 	P4.H = 0xff90;		/* (-112)	P4=0xff900ef0 <_NetDataDestIP> */
-ffa03212:	0c e1 bc 0e 	P4.L = 0xebc;		/* (3772)	P4=0xff900ebc <_txbuf> */
-ffa03216:	05 68       	P5 = 0x0 (X);		/*		P5=0x0(  0) */
-ffa03218:	7c 30       	R7 = P4;
-ffa0321a:	45 30       	R0 = P5;
-ffa0321c:	ff e3 ea fd 	CALL 0xffa02df0 <_SetupTxBuffer>;
-ffa03220:	49 e1 90 ff 	P1.H = 0xff90;		/* (-112)	P1=0xff900ed0 <_rxbuf> */
-ffa03224:	ac 5e       	P2 = P4 + (P5 << 0x2);
-ffa03226:	09 e1 bc 0e 	P1.L = 0xebc;		/* (3772)	P1=0xff900ebc <_txbuf> */
-ffa0322a:	10 93       	[P2] = R0;
-ffa0322c:	45 0c       	CC = P5 == 0x0;
-ffa0322e:	41 18       	IF CC JUMP 0xffa032b0 <_bfin_EMAC_init+0x1a0>;
-ffa03230:	07 32       	P0 = R7;
-ffa03232:	5d 0c       	CC = P5 == 0x3;
-ffa03234:	a8 5e       	P2 = P0 + (P5 << 0x2);
-ffa03236:	12 e5 ff ff 	P2 = [P2 + -0x4];
-ffa0323a:	d0 b0       	[P2 + 0xc] = R0;
-ffa0323c:	3e 18       	IF CC JUMP 0xffa032b8 <_bfin_EMAC_init+0x1a8>;
-ffa0323e:	0d 6c       	P5 += 0x1;		/* (  1) */
-ffa03240:	5d 0d       	CC = P5 <= 0x3;
-ffa03242:	ec 1f       	IF CC JUMP 0xffa0321a <_bfin_EMAC_init+0x10a> (BP);
-ffa03244:	59 91       	P1 = [P3];
-ffa03246:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc03000(-4182016) */
-ffa0324a:	0a e1 40 0c 	P2.L = 0xc40;		/* (3136)	P2=0xffc00c40(-4191168) */
-ffa0324e:	51 93       	[P2] = P1;
-ffa03250:	08 a9       	R0 = W[P1 + 0x8] (X);
-ffa03252:	42 6c       	P2 += 0x8;		/* (  8) */
-ffa03254:	10 97       	W[P2] = R0;
-ffa03256:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00c40(-4191168) */
-ffa0325a:	0a e1 14 30 	P2.L = 0x3014;		/* (12308)	P2=0xffc03014(-4181996) */
-ffa0325e:	10 91       	R0 = [P2];
-ffa03260:	00 48       	CC = !BITTST (R0, 0x0);		/* bit  0 */
-ffa03262:	09 18       	IF CC JUMP 0xffa03274 <_bfin_EMAC_init+0x164>;
-ffa03264:	00 00       	NOP;
-ffa03266:	00 00       	NOP;
-ffa03268:	42 34       	I0 = P2;
-ffa0326a:	00 00       	NOP;
-ffa0326c:	00 00       	NOP;
-ffa0326e:	00 9d       	R0 = [I0];
-ffa03270:	00 48       	CC = !BITTST (R0, 0x0);		/* bit  0 */
-ffa03272:	fc 17       	IF !CC JUMP 0xffa0326a <_bfin_EMAC_init+0x15a> (BP);
-ffa03274:	09 60       	R1 = 0x1 (X);		/*		R1=0x1(  1) */
-ffa03276:	f0 b9       	R0 = [FP -0x4];
-ffa03278:	d1 4f       	R1 <<= 0x1a;
-ffa0327a:	08 08       	CC = R0 == R1;
-ffa0327c:	2b 18       	IF CC JUMP 0xffa032d2 <_bfin_EMAC_init+0x1c2>;
-ffa0327e:	20 e1 03 08 	R0 = 0x803 (X);		/*		R0=0x803(2051) */
-ffa03282:	08 30       	R1 = R0;
-ffa03284:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc03014(-4181996) */
-ffa03288:	0a e1 00 30 	P2.L = 0x3000;		/* (12288)	P2=0xffc03000(-4182016) */
-ffa0328c:	10 93       	[P2] = R0;
-ffa0328e:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900803(-7337981) */
-ffa03292:	00 e1 ec 02 	R0.L = 0x2ec;		/* (748)	R0=0xff9002ec(-7339284) */
-ffa03296:	ff e3 39 f3 	CALL 0xffa01908 <_printf_hex>;
-ffa0329a:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff9002ec(-7339284) */
-ffa0329e:	00 e1 9c 07 	R0.L = 0x79c;		/* (1948)	R0=0xff90079c(-7338084) */
-ffa032a2:	ff e3 37 f4 	CALL 0xffa01b10 <_printf_str>;
-ffa032a6:	01 e8 00 00 	UNLINK;
-ffa032aa:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa032ac:	bb 05       	(R7:7, P5:3) = [SP++];
-ffa032ae:	10 00       	RTS;
-ffa032b0:	0d 68       	P5 = 0x1 (X);		/*		P5=0x1(  1) */
-ffa032b2:	b4 2f       	JUMP.S 0xffa0321a <_bfin_EMAC_init+0x10a>;
-ffa032b4:	0d 68       	P5 = 0x1 (X);		/*		P5=0x1(  1) */
-ffa032b6:	97 2f       	JUMP.S 0xffa031e4 <_bfin_EMAC_init+0xd4>;
-ffa032b8:	ca ac       	P2 = [P1 + 0xc];
-ffa032ba:	08 91       	R0 = [P1];
-ffa032bc:	d0 b0       	[P2 + 0xc] = R0;
-ffa032be:	c3 2f       	JUMP.S 0xffa03244 <_bfin_EMAC_init+0x134>;
-ffa032c0:	ca ac       	P2 = [P1 + 0xc];
-ffa032c2:	08 91       	R0 = [P1];
-ffa032c4:	d0 b0       	[P2 + 0xc] = R0;
-ffa032c6:	a4 2f       	JUMP.S 0xffa0320e <_bfin_EMAC_init+0xfe>;
-ffa032c8:	01 e8 00 00 	UNLINK;
-ffa032cc:	f8 63       	R0 = -0x1 (X);		/*		R0=0xffffffff( -1) */
-ffa032ce:	bb 05       	(R7:7, P5:3) = [SP++];
-ffa032d0:	10 00       	RTS;
-ffa032d2:	20 e1 03 08 	R0 = 0x803 (X);		/*		R0=0x803(2051) */
-ffa032d6:	d0 4a       	BITSET (R0, 0x1a);		/* bit 26 */
-ffa032d8:	08 30       	R1 = R0;
-ffa032da:	d5 2f       	JUMP.S 0xffa03284 <_bfin_EMAC_init+0x174>;
+ffa03150 <_bfin_EMAC_init>:
+ffa03150:	fb 05       	[--SP] = (R7:7, P5:3);
+ffa03152:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900304(-7339260) */
+ffa03156:	00 e8 04 00 	LINK 0x10;		/* (16) */
+ffa0315a:	00 e1 10 03 	R0.L = 0x310;		/* (784)	R0=0xff900310(-7339248) */
+ffa0315e:	ff e3 f9 f4 	CALL 0xffa01b50 <_printf_str>;
+ffa03162:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900c50 */
+ffa03166:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
+ffa03168:	0a e1 3c 0f 	P2.L = 0xf3c;		/* (3900)	P2=0xff900f3c <_txIdx> */
+ffa0316c:	11 97       	W[P2] = R1;
+ffa0316e:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900f3c <_txIdx> */
+ffa03172:	0a e1 50 0f 	P2.L = 0xf50;		/* (3920)	P2=0xff900f50 <_rxIdx> */
+ffa03176:	11 97       	W[P2] = R1;
+ffa03178:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900f50 <_rxIdx> */
+ffa0317c:	0a e1 3e 0f 	P2.L = 0xf3e;		/* (3902)	P2=0xff900f3e <_NetIPID> */
+ffa03180:	11 97       	W[P2] = R1;
+ffa03182:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900f3e <_NetIPID> */
+ffa03186:	07 60       	R7 = 0x0 (X);		/*		R7=0x0(  0) */
+ffa03188:	0a e1 6c 0f 	P2.L = 0xf6c;		/* (3948)	P2=0xff900f6c <_NetSubnetMask> */
+ffa0318c:	17 93       	[P2] = R7;
+ffa0318e:	40 e1 00 09 	R0.H = 0x900;		/* (2304)	R0=0x9000310(150995728) */
+ffa03192:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900f6c <_NetSubnetMask> */
+ffa03196:	00 e1 c0 a8 	R0.L = 0xa8c0;		/* (-22336)	R0=0x900a8c0(151038144) */
+ffa0319a:	0a e1 70 0f 	P2.L = 0xf70;		/* (3952)	P2=0xff900f70 <_NetOurIP> */
+ffa0319e:	10 93       	[P2] = R0;
+ffa031a0:	80 e1 c0 a8 	R0 = 0xa8c0 (Z);		/*		R0=0xa8c0(43200) */
+ffa031a4:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900f70 <_NetOurIP> */
+ffa031a8:	c0 4a       	BITSET (R0, 0x18);		/* bit 24 */
+ffa031aa:	0a e1 34 0f 	P2.L = 0xf34;		/* (3892)	P2=0xff900f34 <_NetDestIP> */
+ffa031ae:	10 93       	[P2] = R0;
+ffa031b0:	40 e1 e5 36 	R0.H = 0x36e5;		/* (14053)	R0=0x36e5a8c0(921020608) */
+ffa031b4:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900f34 <_NetDestIP> */
+ffa031b8:	00 e1 98 10 	R0.L = 0x1098;		/* (4248)	R0=0x36e51098(920981656) */
+ffa031bc:	0a e1 74 0f 	P2.L = 0xf74;		/* (3956)	P2=0xff900f74 <_NetDataDestIP> */
+ffa031c0:	10 93       	[P2] = R0;
+ffa031c2:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900f74 <_NetDataDestIP> */
+ffa031c6:	0a e1 54 10 	P2.L = 0x1054;		/* (4180)	P2=0xff901054 <_TcpState> */
+ffa031ca:	17 93       	[P2] = R7;
+ffa031cc:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff901054 <_TcpState> */
+ffa031d0:	0a e1 4c 10 	P2.L = 0x104c;		/* (4172)	P2=0xff90104c <_TcpSeqClient> */
+ffa031d4:	17 93       	[P2] = R7;
+ffa031d6:	40 e1 da 09 	R0.H = 0x9da;		/* (2522)	R0=0x9da1098(165286040) */
+ffa031da:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff90104c <_TcpSeqClient> */
+ffa031de:	00 e1 b5 24 	R0.L = 0x24b5;		/* (9397)	R0=0x9da24b5(165291189) */
+ffa031e2:	0a e1 48 10 	P2.L = 0x1048;		/* (4168)	P2=0xff901048 <_TcpSeqHost> */
+ffa031e6:	10 93       	[P2] = R0;
+ffa031e8:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff901048 <_TcpSeqHost> */
+ffa031ec:	0a e1 60 10 	P2.L = 0x1060;		/* (4192)	P2=0xff901060 <_TcpClientPort> */
+ffa031f0:	11 97       	W[P2] = R1;
+ffa031f2:	00 e3 2d 03 	CALL 0xffa0384c <_ARP_init>;
+ffa031f6:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc01060(-4190112) */
+ffa031fa:	0a e1 00 30 	P2.L = 0x3000;		/* (12288)	P2=0xffc03000(-4182016) */
+ffa031fe:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff9024b5(-7330635) */
+ffa03202:	17 93       	[P2] = R7;
+ffa03204:	00 e1 64 0f 	R0.L = 0xf64;		/* (3940)	R0=0xff900f64 <_NetOurMAC>(-7336092) */
+ffa03208:	ff e3 58 ff 	CALL 0xffa030b8 <_SetupMacAddr>;
+ffa0320c:	47 30       	R0 = FP;
+ffa0320e:	e0 67       	R0 += -0x4;		/* ( -4) */
+ffa03210:	ff e3 b6 fe 	CALL 0xffa02f7c <_SetupSystemRegs>;
+ffa03214:	80 0c       	CC = R0 < 0x0;
+ffa03216:	79 18       	IF CC JUMP 0xffa03308 <_bfin_EMAC_init+0x1b8>;
+ffa03218:	4b e1 90 ff 	P3.H = 0xff90;		/* (-112)	P3=0xff900f6c <_NetSubnetMask> */
+ffa0321c:	0b e1 54 0f 	P3.L = 0xf54;		/* (3924)	P3=0xff900f54 <_rxbuf> */
+ffa03220:	05 68       	P5 = 0x0 (X);		/*		P5=0x0(  0) */
+ffa03222:	63 32       	P4 = P3;
+ffa03224:	45 30       	R0 = P5;
+ffa03226:	ff e3 59 fe 	CALL 0xffa02ed8 <_SetupRxBuffer>;
+ffa0322a:	49 e1 90 ff 	P1.H = 0xff90;		/* (-112)	P1=0xff903004 */
+ffa0322e:	ab 5e       	P2 = P3 + (P5 << 0x2);
+ffa03230:	09 e1 54 0f 	P1.L = 0xf54;		/* (3924)	P1=0xff900f54 <_rxbuf> */
+ffa03234:	10 93       	[P2] = R0;
+ffa03236:	45 0c       	CC = P5 == 0x0;
+ffa03238:	5e 18       	IF CC JUMP 0xffa032f4 <_bfin_EMAC_init+0x1a4>;
+ffa0323a:	00 00       	NOP;
+ffa0323c:	ac 5e       	P2 = P4 + (P5 << 0x2);
+ffa0323e:	5d 0c       	CC = P5 == 0x3;
+ffa03240:	12 e5 ff ff 	P2 = [P2 + -0x4];
+ffa03244:	d0 b0       	[P2 + 0xc] = R0;
+ffa03246:	5d 18       	IF CC JUMP 0xffa03300 <_bfin_EMAC_init+0x1b0>;
+ffa03248:	0d 6c       	P5 += 0x1;		/* (  1) */
+ffa0324a:	5d 0d       	CC = P5 <= 0x3;
+ffa0324c:	ec 1f       	IF CC JUMP 0xffa03224 <_bfin_EMAC_init+0xd4> (BP);
+ffa0324e:	4c e1 90 ff 	P4.H = 0xff90;		/* (-112)	P4=0xff900f74 <_NetDataDestIP> */
+ffa03252:	0c e1 40 0f 	P4.L = 0xf40;		/* (3904)	P4=0xff900f40 <_txbuf> */
+ffa03256:	05 68       	P5 = 0x0 (X);		/*		P5=0x0(  0) */
+ffa03258:	7c 30       	R7 = P4;
+ffa0325a:	45 30       	R0 = P5;
+ffa0325c:	ff e3 ea fd 	CALL 0xffa02e30 <_SetupTxBuffer>;
+ffa03260:	49 e1 90 ff 	P1.H = 0xff90;		/* (-112)	P1=0xff900f54 <_rxbuf> */
+ffa03264:	ac 5e       	P2 = P4 + (P5 << 0x2);
+ffa03266:	09 e1 40 0f 	P1.L = 0xf40;		/* (3904)	P1=0xff900f40 <_txbuf> */
+ffa0326a:	10 93       	[P2] = R0;
+ffa0326c:	45 0c       	CC = P5 == 0x0;
+ffa0326e:	41 18       	IF CC JUMP 0xffa032f0 <_bfin_EMAC_init+0x1a0>;
+ffa03270:	07 32       	P0 = R7;
+ffa03272:	5d 0c       	CC = P5 == 0x3;
+ffa03274:	a8 5e       	P2 = P0 + (P5 << 0x2);
+ffa03276:	12 e5 ff ff 	P2 = [P2 + -0x4];
+ffa0327a:	d0 b0       	[P2 + 0xc] = R0;
+ffa0327c:	3e 18       	IF CC JUMP 0xffa032f8 <_bfin_EMAC_init+0x1a8>;
+ffa0327e:	0d 6c       	P5 += 0x1;		/* (  1) */
+ffa03280:	5d 0d       	CC = P5 <= 0x3;
+ffa03282:	ec 1f       	IF CC JUMP 0xffa0325a <_bfin_EMAC_init+0x10a> (BP);
+ffa03284:	59 91       	P1 = [P3];
+ffa03286:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc03000(-4182016) */
+ffa0328a:	0a e1 40 0c 	P2.L = 0xc40;		/* (3136)	P2=0xffc00c40(-4191168) */
+ffa0328e:	51 93       	[P2] = P1;
+ffa03290:	08 a9       	R0 = W[P1 + 0x8] (X);
+ffa03292:	42 6c       	P2 += 0x8;		/* (  8) */
+ffa03294:	10 97       	W[P2] = R0;
+ffa03296:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00c40(-4191168) */
+ffa0329a:	0a e1 14 30 	P2.L = 0x3014;		/* (12308)	P2=0xffc03014(-4181996) */
+ffa0329e:	10 91       	R0 = [P2];
+ffa032a0:	00 48       	CC = !BITTST (R0, 0x0);		/* bit  0 */
+ffa032a2:	09 18       	IF CC JUMP 0xffa032b4 <_bfin_EMAC_init+0x164>;
+ffa032a4:	00 00       	NOP;
+ffa032a6:	00 00       	NOP;
+ffa032a8:	42 34       	I0 = P2;
+ffa032aa:	00 00       	NOP;
+ffa032ac:	00 00       	NOP;
+ffa032ae:	00 9d       	R0 = [I0];
+ffa032b0:	00 48       	CC = !BITTST (R0, 0x0);		/* bit  0 */
+ffa032b2:	fc 17       	IF !CC JUMP 0xffa032aa <_bfin_EMAC_init+0x15a> (BP);
+ffa032b4:	09 60       	R1 = 0x1 (X);		/*		R1=0x1(  1) */
+ffa032b6:	f0 b9       	R0 = [FP -0x4];
+ffa032b8:	d1 4f       	R1 <<= 0x1a;
+ffa032ba:	08 08       	CC = R0 == R1;
+ffa032bc:	2b 18       	IF CC JUMP 0xffa03312 <_bfin_EMAC_init+0x1c2>;
+ffa032be:	20 e1 03 08 	R0 = 0x803 (X);		/*		R0=0x803(2051) */
+ffa032c2:	08 30       	R1 = R0;
+ffa032c4:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc03014(-4181996) */
+ffa032c8:	0a e1 00 30 	P2.L = 0x3000;		/* (12288)	P2=0xffc03000(-4182016) */
+ffa032cc:	10 93       	[P2] = R0;
+ffa032ce:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900803(-7337981) */
+ffa032d2:	00 e1 20 03 	R0.L = 0x320;		/* (800)	R0=0xff900320(-7339232) */
+ffa032d6:	ff e3 39 f3 	CALL 0xffa01948 <_printf_hex>;
+ffa032da:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900320(-7339232) */
+ffa032de:	00 e1 20 08 	R0.L = 0x820;		/* (2080)	R0=0xff900820(-7337952) */
+ffa032e2:	ff e3 37 f4 	CALL 0xffa01b50 <_printf_str>;
+ffa032e6:	01 e8 00 00 	UNLINK;
+ffa032ea:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa032ec:	bb 05       	(R7:7, P5:3) = [SP++];
+ffa032ee:	10 00       	RTS;
+ffa032f0:	0d 68       	P5 = 0x1 (X);		/*		P5=0x1(  1) */
+ffa032f2:	b4 2f       	JUMP.S 0xffa0325a <_bfin_EMAC_init+0x10a>;
+ffa032f4:	0d 68       	P5 = 0x1 (X);		/*		P5=0x1(  1) */
+ffa032f6:	97 2f       	JUMP.S 0xffa03224 <_bfin_EMAC_init+0xd4>;
+ffa032f8:	ca ac       	P2 = [P1 + 0xc];
+ffa032fa:	08 91       	R0 = [P1];
+ffa032fc:	d0 b0       	[P2 + 0xc] = R0;
+ffa032fe:	c3 2f       	JUMP.S 0xffa03284 <_bfin_EMAC_init+0x134>;
+ffa03300:	ca ac       	P2 = [P1 + 0xc];
+ffa03302:	08 91       	R0 = [P1];
+ffa03304:	d0 b0       	[P2 + 0xc] = R0;
+ffa03306:	a4 2f       	JUMP.S 0xffa0324e <_bfin_EMAC_init+0xfe>;
+ffa03308:	01 e8 00 00 	UNLINK;
+ffa0330c:	f8 63       	R0 = -0x1 (X);		/*		R0=0xffffffff( -1) */
+ffa0330e:	bb 05       	(R7:7, P5:3) = [SP++];
+ffa03310:	10 00       	RTS;
+ffa03312:	20 e1 03 08 	R0 = 0x803 (X);		/*		R0=0x803(2051) */
+ffa03316:	d0 4a       	BITSET (R0, 0x1a);		/* bit 26 */
+ffa03318:	08 30       	R1 = R0;
+ffa0331a:	d5 2f       	JUMP.S 0xffa032c4 <_bfin_EMAC_init+0x174>;
 
-ffa032dc <_bfin_EMAC_recv_poll>:
-ffa032dc:	fb 05       	[--SP] = (R7:7, P5:3);
-ffa032de:	4c e1 90 ff 	P4.H = 0xff90;		/* (-112)	P4=0xff900ebc <_txbuf> */
-ffa032e2:	4d e1 90 ff 	P5.H = 0xff90;		/* (-112)	P5=0xff900001 */
-ffa032e6:	00 e8 03 00 	LINK 0xc;		/* (12) */
-ffa032ea:	18 32       	P3 = R0;
-ffa032ec:	07 60       	R7 = 0x0 (X);		/*		R7=0x0(  0) */
-ffa032ee:	0c e1 d0 0e 	P4.L = 0xed0;		/* (3792)	P4=0xff900ed0 <_rxbuf> */
-ffa032f2:	0d e1 cc 0e 	P5.L = 0xecc;		/* (3788)	P5=0xff900ecc <_rxIdx> */
-ffa032f6:	06 20       	JUMP.S 0xffa03302 <_bfin_EMAC_recv_poll+0x26>;
-ffa032f8:	0f 64       	R7 += 0x1;		/* (  1) */
-ffa032fa:	20 e1 64 00 	R0 = 0x64 (X);		/*		R0=0x64(100) */
-ffa032fe:	07 08       	CC = R7 == R0;
-ffa03300:	54 18       	IF CC JUMP 0xffa033a8 <_bfin_EMAC_recv_poll+0xcc>;
-ffa03302:	20 e1 e8 03 	R0 = 0x3e8 (X);		/*		R0=0x3e8(1000) */
-ffa03306:	ff e3 33 f6 	CALL 0xffa01f6c <_udelay>;
-ffa0330a:	28 95       	R0 = W[P5] (Z);
-ffa0330c:	10 32       	P2 = R0;
-ffa0330e:	94 5e       	P2 = P4 + (P2 << 0x2);
-ffa03310:	52 91       	P2 = [P2];
-ffa03312:	90 a2       	R0 = [P2 + 0x28];
-ffa03314:	60 48       	CC = !BITTST (R0, 0xc);		/* bit 12 */
-ffa03316:	f1 1f       	IF CC JUMP 0xffa032f8 <_bfin_EMAC_recv_poll+0x1c> (BP);
-ffa03318:	20 e1 ff 07 	R0 = 0x7ff (X);		/*		R0=0x7ff(2047) */
-ffa0331c:	91 a2       	R1 = [P2 + 0x28];
-ffa0331e:	41 54       	R1 = R1 & R0;
-ffa03320:	20 60       	R0 = 0x4 (X);		/*		R0=0x4(  4) */
-ffa03322:	01 09       	CC = R1 <= R0;
-ffa03324:	07 10       	IF !CC JUMP 0xffa03332 <_bfin_EMAC_recv_poll+0x56>;
-ffa03326:	07 60       	R7 = 0x0 (X);		/*		R7=0x0(  0) */
-ffa03328:	07 30       	R0 = R7;
-ffa0332a:	01 e8 00 00 	UNLINK;
-ffa0332e:	bb 05       	(R7:7, P5:3) = [SP++];
-ffa03330:	10 00       	RTS;
-ffa03332:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa03334:	90 b2       	[P2 + 0x28] = R0;
-ffa03336:	39 30       	R7 = R1;
-ffa03338:	e7 67       	R7 += -0x4;		/* ( -4) */
-ffa0333a:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900000 <_l1_data_a>(-7340032) */
-ffa0333e:	0f 30       	R1 = R7;
-ffa03340:	00 e1 f8 02 	R0.L = 0x2f8;		/* (760)	R0=0xff9002f8(-7339272) */
-ffa03344:	ff e3 3e f3 	CALL 0xffa019c0 <_printf_int>;
-ffa03348:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff903000 */
-ffa0334c:	0a e1 cc 0e 	P2.L = 0xecc;		/* (3788)	P2=0xff900ecc <_rxIdx> */
-ffa03350:	10 95       	R0 = W[P2] (Z);
-ffa03352:	08 32       	P1 = R0;
-ffa03354:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900ecc <_rxIdx> */
-ffa03358:	0a e1 d0 0e 	P2.L = 0xed0;		/* (3792)	P2=0xff900ed0 <_rxbuf> */
-ffa0335c:	0f 30       	R1 = R7;
-ffa0335e:	4a 5e       	P1 = P2 + (P1 << 0x2);
-ffa03360:	4a 91       	P2 = [P1];
-ffa03362:	90 a1       	R0 = [P2 + 0x18];
-ffa03364:	18 93       	[P3] = R0;
-ffa03366:	00 e3 03 03 	CALL 0xffa0396c <_ARP_rx>;
-ffa0336a:	00 0c       	CC = R0 == 0x0;
-ffa0336c:	17 18       	IF CC JUMP 0xffa0339a <_bfin_EMAC_recv_poll+0xbe>;
-ffa0336e:	ff 63       	R7 = -0x1 (X);		/*		R7=0xffffffff( -1) */
-ffa03370:	49 e1 90 ff 	P1.H = 0xff90;		/* (-112)	P1=0xff900ebc <_txbuf> */
-ffa03374:	2a 95       	R2 = W[P5] (Z);
-ffa03376:	d1 42       	R1 = R2.L (Z);
-ffa03378:	01 32       	P0 = R1;
-ffa0337a:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa0337c:	09 e1 cc 0e 	P1.L = 0xecc;		/* (3788)	P1=0xff900ecc <_rxIdx> */
-ffa03380:	11 0d       	CC = R1 <= 0x2;
-ffa03382:	84 5e       	P2 = P4 + (P0 << 0x2);
-ffa03384:	52 91       	P2 = [P2];
-ffa03386:	90 b2       	[P2 + 0x28] = R0;
-ffa03388:	03 10       	IF !CC JUMP 0xffa0338e <_bfin_EMAC_recv_poll+0xb2>;
-ffa0338a:	02 30       	R0 = R2;
-ffa0338c:	08 64       	R0 += 0x1;		/* (  1) */
-ffa0338e:	08 97       	W[P1] = R0;
-ffa03390:	07 30       	R0 = R7;
-ffa03392:	01 e8 00 00 	UNLINK;
-ffa03396:	bb 05       	(R7:7, P5:3) = [SP++];
-ffa03398:	10 00       	RTS;
-ffa0339a:	18 91       	R0 = [P3];
+ffa0331c <_bfin_EMAC_recv_poll>:
+ffa0331c:	fb 05       	[--SP] = (R7:7, P5:3);
+ffa0331e:	4c e1 90 ff 	P4.H = 0xff90;		/* (-112)	P4=0xff900f40 <_txbuf> */
+ffa03322:	4d e1 90 ff 	P5.H = 0xff90;		/* (-112)	P5=0xff900001 */
+ffa03326:	00 e8 03 00 	LINK 0xc;		/* (12) */
+ffa0332a:	18 32       	P3 = R0;
+ffa0332c:	07 60       	R7 = 0x0 (X);		/*		R7=0x0(  0) */
+ffa0332e:	0c e1 54 0f 	P4.L = 0xf54;		/* (3924)	P4=0xff900f54 <_rxbuf> */
+ffa03332:	0d e1 50 0f 	P5.L = 0xf50;		/* (3920)	P5=0xff900f50 <_rxIdx> */
+ffa03336:	06 20       	JUMP.S 0xffa03342 <_bfin_EMAC_recv_poll+0x26>;
+ffa03338:	0f 64       	R7 += 0x1;		/* (  1) */
+ffa0333a:	20 e1 64 00 	R0 = 0x64 (X);		/*		R0=0x64(100) */
+ffa0333e:	07 08       	CC = R7 == R0;
+ffa03340:	54 18       	IF CC JUMP 0xffa033e8 <_bfin_EMAC_recv_poll+0xcc>;
+ffa03342:	20 e1 e8 03 	R0 = 0x3e8 (X);		/*		R0=0x3e8(1000) */
+ffa03346:	ff e3 33 f6 	CALL 0xffa01fac <_udelay>;
+ffa0334a:	28 95       	R0 = W[P5] (Z);
+ffa0334c:	10 32       	P2 = R0;
+ffa0334e:	94 5e       	P2 = P4 + (P2 << 0x2);
+ffa03350:	52 91       	P2 = [P2];
+ffa03352:	90 a2       	R0 = [P2 + 0x28];
+ffa03354:	60 48       	CC = !BITTST (R0, 0xc);		/* bit 12 */
+ffa03356:	f1 1f       	IF CC JUMP 0xffa03338 <_bfin_EMAC_recv_poll+0x1c> (BP);
+ffa03358:	20 e1 ff 07 	R0 = 0x7ff (X);		/*		R0=0x7ff(2047) */
+ffa0335c:	91 a2       	R1 = [P2 + 0x28];
+ffa0335e:	41 54       	R1 = R1 & R0;
+ffa03360:	20 60       	R0 = 0x4 (X);		/*		R0=0x4(  4) */
+ffa03362:	01 09       	CC = R1 <= R0;
+ffa03364:	07 10       	IF !CC JUMP 0xffa03372 <_bfin_EMAC_recv_poll+0x56>;
+ffa03366:	07 60       	R7 = 0x0 (X);		/*		R7=0x0(  0) */
+ffa03368:	07 30       	R0 = R7;
+ffa0336a:	01 e8 00 00 	UNLINK;
+ffa0336e:	bb 05       	(R7:7, P5:3) = [SP++];
+ffa03370:	10 00       	RTS;
+ffa03372:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa03374:	90 b2       	[P2 + 0x28] = R0;
+ffa03376:	39 30       	R7 = R1;
+ffa03378:	e7 67       	R7 += -0x4;		/* ( -4) */
+ffa0337a:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900000 <_l1_data_a>(-7340032) */
+ffa0337e:	0f 30       	R1 = R7;
+ffa03380:	00 e1 2c 03 	R0.L = 0x32c;		/* (812)	R0=0xff90032c(-7339220) */
+ffa03384:	ff e3 3e f3 	CALL 0xffa01a00 <_printf_int>;
+ffa03388:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff903000 */
+ffa0338c:	0a e1 50 0f 	P2.L = 0xf50;		/* (3920)	P2=0xff900f50 <_rxIdx> */
+ffa03390:	10 95       	R0 = W[P2] (Z);
+ffa03392:	08 32       	P1 = R0;
+ffa03394:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900f50 <_rxIdx> */
+ffa03398:	0a e1 54 0f 	P2.L = 0xf54;		/* (3924)	P2=0xff900f54 <_rxbuf> */
 ffa0339c:	0f 30       	R1 = R7;
-ffa0339e:	ff e3 7f fc 	CALL 0xffa02c9c <_icmp_rx>;
-ffa033a2:	00 0c       	CC = R0 == 0x0;
-ffa033a4:	e6 1f       	IF CC JUMP 0xffa03370 <_bfin_EMAC_recv_poll+0x94> (BP);
-ffa033a6:	e4 2f       	JUMP.S 0xffa0336e <_bfin_EMAC_recv_poll+0x92>;
-ffa033a8:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900000 <_l1_data_a>(-7340032) */
-ffa033ac:	00 e1 04 03 	R0.L = 0x304;		/* (772)	R0=0xff900304(-7339260) */
-ffa033b0:	ff e3 b0 f3 	CALL 0xffa01b10 <_printf_str>;
-ffa033b4:	ff 63       	R7 = -0x1 (X);		/*		R7=0xffffffff( -1) */
-ffa033b6:	07 30       	R0 = R7;
-ffa033b8:	01 e8 00 00 	UNLINK;
-ffa033bc:	bb 05       	(R7:7, P5:3) = [SP++];
-ffa033be:	10 00       	RTS;
+ffa0339e:	4a 5e       	P1 = P2 + (P1 << 0x2);
+ffa033a0:	4a 91       	P2 = [P1];
+ffa033a2:	90 a1       	R0 = [P2 + 0x18];
+ffa033a4:	18 93       	[P3] = R0;
+ffa033a6:	00 e3 21 03 	CALL 0xffa039e8 <_ARP_rx>;
+ffa033aa:	00 0c       	CC = R0 == 0x0;
+ffa033ac:	17 18       	IF CC JUMP 0xffa033da <_bfin_EMAC_recv_poll+0xbe>;
+ffa033ae:	ff 63       	R7 = -0x1 (X);		/*		R7=0xffffffff( -1) */
+ffa033b0:	49 e1 90 ff 	P1.H = 0xff90;		/* (-112)	P1=0xff900f40 <_txbuf> */
+ffa033b4:	2a 95       	R2 = W[P5] (Z);
+ffa033b6:	d1 42       	R1 = R2.L (Z);
+ffa033b8:	01 32       	P0 = R1;
+ffa033ba:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa033bc:	09 e1 50 0f 	P1.L = 0xf50;		/* (3920)	P1=0xff900f50 <_rxIdx> */
+ffa033c0:	11 0d       	CC = R1 <= 0x2;
+ffa033c2:	84 5e       	P2 = P4 + (P0 << 0x2);
+ffa033c4:	52 91       	P2 = [P2];
+ffa033c6:	90 b2       	[P2 + 0x28] = R0;
+ffa033c8:	03 10       	IF !CC JUMP 0xffa033ce <_bfin_EMAC_recv_poll+0xb2>;
+ffa033ca:	02 30       	R0 = R2;
+ffa033cc:	08 64       	R0 += 0x1;		/* (  1) */
+ffa033ce:	08 97       	W[P1] = R0;
+ffa033d0:	07 30       	R0 = R7;
+ffa033d2:	01 e8 00 00 	UNLINK;
+ffa033d6:	bb 05       	(R7:7, P5:3) = [SP++];
+ffa033d8:	10 00       	RTS;
+ffa033da:	18 91       	R0 = [P3];
+ffa033dc:	0f 30       	R1 = R7;
+ffa033de:	ff e3 7f fc 	CALL 0xffa02cdc <_icmp_rx>;
+ffa033e2:	00 0c       	CC = R0 == 0x0;
+ffa033e4:	e6 1f       	IF CC JUMP 0xffa033b0 <_bfin_EMAC_recv_poll+0x94> (BP);
+ffa033e6:	e4 2f       	JUMP.S 0xffa033ae <_bfin_EMAC_recv_poll+0x92>;
+ffa033e8:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900000 <_l1_data_a>(-7340032) */
+ffa033ec:	00 e1 38 03 	R0.L = 0x338;		/* (824)	R0=0xff900338(-7339208) */
+ffa033f0:	ff e3 b0 f3 	CALL 0xffa01b50 <_printf_str>;
+ffa033f4:	ff 63       	R7 = -0x1 (X);		/*		R7=0xffffffff( -1) */
+ffa033f6:	07 30       	R0 = R7;
+ffa033f8:	01 e8 00 00 	UNLINK;
+ffa033fc:	bb 05       	(R7:7, P5:3) = [SP++];
+ffa033fe:	10 00       	RTS;
 
-ffa033c0 <_bridge_publish>:
-ffa033c0:	e3 05       	[--SP] = (R7:4, P5:3);
-ffa033c2:	00 e8 07 00 	LINK 0x1c;		/* (28) */
-ffa033c6:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
-ffa033c8:	b8 e6 ff ff 	B[FP + -0x1] = R0;
-ffa033cc:	4d e1 90 ff 	P5.H = 0xff90;		/* (-112)	P5=0xff900ecc <_rxIdx> */
-ffa033d0:	40 e1 c8 00 	R0.H = 0xc8;		/* (200)	R0=0xc80001(13107201) */
-ffa033d4:	0d e1 f0 0e 	P5.L = 0xef0;		/* (3824)	P5=0xff900ef0 <_NetDataDestIP> */
-ffa033d8:	00 e1 ef 00 	R0.L = 0xef;		/* (239)	R0=0xc800ef(13107439) */
-ffa033dc:	67 32       	P4 = FP;
-ffa033de:	5f 32       	P3 = FP;
-ffa033e0:	77 30       	R6 = FP;
-ffa033e2:	45 e1 0b e5 	R5.H = 0xe50b;		/* (-6901)	R5=0xe50b0009(-452263927) */
-ffa033e6:	28 93       	[P5] = R0;
-ffa033e8:	04 60       	R4 = 0x0 (X);		/*		R4=0x0(  0) */
-ffa033ea:	c4 6f       	P4 += -0x8;		/* ( -8) */
-ffa033ec:	fb 6f       	P3 += -0x1;		/* ( -1) */
-ffa033ee:	a6 67       	R6 += -0xc;		/* (-12) */
-ffa033f0:	05 e1 81 f7 	R5.L = 0xf781;		/* (-2175)	R5=0xe50bf781(-452200575) */
-ffa033f4:	b0 61       	R0 = 0x36 (X);		/*		R0=0x36( 54) */
-ffa033f6:	e0 bb       	[FP -0x8] = R0;
-ffa033f8:	4b 30       	R1 = P3;
-ffa033fa:	44 30       	R0 = P4;
-ffa033fc:	2a 91       	R2 = [P5];
-ffa033fe:	ff e3 c1 fb 	CALL 0xffa02b80 <_eth_header_setup>;
-ffa03402:	08 30       	R1 = R0;
-ffa03404:	b8 e5 ff ff 	R0 = B[FP + -0x1] (X);
-ffa03408:	80 0c       	CC = R0 < 0x0;
-ffa0340a:	98 18       	IF CC JUMP 0xffa0353a <_bridge_publish+0x17a>;
-ffa0340c:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900ed0 <_rxbuf> */
-ffa03410:	0a e1 f0 0e 	P2.L = 0xef0;		/* (3824)	P2=0xff900ef0 <_NetDataDestIP> */
-ffa03414:	d1 bb       	[FP -0xc] = R1;
-ffa03416:	12 91       	R2 = [P2];
-ffa03418:	88 60       	R0 = 0x11 (X);		/*		R0=0x11( 17) */
-ffa0341a:	f0 b0       	[SP + 0xc] = R0;
-ffa0341c:	01 30       	R0 = R1;
-ffa0341e:	4c 30       	R1 = P4;
-ffa03420:	ff e3 e6 f6 	CALL 0xffa021ec <_ip_header_setup>;
-ffa03424:	10 32       	P2 = R0;
-ffa03426:	21 e1 10 f4 	R1 = -0xbf0 (X);		/*		R1=0xfffff410(-3056) */
-ffa0342a:	20 e1 10 f5 	R0 = -0xaf0 (X);		/*		R0=0xfffff510(-2800) */
-ffa0342e:	ba e4 f9 ff 	R2 = B[FP + -0x7] (Z);
-ffa03432:	07 60       	R7 = 0x0 (X);		/*		R7=0x0(  0) */
-ffa03434:	51 b4       	W[P2 + 0x2] = R1;
-ffa03436:	10 97       	W[P2] = R0;
-ffa03438:	e1 b9       	R1 = [FP -0x8];
-ffa0343a:	82 c6 41 80 	R0 = R1 << 0x8;
-ffa0343e:	10 56       	R0 = R0 | R2;
-ffa03440:	90 b4       	W[P2 + 0x4] = R0;
-ffa03442:	c1 67       	R1 += -0x8;		/* ( -8) */
-ffa03444:	e1 bb       	[FP -0x8] = R1;
-ffa03446:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa03448:	d0 b4       	W[P2 + 0x6] = R0;
-ffa0344a:	4a 30       	R1 = P2;
-ffa0344c:	41 64       	R1 += 0x8;		/* (  8) */
-ffa0344e:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900000 <_l1_data_a>(-7340032) */
-ffa03452:	d1 bb       	[FP -0xc] = R1;
-ffa03454:	52 60       	R2 = 0xa (X);		/*		R2=0xa( 10) */
-ffa03456:	00 e1 14 03 	R0.L = 0x314;		/* (788)	R0=0xff900314(-7339244) */
-ffa0345a:	ff e3 a9 f3 	CALL 0xffa01bac <_memcpy_>;
-ffa0345e:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900314(-7339244) */
-ffa03462:	00 e1 20 03 	R0.L = 0x320;		/* (800)	R0=0xff900320(-7339232) */
-ffa03466:	ff e3 55 f3 	CALL 0xffa01b10 <_printf_str>;
-ffa0346a:	ff e3 ab f7 	CALL 0xffa023c0 <_bfin_EMAC_send_nocopy>;
-ffa0346e:	05 20       	JUMP.S 0xffa03478 <_bridge_publish+0xb8>;
-ffa03470:	0f 64       	R7 += 0x1;		/* (  1) */
-ffa03472:	50 60       	R0 = 0xa (X);		/*		R0=0xa( 10) */
-ffa03474:	07 08       	CC = R7 == R0;
-ffa03476:	45 18       	IF CC JUMP 0xffa03500 <_bridge_publish+0x140>;
-ffa03478:	06 30       	R0 = R6;
-ffa0347a:	ff e3 31 ff 	CALL 0xffa032dc <_bfin_EMAC_recv_poll>;
-ffa0347e:	59 61       	R1 = 0x2b (X);		/*		R1=0x2b( 43) */
-ffa03480:	e0 bb       	[FP -0x8] = R0;
-ffa03482:	da b9       	P2 = [FP -0xc];
-ffa03484:	08 09       	CC = R0 <= R1;
-ffa03486:	f5 1f       	IF CC JUMP 0xffa03470 <_bridge_publish+0xb0> (BP);
-ffa03488:	d0 a9       	R0 = W[P2 + 0xe] (X);
-ffa0348a:	91 e4 0f 00 	R1 = B[P2 + 0xf] (Z);
-ffa0348e:	40 4f       	R0 <<= 0x8;
-ffa03490:	08 56       	R0 = R0 | R1;
-ffa03492:	c0 42       	R0 = R0.L (Z);
-ffa03494:	21 e1 00 08 	R1 = 0x800 (X);		/*		R1=0x800(2048) */
-ffa03498:	08 08       	CC = R0 == R1;
-ffa0349a:	eb 17       	IF !CC JUMP 0xffa03470 <_bridge_publish+0xb0> (BP);
-ffa0349c:	50 e4 12 00 	R0 = W[P2 + 0x24] (Z);
-ffa034a0:	81 e1 10 f4 	R1 = 0xf410 (Z);		/*		R1=0xf410(62480) */
-ffa034a4:	08 08       	CC = R0 == R1;
-ffa034a6:	e5 17       	IF !CC JUMP 0xffa03470 <_bridge_publish+0xb0> (BP);
-ffa034a8:	50 e4 13 00 	R0 = W[P2 + 0x26] (Z);
-ffa034ac:	81 e1 10 f5 	R1 = 0xf510 (Z);		/*		R1=0xf510(62736) */
-ffa034b0:	08 08       	CC = R0 == R1;
-ffa034b2:	df 17       	IF !CC JUMP 0xffa03470 <_bridge_publish+0xb0> (BP);
-ffa034b4:	d1 a1       	R1 = [P2 + 0x1c];
-ffa034b6:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff90000a(-7340022) */
-ffa034ba:	29 93       	[P5] = R1;
-ffa034bc:	00 e1 38 03 	R0.L = 0x338;		/* (824)	R0=0xff900338(-7339208) */
-ffa034c0:	ff e3 2e f3 	CALL 0xffa01b1c <_printf_ip>;
-ffa034c4:	da b9       	P2 = [FP -0xc];
-ffa034c6:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900338(-7339208) */
-ffa034ca:	00 e1 44 03 	R0.L = 0x344;		/* (836)	R0=0xff900344(-7339196) */
-ffa034ce:	62 6d       	P2 += 0x2c;		/* ( 44) */
-ffa034d0:	da bb       	[FP -0xc] = P2;
-ffa034d2:	a2 6e       	P2 += -0x2c;		/* (-44) */
-ffa034d4:	91 e4 2c 00 	R1 = B[P2 + 0x2c] (Z);
-ffa034d8:	ff e3 c2 f1 	CALL 0xffa0185c <_printf_hex_byte>;
-ffa034dc:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900344(-7339196) */
-ffa034e0:	00 e1 50 03 	R0.L = 0x350;		/* (848)	R0=0xff900350(-7339184) */
-ffa034e4:	ff e3 16 f3 	CALL 0xffa01b10 <_printf_str>;
-ffa034e8:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900ef0 <_NetDataDestIP> */
-ffa034ec:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
-ffa034ee:	0a e1 40 0c 	P2.L = 0xc40;		/* (3136)	P2=0xff900c40 <_g_streamEnabled> */
-ffa034f2:	10 9b       	B[P2] = R0;
-ffa034f4:	da b9       	P2 = [FP -0xc];
-ffa034f6:	01 e8 00 00 	UNLINK;
-ffa034fa:	a3 05       	(R7:4, P5:3) = [SP++];
-ffa034fc:	50 99       	R0 = B[P2] (X);
-ffa034fe:	10 00       	RTS;
-ffa03500:	ff e3 54 e6 	CALL 0xffa001a8 <_ustimer>;
-ffa03504:	08 4e       	R0 >>= 0x1;
-ffa03506:	80 c0 05 18 	A1 = R0.L * R5.L (FU);
-ffa0350a:	83 c6 80 51 	A1 = A1 >> 0x10;
-ffa0350e:	81 c0 05 86 	A1 += R0.H * R5.L, A0 = R0.H * R5.H (FU);
-ffa03512:	81 c0 28 98 	A1 += R5.H * R0.L (FU);
-ffa03516:	83 c6 80 51 	A1 = A1 >> 0x10;
-ffa0351a:	0b c4 3f 80 	A0 += A1;
-ffa0351e:	8b c0 00 38 	R0 = A0 (FU);
-ffa03522:	58 4e       	R0 >>= 0xb;
-ffa03524:	20 08       	CC = R0 == R4;
-ffa03526:	67 1b       	IF CC JUMP 0xffa033f4 <_bridge_publish+0x34>;
-ffa03528:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00c40(-4191168) */
-ffa0352c:	21 e1 00 80 	R1 = -0x8000 (X);		/*		R1=0xffff8000(-32768) */
-ffa03530:	0a e1 0c 07 	P2.L = 0x70c;		/* (1804)	P2=0xffc0070c(-4192500) */
-ffa03534:	11 97       	W[P2] = R1;
-ffa03536:	20 30       	R4 = R0;
-ffa03538:	5e 2f       	JUMP.S 0xffa033f4 <_bridge_publish+0x34>;
-ffa0353a:	01 e8 00 00 	UNLINK;
-ffa0353e:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa03540:	a3 05       	(R7:4, P5:3) = [SP++];
-ffa03542:	10 00       	RTS;
+ffa03400 <_bridge_publish>:
+ffa03400:	e3 05       	[--SP] = (R7:4, P5:3);
+ffa03402:	00 e8 07 00 	LINK 0x1c;		/* (28) */
+ffa03406:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
+ffa03408:	b8 e6 ff ff 	B[FP + -0x1] = R0;
+ffa0340c:	4d e1 90 ff 	P5.H = 0xff90;		/* (-112)	P5=0xff900f50 <_rxIdx> */
+ffa03410:	40 e1 c8 00 	R0.H = 0xc8;		/* (200)	R0=0xc80001(13107201) */
+ffa03414:	0d e1 74 0f 	P5.L = 0xf74;		/* (3956)	P5=0xff900f74 <_NetDataDestIP> */
+ffa03418:	00 e1 ef 00 	R0.L = 0xef;		/* (239)	R0=0xc800ef(13107439) */
+ffa0341c:	67 32       	P4 = FP;
+ffa0341e:	5f 32       	P3 = FP;
+ffa03420:	77 30       	R6 = FP;
+ffa03422:	45 e1 0b e5 	R5.H = 0xe50b;		/* (-6901)	R5=0xe50b0009(-452263927) */
+ffa03426:	28 93       	[P5] = R0;
+ffa03428:	04 60       	R4 = 0x0 (X);		/*		R4=0x0(  0) */
+ffa0342a:	c4 6f       	P4 += -0x8;		/* ( -8) */
+ffa0342c:	fb 6f       	P3 += -0x1;		/* ( -1) */
+ffa0342e:	a6 67       	R6 += -0xc;		/* (-12) */
+ffa03430:	05 e1 81 f7 	R5.L = 0xf781;		/* (-2175)	R5=0xe50bf781(-452200575) */
+ffa03434:	b0 61       	R0 = 0x36 (X);		/*		R0=0x36( 54) */
+ffa03436:	e0 bb       	[FP -0x8] = R0;
+ffa03438:	4b 30       	R1 = P3;
+ffa0343a:	44 30       	R0 = P4;
+ffa0343c:	2a 91       	R2 = [P5];
+ffa0343e:	ff e3 c1 fb 	CALL 0xffa02bc0 <_eth_header_setup>;
+ffa03442:	08 30       	R1 = R0;
+ffa03444:	b8 e5 ff ff 	R0 = B[FP + -0x1] (X);
+ffa03448:	80 0c       	CC = R0 < 0x0;
+ffa0344a:	98 18       	IF CC JUMP 0xffa0357a <_bridge_publish+0x17a>;
+ffa0344c:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900f54 <_rxbuf> */
+ffa03450:	0a e1 74 0f 	P2.L = 0xf74;		/* (3956)	P2=0xff900f74 <_NetDataDestIP> */
+ffa03454:	d1 bb       	[FP -0xc] = R1;
+ffa03456:	12 91       	R2 = [P2];
+ffa03458:	88 60       	R0 = 0x11 (X);		/*		R0=0x11( 17) */
+ffa0345a:	f0 b0       	[SP + 0xc] = R0;
+ffa0345c:	01 30       	R0 = R1;
+ffa0345e:	4c 30       	R1 = P4;
+ffa03460:	ff e3 e6 f6 	CALL 0xffa0222c <_ip_header_setup>;
+ffa03464:	10 32       	P2 = R0;
+ffa03466:	21 e1 10 f4 	R1 = -0xbf0 (X);		/*		R1=0xfffff410(-3056) */
+ffa0346a:	20 e1 10 f5 	R0 = -0xaf0 (X);		/*		R0=0xfffff510(-2800) */
+ffa0346e:	ba e4 f9 ff 	R2 = B[FP + -0x7] (Z);
+ffa03472:	07 60       	R7 = 0x0 (X);		/*		R7=0x0(  0) */
+ffa03474:	51 b4       	W[P2 + 0x2] = R1;
+ffa03476:	10 97       	W[P2] = R0;
+ffa03478:	e1 b9       	R1 = [FP -0x8];
+ffa0347a:	82 c6 41 80 	R0 = R1 << 0x8;
+ffa0347e:	10 56       	R0 = R0 | R2;
+ffa03480:	90 b4       	W[P2 + 0x4] = R0;
+ffa03482:	c1 67       	R1 += -0x8;		/* ( -8) */
+ffa03484:	e1 bb       	[FP -0x8] = R1;
+ffa03486:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa03488:	d0 b4       	W[P2 + 0x6] = R0;
+ffa0348a:	4a 30       	R1 = P2;
+ffa0348c:	41 64       	R1 += 0x8;		/* (  8) */
+ffa0348e:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900000 <_l1_data_a>(-7340032) */
+ffa03492:	d1 bb       	[FP -0xc] = R1;
+ffa03494:	52 60       	R2 = 0xa (X);		/*		R2=0xa( 10) */
+ffa03496:	00 e1 48 03 	R0.L = 0x348;		/* (840)	R0=0xff900348(-7339192) */
+ffa0349a:	ff e3 a9 f3 	CALL 0xffa01bec <_memcpy_>;
+ffa0349e:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900348(-7339192) */
+ffa034a2:	00 e1 54 03 	R0.L = 0x354;		/* (852)	R0=0xff900354(-7339180) */
+ffa034a6:	ff e3 55 f3 	CALL 0xffa01b50 <_printf_str>;
+ffa034aa:	ff e3 ab f7 	CALL 0xffa02400 <_bfin_EMAC_send_nocopy>;
+ffa034ae:	05 20       	JUMP.S 0xffa034b8 <_bridge_publish+0xb8>;
+ffa034b0:	0f 64       	R7 += 0x1;		/* (  1) */
+ffa034b2:	50 60       	R0 = 0xa (X);		/*		R0=0xa( 10) */
+ffa034b4:	07 08       	CC = R7 == R0;
+ffa034b6:	45 18       	IF CC JUMP 0xffa03540 <_bridge_publish+0x140>;
+ffa034b8:	06 30       	R0 = R6;
+ffa034ba:	ff e3 31 ff 	CALL 0xffa0331c <_bfin_EMAC_recv_poll>;
+ffa034be:	59 61       	R1 = 0x2b (X);		/*		R1=0x2b( 43) */
+ffa034c0:	e0 bb       	[FP -0x8] = R0;
+ffa034c2:	da b9       	P2 = [FP -0xc];
+ffa034c4:	08 09       	CC = R0 <= R1;
+ffa034c6:	f5 1f       	IF CC JUMP 0xffa034b0 <_bridge_publish+0xb0> (BP);
+ffa034c8:	d0 a9       	R0 = W[P2 + 0xe] (X);
+ffa034ca:	91 e4 0f 00 	R1 = B[P2 + 0xf] (Z);
+ffa034ce:	40 4f       	R0 <<= 0x8;
+ffa034d0:	08 56       	R0 = R0 | R1;
+ffa034d2:	c0 42       	R0 = R0.L (Z);
+ffa034d4:	21 e1 00 08 	R1 = 0x800 (X);		/*		R1=0x800(2048) */
+ffa034d8:	08 08       	CC = R0 == R1;
+ffa034da:	eb 17       	IF !CC JUMP 0xffa034b0 <_bridge_publish+0xb0> (BP);
+ffa034dc:	50 e4 12 00 	R0 = W[P2 + 0x24] (Z);
+ffa034e0:	81 e1 10 f4 	R1 = 0xf410 (Z);		/*		R1=0xf410(62480) */
+ffa034e4:	08 08       	CC = R0 == R1;
+ffa034e6:	e5 17       	IF !CC JUMP 0xffa034b0 <_bridge_publish+0xb0> (BP);
+ffa034e8:	50 e4 13 00 	R0 = W[P2 + 0x26] (Z);
+ffa034ec:	81 e1 10 f5 	R1 = 0xf510 (Z);		/*		R1=0xf510(62736) */
+ffa034f0:	08 08       	CC = R0 == R1;
+ffa034f2:	df 17       	IF !CC JUMP 0xffa034b0 <_bridge_publish+0xb0> (BP);
+ffa034f4:	d1 a1       	R1 = [P2 + 0x1c];
+ffa034f6:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff90000a(-7340022) */
+ffa034fa:	29 93       	[P5] = R1;
+ffa034fc:	00 e1 6c 03 	R0.L = 0x36c;		/* (876)	R0=0xff90036c(-7339156) */
+ffa03500:	ff e3 2e f3 	CALL 0xffa01b5c <_printf_ip>;
+ffa03504:	da b9       	P2 = [FP -0xc];
+ffa03506:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff90036c(-7339156) */
+ffa0350a:	00 e1 78 03 	R0.L = 0x378;		/* (888)	R0=0xff900378(-7339144) */
+ffa0350e:	62 6d       	P2 += 0x2c;		/* ( 44) */
+ffa03510:	da bb       	[FP -0xc] = P2;
+ffa03512:	a2 6e       	P2 += -0x2c;		/* (-44) */
+ffa03514:	91 e4 2c 00 	R1 = B[P2 + 0x2c] (Z);
+ffa03518:	ff e3 c2 f1 	CALL 0xffa0189c <_printf_hex_byte>;
+ffa0351c:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900378(-7339144) */
+ffa03520:	00 e1 84 03 	R0.L = 0x384;		/* (900)	R0=0xff900384(-7339132) */
+ffa03524:	ff e3 16 f3 	CALL 0xffa01b50 <_printf_str>;
+ffa03528:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900f74 <_NetDataDestIP> */
+ffa0352c:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
+ffa0352e:	0a e1 c4 0c 	P2.L = 0xcc4;		/* (3268)	P2=0xff900cc4 <_g_streamEnabled> */
+ffa03532:	10 9b       	B[P2] = R0;
+ffa03534:	da b9       	P2 = [FP -0xc];
+ffa03536:	01 e8 00 00 	UNLINK;
+ffa0353a:	a3 05       	(R7:4, P5:3) = [SP++];
+ffa0353c:	50 99       	R0 = B[P2] (X);
+ffa0353e:	10 00       	RTS;
+ffa03540:	ff e3 34 e6 	CALL 0xffa001a8 <_ustimer>;
+ffa03544:	08 4e       	R0 >>= 0x1;
+ffa03546:	80 c0 05 18 	A1 = R0.L * R5.L (FU);
+ffa0354a:	83 c6 80 51 	A1 = A1 >> 0x10;
+ffa0354e:	81 c0 05 86 	A1 += R0.H * R5.L, A0 = R0.H * R5.H (FU);
+ffa03552:	81 c0 28 98 	A1 += R5.H * R0.L (FU);
+ffa03556:	83 c6 80 51 	A1 = A1 >> 0x10;
+ffa0355a:	0b c4 3f 80 	A0 += A1;
+ffa0355e:	8b c0 00 38 	R0 = A0 (FU);
+ffa03562:	58 4e       	R0 >>= 0xb;
+ffa03564:	20 08       	CC = R0 == R4;
+ffa03566:	67 1b       	IF CC JUMP 0xffa03434 <_bridge_publish+0x34>;
+ffa03568:	4a e1 c0 ff 	P2.H = 0xffc0;		/* (-64)	P2=0xffc00cc4(-4191036) */
+ffa0356c:	21 e1 00 80 	R1 = -0x8000 (X);		/*		R1=0xffff8000(-32768) */
+ffa03570:	0a e1 0c 07 	P2.L = 0x70c;		/* (1804)	P2=0xffc0070c(-4192500) */
+ffa03574:	11 97       	W[P2] = R1;
+ffa03576:	20 30       	R4 = R0;
+ffa03578:	5e 2f       	JUMP.S 0xffa03434 <_bridge_publish+0x34>;
+ffa0357a:	01 e8 00 00 	UNLINK;
+ffa0357e:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa03580:	a3 05       	(R7:4, P5:3) = [SP++];
+ffa03582:	10 00       	RTS;
 
-ffa03544 <_DHCP_rx>:
-ffa03544:	e3 05       	[--SP] = (R7:4, P5:3);
-ffa03546:	00 e8 04 00 	LINK 0x10;		/* (16) */
-ffa0354a:	67 32       	P4 = FP;
-ffa0354c:	4b e1 c0 ff 	P3.H = 0xffc0;		/* (-64)	P3=0xffc00ed0(-4190512) */
-ffa03550:	e4 6f       	P4 += -0x4;		/* ( -4) */
-ffa03552:	24 e1 e4 fe 	R4 = -0x11c (X);		/*		R4=0xfffffee4(-284) */
-ffa03556:	0b e1 04 30 	P3.L = 0x3004;		/* (12292)	P3=0xffc03004(-4182012) */
-ffa0355a:	06 60       	R6 = 0x0 (X);		/*		R6=0x0(  0) */
-ffa0355c:	0b 20       	JUMP.S 0xffa03572 <_DHCP_rx+0x2e>;
-ffa0355e:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900000 <_l1_data_a>(-7340032) */
-ffa03562:	00 e1 64 03 	R0.L = 0x364;		/* (868)	R0=0xff900364(-7339164) */
-ffa03566:	ff e3 d5 f2 	CALL 0xffa01b10 <_printf_str>;
-ffa0356a:	0e 64       	R6 += 0x1;		/* (  1) */
-ffa0356c:	60 60       	R0 = 0xc (X);		/*		R0=0xc( 12) */
-ffa0356e:	06 09       	CC = R6 <= R0;
-ffa03570:	5a 10       	IF !CC JUMP 0xffa03624 <_DHCP_rx+0xe0>;
-ffa03572:	44 30       	R0 = P4;
-ffa03574:	ff e3 b4 fe 	CALL 0xffa032dc <_bfin_EMAC_recv_poll>;
-ffa03578:	38 30       	R7 = R0;
-ffa0357a:	60 51       	R5 = R0 + R4;
-ffa0357c:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff90000c(-7340020) */
-ffa03580:	0d 30       	R1 = R5;
-ffa03582:	00 e1 80 03 	R0.L = 0x380;		/* (896)	R0=0xff900380(-7339136) */
-ffa03586:	ff e3 1d f2 	CALL 0xffa019c0 <_printf_int>;
-ffa0358a:	21 e1 1b 01 	R1 = 0x11b (X);		/*		R1=0x11b(283) */
-ffa0358e:	fd b9       	P5 = [FP -0x4];
-ffa03590:	0f 09       	CC = R7 <= R1;
-ffa03592:	e6 1b       	IF CC JUMP 0xffa0355e <_DHCP_rx+0x1a>;
-ffa03594:	00 00       	NOP;
-ffa03596:	00 00       	NOP;
-ffa03598:	00 00       	NOP;
-ffa0359a:	e8 a9       	R0 = W[P5 + 0xe] (X);
-ffa0359c:	a9 e4 0f 00 	R1 = B[P5 + 0xf] (Z);
-ffa035a0:	40 4f       	R0 <<= 0x8;
-ffa035a2:	08 56       	R0 = R0 | R1;
-ffa035a4:	c0 42       	R0 = R0.L (Z);
-ffa035a6:	21 e1 00 08 	R1 = 0x800 (X);		/*		R1=0x800(2048) */
-ffa035aa:	08 08       	CC = R0 == R1;
-ffa035ac:	d9 17       	IF !CC JUMP 0xffa0355e <_DHCP_rx+0x1a> (BP);
-ffa035ae:	68 e4 12 00 	R0 = W[P5 + 0x24] (Z);
-ffa035b2:	21 e1 00 43 	R1 = 0x4300 (X);		/*		R1=0x4300(17152) */
-ffa035b6:	08 08       	CC = R0 == R1;
-ffa035b8:	da 17       	IF !CC JUMP 0xffa0356c <_DHCP_rx+0x28> (BP);
-ffa035ba:	68 e4 13 00 	R0 = W[P5 + 0x26] (Z);
-ffa035be:	21 e1 00 44 	R1 = 0x4400 (X);		/*		R1=0x4400(17408) */
-ffa035c2:	08 08       	CC = R0 == R1;
-ffa035c4:	d4 17       	IF !CC JUMP 0xffa0356c <_DHCP_rx+0x28> (BP);
-ffa035c6:	19 91       	R1 = [P3];
-ffa035c8:	28 a3       	R0 = [P5 + 0x30];
-ffa035ca:	08 08       	CC = R0 == R1;
-ffa035cc:	d0 17       	IF !CC JUMP 0xffa0356c <_DHCP_rx+0x28> (BP);
-ffa035ce:	41 e1 53 63 	R1.H = 0x6353;		/* (25427)	R1=0x63534400(1666401280) */
-ffa035d2:	28 e4 46 00 	R0 = [P5 + 0x118];
-ffa035d6:	01 e1 63 82 	R1.L = 0x8263;		/* (-32157)	R1=0x63538263(1666417251) */
-ffa035da:	08 08       	CC = R0 == R1;
-ffa035dc:	c8 17       	IF !CC JUMP 0xffa0356c <_DHCP_rx+0x28> (BP);
-ffa035de:	4d 30       	R1 = P5;
-ffa035e0:	20 e1 1c 01 	R0 = 0x11c (X);		/*		R0=0x11c(284) */
-ffa035e4:	01 50       	R0 = R1 + R0;
-ffa035e6:	82 ce 05 c2 	R1 = ROT R5 BY 0x0 || [FP -0x4] = R0 || NOP;
-ffa035ea:	f0 bb 00 00 
-ffa035ee:	ff e3 5d f8 	CALL 0xffa026a8 <_DHCP_parse>;
-ffa035f2:	e9 a3       	R1 = [P5 + 0x3c];
-ffa035f4:	01 0c       	CC = R1 == 0x0;
-ffa035f6:	12 1c       	IF CC JUMP 0xffa0361a <_DHCP_rx+0xd6> (BP);
-ffa035f8:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff90070c */
-ffa035fc:	0a e1 ec 0e 	P2.L = 0xeec;		/* (3820)	P2=0xff900eec <_NetOurIP> */
-ffa03600:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff90011c(-7339748) */
-ffa03604:	11 93       	[P2] = R1;
-ffa03606:	00 e1 54 03 	R0.L = 0x354;		/* (852)	R0=0xff900354(-7339180) */
-ffa0360a:	ff e3 89 f2 	CALL 0xffa01b1c <_printf_ip>;
-ffa0360e:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900354(-7339180) */
-ffa03612:	00 e1 9c 07 	R0.L = 0x79c;		/* (1948)	R0=0xff90079c(-7338084) */
-ffa03616:	ff e3 7d f2 	CALL 0xffa01b10 <_printf_str>;
-ffa0361a:	01 e8 00 00 	UNLINK;
-ffa0361e:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
-ffa03620:	a3 05       	(R7:4, P5:3) = [SP++];
-ffa03622:	10 00       	RTS;
-ffa03624:	ff e3 1e f8 	CALL 0xffa02660 <_DHCP_tx_discover>;
-ffa03628:	99 2f       	JUMP.S 0xffa0355a <_DHCP_rx+0x16>;
+ffa03584 <_DHCP_rx>:
+ffa03584:	e3 05       	[--SP] = (R7:4, P5:3);
+ffa03586:	00 e8 04 00 	LINK 0x10;		/* (16) */
+ffa0358a:	67 32       	P4 = FP;
+ffa0358c:	4b e1 c0 ff 	P3.H = 0xffc0;		/* (-64)	P3=0xffc00f54(-4190380) */
+ffa03590:	e4 6f       	P4 += -0x4;		/* ( -4) */
+ffa03592:	24 e1 e4 fe 	R4 = -0x11c (X);		/*		R4=0xfffffee4(-284) */
+ffa03596:	0b e1 04 30 	P3.L = 0x3004;		/* (12292)	P3=0xffc03004(-4182012) */
+ffa0359a:	06 60       	R6 = 0x0 (X);		/*		R6=0x0(  0) */
+ffa0359c:	0b 20       	JUMP.S 0xffa035b2 <_DHCP_rx+0x2e>;
+ffa0359e:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900000 <_l1_data_a>(-7340032) */
+ffa035a2:	00 e1 a8 03 	R0.L = 0x3a8;		/* (936)	R0=0xff9003a8(-7339096) */
+ffa035a6:	ff e3 d5 f2 	CALL 0xffa01b50 <_printf_str>;
+ffa035aa:	0e 64       	R6 += 0x1;		/* (  1) */
+ffa035ac:	60 60       	R0 = 0xc (X);		/*		R0=0xc( 12) */
+ffa035ae:	06 09       	CC = R6 <= R0;
+ffa035b0:	66 10       	IF !CC JUMP 0xffa0367c <_DHCP_rx+0xf8>;
+ffa035b2:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff90000c(-7340020) */
+ffa035b6:	00 e1 c8 03 	R0.L = 0x3c8;		/* (968)	R0=0xff9003c8(-7339064) */
+ffa035ba:	ff e3 cb f2 	CALL 0xffa01b50 <_printf_str>;
+ffa035be:	44 30       	R0 = P4;
+ffa035c0:	ff e3 ae fe 	CALL 0xffa0331c <_bfin_EMAC_recv_poll>;
+ffa035c4:	38 30       	R7 = R0;
+ffa035c6:	60 51       	R5 = R0 + R4;
+ffa035c8:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff9003c8(-7339064) */
+ffa035cc:	0d 30       	R1 = R5;
+ffa035ce:	00 e1 d8 03 	R0.L = 0x3d8;		/* (984)	R0=0xff9003d8(-7339048) */
+ffa035d2:	ff e3 17 f2 	CALL 0xffa01a00 <_printf_int>;
+ffa035d6:	21 e1 1b 01 	R1 = 0x11b (X);		/*		R1=0x11b(283) */
+ffa035da:	fd b9       	P5 = [FP -0x4];
+ffa035dc:	0f 09       	CC = R7 <= R1;
+ffa035de:	e0 1b       	IF CC JUMP 0xffa0359e <_DHCP_rx+0x1a>;
+ffa035e0:	00 00       	NOP;
+ffa035e2:	00 00       	NOP;
+ffa035e4:	00 00       	NOP;
+ffa035e6:	e8 a9       	R0 = W[P5 + 0xe] (X);
+ffa035e8:	a9 e4 0f 00 	R1 = B[P5 + 0xf] (Z);
+ffa035ec:	40 4f       	R0 <<= 0x8;
+ffa035ee:	08 56       	R0 = R0 | R1;
+ffa035f0:	c0 42       	R0 = R0.L (Z);
+ffa035f2:	21 e1 00 08 	R1 = 0x800 (X);		/*		R1=0x800(2048) */
+ffa035f6:	08 08       	CC = R0 == R1;
+ffa035f8:	d3 17       	IF !CC JUMP 0xffa0359e <_DHCP_rx+0x1a> (BP);
+ffa035fa:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff9003d8(-7339048) */
+ffa035fe:	00 e1 88 03 	R0.L = 0x388;		/* (904)	R0=0xff900388(-7339128) */
+ffa03602:	ff e3 a7 f2 	CALL 0xffa01b50 <_printf_str>;
+ffa03606:	68 e4 12 00 	R0 = W[P5 + 0x24] (Z);
+ffa0360a:	21 e1 00 43 	R1 = 0x4300 (X);		/*		R1=0x4300(17152) */
+ffa0360e:	08 08       	CC = R0 == R1;
+ffa03610:	ce 17       	IF !CC JUMP 0xffa035ac <_DHCP_rx+0x28> (BP);
+ffa03612:	68 e4 13 00 	R0 = W[P5 + 0x26] (Z);
+ffa03616:	21 e1 00 44 	R1 = 0x4400 (X);		/*		R1=0x4400(17408) */
+ffa0361a:	08 08       	CC = R0 == R1;
+ffa0361c:	c8 17       	IF !CC JUMP 0xffa035ac <_DHCP_rx+0x28> (BP);
+ffa0361e:	19 91       	R1 = [P3];
+ffa03620:	28 a3       	R0 = [P5 + 0x30];
+ffa03622:	08 08       	CC = R0 == R1;
+ffa03624:	c4 17       	IF !CC JUMP 0xffa035ac <_DHCP_rx+0x28> (BP);
+ffa03626:	41 e1 53 63 	R1.H = 0x6353;		/* (25427)	R1=0x63534400(1666401280) */
+ffa0362a:	28 e4 46 00 	R0 = [P5 + 0x118];
+ffa0362e:	01 e1 63 82 	R1.L = 0x8263;		/* (-32157)	R1=0x63538263(1666417251) */
+ffa03632:	08 08       	CC = R0 == R1;
+ffa03634:	bc 17       	IF !CC JUMP 0xffa035ac <_DHCP_rx+0x28> (BP);
+ffa03636:	4d 30       	R1 = P5;
+ffa03638:	20 e1 1c 01 	R0 = 0x11c (X);		/*		R0=0x11c(284) */
+ffa0363c:	01 50       	R0 = R1 + R0;
+ffa0363e:	82 ce 05 c2 	R1 = ROT R5 BY 0x0 || [FP -0x4] = R0 || NOP;
+ffa03642:	f0 bb 00 00 
+ffa03646:	ff e3 51 f8 	CALL 0xffa026e8 <_DHCP_parse>;
+ffa0364a:	e9 a3       	R1 = [P5 + 0x3c];
+ffa0364c:	01 0c       	CC = R1 == 0x0;
+ffa0364e:	12 1c       	IF CC JUMP 0xffa03672 <_DHCP_rx+0xee> (BP);
+ffa03650:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff90070c */
+ffa03654:	0a e1 70 0f 	P2.L = 0xf70;		/* (3952)	P2=0xff900f70 <_NetOurIP> */
+ffa03658:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff90011c(-7339748) */
+ffa0365c:	11 93       	[P2] = R1;
+ffa0365e:	00 e1 98 03 	R0.L = 0x398;		/* (920)	R0=0xff900398(-7339112) */
+ffa03662:	ff e3 7d f2 	CALL 0xffa01b5c <_printf_ip>;
+ffa03666:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900398(-7339112) */
+ffa0366a:	00 e1 20 08 	R0.L = 0x820;		/* (2080)	R0=0xff900820(-7337952) */
+ffa0366e:	ff e3 71 f2 	CALL 0xffa01b50 <_printf_str>;
+ffa03672:	01 e8 00 00 	UNLINK;
+ffa03676:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
+ffa03678:	a3 05       	(R7:4, P5:3) = [SP++];
+ffa0367a:	10 00       	RTS;
+ffa0367c:	ff e3 12 f8 	CALL 0xffa026a0 <_DHCP_tx_discover>;
+ffa03680:	8d 2f       	JUMP.S 0xffa0359a <_DHCP_rx+0x16>;
 	...
 
-ffa0362c <_DHCP_req>:
-ffa0362c:	c5 04       	[--SP] = (P5:5);
-ffa0362e:	00 e8 06 00 	LINK 0x18;		/* (24) */
-ffa03632:	ff e3 17 f8 	CALL 0xffa02660 <_DHCP_tx_discover>;
-ffa03636:	4d e1 90 ff 	P5.H = 0xff90;		/* (-112)	P5=0xff900ef0 <_NetDataDestIP> */
-ffa0363a:	ff e3 85 ff 	CALL 0xffa03544 <_DHCP_rx>;
-ffa0363e:	0d e1 b4 0e 	P5.L = 0xeb4;		/* (3764)	P5=0xff900eb4 <_NetDHCPserv> */
-ffa03642:	29 91       	R1 = [P5];
-ffa03644:	39 0c       	CC = R1 == -0x1;
-ffa03646:	42 18       	IF CC JUMP 0xffa036ca <_DHCP_req+0x9e>;
-ffa03648:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900eec <_NetOurIP> */
-ffa0364c:	0a e1 ec 0e 	P2.L = 0xeec;		/* (3820)	P2=0xff900eec <_NetOurIP> */
-ffa03650:	10 91       	R0 = [P2];
-ffa03652:	00 0c       	CC = R0 == 0x0;
-ffa03654:	08 18       	IF CC JUMP 0xffa03664 <_DHCP_req+0x38>;
-ffa03656:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900eec <_NetOurIP> */
-ffa0365a:	0a e1 e8 0e 	P2.L = 0xee8;		/* (3816)	P2=0xff900ee8 <_NetSubnetMask> */
-ffa0365e:	10 91       	R0 = [P2];
-ffa03660:	00 0c       	CC = R0 == 0x0;
-ffa03662:	2f 10       	IF !CC JUMP 0xffa036c0 <_DHCP_req+0x94>;
-ffa03664:	a8 61       	R0 = 0x35 (X);		/*		R0=0x35( 53) */
-ffa03666:	b8 e6 f4 ff 	B[FP + -0xc] = R0;
-ffa0366a:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
-ffa0366c:	b8 e6 f5 ff 	B[FP + -0xb] = R0;
-ffa03670:	18 60       	R0 = 0x3 (X);		/*		R0=0x3(  3) */
-ffa03672:	b8 e6 f6 ff 	B[FP + -0xa] = R0;
-ffa03676:	b0 61       	R0 = 0x36 (X);		/*		R0=0x36( 54) */
-ffa03678:	b8 e6 f7 ff 	B[FP + -0x9] = R0;
-ffa0367c:	20 60       	R0 = 0x4 (X);		/*		R0=0x4(  4) */
-ffa0367e:	b8 e6 f8 ff 	B[FP + -0x8] = R0;
-ffa03682:	82 c6 c1 81 	R0 = R1 >> 0x8;
-ffa03686:	b8 e6 fa ff 	B[FP + -0x6] = R0;
-ffa0368a:	82 c6 81 81 	R0 = R1 >> 0x10;
-ffa0368e:	b8 e6 fb ff 	B[FP + -0x5] = R0;
-ffa03692:	82 c6 41 81 	R0 = R1 >> 0x18;
-ffa03696:	b8 e6 fc ff 	B[FP + -0x4] = R0;
-ffa0369a:	f8 63       	R0 = -0x1 (X);		/*		R0=0xffffffff( -1) */
-ffa0369c:	b8 e6 fd ff 	B[FP + -0x3] = R0;
-ffa036a0:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff90ffff(-7274497) */
-ffa036a4:	b9 e6 f9 ff 	B[FP + -0x7] = R1;
-ffa036a8:	00 e1 b0 03 	R0.L = 0x3b0;		/* (944)	R0=0xff9003b0(-7339088) */
-ffa036ac:	ff e3 32 f2 	CALL 0xffa01b10 <_printf_str>;
-ffa036b0:	4f 30       	R1 = FP;
-ffa036b2:	50 60       	R0 = 0xa (X);		/*		R0=0xa( 10) */
-ffa036b4:	a1 67       	R1 += -0xc;		/* (-12) */
-ffa036b6:	2a 91       	R2 = [P5];
-ffa036b8:	ff e3 ee f6 	CALL 0xffa02494 <_DHCP_tx>;
-ffa036bc:	ff e3 44 ff 	CALL 0xffa03544 <_DHCP_rx>;
-ffa036c0:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa036c2:	01 e8 00 00 	UNLINK;
-ffa036c6:	85 04       	(P5:5) = [SP++];
-ffa036c8:	10 00       	RTS;
-ffa036ca:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900000 <_l1_data_a>(-7340032) */
-ffa036ce:	00 e1 94 03 	R0.L = 0x394;		/* (916)	R0=0xff900394(-7339116) */
-ffa036d2:	ff e3 1f f2 	CALL 0xffa01b10 <_printf_str>;
-ffa036d6:	f8 63       	R0 = -0x1 (X);		/*		R0=0xffffffff( -1) */
-ffa036d8:	f5 2f       	JUMP.S 0xffa036c2 <_DHCP_req+0x96>;
+ffa03684 <_DHCP_req>:
+ffa03684:	c5 04       	[--SP] = (P5:5);
+ffa03686:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900001(-7340031) */
+ffa0368a:	00 e8 06 00 	LINK 0x18;		/* (24) */
+ffa0368e:	00 e1 e8 03 	R0.L = 0x3e8;		/* (1000)	R0=0xff9003e8(-7339032) */
+ffa03692:	ff e3 5f f2 	CALL 0xffa01b50 <_printf_str>;
+ffa03696:	ff e3 05 f8 	CALL 0xffa026a0 <_DHCP_tx_discover>;
+ffa0369a:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff9003e8(-7339032) */
+ffa0369e:	00 e1 f8 03 	R0.L = 0x3f8;		/* (1016)	R0=0xff9003f8(-7339016) */
+ffa036a2:	ff e3 57 f2 	CALL 0xffa01b50 <_printf_str>;
+ffa036a6:	ff e3 6f ff 	CALL 0xffa03584 <_DHCP_rx>;
+ffa036aa:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff9003f8(-7339016) */
+ffa036ae:	00 e1 08 04 	R0.L = 0x408;		/* (1032)	R0=0xff900408(-7339000) */
+ffa036b2:	4d e1 90 ff 	P5.H = 0xff90;		/* (-112)	P5=0xff900f74 <_NetDataDestIP> */
+ffa036b6:	ff e3 4d f2 	CALL 0xffa01b50 <_printf_str>;
+ffa036ba:	0d e1 38 0f 	P5.L = 0xf38;		/* (3896)	P5=0xff900f38 <_NetDHCPserv> */
+ffa036be:	29 91       	R1 = [P5];
+ffa036c0:	39 0c       	CC = R1 == -0x1;
+ffa036c2:	42 18       	IF CC JUMP 0xffa03746 <_DHCP_req+0xc2>;
+ffa036c4:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900f70 <_NetOurIP> */
+ffa036c8:	0a e1 70 0f 	P2.L = 0xf70;		/* (3952)	P2=0xff900f70 <_NetOurIP> */
+ffa036cc:	10 91       	R0 = [P2];
+ffa036ce:	00 0c       	CC = R0 == 0x0;
+ffa036d0:	08 18       	IF CC JUMP 0xffa036e0 <_DHCP_req+0x5c>;
+ffa036d2:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900f70 <_NetOurIP> */
+ffa036d6:	0a e1 6c 0f 	P2.L = 0xf6c;		/* (3948)	P2=0xff900f6c <_NetSubnetMask> */
+ffa036da:	10 91       	R0 = [P2];
+ffa036dc:	00 0c       	CC = R0 == 0x0;
+ffa036de:	2f 10       	IF !CC JUMP 0xffa0373c <_DHCP_req+0xb8>;
+ffa036e0:	a8 61       	R0 = 0x35 (X);		/*		R0=0x35( 53) */
+ffa036e2:	b8 e6 f4 ff 	B[FP + -0xc] = R0;
+ffa036e6:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
+ffa036e8:	b8 e6 f5 ff 	B[FP + -0xb] = R0;
+ffa036ec:	18 60       	R0 = 0x3 (X);		/*		R0=0x3(  3) */
+ffa036ee:	b8 e6 f6 ff 	B[FP + -0xa] = R0;
+ffa036f2:	b0 61       	R0 = 0x36 (X);		/*		R0=0x36( 54) */
+ffa036f4:	b8 e6 f7 ff 	B[FP + -0x9] = R0;
+ffa036f8:	20 60       	R0 = 0x4 (X);		/*		R0=0x4(  4) */
+ffa036fa:	b8 e6 f8 ff 	B[FP + -0x8] = R0;
+ffa036fe:	82 c6 c1 81 	R0 = R1 >> 0x8;
+ffa03702:	b8 e6 fa ff 	B[FP + -0x6] = R0;
+ffa03706:	82 c6 81 81 	R0 = R1 >> 0x10;
+ffa0370a:	b8 e6 fb ff 	B[FP + -0x5] = R0;
+ffa0370e:	82 c6 41 81 	R0 = R1 >> 0x18;
+ffa03712:	b8 e6 fc ff 	B[FP + -0x4] = R0;
+ffa03716:	f8 63       	R0 = -0x1 (X);		/*		R0=0xffffffff( -1) */
+ffa03718:	b8 e6 fd ff 	B[FP + -0x3] = R0;
+ffa0371c:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff90ffff(-7274497) */
+ffa03720:	b9 e6 f9 ff 	B[FP + -0x7] = R1;
+ffa03724:	00 e1 34 04 	R0.L = 0x434;		/* (1076)	R0=0xff900434(-7338956) */
+ffa03728:	ff e3 14 f2 	CALL 0xffa01b50 <_printf_str>;
+ffa0372c:	4f 30       	R1 = FP;
+ffa0372e:	50 60       	R0 = 0xa (X);		/*		R0=0xa( 10) */
+ffa03730:	a1 67       	R1 += -0xc;		/* (-12) */
+ffa03732:	2a 91       	R2 = [P5];
+ffa03734:	ff e3 d0 f6 	CALL 0xffa024d4 <_DHCP_tx>;
+ffa03738:	ff e3 26 ff 	CALL 0xffa03584 <_DHCP_rx>;
+ffa0373c:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa0373e:	01 e8 00 00 	UNLINK;
+ffa03742:	85 04       	(P5:5) = [SP++];
+ffa03744:	10 00       	RTS;
+ffa03746:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900000 <_l1_data_a>(-7340032) */
+ffa0374a:	00 e1 18 04 	R0.L = 0x418;		/* (1048)	R0=0xff900418(-7338984) */
+ffa0374e:	ff e3 01 f2 	CALL 0xffa01b50 <_printf_str>;
+ffa03752:	f8 63       	R0 = -0x1 (X);		/*		R0=0xffffffff( -1) */
+ffa03754:	f5 2f       	JUMP.S 0xffa0373e <_DHCP_req+0xba>;
 	...
 
-ffa036dc <_bfin_EMAC_recv>:
-ffa036dc:	e3 05       	[--SP] = (R7:4, P5:3);
-ffa036de:	46 e1 90 ff 	R6.H = 0xff90;		/* (-112)	R6=0xff900000 <_l1_data_a>(-7340032) */
-ffa036e2:	45 e1 90 ff 	R5.H = 0xff90;		/* (-112)	R5=0xff90f781(-7276671) */
-ffa036e6:	06 e1 cc 0e 	R6.L = 0xecc;		/* (3788)	R6=0xff900ecc <_rxIdx>(-7336244) */
-ffa036ea:	4b e1 c0 ff 	P3.H = 0xffc0;		/* (-64)	P3=0xffc03004(-4182012) */
-ffa036ee:	00 e8 03 00 	LINK 0xc;		/* (12) */
-ffa036f2:	28 32       	P5 = R0;
-ffa036f4:	07 60       	R7 = 0x0 (X);		/*		R7=0x0(  0) */
-ffa036f6:	05 e1 d0 0e 	R5.L = 0xed0;		/* (3792)	R5=0xff900ed0 <_rxbuf>(-7336240) */
-ffa036fa:	26 32       	P4 = R6;
-ffa036fc:	0b e1 68 0c 	P3.L = 0xc68;		/* (3176)	P3=0xffc00c68(-4191128) */
-ffa03700:	04 60       	R4 = 0x0 (X);		/*		R4=0x0(  0) */
-ffa03702:	06 32       	P0 = R6;
-ffa03704:	0d 32       	P1 = R5;
-ffa03706:	00 95       	R0 = W[P0] (Z);
-ffa03708:	10 32       	P2 = R0;
-ffa0370a:	91 5e       	P2 = P1 + (P2 << 0x2);
-ffa0370c:	52 91       	P2 = [P2];
-ffa0370e:	90 a2       	R0 = [P2 + 0x28];
-ffa03710:	60 48       	CC = !BITTST (R0, 0xc);		/* bit 12 */
-ffa03712:	48 18       	IF CC JUMP 0xffa037a2 <_bfin_EMAC_recv+0xc6>;
-ffa03714:	00 00       	NOP;
-ffa03716:	00 00       	NOP;
-ffa03718:	00 00       	NOP;
-ffa0371a:	90 a2       	R0 = [P2 + 0x28];
-ffa0371c:	a0 48       	CC = !BITTST (R0, 0x14);		/* bit 20 */
-ffa0371e:	44 10       	IF !CC JUMP 0xffa037a6 <_bfin_EMAC_recv+0xca>;
-ffa03720:	00 00       	NOP;
-ffa03722:	00 00       	NOP;
-ffa03724:	00 00       	NOP;
-ffa03726:	90 a2       	R0 = [P2 + 0x28];
-ffa03728:	68 48       	CC = !BITTST (R0, 0xd);		/* bit 13 */
-ffa0372a:	45 18       	IF CC JUMP 0xffa037b4 <_bfin_EMAC_recv+0xd8>;
-ffa0372c:	00 00       	NOP;
-ffa0372e:	00 00       	NOP;
-ffa03730:	21 e1 ff 07 	R1 = 0x7ff (X);		/*		R1=0x7ff(2047) */
-ffa03734:	90 a2       	R0 = [P2 + 0x28];
-ffa03736:	c8 55       	R7 = R0 & R1;
-ffa03738:	20 60       	R0 = 0x4 (X);		/*		R0=0x4(  4) */
-ffa0373a:	07 09       	CC = R7 <= R0;
-ffa0373c:	43 18       	IF CC JUMP 0xffa037c2 <_bfin_EMAC_recv+0xe6>;
-ffa0373e:	19 60       	R1 = 0x3 (X);		/*		R1=0x3(  3) */
-ffa03740:	49 e1 90 ff 	P1.H = 0xff90;		/* (-112)	P1=0xff900ecc <_rxIdx> */
-ffa03744:	09 e1 d0 0e 	P1.L = 0xed0;		/* (3792)	P1=0xff900ed0 <_rxbuf> */
-ffa03748:	90 a1       	R0 = [P2 + 0x18];
-ffa0374a:	28 93       	[P5] = R0;
-ffa0374c:	18 95       	R0 = W[P3] (Z);
-ffa0374e:	01 56       	R0 = R1 | R0;
-ffa03750:	18 97       	W[P3] = R0;
-ffa03752:	21 95       	R1 = W[P4] (Z);
-ffa03754:	c8 42       	R0 = R1.L (Z);
-ffa03756:	00 32       	P0 = R0;
-ffa03758:	e7 67       	R7 += -0x4;		/* ( -4) */
-ffa0375a:	10 0d       	CC = R0 <= 0x2;
-ffa0375c:	81 5e       	P2 = P1 + (P0 << 0x2);
-ffa0375e:	52 91       	P2 = [P2];
-ffa03760:	94 b2       	[P2 + 0x28] = R4;
-ffa03762:	1c 1c       	IF CC JUMP 0xffa0379a <_bfin_EMAC_recv+0xbe> (BP);
-ffa03764:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa03766:	20 97       	W[P4] = R0;
-ffa03768:	28 91       	R0 = [P5];
-ffa0376a:	0f 30       	R1 = R7;
-ffa0376c:	00 e3 00 01 	CALL 0xffa0396c <_ARP_rx>;
-ffa03770:	00 0c       	CC = R0 == 0x0;
-ffa03772:	03 18       	IF CC JUMP 0xffa03778 <_bfin_EMAC_recv+0x9c>;
-ffa03774:	ff 63       	R7 = -0x1 (X);		/*		R7=0xffffffff( -1) */
-ffa03776:	c6 2f       	JUMP.S 0xffa03702 <_bfin_EMAC_recv+0x26>;
-ffa03778:	28 91       	R0 = [P5];
-ffa0377a:	0f 30       	R1 = R7;
-ffa0377c:	ff e3 90 fa 	CALL 0xffa02c9c <_icmp_rx>;
-ffa03780:	00 0c       	CC = R0 == 0x0;
-ffa03782:	f9 17       	IF !CC JUMP 0xffa03774 <_bfin_EMAC_recv+0x98> (BP);
-ffa03784:	28 91       	R0 = [P5];
-ffa03786:	0f 30       	R1 = R7;
-ffa03788:	00 e3 88 04 	CALL 0xffa04098 <_tcp_rx>;
-ffa0378c:	00 0c       	CC = R0 == 0x0;
-ffa0378e:	f3 17       	IF !CC JUMP 0xffa03774 <_bfin_EMAC_recv+0x98> (BP);
-ffa03790:	07 30       	R0 = R7;
-ffa03792:	01 e8 00 00 	UNLINK;
-ffa03796:	a3 05       	(R7:4, P5:3) = [SP++];
-ffa03798:	10 00       	RTS;
-ffa0379a:	01 30       	R0 = R1;
-ffa0379c:	08 64       	R0 += 0x1;		/* (  1) */
-ffa0379e:	20 97       	W[P4] = R0;
-ffa037a0:	e4 2f       	JUMP.S 0xffa03768 <_bfin_EMAC_recv+0x8c>;
-ffa037a2:	ff 63       	R7 = -0x1 (X);		/*		R7=0xffffffff( -1) */
-ffa037a4:	f6 2f       	JUMP.S 0xffa03790 <_bfin_EMAC_recv+0xb4>;
-ffa037a6:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900000 <_l1_data_a>(-7340032) */
-ffa037aa:	00 e1 c4 03 	R0.L = 0x3c4;		/* (964)	R0=0xff9003c4(-7339068) */
-ffa037ae:	ff e3 b1 f1 	CALL 0xffa01b10 <_printf_str>;
-ffa037b2:	ef 2f       	JUMP.S 0xffa03790 <_bfin_EMAC_recv+0xb4>;
-ffa037b4:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff9003c4(-7339068) */
-ffa037b8:	00 e1 e0 03 	R0.L = 0x3e0;		/* (992)	R0=0xff9003e0(-7339040) */
-ffa037bc:	ff e3 aa f1 	CALL 0xffa01b10 <_printf_str>;
-ffa037c0:	e8 2f       	JUMP.S 0xffa03790 <_bfin_EMAC_recv+0xb4>;
-ffa037c2:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff9003e0(-7339040) */
-ffa037c6:	00 e1 f4 03 	R0.L = 0x3f4;		/* (1012)	R0=0xff9003f4(-7339020) */
-ffa037ca:	ff e3 a3 f1 	CALL 0xffa01b10 <_printf_str>;
-ffa037ce:	e1 2f       	JUMP.S 0xffa03790 <_bfin_EMAC_recv+0xb4>;
+ffa03758 <_bfin_EMAC_recv>:
+ffa03758:	e3 05       	[--SP] = (R7:4, P5:3);
+ffa0375a:	46 e1 90 ff 	R6.H = 0xff90;		/* (-112)	R6=0xff900000 <_l1_data_a>(-7340032) */
+ffa0375e:	45 e1 90 ff 	R5.H = 0xff90;		/* (-112)	R5=0xff90f781(-7276671) */
+ffa03762:	06 e1 50 0f 	R6.L = 0xf50;		/* (3920)	R6=0xff900f50 <_rxIdx>(-7336112) */
+ffa03766:	4b e1 c0 ff 	P3.H = 0xffc0;		/* (-64)	P3=0xffc03004(-4182012) */
+ffa0376a:	00 e8 03 00 	LINK 0xc;		/* (12) */
+ffa0376e:	28 32       	P5 = R0;
+ffa03770:	07 60       	R7 = 0x0 (X);		/*		R7=0x0(  0) */
+ffa03772:	05 e1 54 0f 	R5.L = 0xf54;		/* (3924)	R5=0xff900f54 <_rxbuf>(-7336108) */
+ffa03776:	26 32       	P4 = R6;
+ffa03778:	0b e1 68 0c 	P3.L = 0xc68;		/* (3176)	P3=0xffc00c68(-4191128) */
+ffa0377c:	04 60       	R4 = 0x0 (X);		/*		R4=0x0(  0) */
+ffa0377e:	06 32       	P0 = R6;
+ffa03780:	0d 32       	P1 = R5;
+ffa03782:	00 95       	R0 = W[P0] (Z);
+ffa03784:	10 32       	P2 = R0;
+ffa03786:	91 5e       	P2 = P1 + (P2 << 0x2);
+ffa03788:	52 91       	P2 = [P2];
+ffa0378a:	90 a2       	R0 = [P2 + 0x28];
+ffa0378c:	60 48       	CC = !BITTST (R0, 0xc);		/* bit 12 */
+ffa0378e:	48 18       	IF CC JUMP 0xffa0381e <_bfin_EMAC_recv+0xc6>;
+ffa03790:	00 00       	NOP;
+ffa03792:	00 00       	NOP;
+ffa03794:	00 00       	NOP;
+ffa03796:	90 a2       	R0 = [P2 + 0x28];
+ffa03798:	a0 48       	CC = !BITTST (R0, 0x14);		/* bit 20 */
+ffa0379a:	44 10       	IF !CC JUMP 0xffa03822 <_bfin_EMAC_recv+0xca>;
+ffa0379c:	00 00       	NOP;
+ffa0379e:	00 00       	NOP;
+ffa037a0:	00 00       	NOP;
+ffa037a2:	90 a2       	R0 = [P2 + 0x28];
+ffa037a4:	68 48       	CC = !BITTST (R0, 0xd);		/* bit 13 */
+ffa037a6:	45 18       	IF CC JUMP 0xffa03830 <_bfin_EMAC_recv+0xd8>;
+ffa037a8:	00 00       	NOP;
+ffa037aa:	00 00       	NOP;
+ffa037ac:	21 e1 ff 07 	R1 = 0x7ff (X);		/*		R1=0x7ff(2047) */
+ffa037b0:	90 a2       	R0 = [P2 + 0x28];
+ffa037b2:	c8 55       	R7 = R0 & R1;
+ffa037b4:	20 60       	R0 = 0x4 (X);		/*		R0=0x4(  4) */
+ffa037b6:	07 09       	CC = R7 <= R0;
+ffa037b8:	43 18       	IF CC JUMP 0xffa0383e <_bfin_EMAC_recv+0xe6>;
+ffa037ba:	19 60       	R1 = 0x3 (X);		/*		R1=0x3(  3) */
+ffa037bc:	49 e1 90 ff 	P1.H = 0xff90;		/* (-112)	P1=0xff900f50 <_rxIdx> */
+ffa037c0:	09 e1 54 0f 	P1.L = 0xf54;		/* (3924)	P1=0xff900f54 <_rxbuf> */
+ffa037c4:	90 a1       	R0 = [P2 + 0x18];
+ffa037c6:	28 93       	[P5] = R0;
+ffa037c8:	18 95       	R0 = W[P3] (Z);
+ffa037ca:	01 56       	R0 = R1 | R0;
+ffa037cc:	18 97       	W[P3] = R0;
+ffa037ce:	21 95       	R1 = W[P4] (Z);
+ffa037d0:	c8 42       	R0 = R1.L (Z);
+ffa037d2:	00 32       	P0 = R0;
+ffa037d4:	e7 67       	R7 += -0x4;		/* ( -4) */
+ffa037d6:	10 0d       	CC = R0 <= 0x2;
+ffa037d8:	81 5e       	P2 = P1 + (P0 << 0x2);
+ffa037da:	52 91       	P2 = [P2];
+ffa037dc:	94 b2       	[P2 + 0x28] = R4;
+ffa037de:	1c 1c       	IF CC JUMP 0xffa03816 <_bfin_EMAC_recv+0xbe> (BP);
+ffa037e0:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa037e2:	20 97       	W[P4] = R0;
+ffa037e4:	28 91       	R0 = [P5];
+ffa037e6:	0f 30       	R1 = R7;
+ffa037e8:	00 e3 00 01 	CALL 0xffa039e8 <_ARP_rx>;
+ffa037ec:	00 0c       	CC = R0 == 0x0;
+ffa037ee:	03 18       	IF CC JUMP 0xffa037f4 <_bfin_EMAC_recv+0x9c>;
+ffa037f0:	ff 63       	R7 = -0x1 (X);		/*		R7=0xffffffff( -1) */
+ffa037f2:	c6 2f       	JUMP.S 0xffa0377e <_bfin_EMAC_recv+0x26>;
+ffa037f4:	28 91       	R0 = [P5];
+ffa037f6:	0f 30       	R1 = R7;
+ffa037f8:	ff e3 72 fa 	CALL 0xffa02cdc <_icmp_rx>;
+ffa037fc:	00 0c       	CC = R0 == 0x0;
+ffa037fe:	f9 17       	IF !CC JUMP 0xffa037f0 <_bfin_EMAC_recv+0x98> (BP);
+ffa03800:	28 91       	R0 = [P5];
+ffa03802:	0f 30       	R1 = R7;
+ffa03804:	00 e3 88 04 	CALL 0xffa04114 <_tcp_rx>;
+ffa03808:	00 0c       	CC = R0 == 0x0;
+ffa0380a:	f3 17       	IF !CC JUMP 0xffa037f0 <_bfin_EMAC_recv+0x98> (BP);
+ffa0380c:	07 30       	R0 = R7;
+ffa0380e:	01 e8 00 00 	UNLINK;
+ffa03812:	a3 05       	(R7:4, P5:3) = [SP++];
+ffa03814:	10 00       	RTS;
+ffa03816:	01 30       	R0 = R1;
+ffa03818:	08 64       	R0 += 0x1;		/* (  1) */
+ffa0381a:	20 97       	W[P4] = R0;
+ffa0381c:	e4 2f       	JUMP.S 0xffa037e4 <_bfin_EMAC_recv+0x8c>;
+ffa0381e:	ff 63       	R7 = -0x1 (X);		/*		R7=0xffffffff( -1) */
+ffa03820:	f6 2f       	JUMP.S 0xffa0380c <_bfin_EMAC_recv+0xb4>;
+ffa03822:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900000 <_l1_data_a>(-7340032) */
+ffa03826:	00 e1 48 04 	R0.L = 0x448;		/* (1096)	R0=0xff900448(-7338936) */
+ffa0382a:	ff e3 93 f1 	CALL 0xffa01b50 <_printf_str>;
+ffa0382e:	ef 2f       	JUMP.S 0xffa0380c <_bfin_EMAC_recv+0xb4>;
+ffa03830:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900448(-7338936) */
+ffa03834:	00 e1 64 04 	R0.L = 0x464;		/* (1124)	R0=0xff900464(-7338908) */
+ffa03838:	ff e3 8c f1 	CALL 0xffa01b50 <_printf_str>;
+ffa0383c:	e8 2f       	JUMP.S 0xffa0380c <_bfin_EMAC_recv+0xb4>;
+ffa0383e:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900464(-7338908) */
+ffa03842:	00 e1 78 04 	R0.L = 0x478;		/* (1144)	R0=0xff900478(-7338888) */
+ffa03846:	ff e3 85 f1 	CALL 0xffa01b50 <_printf_str>;
+ffa0384a:	e1 2f       	JUMP.S 0xffa0380c <_bfin_EMAC_recv+0xb4>;
 
-ffa037d0 <_ARP_init>:
-ffa037d0:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900ee8 <_NetSubnetMask> */
-ffa037d4:	00 e8 00 00 	LINK 0x0;		/* (0) */
-ffa037d8:	0a e1 00 0f 	P2.L = 0xf00;		/* (3840)	P2=0xff900f00 */
-ffa037dc:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
-ffa037de:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa037e0:	02 60       	R2 = 0x0 (X);		/*		R2=0x0(  0) */
-ffa037e2:	51 68       	P1 = 0xa (X);		/*		P1=0xa( 10) */
-ffa037e4:	b2 e0 12 10 	LSETUP(0xffa037e8 <_ARP_init+0x18>, 0xffa03808 <_ARP_init+0x38>) LC1 = P1;
-ffa037e8:	11 e6 fe ff 	[P2 + -0x8] = R1;
-ffa037ec:	90 e6 fc ff 	B[P2 + -0x4] = R0;
-ffa037f0:	90 e6 fd ff 	B[P2 + -0x3] = R0;
-ffa037f4:	90 e6 fe ff 	B[P2 + -0x2] = R0;
-ffa037f8:	90 e6 ff ff 	B[P2 + -0x1] = R0;
-ffa037fc:	10 9b       	B[P2] = R0;
-ffa037fe:	90 e6 01 00 	B[P2 + 0x1] = R0;
-ffa03802:	52 b4       	W[P2 + 0x2] = R2;
-ffa03804:	51 b0       	[P2 + 0x4] = R1;
-ffa03806:	91 b0       	[P2 + 0x8] = R1;
-ffa03808:	a2 6c       	P2 += 0x14;		/* ( 20) */
-ffa0380a:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900f00 */
-ffa0380e:	20 e1 64 00 	R0 = 0x64 (X);		/*		R0=0x64(100) */
-ffa03812:	0a e1 f4 0e 	P2.L = 0xef4;		/* (3828)	P2=0xff900ef4 <_NetArpLut_age> */
-ffa03816:	10 97       	W[P2] = R0;
-ffa03818:	01 e8 00 00 	UNLINK;
-ffa0381c:	10 00       	RTS;
+ffa0384c <_ARP_init>:
+ffa0384c:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900f6c <_NetSubnetMask> */
+ffa03850:	00 e8 00 00 	LINK 0x0;		/* (0) */
+ffa03854:	0a e1 84 0f 	P2.L = 0xf84;		/* (3972)	P2=0xff900f84 */
+ffa03858:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
+ffa0385a:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa0385c:	02 60       	R2 = 0x0 (X);		/*		R2=0x0(  0) */
+ffa0385e:	51 68       	P1 = 0xa (X);		/*		P1=0xa( 10) */
+ffa03860:	b2 e0 12 10 	LSETUP(0xffa03864 <_ARP_init+0x18>, 0xffa03884 <_ARP_init+0x38>) LC1 = P1;
+ffa03864:	11 e6 fe ff 	[P2 + -0x8] = R1;
+ffa03868:	90 e6 fc ff 	B[P2 + -0x4] = R0;
+ffa0386c:	90 e6 fd ff 	B[P2 + -0x3] = R0;
+ffa03870:	90 e6 fe ff 	B[P2 + -0x2] = R0;
+ffa03874:	90 e6 ff ff 	B[P2 + -0x1] = R0;
+ffa03878:	10 9b       	B[P2] = R0;
+ffa0387a:	90 e6 01 00 	B[P2 + 0x1] = R0;
+ffa0387e:	52 b4       	W[P2 + 0x2] = R2;
+ffa03880:	51 b0       	[P2 + 0x4] = R1;
+ffa03882:	91 b0       	[P2 + 0x8] = R1;
+ffa03884:	a2 6c       	P2 += 0x14;		/* ( 20) */
+ffa03886:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900f84 */
+ffa0388a:	20 e1 64 00 	R0 = 0x64 (X);		/*		R0=0x64(100) */
+ffa0388e:	0a e1 78 0f 	P2.L = 0xf78;		/* (3960)	P2=0xff900f78 <_NetArpLut_age> */
+ffa03892:	10 97       	W[P2] = R0;
+ffa03894:	01 e8 00 00 	UNLINK;
+ffa03898:	10 00       	RTS;
 	...
 
-ffa03820 <_ARP_lut_find>:
-ffa03820:	48 e1 90 ff 	P0.H = 0xff90;		/* (-112)	P0=0xff900eb8 <_txIdx> */
-ffa03824:	08 e1 f8 0e 	P0.L = 0xef8;		/* (3832)	P0=0xff900ef8 <_NetArpLut> */
-ffa03828:	00 e8 00 00 	LINK 0x0;		/* (0) */
-ffa0382c:	48 32       	P1 = P0;
-ffa0382e:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
-ffa03830:	52 68       	P2 = 0xa (X);		/*		P2=0xa( 10) */
-ffa03832:	b2 e0 06 20 	LSETUP(0xffa03836 <_ARP_lut_find+0x16>, 0xffa0383e <_ARP_lut_find+0x1e>) LC1 = P2;
-ffa03836:	08 91       	R0 = [P1];
-ffa03838:	00 0c       	CC = R0 == 0x0;
-ffa0383a:	0f 18       	IF CC JUMP 0xffa03858 <_ARP_lut_find+0x38>;
-ffa0383c:	09 64       	R1 += 0x1;		/* (  1) */
-ffa0383e:	a1 6c       	P1 += 0x14;		/* ( 20) */
-ffa03840:	49 e1 90 ff 	P1.H = 0xff90;		/* (-112)	P1=0xff90000a */
-ffa03844:	43 a5       	R3 = W[P0 + 0xa] (Z);
-ffa03846:	09 e1 16 0f 	P1.L = 0xf16;		/* (3862)	P1=0xff900f16 */
-ffa0384a:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
-ffa0384c:	02 60       	R2 = 0x0 (X);		/*		R2=0x0(  0) */
-ffa0384e:	52 68       	P2 = 0xa (X);		/*		P2=0xa( 10) */
-ffa03850:	0a 64       	R2 += 0x1;		/* (  1) */
-ffa03852:	fa 6f       	P2 += -0x1;		/* ( -1) */
-ffa03854:	42 0c       	CC = P2 == 0x0;
-ffa03856:	05 10       	IF !CC JUMP 0xffa03860 <_ARP_lut_find+0x40>;
-ffa03858:	01 30       	R0 = R1;
-ffa0385a:	01 e8 00 00 	UNLINK;
-ffa0385e:	10 00       	RTS;
-ffa03860:	08 95       	R0 = W[P1] (Z);
-ffa03862:	03 09       	CC = R3 <= R0;
-ffa03864:	03 07       	IF CC R0 = R3;
-ffa03866:	0a 06       	IF !CC R1 = R2;
-ffa03868:	a1 6c       	P1 += 0x14;		/* ( 20) */
-ffa0386a:	18 30       	R3 = R0;
-ffa0386c:	f2 2f       	JUMP.S 0xffa03850 <_ARP_lut_find+0x30>;
+ffa0389c <_ARP_lut_find>:
+ffa0389c:	48 e1 90 ff 	P0.H = 0xff90;		/* (-112)	P0=0xff900f3c <_txIdx> */
+ffa038a0:	08 e1 7c 0f 	P0.L = 0xf7c;		/* (3964)	P0=0xff900f7c <_NetArpLut> */
+ffa038a4:	00 e8 00 00 	LINK 0x0;		/* (0) */
+ffa038a8:	48 32       	P1 = P0;
+ffa038aa:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
+ffa038ac:	52 68       	P2 = 0xa (X);		/*		P2=0xa( 10) */
+ffa038ae:	b2 e0 06 20 	LSETUP(0xffa038b2 <_ARP_lut_find+0x16>, 0xffa038ba <_ARP_lut_find+0x1e>) LC1 = P2;
+ffa038b2:	08 91       	R0 = [P1];
+ffa038b4:	00 0c       	CC = R0 == 0x0;
+ffa038b6:	0f 18       	IF CC JUMP 0xffa038d4 <_ARP_lut_find+0x38>;
+ffa038b8:	09 64       	R1 += 0x1;		/* (  1) */
+ffa038ba:	a1 6c       	P1 += 0x14;		/* ( 20) */
+ffa038bc:	49 e1 90 ff 	P1.H = 0xff90;		/* (-112)	P1=0xff90000a */
+ffa038c0:	43 a5       	R3 = W[P0 + 0xa] (Z);
+ffa038c2:	09 e1 9a 0f 	P1.L = 0xf9a;		/* (3994)	P1=0xff900f9a */
+ffa038c6:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
+ffa038c8:	02 60       	R2 = 0x0 (X);		/*		R2=0x0(  0) */
+ffa038ca:	52 68       	P2 = 0xa (X);		/*		P2=0xa( 10) */
+ffa038cc:	0a 64       	R2 += 0x1;		/* (  1) */
+ffa038ce:	fa 6f       	P2 += -0x1;		/* ( -1) */
+ffa038d0:	42 0c       	CC = P2 == 0x0;
+ffa038d2:	05 10       	IF !CC JUMP 0xffa038dc <_ARP_lut_find+0x40>;
+ffa038d4:	01 30       	R0 = R1;
+ffa038d6:	01 e8 00 00 	UNLINK;
+ffa038da:	10 00       	RTS;
+ffa038dc:	08 95       	R0 = W[P1] (Z);
+ffa038de:	03 09       	CC = R3 <= R0;
+ffa038e0:	03 07       	IF CC R0 = R3;
+ffa038e2:	0a 06       	IF !CC R1 = R2;
+ffa038e4:	a1 6c       	P1 += 0x14;		/* ( 20) */
+ffa038e6:	18 30       	R3 = R0;
+ffa038e8:	f2 2f       	JUMP.S 0xffa038cc <_ARP_lut_find+0x30>;
 	...
 
-ffa03870 <_ARP_lut_add>:
-ffa03870:	48 e1 90 ff 	P0.H = 0xff90;		/* (-112)	P0=0xff900ef8 <_NetArpLut> */
-ffa03874:	fb 05       	[--SP] = (R7:7, P5:3);
-ffa03876:	08 e1 f8 0e 	P0.L = 0xef8;		/* (3832)	P0=0xff900ef8 <_NetArpLut> */
-ffa0387a:	00 e8 00 00 	LINK 0x0;		/* (0) */
-ffa0387e:	38 30       	R7 = R0;
-ffa03880:	58 32       	P3 = P0;
-ffa03882:	48 32       	P1 = P0;
-ffa03884:	02 60       	R2 = 0x0 (X);		/*		R2=0x0(  0) */
-ffa03886:	fb 63       	R3 = -0x1 (X);		/*		R3=0xffffffff( -1) */
-ffa03888:	52 68       	P2 = 0xa (X);		/*		P2=0xa( 10) */
-ffa0388a:	00 00       	NOP;
-ffa0388c:	08 91       	R0 = [P1];
-ffa0388e:	38 08       	CC = R0 == R7;
-ffa03890:	aa 07       	IF CC P5 = R2;
-ffa03892:	ab 06       	IF !CC P5 = R3;
-ffa03894:	0a 64       	R2 += 0x1;		/* (  1) */
-ffa03896:	fa 6f       	P2 += -0x1;		/* ( -1) */
-ffa03898:	42 0c       	CC = P2 == 0x0;
-ffa0389a:	1f 10       	IF !CC JUMP 0xffa038d8 <_ARP_lut_add+0x68>;
-ffa0389c:	7d 0c       	CC = P5 == -0x1;
-ffa0389e:	21 18       	IF CC JUMP 0xffa038e0 <_ARP_lut_add+0x70>;
-ffa038a0:	6c 44       	P4 = P5 << 0x2;
-ffa038a2:	ac 5a       	P2 = P4 + P5;
-ffa038a4:	53 5e       	P1 = P3 + (P2 << 0x2);
-ffa038a6:	0a 6c       	P2 += 0x1;		/* (  1) */
-ffa038a8:	0f 93       	[P1] = R7;
-ffa038aa:	53 5e       	P1 = P3 + (P2 << 0x2);
-ffa038ac:	01 32       	P0 = R1;
-ffa038ae:	32 68       	P2 = 0x6 (X);		/*		P2=0x6(  6) */
-ffa038b0:	b2 e0 03 20 	LSETUP(0xffa038b4 <_ARP_lut_add+0x44>, 0xffa038b6 <_ARP_lut_add+0x46>) LC1 = P2;
-ffa038b4:	40 98       	R0 = B[P0++] (X);
-ffa038b6:	08 9a       	B[P1++] = R0;
-ffa038b8:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900006 */
-ffa038bc:	0a e1 f4 0e 	P2.L = 0xef4;		/* (3828)	P2=0xff900ef4 <_NetArpLut_age> */
-ffa038c0:	10 95       	R0 = W[P2] (Z);
-ffa038c2:	08 64       	R0 += 0x1;		/* (  1) */
-ffa038c4:	10 97       	W[P2] = R0;
-ffa038c6:	ec 45       	P4 = (P4 + P5) << 0x2;
-ffa038c8:	a3 5a       	P2 = P3 + P4;
-ffa038ca:	50 b5       	W[P2 + 0xa] = R0;
-ffa038cc:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
-ffa038ce:	10 b1       	[P2 + 0x10] = R0;
-ffa038d0:	01 e8 00 00 	UNLINK;
-ffa038d4:	bb 05       	(R7:7, P5:3) = [SP++];
-ffa038d6:	10 00       	RTS;
-ffa038d8:	a1 6c       	P1 += 0x14;		/* ( 20) */
-ffa038da:	7d 0c       	CC = P5 == -0x1;
-ffa038dc:	d7 1f       	IF CC JUMP 0xffa0388a <_ARP_lut_add+0x1a> (BP);
-ffa038de:	e1 2f       	JUMP.S 0xffa038a0 <_ARP_lut_add+0x30>;
-ffa038e0:	05 68       	P5 = 0x0 (X);		/*		P5=0x0(  0) */
-ffa038e2:	52 68       	P2 = 0xa (X);		/*		P2=0xa( 10) */
-ffa038e4:	b2 e0 06 20 	LSETUP(0xffa038e8 <_ARP_lut_add+0x78>, 0xffa038f0 <_ARP_lut_add+0x80>) LC1 = P2;
-ffa038e8:	00 91       	R0 = [P0];
-ffa038ea:	00 0c       	CC = R0 == 0x0;
-ffa038ec:	da 1b       	IF CC JUMP 0xffa038a0 <_ARP_lut_add+0x30>;
-ffa038ee:	0d 6c       	P5 += 0x1;		/* (  1) */
-ffa038f0:	a0 6c       	P0 += 0x14;		/* ( 20) */
-ffa038f2:	49 e1 90 ff 	P1.H = 0xff90;		/* (-112)	P1=0xff900f16 */
-ffa038f6:	5b a5       	R3 = W[P3 + 0xa] (Z);
-ffa038f8:	09 e1 16 0f 	P1.L = 0xf16;		/* (3862)	P1=0xff900f16 */
-ffa038fc:	05 68       	P5 = 0x0 (X);		/*		P5=0x0(  0) */
-ffa038fe:	02 60       	R2 = 0x0 (X);		/*		R2=0x0(  0) */
-ffa03900:	52 68       	P2 = 0xa (X);		/*		P2=0xa( 10) */
-ffa03902:	0a 64       	R2 += 0x1;		/* (  1) */
-ffa03904:	fa 6f       	P2 += -0x1;		/* ( -1) */
-ffa03906:	42 0c       	CC = P2 == 0x0;
-ffa03908:	02 10       	IF !CC JUMP 0xffa0390c <_ARP_lut_add+0x9c>;
-ffa0390a:	cb 2f       	JUMP.S 0xffa038a0 <_ARP_lut_add+0x30>;
-ffa0390c:	08 95       	R0 = W[P1] (Z);
-ffa0390e:	98 08       	CC = R0 < R3;
-ffa03910:	03 06       	IF !CC R0 = R3;
-ffa03912:	aa 07       	IF CC P5 = R2;
-ffa03914:	a1 6c       	P1 += 0x14;		/* ( 20) */
-ffa03916:	18 30       	R3 = R0;
-ffa03918:	f5 2f       	JUMP.S 0xffa03902 <_ARP_lut_add+0x92>;
+ffa038ec <_ARP_lut_add>:
+ffa038ec:	48 e1 90 ff 	P0.H = 0xff90;		/* (-112)	P0=0xff900f7c <_NetArpLut> */
+ffa038f0:	fb 05       	[--SP] = (R7:7, P5:3);
+ffa038f2:	08 e1 7c 0f 	P0.L = 0xf7c;		/* (3964)	P0=0xff900f7c <_NetArpLut> */
+ffa038f6:	00 e8 00 00 	LINK 0x0;		/* (0) */
+ffa038fa:	38 30       	R7 = R0;
+ffa038fc:	58 32       	P3 = P0;
+ffa038fe:	48 32       	P1 = P0;
+ffa03900:	02 60       	R2 = 0x0 (X);		/*		R2=0x0(  0) */
+ffa03902:	fb 63       	R3 = -0x1 (X);		/*		R3=0xffffffff( -1) */
+ffa03904:	52 68       	P2 = 0xa (X);		/*		P2=0xa( 10) */
+ffa03906:	00 00       	NOP;
+ffa03908:	08 91       	R0 = [P1];
+ffa0390a:	38 08       	CC = R0 == R7;
+ffa0390c:	aa 07       	IF CC P5 = R2;
+ffa0390e:	ab 06       	IF !CC P5 = R3;
+ffa03910:	0a 64       	R2 += 0x1;		/* (  1) */
+ffa03912:	fa 6f       	P2 += -0x1;		/* ( -1) */
+ffa03914:	42 0c       	CC = P2 == 0x0;
+ffa03916:	1f 10       	IF !CC JUMP 0xffa03954 <_ARP_lut_add+0x68>;
+ffa03918:	7d 0c       	CC = P5 == -0x1;
+ffa0391a:	21 18       	IF CC JUMP 0xffa0395c <_ARP_lut_add+0x70>;
+ffa0391c:	6c 44       	P4 = P5 << 0x2;
+ffa0391e:	ac 5a       	P2 = P4 + P5;
+ffa03920:	53 5e       	P1 = P3 + (P2 << 0x2);
+ffa03922:	0a 6c       	P2 += 0x1;		/* (  1) */
+ffa03924:	0f 93       	[P1] = R7;
+ffa03926:	53 5e       	P1 = P3 + (P2 << 0x2);
+ffa03928:	01 32       	P0 = R1;
+ffa0392a:	32 68       	P2 = 0x6 (X);		/*		P2=0x6(  6) */
+ffa0392c:	b2 e0 03 20 	LSETUP(0xffa03930 <_ARP_lut_add+0x44>, 0xffa03932 <_ARP_lut_add+0x46>) LC1 = P2;
+ffa03930:	40 98       	R0 = B[P0++] (X);
+ffa03932:	08 9a       	B[P1++] = R0;
+ffa03934:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900006 */
+ffa03938:	0a e1 78 0f 	P2.L = 0xf78;		/* (3960)	P2=0xff900f78 <_NetArpLut_age> */
+ffa0393c:	10 95       	R0 = W[P2] (Z);
+ffa0393e:	08 64       	R0 += 0x1;		/* (  1) */
+ffa03940:	10 97       	W[P2] = R0;
+ffa03942:	ec 45       	P4 = (P4 + P5) << 0x2;
+ffa03944:	a3 5a       	P2 = P3 + P4;
+ffa03946:	50 b5       	W[P2 + 0xa] = R0;
+ffa03948:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
+ffa0394a:	10 b1       	[P2 + 0x10] = R0;
+ffa0394c:	01 e8 00 00 	UNLINK;
+ffa03950:	bb 05       	(R7:7, P5:3) = [SP++];
+ffa03952:	10 00       	RTS;
+ffa03954:	a1 6c       	P1 += 0x14;		/* ( 20) */
+ffa03956:	7d 0c       	CC = P5 == -0x1;
+ffa03958:	d7 1f       	IF CC JUMP 0xffa03906 <_ARP_lut_add+0x1a> (BP);
+ffa0395a:	e1 2f       	JUMP.S 0xffa0391c <_ARP_lut_add+0x30>;
+ffa0395c:	05 68       	P5 = 0x0 (X);		/*		P5=0x0(  0) */
+ffa0395e:	52 68       	P2 = 0xa (X);		/*		P2=0xa( 10) */
+ffa03960:	b2 e0 06 20 	LSETUP(0xffa03964 <_ARP_lut_add+0x78>, 0xffa0396c <_ARP_lut_add+0x80>) LC1 = P2;
+ffa03964:	00 91       	R0 = [P0];
+ffa03966:	00 0c       	CC = R0 == 0x0;
+ffa03968:	da 1b       	IF CC JUMP 0xffa0391c <_ARP_lut_add+0x30>;
+ffa0396a:	0d 6c       	P5 += 0x1;		/* (  1) */
+ffa0396c:	a0 6c       	P0 += 0x14;		/* ( 20) */
+ffa0396e:	49 e1 90 ff 	P1.H = 0xff90;		/* (-112)	P1=0xff900f9a */
+ffa03972:	5b a5       	R3 = W[P3 + 0xa] (Z);
+ffa03974:	09 e1 9a 0f 	P1.L = 0xf9a;		/* (3994)	P1=0xff900f9a */
+ffa03978:	05 68       	P5 = 0x0 (X);		/*		P5=0x0(  0) */
+ffa0397a:	02 60       	R2 = 0x0 (X);		/*		R2=0x0(  0) */
+ffa0397c:	52 68       	P2 = 0xa (X);		/*		P2=0xa( 10) */
+ffa0397e:	0a 64       	R2 += 0x1;		/* (  1) */
+ffa03980:	fa 6f       	P2 += -0x1;		/* ( -1) */
+ffa03982:	42 0c       	CC = P2 == 0x0;
+ffa03984:	02 10       	IF !CC JUMP 0xffa03988 <_ARP_lut_add+0x9c>;
+ffa03986:	cb 2f       	JUMP.S 0xffa0391c <_ARP_lut_add+0x30>;
+ffa03988:	08 95       	R0 = W[P1] (Z);
+ffa0398a:	98 08       	CC = R0 < R3;
+ffa0398c:	03 06       	IF !CC R0 = R3;
+ffa0398e:	aa 07       	IF CC P5 = R2;
+ffa03990:	a1 6c       	P1 += 0x14;		/* ( 20) */
+ffa03992:	18 30       	R3 = R0;
+ffa03994:	f5 2f       	JUMP.S 0xffa0397e <_ARP_lut_add+0x92>;
 	...
 
-ffa0391c <_ARP_lu>:
-ffa0391c:	c4 04       	[--SP] = (P5:4);
-ffa0391e:	4c e1 90 ff 	P4.H = 0xff90;		/* (-112)	P4=0xff900ed0 <_rxbuf> */
-ffa03922:	0c e1 f8 0e 	P4.L = 0xef8;		/* (3832)	P4=0xff900ef8 <_NetArpLut> */
-ffa03926:	00 e8 00 00 	LINK 0x0;		/* (0) */
-ffa0392a:	10 30       	R2 = R0;
-ffa0392c:	29 32       	P5 = R1;
-ffa0392e:	4c 32       	P1 = P4;
-ffa03930:	00 68       	P0 = 0x0 (X);		/*		P0=0x0(  0) */
-ffa03932:	52 68       	P2 = 0xa (X);		/*		P2=0xa( 10) */
-ffa03934:	b2 e0 06 20 	LSETUP(0xffa03938 <_ARP_lu+0x1c>, 0xffa03940 <_ARP_lu+0x24>) LC1 = P2;
-ffa03938:	08 91       	R0 = [P1];
-ffa0393a:	10 08       	CC = R0 == R2;
-ffa0393c:	08 18       	IF CC JUMP 0xffa0394c <_ARP_lu+0x30>;
-ffa0393e:	08 6c       	P0 += 0x1;		/* (  1) */
-ffa03940:	a1 6c       	P1 += 0x14;		/* ( 20) */
-ffa03942:	01 e8 00 00 	UNLINK;
-ffa03946:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa03948:	84 04       	(P5:4) = [SP++];
-ffa0394a:	10 00       	RTS;
-ffa0394c:	08 a1       	R0 = [P1 + 0x10];
-ffa0394e:	00 48       	CC = !BITTST (R0, 0x0);		/* bit  0 */
-ffa03950:	f7 1f       	IF CC JUMP 0xffa0393e <_ARP_lu+0x22> (BP);
-ffa03952:	80 5e       	P2 = P0 + (P0 << 0x2);
-ffa03954:	0a 6c       	P2 += 0x1;		/* (  1) */
-ffa03956:	54 5e       	P1 = P4 + (P2 << 0x2);
-ffa03958:	32 68       	P2 = 0x6 (X);		/*		P2=0x6(  6) */
-ffa0395a:	b2 e0 03 20 	LSETUP(0xffa0395e <_ARP_lu+0x42>, 0xffa03960 <_ARP_lu+0x44>) LC1 = P2;
-ffa0395e:	48 98       	R0 = B[P1++] (X);
-ffa03960:	28 9a       	B[P5++] = R0;
-ffa03962:	01 e8 00 00 	UNLINK;
-ffa03966:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
-ffa03968:	84 04       	(P5:4) = [SP++];
-ffa0396a:	10 00       	RTS;
-
-ffa0396c <_ARP_rx>:
-ffa0396c:	fb 05       	[--SP] = (R7:7, P5:3);
-ffa0396e:	20 32       	P4 = R0;
-ffa03970:	39 30       	R7 = R1;
-ffa03972:	00 e8 04 00 	LINK 0x10;		/* (16) */
-ffa03976:	e0 a5       	R0 = W[P4 + 0xe] (Z);
-ffa03978:	ff e3 08 f4 	CALL 0xffa02188 <_htons>;
-ffa0397c:	c0 42       	R0 = R0.L (Z);
-ffa0397e:	21 e1 06 08 	R1 = 0x806 (X);		/*		R1=0x806(2054) */
-ffa03982:	08 08       	CC = R0 == R1;
-ffa03984:	06 18       	IF CC JUMP 0xffa03990 <_ARP_rx+0x24>;
-ffa03986:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa03988:	01 e8 00 00 	UNLINK;
-ffa0398c:	bb 05       	(R7:7, P5:3) = [SP++];
-ffa0398e:	10 00       	RTS;
-ffa03990:	58 61       	R0 = 0x2b (X);		/*		R0=0x2b( 43) */
-ffa03992:	07 0a       	CC = R7 <= R0 (IU);
-ffa03994:	f9 1f       	IF CC JUMP 0xffa03986 <_ARP_rx+0x1a> (BP);
-ffa03996:	27 a6       	R7 = W[P4 + 0x10] (Z);
-ffa03998:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
-ffa0399a:	ff e3 f7 f3 	CALL 0xffa02188 <_htons>;
-ffa0399e:	c0 42       	R0 = R0.L (Z);
-ffa039a0:	07 08       	CC = R7 == R0;
-ffa039a2:	f2 17       	IF !CC JUMP 0xffa03986 <_ARP_rx+0x1a> (BP);
-ffa039a4:	67 a6       	R7 = W[P4 + 0x12] (Z);
-ffa039a6:	20 e1 00 08 	R0 = 0x800 (X);		/*		R0=0x800(2048) */
-ffa039aa:	ff e3 ef f3 	CALL 0xffa02188 <_htons>;
-ffa039ae:	c0 42       	R0 = R0.L (Z);
-ffa039b0:	07 08       	CC = R7 == R0;
-ffa039b2:	ea 17       	IF !CC JUMP 0xffa03986 <_ARP_rx+0x1a> (BP);
-ffa039b4:	a0 a6       	R0 = W[P4 + 0x14] (Z);
-ffa039b6:	21 e1 06 04 	R1 = 0x406 (X);		/*		R1=0x406(1030) */
-ffa039ba:	08 08       	CC = R0 == R1;
-ffa039bc:	e5 17       	IF !CC JUMP 0xffa03986 <_ARP_rx+0x1a> (BP);
-ffa039be:	e7 a6       	R7 = W[P4 + 0x16] (Z);
-ffa039c0:	10 60       	R0 = 0x2 (X);		/*		R0=0x2(  2) */
-ffa039c2:	ff e3 e3 f3 	CALL 0xffa02188 <_htons>;
-ffa039c6:	c0 42       	R0 = R0.L (Z);
-ffa039c8:	07 08       	CC = R7 == R0;
-ffa039ca:	0c 14       	IF !CC JUMP 0xffa039e2 <_ARP_rx+0x76> (BP);
-ffa039cc:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900006 */
-ffa039d0:	0a e1 e0 0e 	P2.L = 0xee0;		/* (3808)	P2=0xff900ee0 <_NetOurMAC> */
-ffa039d4:	a1 e4 22 00 	R1 = B[P4 + 0x22] (Z);
-ffa039d8:	10 99       	R0 = B[P2] (Z);
-ffa039da:	01 08       	CC = R1 == R0;
-ffa039dc:	ad 18       	IF CC JUMP 0xffa03b36 <_ARP_rx+0x1ca>;
-ffa039de:	00 00       	NOP;
-ffa039e0:	00 00       	NOP;
+ffa03998 <_ARP_lu>:
+ffa03998:	c4 04       	[--SP] = (P5:4);
+ffa0399a:	4c e1 90 ff 	P4.H = 0xff90;		/* (-112)	P4=0xff900f54 <_rxbuf> */
+ffa0399e:	0c e1 7c 0f 	P4.L = 0xf7c;		/* (3964)	P4=0xff900f7c <_NetArpLut> */
+ffa039a2:	00 e8 00 00 	LINK 0x0;		/* (0) */
+ffa039a6:	10 30       	R2 = R0;
+ffa039a8:	29 32       	P5 = R1;
+ffa039aa:	4c 32       	P1 = P4;
+ffa039ac:	00 68       	P0 = 0x0 (X);		/*		P0=0x0(  0) */
+ffa039ae:	52 68       	P2 = 0xa (X);		/*		P2=0xa( 10) */
+ffa039b0:	b2 e0 06 20 	LSETUP(0xffa039b4 <_ARP_lu+0x1c>, 0xffa039bc <_ARP_lu+0x24>) LC1 = P2;
+ffa039b4:	08 91       	R0 = [P1];
+ffa039b6:	10 08       	CC = R0 == R2;
+ffa039b8:	08 18       	IF CC JUMP 0xffa039c8 <_ARP_lu+0x30>;
+ffa039ba:	08 6c       	P0 += 0x1;		/* (  1) */
+ffa039bc:	a1 6c       	P1 += 0x14;		/* ( 20) */
+ffa039be:	01 e8 00 00 	UNLINK;
+ffa039c2:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa039c4:	84 04       	(P5:4) = [SP++];
+ffa039c6:	10 00       	RTS;
+ffa039c8:	08 a1       	R0 = [P1 + 0x10];
+ffa039ca:	00 48       	CC = !BITTST (R0, 0x0);		/* bit  0 */
+ffa039cc:	f7 1f       	IF CC JUMP 0xffa039ba <_ARP_lu+0x22> (BP);
+ffa039ce:	80 5e       	P2 = P0 + (P0 << 0x2);
+ffa039d0:	0a 6c       	P2 += 0x1;		/* (  1) */
+ffa039d2:	54 5e       	P1 = P4 + (P2 << 0x2);
+ffa039d4:	32 68       	P2 = 0x6 (X);		/*		P2=0x6(  6) */
+ffa039d6:	b2 e0 03 20 	LSETUP(0xffa039da <_ARP_lu+0x42>, 0xffa039dc <_ARP_lu+0x44>) LC1 = P2;
+ffa039da:	48 98       	R0 = B[P1++] (X);
+ffa039dc:	28 9a       	B[P5++] = R0;
+ffa039de:	01 e8 00 00 	UNLINK;
 ffa039e2:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
-ffa039e4:	27 a6       	R7 = W[P4 + 0x10] (Z);
-ffa039e6:	ff e3 d1 f3 	CALL 0xffa02188 <_htons>;
-ffa039ea:	c0 42       	R0 = R0.L (Z);
-ffa039ec:	07 08       	CC = R7 == R0;
-ffa039ee:	cc 17       	IF !CC JUMP 0xffa03986 <_ARP_rx+0x1a> (BP);
-ffa039f0:	67 a6       	R7 = W[P4 + 0x12] (Z);
-ffa039f2:	20 e1 00 08 	R0 = 0x800 (X);		/*		R0=0x800(2048) */
-ffa039f6:	ff e3 c9 f3 	CALL 0xffa02188 <_htons>;
-ffa039fa:	c0 42       	R0 = R0.L (Z);
-ffa039fc:	07 08       	CC = R7 == R0;
-ffa039fe:	c4 17       	IF !CC JUMP 0xffa03986 <_ARP_rx+0x1a> (BP);
-ffa03a00:	a0 a6       	R0 = W[P4 + 0x14] (Z);
-ffa03a02:	21 e1 06 04 	R1 = 0x406 (X);		/*		R1=0x406(1030) */
-ffa03a06:	08 08       	CC = R0 == R1;
-ffa03a08:	bf 17       	IF !CC JUMP 0xffa03986 <_ARP_rx+0x1a> (BP);
-ffa03a0a:	e7 a6       	R7 = W[P4 + 0x16] (Z);
-ffa03a0c:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
-ffa03a0e:	ff e3 bd f3 	CALL 0xffa02188 <_htons>;
-ffa03a12:	c0 42       	R0 = R0.L (Z);
-ffa03a14:	07 08       	CC = R7 == R0;
-ffa03a16:	b8 17       	IF !CC JUMP 0xffa03986 <_ARP_rx+0x1a> (BP);
-ffa03a18:	47 e1 90 ff 	R7.H = 0xff90;		/* (-112)	R7=0xff90ffff(-7274497) */
-ffa03a1c:	07 e1 ec 0e 	R7.L = 0xeec;		/* (3820)	R7=0xff900eec <_NetOurIP>(-7336212) */
-ffa03a20:	17 32       	P2 = R7;
-ffa03a22:	a1 a2       	R1 = [P4 + 0x28];
-ffa03a24:	10 91       	R0 = [P2];
-ffa03a26:	01 08       	CC = R1 == R0;
-ffa03a28:	af 17       	IF !CC JUMP 0xffa03986 <_ARP_rx+0x1a> (BP);
-ffa03a2a:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900ee0 <_NetOurMAC> */
-ffa03a2e:	0a e1 b8 0e 	P2.L = 0xeb8;		/* (3768)	P2=0xff900eb8 <_txIdx> */
-ffa03a32:	10 95       	R0 = W[P2] (Z);
-ffa03a34:	10 32       	P2 = R0;
-ffa03a36:	49 e1 90 ff 	P1.H = 0xff90;		/* (-112)	P1=0xff900f16 */
-ffa03a3a:	09 e1 bc 0e 	P1.L = 0xebc;		/* (3772)	P1=0xff900ebc <_txbuf> */
-ffa03a3e:	50 61       	R0 = 0x2a (X);		/*		R0=0x2a( 42) */
-ffa03a40:	4d e1 90 ff 	P5.H = 0xff90;		/* (-112)	P5=0xff900000 <_l1_data_a> */
-ffa03a44:	91 5e       	P2 = P1 + (P2 << 0x2);
-ffa03a46:	52 91       	P2 = [P2];
-ffa03a48:	0d e1 e0 0e 	P5.L = 0xee0;		/* (3808)	P5=0xff900ee0 <_NetOurMAC> */
-ffa03a4c:	93 ad       	P3 = [P2 + 0x18];
-ffa03a4e:	18 97       	W[P3] = R0;
-ffa03a50:	a0 e5 08 00 	R0 = B[P4 + 0x8] (X);
-ffa03a54:	98 e6 02 00 	B[P3 + 0x2] = R0;
-ffa03a58:	a0 e5 09 00 	R0 = B[P4 + 0x9] (X);
-ffa03a5c:	98 e6 03 00 	B[P3 + 0x3] = R0;
-ffa03a60:	a0 e5 0a 00 	R0 = B[P4 + 0xa] (X);
-ffa03a64:	98 e6 04 00 	B[P3 + 0x4] = R0;
-ffa03a68:	a0 e5 0b 00 	R0 = B[P4 + 0xb] (X);
-ffa03a6c:	98 e6 05 00 	B[P3 + 0x5] = R0;
-ffa03a70:	a0 e5 0c 00 	R0 = B[P4 + 0xc] (X);
-ffa03a74:	98 e6 06 00 	B[P3 + 0x6] = R0;
-ffa03a78:	a0 e5 0d 00 	R0 = B[P4 + 0xd] (X);
-ffa03a7c:	98 e6 07 00 	B[P3 + 0x7] = R0;
-ffa03a80:	68 99       	R0 = B[P5] (X);
-ffa03a82:	98 e6 08 00 	B[P3 + 0x8] = R0;
-ffa03a86:	a8 e5 01 00 	R0 = B[P5 + 0x1] (X);
-ffa03a8a:	98 e6 09 00 	B[P3 + 0x9] = R0;
-ffa03a8e:	a8 e5 02 00 	R0 = B[P5 + 0x2] (X);
-ffa03a92:	98 e6 0a 00 	B[P3 + 0xa] = R0;
-ffa03a96:	a8 e5 03 00 	R0 = B[P5 + 0x3] (X);
-ffa03a9a:	98 e6 0b 00 	B[P3 + 0xb] = R0;
-ffa03a9e:	a8 e5 04 00 	R0 = B[P5 + 0x4] (X);
-ffa03aa2:	98 e6 0c 00 	B[P3 + 0xc] = R0;
-ffa03aa6:	a8 e5 05 00 	R0 = B[P5 + 0x5] (X);
-ffa03aaa:	98 e6 0d 00 	B[P3 + 0xd] = R0;
-ffa03aae:	20 e1 06 08 	R0 = 0x806 (X);		/*		R0=0x806(2054) */
-ffa03ab2:	ff e3 6b f3 	CALL 0xffa02188 <_htons>;
-ffa03ab6:	d8 b5       	W[P3 + 0xe] = R0;
-ffa03ab8:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
-ffa03aba:	ff e3 67 f3 	CALL 0xffa02188 <_htons>;
-ffa03abe:	18 b6       	W[P3 + 0x10] = R0;
-ffa03ac0:	20 e1 00 08 	R0 = 0x800 (X);		/*		R0=0x800(2048) */
-ffa03ac4:	ff e3 62 f3 	CALL 0xffa02188 <_htons>;
-ffa03ac8:	58 b6       	W[P3 + 0x12] = R0;
-ffa03aca:	30 60       	R0 = 0x6 (X);		/*		R0=0x6(  6) */
-ffa03acc:	98 e6 14 00 	B[P3 + 0x14] = R0;
-ffa03ad0:	20 60       	R0 = 0x4 (X);		/*		R0=0x4(  4) */
-ffa03ad2:	98 e6 15 00 	B[P3 + 0x15] = R0;
-ffa03ad6:	10 60       	R0 = 0x2 (X);		/*		R0=0x2(  2) */
-ffa03ad8:	ff e3 58 f3 	CALL 0xffa02188 <_htons>;
-ffa03adc:	44 32       	P0 = P4;
-ffa03ade:	d8 b6       	W[P3 + 0x16] = R0;
-ffa03ae0:	53 32       	P2 = P3;
-ffa03ae2:	c0 6c       	P0 += 0x18;		/* ( 24) */
-ffa03ae4:	31 68       	P1 = 0x6 (X);		/*		P1=0x6(  6) */
-ffa03ae6:	b2 e0 08 10 	LSETUP(0xffa03aea <_ARP_rx+0x17e>, 0xffa03af6 <_ARP_rx+0x18a>) LC1 = P1;
-ffa03aea:	68 98       	R0 = B[P5++] (X);
-ffa03aec:	90 e6 18 00 	B[P2 + 0x18] = R0;
-ffa03af0:	40 98       	R0 = B[P0++] (X);
-ffa03af2:	90 e6 22 00 	B[P2 + 0x22] = R0;
-ffa03af6:	0a 6c       	P2 += 0x1;		/* (  1) */
-ffa03af8:	17 32       	P2 = R7;
-ffa03afa:	11 91       	R1 = [P2];
-ffa03afc:	82 c6 c1 81 	R0 = R1 >> 0x8;
-ffa03b00:	98 e6 1f 00 	B[P3 + 0x1f] = R0;
-ffa03b04:	99 e6 1e 00 	B[P3 + 0x1e] = R1;
-ffa03b08:	82 c6 81 81 	R0 = R1 >> 0x10;
-ffa03b0c:	c1 4e       	R1 >>= 0x18;
-ffa03b0e:	98 e6 20 00 	B[P3 + 0x20] = R0;
-ffa03b12:	99 e6 21 00 	B[P3 + 0x21] = R1;
-ffa03b16:	a3 e4 21 00 	R3 = B[P4 + 0x21] (Z);
-ffa03b1a:	a1 e4 1f 00 	R1 = B[P4 + 0x1f] (Z);
-ffa03b1e:	a2 e4 20 00 	R2 = B[P4 + 0x20] (Z);
-ffa03b22:	f3 b0       	[SP + 0xc] = R3;
-ffa03b24:	a0 e4 1e 00 	R0 = B[P4 + 0x1e] (Z);
-ffa03b28:	ff e3 42 f2 	CALL 0xffa01fac <_FormatIPAddress>;
-ffa03b2c:	98 b2       	[P3 + 0x28] = R0;
-ffa03b2e:	ff e3 49 f4 	CALL 0xffa023c0 <_bfin_EMAC_send_nocopy>;
-ffa03b32:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
-ffa03b34:	2a 2f       	JUMP.S 0xffa03988 <_ARP_rx+0x1c>;
-ffa03b36:	a1 e4 23 00 	R1 = B[P4 + 0x23] (Z);
-ffa03b3a:	90 e4 01 00 	R0 = B[P2 + 0x1] (Z);
-ffa03b3e:	01 08       	CC = R1 == R0;
-ffa03b40:	51 17       	IF !CC JUMP 0xffa039e2 <_ARP_rx+0x76> (BP);
-ffa03b42:	a1 e4 24 00 	R1 = B[P4 + 0x24] (Z);
-ffa03b46:	90 e4 02 00 	R0 = B[P2 + 0x2] (Z);
-ffa03b4a:	01 08       	CC = R1 == R0;
-ffa03b4c:	4b 17       	IF !CC JUMP 0xffa039e2 <_ARP_rx+0x76> (BP);
-ffa03b4e:	a1 e4 25 00 	R1 = B[P4 + 0x25] (Z);
-ffa03b52:	90 e4 03 00 	R0 = B[P2 + 0x3] (Z);
-ffa03b56:	01 08       	CC = R1 == R0;
-ffa03b58:	45 17       	IF !CC JUMP 0xffa039e2 <_ARP_rx+0x76> (BP);
-ffa03b5a:	a1 e4 26 00 	R1 = B[P4 + 0x26] (Z);
-ffa03b5e:	90 e4 04 00 	R0 = B[P2 + 0x4] (Z);
-ffa03b62:	01 08       	CC = R1 == R0;
-ffa03b64:	3f 17       	IF !CC JUMP 0xffa039e2 <_ARP_rx+0x76> (BP);
-ffa03b66:	a0 e4 27 00 	R0 = B[P4 + 0x27] (Z);
-ffa03b6a:	91 e4 05 00 	R1 = B[P2 + 0x5] (Z);
-ffa03b6e:	08 08       	CC = R0 == R1;
-ffa03b70:	39 17       	IF !CC JUMP 0xffa039e2 <_ARP_rx+0x76> (BP);
-ffa03b72:	f4 6c       	P4 += 0x1e;		/* ( 30) */
-ffa03b74:	44 30       	R0 = P4;
-ffa03b76:	ff e3 27 f3 	CALL 0xffa021c4 <_pack4chars>;
-ffa03b7a:	38 30       	R7 = R0;
-ffa03b7c:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900001(-7340031) */
-ffa03b80:	0f 30       	R1 = R7;
-ffa03b82:	00 e1 00 05 	R0.L = 0x500;		/* (1280)	R0=0xff900500(-7338752) */
-ffa03b86:	ff e3 cb ef 	CALL 0xffa01b1c <_printf_ip>;
-ffa03b8a:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900500(-7338752) */
-ffa03b8e:	00 e1 9c 07 	R0.L = 0x79c;		/* (1948)	R0=0xff90079c(-7338084) */
-ffa03b92:	ff e3 bf ef 	CALL 0xffa01b10 <_printf_str>;
-ffa03b96:	d4 6f       	P4 += -0x6;		/* ( -6) */
-ffa03b98:	07 30       	R0 = R7;
-ffa03b9a:	4c 30       	R1 = P4;
-ffa03b9c:	ff e3 6a fe 	CALL 0xffa03870 <_ARP_lut_add>;
-ffa03ba0:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
-ffa03ba2:	f3 2e       	JUMP.S 0xffa03988 <_ARP_rx+0x1c>;
+ffa039e4:	84 04       	(P5:4) = [SP++];
+ffa039e6:	10 00       	RTS;
 
-ffa03ba4 <_ARP_tx>:
-ffa03ba4:	fc 05       	[--SP] = (R7:7, P5:4);
-ffa03ba6:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900eb8 <_txIdx> */
-ffa03baa:	00 e8 03 00 	LINK 0xc;		/* (12) */
-ffa03bae:	0a e1 b8 0e 	P2.L = 0xeb8;		/* (3768)	P2=0xff900eb8 <_txIdx> */
-ffa03bb2:	38 30       	R7 = R0;
-ffa03bb4:	10 95       	R0 = W[P2] (Z);
-ffa03bb6:	10 32       	P2 = R0;
-ffa03bb8:	49 e1 90 ff 	P1.H = 0xff90;		/* (-112)	P1=0xff900006 */
-ffa03bbc:	09 e1 bc 0e 	P1.L = 0xebc;		/* (3772)	P1=0xff900ebc <_txbuf> */
-ffa03bc0:	60 61       	R0 = 0x2c (X);		/*		R0=0x2c( 44) */
-ffa03bc2:	4d e1 90 ff 	P5.H = 0xff90;		/* (-112)	P5=0xff900ee0 <_NetOurMAC> */
-ffa03bc6:	91 5e       	P2 = P1 + (P2 << 0x2);
-ffa03bc8:	52 91       	P2 = [P2];
-ffa03bca:	0d e1 e0 0e 	P5.L = 0xee0;		/* (3808)	P5=0xff900ee0 <_NetOurMAC> */
-ffa03bce:	94 ad       	P4 = [P2 + 0x18];
-ffa03bd0:	20 97       	W[P4] = R0;
-ffa03bd2:	f8 63       	R0 = -0x1 (X);		/*		R0=0xffffffff( -1) */
-ffa03bd4:	a0 e6 02 00 	B[P4 + 0x2] = R0;
-ffa03bd8:	a0 e6 03 00 	B[P4 + 0x3] = R0;
-ffa03bdc:	a0 e6 04 00 	B[P4 + 0x4] = R0;
-ffa03be0:	a0 e6 05 00 	B[P4 + 0x5] = R0;
-ffa03be4:	a0 e6 06 00 	B[P4 + 0x6] = R0;
-ffa03be8:	a0 e6 07 00 	B[P4 + 0x7] = R0;
-ffa03bec:	68 99       	R0 = B[P5] (X);
-ffa03bee:	a0 e6 08 00 	B[P4 + 0x8] = R0;
-ffa03bf2:	a8 e5 01 00 	R0 = B[P5 + 0x1] (X);
-ffa03bf6:	a0 e6 09 00 	B[P4 + 0x9] = R0;
-ffa03bfa:	a8 e5 02 00 	R0 = B[P5 + 0x2] (X);
-ffa03bfe:	a0 e6 0a 00 	B[P4 + 0xa] = R0;
-ffa03c02:	a8 e5 03 00 	R0 = B[P5 + 0x3] (X);
-ffa03c06:	a0 e6 0b 00 	B[P4 + 0xb] = R0;
-ffa03c0a:	a8 e5 04 00 	R0 = B[P5 + 0x4] (X);
-ffa03c0e:	a0 e6 0c 00 	B[P4 + 0xc] = R0;
-ffa03c12:	a8 e5 05 00 	R0 = B[P5 + 0x5] (X);
-ffa03c16:	a0 e6 0d 00 	B[P4 + 0xd] = R0;
-ffa03c1a:	20 e1 06 08 	R0 = 0x806 (X);		/*		R0=0x806(2054) */
-ffa03c1e:	ff e3 b5 f2 	CALL 0xffa02188 <_htons>;
-ffa03c22:	e0 b5       	W[P4 + 0xe] = R0;
-ffa03c24:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
-ffa03c26:	ff e3 b1 f2 	CALL 0xffa02188 <_htons>;
-ffa03c2a:	20 b6       	W[P4 + 0x10] = R0;
-ffa03c2c:	20 e1 00 08 	R0 = 0x800 (X);		/*		R0=0x800(2048) */
-ffa03c30:	ff e3 ac f2 	CALL 0xffa02188 <_htons>;
-ffa03c34:	60 b6       	W[P4 + 0x12] = R0;
-ffa03c36:	30 60       	R0 = 0x6 (X);		/*		R0=0x6(  6) */
-ffa03c38:	a0 e6 14 00 	B[P4 + 0x14] = R0;
-ffa03c3c:	20 60       	R0 = 0x4 (X);		/*		R0=0x4(  4) */
-ffa03c3e:	a0 e6 15 00 	B[P4 + 0x15] = R0;
-ffa03c42:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
-ffa03c44:	ff e3 a2 f2 	CALL 0xffa02188 <_htons>;
-ffa03c48:	e0 b6       	W[P4 + 0x16] = R0;
-ffa03c4a:	54 32       	P2 = P4;
-ffa03c4c:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
-ffa03c4e:	31 68       	P1 = 0x6 (X);		/*		P1=0x6(  6) */
-ffa03c50:	b2 e0 07 10 	LSETUP(0xffa03c54 <_ARP_tx+0xb0>, 0xffa03c5e <_ARP_tx+0xba>) LC1 = P1;
-ffa03c54:	68 98       	R0 = B[P5++] (X);
-ffa03c56:	90 e6 18 00 	B[P2 + 0x18] = R0;
-ffa03c5a:	91 e6 22 00 	B[P2 + 0x22] = R1;
-ffa03c5e:	0a 6c       	P2 += 0x1;		/* (  1) */
-ffa03c60:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900eb8 <_txIdx> */
-ffa03c64:	0a e1 ec 0e 	P2.L = 0xeec;		/* (3820)	P2=0xff900eec <_NetOurIP> */
-ffa03c68:	11 91       	R1 = [P2];
-ffa03c6a:	82 ce c1 81 	R0 = R1 >> 0x8 || [P4 + 0x28] = R7 || NOP;
-ffa03c6e:	a7 b2 00 00 
-ffa03c72:	a0 e6 1f 00 	B[P4 + 0x1f] = R0;
-ffa03c76:	a1 e6 1e 00 	B[P4 + 0x1e] = R1;
-ffa03c7a:	82 c6 81 81 	R0 = R1 >> 0x10;
-ffa03c7e:	c1 4e       	R1 >>= 0x18;
-ffa03c80:	a0 e6 20 00 	B[P4 + 0x20] = R0;
-ffa03c84:	a1 e6 21 00 	B[P4 + 0x21] = R1;
-ffa03c88:	01 e8 00 00 	UNLINK;
-ffa03c8c:	bc 05       	(R7:7, P5:4) = [SP++];
-ffa03c8e:	ff e2 99 f3 	JUMP.L 0xffa023c0 <_bfin_EMAC_send_nocopy>;
+ffa039e8 <_ARP_rx>:
+ffa039e8:	fb 05       	[--SP] = (R7:7, P5:3);
+ffa039ea:	20 32       	P4 = R0;
+ffa039ec:	39 30       	R7 = R1;
+ffa039ee:	00 e8 04 00 	LINK 0x10;		/* (16) */
+ffa039f2:	e0 a5       	R0 = W[P4 + 0xe] (Z);
+ffa039f4:	ff e3 ea f3 	CALL 0xffa021c8 <_htons>;
+ffa039f8:	c0 42       	R0 = R0.L (Z);
+ffa039fa:	21 e1 06 08 	R1 = 0x806 (X);		/*		R1=0x806(2054) */
+ffa039fe:	08 08       	CC = R0 == R1;
+ffa03a00:	06 18       	IF CC JUMP 0xffa03a0c <_ARP_rx+0x24>;
+ffa03a02:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa03a04:	01 e8 00 00 	UNLINK;
+ffa03a08:	bb 05       	(R7:7, P5:3) = [SP++];
+ffa03a0a:	10 00       	RTS;
+ffa03a0c:	58 61       	R0 = 0x2b (X);		/*		R0=0x2b( 43) */
+ffa03a0e:	07 0a       	CC = R7 <= R0 (IU);
+ffa03a10:	f9 1f       	IF CC JUMP 0xffa03a02 <_ARP_rx+0x1a> (BP);
+ffa03a12:	27 a6       	R7 = W[P4 + 0x10] (Z);
+ffa03a14:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
+ffa03a16:	ff e3 d9 f3 	CALL 0xffa021c8 <_htons>;
+ffa03a1a:	c0 42       	R0 = R0.L (Z);
+ffa03a1c:	07 08       	CC = R7 == R0;
+ffa03a1e:	f2 17       	IF !CC JUMP 0xffa03a02 <_ARP_rx+0x1a> (BP);
+ffa03a20:	67 a6       	R7 = W[P4 + 0x12] (Z);
+ffa03a22:	20 e1 00 08 	R0 = 0x800 (X);		/*		R0=0x800(2048) */
+ffa03a26:	ff e3 d1 f3 	CALL 0xffa021c8 <_htons>;
+ffa03a2a:	c0 42       	R0 = R0.L (Z);
+ffa03a2c:	07 08       	CC = R7 == R0;
+ffa03a2e:	ea 17       	IF !CC JUMP 0xffa03a02 <_ARP_rx+0x1a> (BP);
+ffa03a30:	a0 a6       	R0 = W[P4 + 0x14] (Z);
+ffa03a32:	21 e1 06 04 	R1 = 0x406 (X);		/*		R1=0x406(1030) */
+ffa03a36:	08 08       	CC = R0 == R1;
+ffa03a38:	e5 17       	IF !CC JUMP 0xffa03a02 <_ARP_rx+0x1a> (BP);
+ffa03a3a:	e7 a6       	R7 = W[P4 + 0x16] (Z);
+ffa03a3c:	10 60       	R0 = 0x2 (X);		/*		R0=0x2(  2) */
+ffa03a3e:	ff e3 c5 f3 	CALL 0xffa021c8 <_htons>;
+ffa03a42:	c0 42       	R0 = R0.L (Z);
+ffa03a44:	07 08       	CC = R7 == R0;
+ffa03a46:	0c 14       	IF !CC JUMP 0xffa03a5e <_ARP_rx+0x76> (BP);
+ffa03a48:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900006 */
+ffa03a4c:	0a e1 64 0f 	P2.L = 0xf64;		/* (3940)	P2=0xff900f64 <_NetOurMAC> */
+ffa03a50:	a1 e4 22 00 	R1 = B[P4 + 0x22] (Z);
+ffa03a54:	10 99       	R0 = B[P2] (Z);
+ffa03a56:	01 08       	CC = R1 == R0;
+ffa03a58:	ad 18       	IF CC JUMP 0xffa03bb2 <_ARP_rx+0x1ca>;
+ffa03a5a:	00 00       	NOP;
+ffa03a5c:	00 00       	NOP;
+ffa03a5e:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
+ffa03a60:	27 a6       	R7 = W[P4 + 0x10] (Z);
+ffa03a62:	ff e3 b3 f3 	CALL 0xffa021c8 <_htons>;
+ffa03a66:	c0 42       	R0 = R0.L (Z);
+ffa03a68:	07 08       	CC = R7 == R0;
+ffa03a6a:	cc 17       	IF !CC JUMP 0xffa03a02 <_ARP_rx+0x1a> (BP);
+ffa03a6c:	67 a6       	R7 = W[P4 + 0x12] (Z);
+ffa03a6e:	20 e1 00 08 	R0 = 0x800 (X);		/*		R0=0x800(2048) */
+ffa03a72:	ff e3 ab f3 	CALL 0xffa021c8 <_htons>;
+ffa03a76:	c0 42       	R0 = R0.L (Z);
+ffa03a78:	07 08       	CC = R7 == R0;
+ffa03a7a:	c4 17       	IF !CC JUMP 0xffa03a02 <_ARP_rx+0x1a> (BP);
+ffa03a7c:	a0 a6       	R0 = W[P4 + 0x14] (Z);
+ffa03a7e:	21 e1 06 04 	R1 = 0x406 (X);		/*		R1=0x406(1030) */
+ffa03a82:	08 08       	CC = R0 == R1;
+ffa03a84:	bf 17       	IF !CC JUMP 0xffa03a02 <_ARP_rx+0x1a> (BP);
+ffa03a86:	e7 a6       	R7 = W[P4 + 0x16] (Z);
+ffa03a88:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
+ffa03a8a:	ff e3 9f f3 	CALL 0xffa021c8 <_htons>;
+ffa03a8e:	c0 42       	R0 = R0.L (Z);
+ffa03a90:	07 08       	CC = R7 == R0;
+ffa03a92:	b8 17       	IF !CC JUMP 0xffa03a02 <_ARP_rx+0x1a> (BP);
+ffa03a94:	47 e1 90 ff 	R7.H = 0xff90;		/* (-112)	R7=0xff90ffff(-7274497) */
+ffa03a98:	07 e1 70 0f 	R7.L = 0xf70;		/* (3952)	R7=0xff900f70 <_NetOurIP>(-7336080) */
+ffa03a9c:	17 32       	P2 = R7;
+ffa03a9e:	a1 a2       	R1 = [P4 + 0x28];
+ffa03aa0:	10 91       	R0 = [P2];
+ffa03aa2:	01 08       	CC = R1 == R0;
+ffa03aa4:	af 17       	IF !CC JUMP 0xffa03a02 <_ARP_rx+0x1a> (BP);
+ffa03aa6:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900f64 <_NetOurMAC> */
+ffa03aaa:	0a e1 3c 0f 	P2.L = 0xf3c;		/* (3900)	P2=0xff900f3c <_txIdx> */
+ffa03aae:	10 95       	R0 = W[P2] (Z);
+ffa03ab0:	10 32       	P2 = R0;
+ffa03ab2:	49 e1 90 ff 	P1.H = 0xff90;		/* (-112)	P1=0xff900f9a */
+ffa03ab6:	09 e1 40 0f 	P1.L = 0xf40;		/* (3904)	P1=0xff900f40 <_txbuf> */
+ffa03aba:	50 61       	R0 = 0x2a (X);		/*		R0=0x2a( 42) */
+ffa03abc:	4d e1 90 ff 	P5.H = 0xff90;		/* (-112)	P5=0xff900000 <_l1_data_a> */
+ffa03ac0:	91 5e       	P2 = P1 + (P2 << 0x2);
+ffa03ac2:	52 91       	P2 = [P2];
+ffa03ac4:	0d e1 64 0f 	P5.L = 0xf64;		/* (3940)	P5=0xff900f64 <_NetOurMAC> */
+ffa03ac8:	93 ad       	P3 = [P2 + 0x18];
+ffa03aca:	18 97       	W[P3] = R0;
+ffa03acc:	a0 e5 08 00 	R0 = B[P4 + 0x8] (X);
+ffa03ad0:	98 e6 02 00 	B[P3 + 0x2] = R0;
+ffa03ad4:	a0 e5 09 00 	R0 = B[P4 + 0x9] (X);
+ffa03ad8:	98 e6 03 00 	B[P3 + 0x3] = R0;
+ffa03adc:	a0 e5 0a 00 	R0 = B[P4 + 0xa] (X);
+ffa03ae0:	98 e6 04 00 	B[P3 + 0x4] = R0;
+ffa03ae4:	a0 e5 0b 00 	R0 = B[P4 + 0xb] (X);
+ffa03ae8:	98 e6 05 00 	B[P3 + 0x5] = R0;
+ffa03aec:	a0 e5 0c 00 	R0 = B[P4 + 0xc] (X);
+ffa03af0:	98 e6 06 00 	B[P3 + 0x6] = R0;
+ffa03af4:	a0 e5 0d 00 	R0 = B[P4 + 0xd] (X);
+ffa03af8:	98 e6 07 00 	B[P3 + 0x7] = R0;
+ffa03afc:	68 99       	R0 = B[P5] (X);
+ffa03afe:	98 e6 08 00 	B[P3 + 0x8] = R0;
+ffa03b02:	a8 e5 01 00 	R0 = B[P5 + 0x1] (X);
+ffa03b06:	98 e6 09 00 	B[P3 + 0x9] = R0;
+ffa03b0a:	a8 e5 02 00 	R0 = B[P5 + 0x2] (X);
+ffa03b0e:	98 e6 0a 00 	B[P3 + 0xa] = R0;
+ffa03b12:	a8 e5 03 00 	R0 = B[P5 + 0x3] (X);
+ffa03b16:	98 e6 0b 00 	B[P3 + 0xb] = R0;
+ffa03b1a:	a8 e5 04 00 	R0 = B[P5 + 0x4] (X);
+ffa03b1e:	98 e6 0c 00 	B[P3 + 0xc] = R0;
+ffa03b22:	a8 e5 05 00 	R0 = B[P5 + 0x5] (X);
+ffa03b26:	98 e6 0d 00 	B[P3 + 0xd] = R0;
+ffa03b2a:	20 e1 06 08 	R0 = 0x806 (X);		/*		R0=0x806(2054) */
+ffa03b2e:	ff e3 4d f3 	CALL 0xffa021c8 <_htons>;
+ffa03b32:	d8 b5       	W[P3 + 0xe] = R0;
+ffa03b34:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
+ffa03b36:	ff e3 49 f3 	CALL 0xffa021c8 <_htons>;
+ffa03b3a:	18 b6       	W[P3 + 0x10] = R0;
+ffa03b3c:	20 e1 00 08 	R0 = 0x800 (X);		/*		R0=0x800(2048) */
+ffa03b40:	ff e3 44 f3 	CALL 0xffa021c8 <_htons>;
+ffa03b44:	58 b6       	W[P3 + 0x12] = R0;
+ffa03b46:	30 60       	R0 = 0x6 (X);		/*		R0=0x6(  6) */
+ffa03b48:	98 e6 14 00 	B[P3 + 0x14] = R0;
+ffa03b4c:	20 60       	R0 = 0x4 (X);		/*		R0=0x4(  4) */
+ffa03b4e:	98 e6 15 00 	B[P3 + 0x15] = R0;
+ffa03b52:	10 60       	R0 = 0x2 (X);		/*		R0=0x2(  2) */
+ffa03b54:	ff e3 3a f3 	CALL 0xffa021c8 <_htons>;
+ffa03b58:	44 32       	P0 = P4;
+ffa03b5a:	d8 b6       	W[P3 + 0x16] = R0;
+ffa03b5c:	53 32       	P2 = P3;
+ffa03b5e:	c0 6c       	P0 += 0x18;		/* ( 24) */
+ffa03b60:	31 68       	P1 = 0x6 (X);		/*		P1=0x6(  6) */
+ffa03b62:	b2 e0 08 10 	LSETUP(0xffa03b66 <_ARP_rx+0x17e>, 0xffa03b72 <_ARP_rx+0x18a>) LC1 = P1;
+ffa03b66:	68 98       	R0 = B[P5++] (X);
+ffa03b68:	90 e6 18 00 	B[P2 + 0x18] = R0;
+ffa03b6c:	40 98       	R0 = B[P0++] (X);
+ffa03b6e:	90 e6 22 00 	B[P2 + 0x22] = R0;
+ffa03b72:	0a 6c       	P2 += 0x1;		/* (  1) */
+ffa03b74:	17 32       	P2 = R7;
+ffa03b76:	11 91       	R1 = [P2];
+ffa03b78:	82 c6 c1 81 	R0 = R1 >> 0x8;
+ffa03b7c:	98 e6 1f 00 	B[P3 + 0x1f] = R0;
+ffa03b80:	99 e6 1e 00 	B[P3 + 0x1e] = R1;
+ffa03b84:	82 c6 81 81 	R0 = R1 >> 0x10;
+ffa03b88:	c1 4e       	R1 >>= 0x18;
+ffa03b8a:	98 e6 20 00 	B[P3 + 0x20] = R0;
+ffa03b8e:	99 e6 21 00 	B[P3 + 0x21] = R1;
+ffa03b92:	a3 e4 21 00 	R3 = B[P4 + 0x21] (Z);
+ffa03b96:	a1 e4 1f 00 	R1 = B[P4 + 0x1f] (Z);
+ffa03b9a:	a2 e4 20 00 	R2 = B[P4 + 0x20] (Z);
+ffa03b9e:	f3 b0       	[SP + 0xc] = R3;
+ffa03ba0:	a0 e4 1e 00 	R0 = B[P4 + 0x1e] (Z);
+ffa03ba4:	ff e3 24 f2 	CALL 0xffa01fec <_FormatIPAddress>;
+ffa03ba8:	98 b2       	[P3 + 0x28] = R0;
+ffa03baa:	ff e3 2b f4 	CALL 0xffa02400 <_bfin_EMAC_send_nocopy>;
+ffa03bae:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
+ffa03bb0:	2a 2f       	JUMP.S 0xffa03a04 <_ARP_rx+0x1c>;
+ffa03bb2:	a1 e4 23 00 	R1 = B[P4 + 0x23] (Z);
+ffa03bb6:	90 e4 01 00 	R0 = B[P2 + 0x1] (Z);
+ffa03bba:	01 08       	CC = R1 == R0;
+ffa03bbc:	51 17       	IF !CC JUMP 0xffa03a5e <_ARP_rx+0x76> (BP);
+ffa03bbe:	a1 e4 24 00 	R1 = B[P4 + 0x24] (Z);
+ffa03bc2:	90 e4 02 00 	R0 = B[P2 + 0x2] (Z);
+ffa03bc6:	01 08       	CC = R1 == R0;
+ffa03bc8:	4b 17       	IF !CC JUMP 0xffa03a5e <_ARP_rx+0x76> (BP);
+ffa03bca:	a1 e4 25 00 	R1 = B[P4 + 0x25] (Z);
+ffa03bce:	90 e4 03 00 	R0 = B[P2 + 0x3] (Z);
+ffa03bd2:	01 08       	CC = R1 == R0;
+ffa03bd4:	45 17       	IF !CC JUMP 0xffa03a5e <_ARP_rx+0x76> (BP);
+ffa03bd6:	a1 e4 26 00 	R1 = B[P4 + 0x26] (Z);
+ffa03bda:	90 e4 04 00 	R0 = B[P2 + 0x4] (Z);
+ffa03bde:	01 08       	CC = R1 == R0;
+ffa03be0:	3f 17       	IF !CC JUMP 0xffa03a5e <_ARP_rx+0x76> (BP);
+ffa03be2:	a0 e4 27 00 	R0 = B[P4 + 0x27] (Z);
+ffa03be6:	91 e4 05 00 	R1 = B[P2 + 0x5] (Z);
+ffa03bea:	08 08       	CC = R0 == R1;
+ffa03bec:	39 17       	IF !CC JUMP 0xffa03a5e <_ARP_rx+0x76> (BP);
+ffa03bee:	f4 6c       	P4 += 0x1e;		/* ( 30) */
+ffa03bf0:	44 30       	R0 = P4;
+ffa03bf2:	ff e3 09 f3 	CALL 0xffa02204 <_pack4chars>;
+ffa03bf6:	38 30       	R7 = R0;
+ffa03bf8:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900001(-7340031) */
+ffa03bfc:	0f 30       	R1 = R7;
+ffa03bfe:	00 e1 84 05 	R0.L = 0x584;		/* (1412)	R0=0xff900584(-7338620) */
+ffa03c02:	ff e3 ad ef 	CALL 0xffa01b5c <_printf_ip>;
+ffa03c06:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900584(-7338620) */
+ffa03c0a:	00 e1 20 08 	R0.L = 0x820;		/* (2080)	R0=0xff900820(-7337952) */
+ffa03c0e:	ff e3 a1 ef 	CALL 0xffa01b50 <_printf_str>;
+ffa03c12:	d4 6f       	P4 += -0x6;		/* ( -6) */
+ffa03c14:	07 30       	R0 = R7;
+ffa03c16:	4c 30       	R1 = P4;
+ffa03c18:	ff e3 6a fe 	CALL 0xffa038ec <_ARP_lut_add>;
+ffa03c1c:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
+ffa03c1e:	f3 2e       	JUMP.S 0xffa03a04 <_ARP_rx+0x1c>;
+
+ffa03c20 <_ARP_tx>:
+ffa03c20:	fc 05       	[--SP] = (R7:7, P5:4);
+ffa03c22:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900f3c <_txIdx> */
+ffa03c26:	00 e8 03 00 	LINK 0xc;		/* (12) */
+ffa03c2a:	0a e1 3c 0f 	P2.L = 0xf3c;		/* (3900)	P2=0xff900f3c <_txIdx> */
+ffa03c2e:	38 30       	R7 = R0;
+ffa03c30:	10 95       	R0 = W[P2] (Z);
+ffa03c32:	10 32       	P2 = R0;
+ffa03c34:	49 e1 90 ff 	P1.H = 0xff90;		/* (-112)	P1=0xff900006 */
+ffa03c38:	09 e1 40 0f 	P1.L = 0xf40;		/* (3904)	P1=0xff900f40 <_txbuf> */
+ffa03c3c:	60 61       	R0 = 0x2c (X);		/*		R0=0x2c( 44) */
+ffa03c3e:	4d e1 90 ff 	P5.H = 0xff90;		/* (-112)	P5=0xff900f64 <_NetOurMAC> */
+ffa03c42:	91 5e       	P2 = P1 + (P2 << 0x2);
+ffa03c44:	52 91       	P2 = [P2];
+ffa03c46:	0d e1 64 0f 	P5.L = 0xf64;		/* (3940)	P5=0xff900f64 <_NetOurMAC> */
+ffa03c4a:	94 ad       	P4 = [P2 + 0x18];
+ffa03c4c:	20 97       	W[P4] = R0;
+ffa03c4e:	f8 63       	R0 = -0x1 (X);		/*		R0=0xffffffff( -1) */
+ffa03c50:	a0 e6 02 00 	B[P4 + 0x2] = R0;
+ffa03c54:	a0 e6 03 00 	B[P4 + 0x3] = R0;
+ffa03c58:	a0 e6 04 00 	B[P4 + 0x4] = R0;
+ffa03c5c:	a0 e6 05 00 	B[P4 + 0x5] = R0;
+ffa03c60:	a0 e6 06 00 	B[P4 + 0x6] = R0;
+ffa03c64:	a0 e6 07 00 	B[P4 + 0x7] = R0;
+ffa03c68:	68 99       	R0 = B[P5] (X);
+ffa03c6a:	a0 e6 08 00 	B[P4 + 0x8] = R0;
+ffa03c6e:	a8 e5 01 00 	R0 = B[P5 + 0x1] (X);
+ffa03c72:	a0 e6 09 00 	B[P4 + 0x9] = R0;
+ffa03c76:	a8 e5 02 00 	R0 = B[P5 + 0x2] (X);
+ffa03c7a:	a0 e6 0a 00 	B[P4 + 0xa] = R0;
+ffa03c7e:	a8 e5 03 00 	R0 = B[P5 + 0x3] (X);
+ffa03c82:	a0 e6 0b 00 	B[P4 + 0xb] = R0;
+ffa03c86:	a8 e5 04 00 	R0 = B[P5 + 0x4] (X);
+ffa03c8a:	a0 e6 0c 00 	B[P4 + 0xc] = R0;
+ffa03c8e:	a8 e5 05 00 	R0 = B[P5 + 0x5] (X);
+ffa03c92:	a0 e6 0d 00 	B[P4 + 0xd] = R0;
+ffa03c96:	20 e1 06 08 	R0 = 0x806 (X);		/*		R0=0x806(2054) */
+ffa03c9a:	ff e3 97 f2 	CALL 0xffa021c8 <_htons>;
+ffa03c9e:	e0 b5       	W[P4 + 0xe] = R0;
+ffa03ca0:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
+ffa03ca2:	ff e3 93 f2 	CALL 0xffa021c8 <_htons>;
+ffa03ca6:	20 b6       	W[P4 + 0x10] = R0;
+ffa03ca8:	20 e1 00 08 	R0 = 0x800 (X);		/*		R0=0x800(2048) */
+ffa03cac:	ff e3 8e f2 	CALL 0xffa021c8 <_htons>;
+ffa03cb0:	60 b6       	W[P4 + 0x12] = R0;
+ffa03cb2:	30 60       	R0 = 0x6 (X);		/*		R0=0x6(  6) */
+ffa03cb4:	a0 e6 14 00 	B[P4 + 0x14] = R0;
+ffa03cb8:	20 60       	R0 = 0x4 (X);		/*		R0=0x4(  4) */
+ffa03cba:	a0 e6 15 00 	B[P4 + 0x15] = R0;
+ffa03cbe:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
+ffa03cc0:	ff e3 84 f2 	CALL 0xffa021c8 <_htons>;
+ffa03cc4:	e0 b6       	W[P4 + 0x16] = R0;
+ffa03cc6:	54 32       	P2 = P4;
+ffa03cc8:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
+ffa03cca:	31 68       	P1 = 0x6 (X);		/*		P1=0x6(  6) */
+ffa03ccc:	b2 e0 07 10 	LSETUP(0xffa03cd0 <_ARP_tx+0xb0>, 0xffa03cda <_ARP_tx+0xba>) LC1 = P1;
+ffa03cd0:	68 98       	R0 = B[P5++] (X);
+ffa03cd2:	90 e6 18 00 	B[P2 + 0x18] = R0;
+ffa03cd6:	91 e6 22 00 	B[P2 + 0x22] = R1;
+ffa03cda:	0a 6c       	P2 += 0x1;		/* (  1) */
+ffa03cdc:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900f3c <_txIdx> */
+ffa03ce0:	0a e1 70 0f 	P2.L = 0xf70;		/* (3952)	P2=0xff900f70 <_NetOurIP> */
+ffa03ce4:	11 91       	R1 = [P2];
+ffa03ce6:	82 ce c1 81 	R0 = R1 >> 0x8 || [P4 + 0x28] = R7 || NOP;
+ffa03cea:	a7 b2 00 00 
+ffa03cee:	a0 e6 1f 00 	B[P4 + 0x1f] = R0;
+ffa03cf2:	a1 e6 1e 00 	B[P4 + 0x1e] = R1;
+ffa03cf6:	82 c6 81 81 	R0 = R1 >> 0x10;
+ffa03cfa:	c1 4e       	R1 >>= 0x18;
+ffa03cfc:	a0 e6 20 00 	B[P4 + 0x20] = R0;
+ffa03d00:	a1 e6 21 00 	B[P4 + 0x21] = R1;
+ffa03d04:	01 e8 00 00 	UNLINK;
+ffa03d08:	bc 05       	(R7:7, P5:4) = [SP++];
+ffa03d0a:	ff e2 7b f3 	JUMP.L 0xffa02400 <_bfin_EMAC_send_nocopy>;
 	...
 
-ffa03c94 <_ARP_req>:
-ffa03c94:	f3 05       	[--SP] = (R7:6, P5:3);
-ffa03c96:	4d e1 90 ff 	P5.H = 0xff90;		/* (-112)	P5=0xff900ee0 <_NetOurMAC> */
-ffa03c9a:	0d e1 f8 0e 	P5.L = 0xef8;		/* (3832)	P5=0xff900ef8 <_NetArpLut> */
-ffa03c9e:	00 e8 03 00 	LINK 0xc;		/* (12) */
-ffa03ca2:	38 30       	R7 = R0;
-ffa03ca4:	21 32       	P4 = R1;
-ffa03ca6:	5d 32       	P3 = P5;
-ffa03ca8:	4d 32       	P1 = P5;
-ffa03caa:	00 68       	P0 = 0x0 (X);		/*		P0=0x0(  0) */
-ffa03cac:	52 68       	P2 = 0xa (X);		/*		P2=0xa( 10) */
-ffa03cae:	b2 e0 06 20 	LSETUP(0xffa03cb2 <_ARP_req+0x1e>, 0xffa03cba <_ARP_req+0x26>) LC1 = P2;
-ffa03cb2:	08 91       	R0 = [P1];
-ffa03cb4:	07 08       	CC = R7 == R0;
-ffa03cb6:	56 18       	IF CC JUMP 0xffa03d62 <_ARP_req+0xce>;
-ffa03cb8:	08 6c       	P0 += 0x1;		/* (  1) */
-ffa03cba:	a1 6c       	P1 += 0x14;		/* ( 20) */
-ffa03cbc:	ff e3 76 e2 	CALL 0xffa001a8 <_ustimer>;
-ffa03cc0:	41 e1 e3 38 	R1.H = 0x38e3;		/* (14563)	R1=0x38e30000(954400768) */
-ffa03cc4:	01 e1 39 8e 	R1.L = 0x8e39;		/* (-29127)	R1=0x38e38e39(954437177) */
-ffa03cc8:	80 c0 01 18 	A1 = R0.L * R1.L (FU);
-ffa03ccc:	83 c6 80 51 	A1 = A1 >> 0x10;
-ffa03cd0:	81 c0 01 86 	A1 += R0.H * R1.L, A0 = R0.H * R1.H (FU);
-ffa03cd4:	81 c0 08 98 	A1 += R1.H * R0.L (FU);
-ffa03cd8:	83 c6 80 51 	A1 = A1 >> 0x10;
-ffa03cdc:	0b c4 3f 80 	A0 += A1;
-ffa03ce0:	8b c0 00 38 	R0 = A0 (FU);
-ffa03ce4:	49 e1 90 ff 	P1.H = 0xff90;		/* (-112)	P1=0xff900006 */
-ffa03ce8:	82 c6 f8 8d 	R6 = R0 >> 0x1;
-ffa03cec:	09 e1 f8 0e 	P1.L = 0xef8;		/* (3832)	P1=0xff900ef8 <_NetArpLut> */
-ffa03cf0:	00 68       	P0 = 0x0 (X);		/*		P0=0x0(  0) */
-ffa03cf2:	52 68       	P2 = 0xa (X);		/*		P2=0xa( 10) */
-ffa03cf4:	b2 e0 06 20 	LSETUP(0xffa03cf8 <_ARP_req+0x64>, 0xffa03d00 <_ARP_req+0x6c>) LC1 = P2;
-ffa03cf8:	08 91       	R0 = [P1];
-ffa03cfa:	38 08       	CC = R0 == R7;
-ffa03cfc:	43 18       	IF CC JUMP 0xffa03d82 <_ARP_req+0xee>;
-ffa03cfe:	08 6c       	P0 += 0x1;		/* (  1) */
-ffa03d00:	a1 6c       	P1 += 0x14;		/* ( 20) */
-ffa03d02:	01 68       	P1 = 0x0 (X);		/*		P1=0x0(  0) */
-ffa03d04:	52 68       	P2 = 0xa (X);		/*		P2=0xa( 10) */
-ffa03d06:	b2 e0 06 20 	LSETUP(0xffa03d0a <_ARP_req+0x76>, 0xffa03d12 <_ARP_req+0x7e>) LC1 = P2;
-ffa03d0a:	28 91       	R0 = [P5];
-ffa03d0c:	00 0c       	CC = R0 == 0x0;
-ffa03d0e:	0f 18       	IF CC JUMP 0xffa03d2c <_ARP_req+0x98>;
-ffa03d10:	09 6c       	P1 += 0x1;		/* (  1) */
-ffa03d12:	a5 6c       	P5 += 0x14;		/* ( 20) */
-ffa03d14:	48 e1 90 ff 	P0.H = 0xff90;		/* (-112)	P0=0xff900000 <_l1_data_a> */
-ffa03d18:	5a a5       	R2 = W[P3 + 0xa] (Z);
-ffa03d1a:	08 e1 16 0f 	P0.L = 0xf16;		/* (3862)	P0=0xff900f16 */
-ffa03d1e:	01 68       	P1 = 0x0 (X);		/*		P1=0x0(  0) */
-ffa03d20:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
-ffa03d22:	52 68       	P2 = 0xa (X);		/*		P2=0xa( 10) */
-ffa03d24:	09 64       	R1 += 0x1;		/* (  1) */
-ffa03d26:	fa 6f       	P2 += -0x1;		/* ( -1) */
-ffa03d28:	42 0c       	CC = P2 == 0x0;
-ffa03d2a:	4a 10       	IF !CC JUMP 0xffa03dbe <_ARP_req+0x12a>;
-ffa03d2c:	89 5e       	P2 = P1 + (P1 << 0x2);
-ffa03d2e:	93 5e       	P2 = P3 + (P2 << 0x2);
-ffa03d30:	10 60       	R0 = 0x2 (X);		/*		R0=0x2(  2) */
-ffa03d32:	10 b1       	[P2 + 0x10] = R0;
-ffa03d34:	20 e1 e8 03 	R0 = 0x3e8 (X);		/*		R0=0x3e8(1000) */
-ffa03d38:	04 cc 30 00 	R0 = R6 + R0 (NS) || [P2] = R7 || NOP;
-ffa03d3c:	17 93 00 00 
-ffa03d40:	49 e1 90 ff 	P1.H = 0xff90;		/* (-112)	P1=0xff900000 <_l1_data_a> */
-ffa03d44:	09 e1 f4 0e 	P1.L = 0xef4;		/* (3828)	P1=0xff900ef4 <_NetArpLut_age> */
-ffa03d48:	d0 b0       	[P2 + 0xc] = R0;
-ffa03d4a:	08 95       	R0 = W[P1] (Z);
-ffa03d4c:	08 64       	R0 += 0x1;		/* (  1) */
-ffa03d4e:	08 97       	W[P1] = R0;
-ffa03d50:	50 b5       	W[P2 + 0xa] = R0;
-ffa03d52:	07 30       	R0 = R7;
-ffa03d54:	ff e3 28 ff 	CALL 0xffa03ba4 <_ARP_tx>;
-ffa03d58:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa03d5a:	01 e8 00 00 	UNLINK;
-ffa03d5e:	b3 05       	(R7:6, P5:3) = [SP++];
-ffa03d60:	10 00       	RTS;
-ffa03d62:	08 a1       	R0 = [P1 + 0x10];
-ffa03d64:	00 48       	CC = !BITTST (R0, 0x0);		/* bit  0 */
-ffa03d66:	a9 1f       	IF CC JUMP 0xffa03cb8 <_ARP_req+0x24> (BP);
-ffa03d68:	80 5e       	P2 = P0 + (P0 << 0x2);
-ffa03d6a:	0a 6c       	P2 += 0x1;		/* (  1) */
-ffa03d6c:	53 5e       	P1 = P3 + (P2 << 0x2);
-ffa03d6e:	32 68       	P2 = 0x6 (X);		/*		P2=0x6(  6) */
-ffa03d70:	b2 e0 03 20 	LSETUP(0xffa03d74 <_ARP_req+0xe0>, 0xffa03d76 <_ARP_req+0xe2>) LC1 = P2;
-ffa03d74:	48 98       	R0 = B[P1++] (X);
-ffa03d76:	20 9a       	B[P4++] = R0;
-ffa03d78:	01 e8 00 00 	UNLINK;
-ffa03d7c:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
-ffa03d7e:	b3 05       	(R7:6, P5:3) = [SP++];
-ffa03d80:	10 00       	RTS;
-ffa03d82:	08 a1       	R0 = [P1 + 0x10];
-ffa03d84:	08 48       	CC = !BITTST (R0, 0x1);		/* bit  1 */
-ffa03d86:	bc 1f       	IF CC JUMP 0xffa03cfe <_ARP_req+0x6a> (BP);
-ffa03d88:	80 5e       	P2 = P0 + (P0 << 0x2);
-ffa03d8a:	53 5f       	P5 = P3 + (P2 << 0x2);
-ffa03d8c:	e8 a0       	R0 = [P5 + 0xc];
-ffa03d8e:	86 09       	CC = R6 < R0 (IU);
-ffa03d90:	e4 1f       	IF CC JUMP 0xffa03d58 <_ARP_req+0xc4> (BP);
-ffa03d92:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900001(-7340031) */
-ffa03d96:	0f 30       	R1 = R7;
-ffa03d98:	00 e1 24 05 	R0.L = 0x524;		/* (1316)	R0=0xff900524(-7338716) */
-ffa03d9c:	ff e3 c0 ee 	CALL 0xffa01b1c <_printf_ip>;
-ffa03da0:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900524(-7338716) */
-ffa03da4:	00 e1 9c 07 	R0.L = 0x79c;		/* (1948)	R0=0xff90079c(-7338084) */
-ffa03da8:	ff e3 b4 ee 	CALL 0xffa01b10 <_printf_str>;
-ffa03dac:	07 30       	R0 = R7;
-ffa03dae:	ff e3 fb fe 	CALL 0xffa03ba4 <_ARP_tx>;
-ffa03db2:	20 e1 e8 03 	R0 = 0x3e8 (X);		/*		R0=0x3e8(1000) */
-ffa03db6:	06 50       	R0 = R6 + R0;
-ffa03db8:	e8 b0       	[P5 + 0xc] = R0;
-ffa03dba:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa03dbc:	cf 2f       	JUMP.S 0xffa03d5a <_ARP_req+0xc6>;
-ffa03dbe:	00 95       	R0 = W[P0] (Z);
-ffa03dc0:	90 08       	CC = R0 < R2;
-ffa03dc2:	02 06       	IF !CC R0 = R2;
-ffa03dc4:	89 07       	IF CC P1 = R1;
-ffa03dc6:	a0 6c       	P0 += 0x14;		/* ( 20) */
-ffa03dc8:	10 30       	R2 = R0;
-ffa03dca:	ad 2f       	JUMP.S 0xffa03d24 <_ARP_req+0x90>;
+ffa03d10 <_ARP_req>:
+ffa03d10:	f3 05       	[--SP] = (R7:6, P5:3);
+ffa03d12:	4d e1 90 ff 	P5.H = 0xff90;		/* (-112)	P5=0xff900f64 <_NetOurMAC> */
+ffa03d16:	0d e1 7c 0f 	P5.L = 0xf7c;		/* (3964)	P5=0xff900f7c <_NetArpLut> */
+ffa03d1a:	00 e8 03 00 	LINK 0xc;		/* (12) */
+ffa03d1e:	38 30       	R7 = R0;
+ffa03d20:	21 32       	P4 = R1;
+ffa03d22:	5d 32       	P3 = P5;
+ffa03d24:	4d 32       	P1 = P5;
+ffa03d26:	00 68       	P0 = 0x0 (X);		/*		P0=0x0(  0) */
+ffa03d28:	52 68       	P2 = 0xa (X);		/*		P2=0xa( 10) */
+ffa03d2a:	b2 e0 06 20 	LSETUP(0xffa03d2e <_ARP_req+0x1e>, 0xffa03d36 <_ARP_req+0x26>) LC1 = P2;
+ffa03d2e:	08 91       	R0 = [P1];
+ffa03d30:	07 08       	CC = R7 == R0;
+ffa03d32:	56 18       	IF CC JUMP 0xffa03dde <_ARP_req+0xce>;
+ffa03d34:	08 6c       	P0 += 0x1;		/* (  1) */
+ffa03d36:	a1 6c       	P1 += 0x14;		/* ( 20) */
+ffa03d38:	ff e3 38 e2 	CALL 0xffa001a8 <_ustimer>;
+ffa03d3c:	41 e1 e3 38 	R1.H = 0x38e3;		/* (14563)	R1=0x38e30000(954400768) */
+ffa03d40:	01 e1 39 8e 	R1.L = 0x8e39;		/* (-29127)	R1=0x38e38e39(954437177) */
+ffa03d44:	80 c0 01 18 	A1 = R0.L * R1.L (FU);
+ffa03d48:	83 c6 80 51 	A1 = A1 >> 0x10;
+ffa03d4c:	81 c0 01 86 	A1 += R0.H * R1.L, A0 = R0.H * R1.H (FU);
+ffa03d50:	81 c0 08 98 	A1 += R1.H * R0.L (FU);
+ffa03d54:	83 c6 80 51 	A1 = A1 >> 0x10;
+ffa03d58:	0b c4 3f 80 	A0 += A1;
+ffa03d5c:	8b c0 00 38 	R0 = A0 (FU);
+ffa03d60:	49 e1 90 ff 	P1.H = 0xff90;		/* (-112)	P1=0xff900006 */
+ffa03d64:	82 c6 f8 8d 	R6 = R0 >> 0x1;
+ffa03d68:	09 e1 7c 0f 	P1.L = 0xf7c;		/* (3964)	P1=0xff900f7c <_NetArpLut> */
+ffa03d6c:	00 68       	P0 = 0x0 (X);		/*		P0=0x0(  0) */
+ffa03d6e:	52 68       	P2 = 0xa (X);		/*		P2=0xa( 10) */
+ffa03d70:	b2 e0 06 20 	LSETUP(0xffa03d74 <_ARP_req+0x64>, 0xffa03d7c <_ARP_req+0x6c>) LC1 = P2;
+ffa03d74:	08 91       	R0 = [P1];
+ffa03d76:	38 08       	CC = R0 == R7;
+ffa03d78:	43 18       	IF CC JUMP 0xffa03dfe <_ARP_req+0xee>;
+ffa03d7a:	08 6c       	P0 += 0x1;		/* (  1) */
+ffa03d7c:	a1 6c       	P1 += 0x14;		/* ( 20) */
+ffa03d7e:	01 68       	P1 = 0x0 (X);		/*		P1=0x0(  0) */
+ffa03d80:	52 68       	P2 = 0xa (X);		/*		P2=0xa( 10) */
+ffa03d82:	b2 e0 06 20 	LSETUP(0xffa03d86 <_ARP_req+0x76>, 0xffa03d8e <_ARP_req+0x7e>) LC1 = P2;
+ffa03d86:	28 91       	R0 = [P5];
+ffa03d88:	00 0c       	CC = R0 == 0x0;
+ffa03d8a:	0f 18       	IF CC JUMP 0xffa03da8 <_ARP_req+0x98>;
+ffa03d8c:	09 6c       	P1 += 0x1;		/* (  1) */
+ffa03d8e:	a5 6c       	P5 += 0x14;		/* ( 20) */
+ffa03d90:	48 e1 90 ff 	P0.H = 0xff90;		/* (-112)	P0=0xff900000 <_l1_data_a> */
+ffa03d94:	5a a5       	R2 = W[P3 + 0xa] (Z);
+ffa03d96:	08 e1 9a 0f 	P0.L = 0xf9a;		/* (3994)	P0=0xff900f9a */
+ffa03d9a:	01 68       	P1 = 0x0 (X);		/*		P1=0x0(  0) */
+ffa03d9c:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
+ffa03d9e:	52 68       	P2 = 0xa (X);		/*		P2=0xa( 10) */
+ffa03da0:	09 64       	R1 += 0x1;		/* (  1) */
+ffa03da2:	fa 6f       	P2 += -0x1;		/* ( -1) */
+ffa03da4:	42 0c       	CC = P2 == 0x0;
+ffa03da6:	4a 10       	IF !CC JUMP 0xffa03e3a <_ARP_req+0x12a>;
+ffa03da8:	89 5e       	P2 = P1 + (P1 << 0x2);
+ffa03daa:	93 5e       	P2 = P3 + (P2 << 0x2);
+ffa03dac:	10 60       	R0 = 0x2 (X);		/*		R0=0x2(  2) */
+ffa03dae:	10 b1       	[P2 + 0x10] = R0;
+ffa03db0:	20 e1 e8 03 	R0 = 0x3e8 (X);		/*		R0=0x3e8(1000) */
+ffa03db4:	04 cc 30 00 	R0 = R6 + R0 (NS) || [P2] = R7 || NOP;
+ffa03db8:	17 93 00 00 
+ffa03dbc:	49 e1 90 ff 	P1.H = 0xff90;		/* (-112)	P1=0xff900000 <_l1_data_a> */
+ffa03dc0:	09 e1 78 0f 	P1.L = 0xf78;		/* (3960)	P1=0xff900f78 <_NetArpLut_age> */
+ffa03dc4:	d0 b0       	[P2 + 0xc] = R0;
+ffa03dc6:	08 95       	R0 = W[P1] (Z);
+ffa03dc8:	08 64       	R0 += 0x1;		/* (  1) */
+ffa03dca:	08 97       	W[P1] = R0;
+ffa03dcc:	50 b5       	W[P2 + 0xa] = R0;
+ffa03dce:	07 30       	R0 = R7;
+ffa03dd0:	ff e3 28 ff 	CALL 0xffa03c20 <_ARP_tx>;
+ffa03dd4:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa03dd6:	01 e8 00 00 	UNLINK;
+ffa03dda:	b3 05       	(R7:6, P5:3) = [SP++];
+ffa03ddc:	10 00       	RTS;
+ffa03dde:	08 a1       	R0 = [P1 + 0x10];
+ffa03de0:	00 48       	CC = !BITTST (R0, 0x0);		/* bit  0 */
+ffa03de2:	a9 1f       	IF CC JUMP 0xffa03d34 <_ARP_req+0x24> (BP);
+ffa03de4:	80 5e       	P2 = P0 + (P0 << 0x2);
+ffa03de6:	0a 6c       	P2 += 0x1;		/* (  1) */
+ffa03de8:	53 5e       	P1 = P3 + (P2 << 0x2);
+ffa03dea:	32 68       	P2 = 0x6 (X);		/*		P2=0x6(  6) */
+ffa03dec:	b2 e0 03 20 	LSETUP(0xffa03df0 <_ARP_req+0xe0>, 0xffa03df2 <_ARP_req+0xe2>) LC1 = P2;
+ffa03df0:	48 98       	R0 = B[P1++] (X);
+ffa03df2:	20 9a       	B[P4++] = R0;
+ffa03df4:	01 e8 00 00 	UNLINK;
+ffa03df8:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
+ffa03dfa:	b3 05       	(R7:6, P5:3) = [SP++];
+ffa03dfc:	10 00       	RTS;
+ffa03dfe:	08 a1       	R0 = [P1 + 0x10];
+ffa03e00:	08 48       	CC = !BITTST (R0, 0x1);		/* bit  1 */
+ffa03e02:	bc 1f       	IF CC JUMP 0xffa03d7a <_ARP_req+0x6a> (BP);
+ffa03e04:	80 5e       	P2 = P0 + (P0 << 0x2);
+ffa03e06:	53 5f       	P5 = P3 + (P2 << 0x2);
+ffa03e08:	e8 a0       	R0 = [P5 + 0xc];
+ffa03e0a:	86 09       	CC = R6 < R0 (IU);
+ffa03e0c:	e4 1f       	IF CC JUMP 0xffa03dd4 <_ARP_req+0xc4> (BP);
+ffa03e0e:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900001(-7340031) */
+ffa03e12:	0f 30       	R1 = R7;
+ffa03e14:	00 e1 a8 05 	R0.L = 0x5a8;		/* (1448)	R0=0xff9005a8(-7338584) */
+ffa03e18:	ff e3 a2 ee 	CALL 0xffa01b5c <_printf_ip>;
+ffa03e1c:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff9005a8(-7338584) */
+ffa03e20:	00 e1 20 08 	R0.L = 0x820;		/* (2080)	R0=0xff900820(-7337952) */
+ffa03e24:	ff e3 96 ee 	CALL 0xffa01b50 <_printf_str>;
+ffa03e28:	07 30       	R0 = R7;
+ffa03e2a:	ff e3 fb fe 	CALL 0xffa03c20 <_ARP_tx>;
+ffa03e2e:	20 e1 e8 03 	R0 = 0x3e8 (X);		/*		R0=0x3e8(1000) */
+ffa03e32:	06 50       	R0 = R6 + R0;
+ffa03e34:	e8 b0       	[P5 + 0xc] = R0;
+ffa03e36:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa03e38:	cf 2f       	JUMP.S 0xffa03dd6 <_ARP_req+0xc6>;
+ffa03e3a:	00 95       	R0 = W[P0] (Z);
+ffa03e3c:	90 08       	CC = R0 < R2;
+ffa03e3e:	02 06       	IF !CC R0 = R2;
+ffa03e40:	89 07       	IF CC P1 = R1;
+ffa03e42:	a0 6c       	P0 += 0x14;		/* ( 20) */
+ffa03e44:	10 30       	R2 = R0;
+ffa03e46:	ad 2f       	JUMP.S 0xffa03da0 <_ARP_req+0x90>;
 
-ffa03dcc <_tcp_length>:
-ffa03dcc:	c5 04       	[--SP] = (P5:5);
-ffa03dce:	28 32       	P5 = R0;
-ffa03dd0:	00 e8 03 00 	LINK 0xc;		/* (12) */
-ffa03dd4:	68 a6       	R0 = W[P5 + 0x12] (Z);
-ffa03dd6:	ff e3 d9 f1 	CALL 0xffa02188 <_htons>;
-ffa03dda:	a9 e4 10 00 	R1 = B[P5 + 0x10] (Z);
-ffa03dde:	7a 60       	R2 = 0xf (X);		/*		R2=0xf( 15) */
-ffa03de0:	51 54       	R1 = R1 & R2;
-ffa03de2:	11 4f       	R1 <<= 0x2;
-ffa03de4:	c0 42       	R0 = R0.L (Z);
-ffa03de6:	08 52       	R0 = R0 - R1;
-ffa03de8:	a9 e4 30 00 	R1 = B[P5 + 0x30] (Z);
-ffa03dec:	11 4d       	R1 >>>= 0x2;
-ffa03dee:	e2 61       	R2 = 0x3c (X);		/*		R2=0x3c( 60) */
-ffa03df0:	51 54       	R1 = R1 & R2;
-ffa03df2:	01 e8 00 00 	UNLINK;
-ffa03df6:	08 52       	R0 = R0 - R1;
-ffa03df8:	85 04       	(P5:5) = [SP++];
-ffa03dfa:	10 00       	RTS;
+ffa03e48 <_tcp_length>:
+ffa03e48:	c5 04       	[--SP] = (P5:5);
+ffa03e4a:	28 32       	P5 = R0;
+ffa03e4c:	00 e8 03 00 	LINK 0xc;		/* (12) */
+ffa03e50:	68 a6       	R0 = W[P5 + 0x12] (Z);
+ffa03e52:	ff e3 bb f1 	CALL 0xffa021c8 <_htons>;
+ffa03e56:	a9 e4 10 00 	R1 = B[P5 + 0x10] (Z);
+ffa03e5a:	7a 60       	R2 = 0xf (X);		/*		R2=0xf( 15) */
+ffa03e5c:	51 54       	R1 = R1 & R2;
+ffa03e5e:	11 4f       	R1 <<= 0x2;
+ffa03e60:	c0 42       	R0 = R0.L (Z);
+ffa03e62:	08 52       	R0 = R0 - R1;
+ffa03e64:	a9 e4 30 00 	R1 = B[P5 + 0x30] (Z);
+ffa03e68:	11 4d       	R1 >>>= 0x2;
+ffa03e6a:	e2 61       	R2 = 0x3c (X);		/*		R2=0x3c( 60) */
+ffa03e6c:	51 54       	R1 = R1 & R2;
+ffa03e6e:	01 e8 00 00 	UNLINK;
+ffa03e72:	08 52       	R0 = R0 - R1;
+ffa03e74:	85 04       	(P5:5) = [SP++];
+ffa03e76:	10 00       	RTS;
 
-ffa03dfc <_tcp_checksum_calc>:
-ffa03dfc:	08 32       	P1 = R0;
-ffa03dfe:	ed 05       	[--SP] = (R7:5, P5:5);
-ffa03e00:	00 e8 03 00 	LINK 0xc;		/* (12) */
-ffa03e04:	28 32       	P5 = R0;
-ffa03e06:	29 30       	R5 = R1;
-ffa03e08:	e1 6c       	P1 += 0x1c;		/* ( 28) */
-ffa03e0a:	06 60       	R6 = 0x0 (X);		/*		R6=0x0(  0) */
-ffa03e0c:	22 68       	P2 = 0x4 (X);		/*		P2=0x4(  4) */
-ffa03e0e:	b2 e0 03 20 	LSETUP(0xffa03e12 <_tcp_checksum_calc+0x16>, 0xffa03e14 <_tcp_checksum_calc+0x18>) LC1 = P2;
-ffa03e12:	08 94       	R0 = W[P1++] (Z);
-ffa03e14:	86 51       	R6 = R6 + R0;
-ffa03e16:	a8 e4 30 00 	R0 = B[P5 + 0x30] (Z);
-ffa03e1a:	10 4e       	R0 >>= 0x2;
-ffa03e1c:	05 50       	R0 = R5 + R0;
-ffa03e1e:	af e4 19 00 	R7 = B[P5 + 0x19] (Z);
-ffa03e22:	c0 42       	R0 = R0.L (Z);
-ffa03e24:	ff e3 b2 f1 	CALL 0xffa02188 <_htons>;
-ffa03e28:	47 4f       	R7 <<= 0x8;
-ffa03e2a:	fe 51       	R7 = R6 + R7;
-ffa03e2c:	c0 42       	R0 = R0.L (Z);
-ffa03e2e:	87 50       	R2 = R7 + R0;
-ffa03e30:	05 48       	CC = !BITTST (R5, 0x0);		/* bit  0 */
-ffa03e32:	0d 1c       	IF CC JUMP 0xffa03e4c <_tcp_checksum_calc+0x50> (BP);
-ffa03e34:	0d 32       	P1 = R5;
-ffa03e36:	a8 e4 30 00 	R0 = B[P5 + 0x30] (Z);
-ffa03e3a:	25 6d       	P5 += 0x24;		/* ( 36) */
-ffa03e3c:	10 4e       	R0 >>= 0x2;
-ffa03e3e:	0d 64       	R5 += 0x1;		/* (  1) */
-ffa03e40:	8d 5a       	P2 = P5 + P1;
-ffa03e42:	08 32       	P1 = R0;
-ffa03e44:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa03e46:	e5 6e       	P5 += -0x24;		/* (-36) */
-ffa03e48:	8a 5a       	P2 = P2 + P1;
-ffa03e4a:	10 9b       	B[P2] = R0;
-ffa03e4c:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa03e4e:	68 e6 1a 00 	W[P5 + 0x34] = R0;
-ffa03e52:	82 c6 0d 83 	R1 = R5 >> 0x1f;
-ffa03e56:	69 50       	R1 = R1 + R5;
-ffa03e58:	a8 e4 30 00 	R0 = B[P5 + 0x30] (Z);
-ffa03e5c:	09 4d       	R1 >>>= 0x1;
-ffa03e5e:	18 4e       	R0 >>= 0x3;
-ffa03e60:	01 50       	R0 = R1 + R0;
-ffa03e62:	00 0d       	CC = R0 <= 0x0;
-ffa03e64:	08 18       	IF CC JUMP 0xffa03e74 <_tcp_checksum_calc+0x78>;
-ffa03e66:	55 32       	P2 = P5;
-ffa03e68:	22 6d       	P2 += 0x24;		/* ( 36) */
-ffa03e6a:	08 32       	P1 = R0;
-ffa03e6c:	b2 e0 03 10 	LSETUP(0xffa03e70 <_tcp_checksum_calc+0x74>, 0xffa03e72 <_tcp_checksum_calc+0x76>) LC1 = P1;
-ffa03e70:	10 94       	R0 = W[P2++] (Z);
-ffa03e72:	82 50       	R2 = R2 + R0;
-ffa03e74:	d1 42       	R1 = R2.L (Z);
-ffa03e76:	82 c6 82 81 	R0 = R2 >> 0x10;
-ffa03e7a:	08 50       	R0 = R0 + R1;
-ffa03e7c:	01 e8 00 00 	UNLINK;
-ffa03e80:	c0 43       	R0 =~ R0;
-ffa03e82:	ad 05       	(R7:5, P5:5) = [SP++];
-ffa03e84:	10 00       	RTS;
+ffa03e78 <_tcp_checksum_calc>:
+ffa03e78:	08 32       	P1 = R0;
+ffa03e7a:	ed 05       	[--SP] = (R7:5, P5:5);
+ffa03e7c:	00 e8 03 00 	LINK 0xc;		/* (12) */
+ffa03e80:	28 32       	P5 = R0;
+ffa03e82:	29 30       	R5 = R1;
+ffa03e84:	e1 6c       	P1 += 0x1c;		/* ( 28) */
+ffa03e86:	06 60       	R6 = 0x0 (X);		/*		R6=0x0(  0) */
+ffa03e88:	22 68       	P2 = 0x4 (X);		/*		P2=0x4(  4) */
+ffa03e8a:	b2 e0 03 20 	LSETUP(0xffa03e8e <_tcp_checksum_calc+0x16>, 0xffa03e90 <_tcp_checksum_calc+0x18>) LC1 = P2;
+ffa03e8e:	08 94       	R0 = W[P1++] (Z);
+ffa03e90:	86 51       	R6 = R6 + R0;
+ffa03e92:	a8 e4 30 00 	R0 = B[P5 + 0x30] (Z);
+ffa03e96:	10 4e       	R0 >>= 0x2;
+ffa03e98:	05 50       	R0 = R5 + R0;
+ffa03e9a:	af e4 19 00 	R7 = B[P5 + 0x19] (Z);
+ffa03e9e:	c0 42       	R0 = R0.L (Z);
+ffa03ea0:	ff e3 94 f1 	CALL 0xffa021c8 <_htons>;
+ffa03ea4:	47 4f       	R7 <<= 0x8;
+ffa03ea6:	fe 51       	R7 = R6 + R7;
+ffa03ea8:	c0 42       	R0 = R0.L (Z);
+ffa03eaa:	87 50       	R2 = R7 + R0;
+ffa03eac:	05 48       	CC = !BITTST (R5, 0x0);		/* bit  0 */
+ffa03eae:	0d 1c       	IF CC JUMP 0xffa03ec8 <_tcp_checksum_calc+0x50> (BP);
+ffa03eb0:	0d 32       	P1 = R5;
+ffa03eb2:	a8 e4 30 00 	R0 = B[P5 + 0x30] (Z);
+ffa03eb6:	25 6d       	P5 += 0x24;		/* ( 36) */
+ffa03eb8:	10 4e       	R0 >>= 0x2;
+ffa03eba:	0d 64       	R5 += 0x1;		/* (  1) */
+ffa03ebc:	8d 5a       	P2 = P5 + P1;
+ffa03ebe:	08 32       	P1 = R0;
+ffa03ec0:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa03ec2:	e5 6e       	P5 += -0x24;		/* (-36) */
+ffa03ec4:	8a 5a       	P2 = P2 + P1;
+ffa03ec6:	10 9b       	B[P2] = R0;
+ffa03ec8:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa03eca:	68 e6 1a 00 	W[P5 + 0x34] = R0;
+ffa03ece:	82 c6 0d 83 	R1 = R5 >> 0x1f;
+ffa03ed2:	69 50       	R1 = R1 + R5;
+ffa03ed4:	a8 e4 30 00 	R0 = B[P5 + 0x30] (Z);
+ffa03ed8:	09 4d       	R1 >>>= 0x1;
+ffa03eda:	18 4e       	R0 >>= 0x3;
+ffa03edc:	01 50       	R0 = R1 + R0;
+ffa03ede:	00 0d       	CC = R0 <= 0x0;
+ffa03ee0:	08 18       	IF CC JUMP 0xffa03ef0 <_tcp_checksum_calc+0x78>;
+ffa03ee2:	55 32       	P2 = P5;
+ffa03ee4:	22 6d       	P2 += 0x24;		/* ( 36) */
+ffa03ee6:	08 32       	P1 = R0;
+ffa03ee8:	b2 e0 03 10 	LSETUP(0xffa03eec <_tcp_checksum_calc+0x74>, 0xffa03eee <_tcp_checksum_calc+0x76>) LC1 = P1;
+ffa03eec:	10 94       	R0 = W[P2++] (Z);
+ffa03eee:	82 50       	R2 = R2 + R0;
+ffa03ef0:	d1 42       	R1 = R2.L (Z);
+ffa03ef2:	82 c6 82 81 	R0 = R2 >> 0x10;
+ffa03ef6:	08 50       	R0 = R0 + R1;
+ffa03ef8:	01 e8 00 00 	UNLINK;
+ffa03efc:	c0 43       	R0 =~ R0;
+ffa03efe:	ad 05       	(R7:5, P5:5) = [SP++];
+ffa03f00:	10 00       	RTS;
 	...
 
-ffa03e88 <_tcp_checksum_set>:
-ffa03e88:	c5 04       	[--SP] = (P5:5);
-ffa03e8a:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900004 */
-ffa03e8e:	00 e8 03 00 	LINK 0xc;		/* (12) */
-ffa03e92:	08 30       	R1 = R0;
-ffa03e94:	0a e1 b8 0e 	P2.L = 0xeb8;		/* (3768)	P2=0xff900eb8 <_txIdx> */
-ffa03e98:	10 95       	R0 = W[P2] (Z);
-ffa03e9a:	10 32       	P2 = R0;
-ffa03e9c:	49 e1 90 ff 	P1.H = 0xff90;		/* (-112)	P1=0xff900ef4 <_NetArpLut_age> */
-ffa03ea0:	09 e1 bc 0e 	P1.L = 0xebc;		/* (3772)	P1=0xff900ebc <_txbuf> */
-ffa03ea4:	91 5e       	P2 = P1 + (P2 << 0x2);
-ffa03ea6:	52 91       	P2 = [P2];
-ffa03ea8:	95 ad       	P5 = [P2 + 0x18];
-ffa03eaa:	45 30       	R0 = P5;
-ffa03eac:	ff e3 a8 ff 	CALL 0xffa03dfc <_tcp_checksum_calc>;
-ffa03eb0:	68 e6 1a 00 	W[P5 + 0x34] = R0;
-ffa03eb4:	01 e8 00 00 	UNLINK;
-ffa03eb8:	85 04       	(P5:5) = [SP++];
-ffa03eba:	10 00       	RTS;
+ffa03f04 <_tcp_checksum_set>:
+ffa03f04:	c5 04       	[--SP] = (P5:5);
+ffa03f06:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900004 */
+ffa03f0a:	00 e8 03 00 	LINK 0xc;		/* (12) */
+ffa03f0e:	08 30       	R1 = R0;
+ffa03f10:	0a e1 3c 0f 	P2.L = 0xf3c;		/* (3900)	P2=0xff900f3c <_txIdx> */
+ffa03f14:	10 95       	R0 = W[P2] (Z);
+ffa03f16:	10 32       	P2 = R0;
+ffa03f18:	49 e1 90 ff 	P1.H = 0xff90;		/* (-112)	P1=0xff900f78 <_NetArpLut_age> */
+ffa03f1c:	09 e1 40 0f 	P1.L = 0xf40;		/* (3904)	P1=0xff900f40 <_txbuf> */
+ffa03f20:	91 5e       	P2 = P1 + (P2 << 0x2);
+ffa03f22:	52 91       	P2 = [P2];
+ffa03f24:	95 ad       	P5 = [P2 + 0x18];
+ffa03f26:	45 30       	R0 = P5;
+ffa03f28:	ff e3 a8 ff 	CALL 0xffa03e78 <_tcp_checksum_calc>;
+ffa03f2c:	68 e6 1a 00 	W[P5 + 0x34] = R0;
+ffa03f30:	01 e8 00 00 	UNLINK;
+ffa03f34:	85 04       	(P5:5) = [SP++];
+ffa03f36:	10 00       	RTS;
 
-ffa03ebc <_tcp_checksum_check>:
-ffa03ebc:	10 32       	P2 = R0;
-ffa03ebe:	78 05       	[--SP] = (R7:7);
-ffa03ec0:	00 e8 03 00 	LINK 0xc;		/* (12) */
-ffa03ec4:	57 e4 1a 00 	R7 = W[P2 + 0x34] (Z);
-ffa03ec8:	ff e3 9a ff 	CALL 0xffa03dfc <_tcp_checksum_calc>;
-ffa03ecc:	0f 30       	R1 = R7;
-ffa03ece:	c7 42       	R7 = R0.L (Z);
-ffa03ed0:	39 08       	CC = R1 == R7;
-ffa03ed2:	19 18       	IF CC JUMP 0xffa03f04 <_tcp_checksum_check+0x48>;
-ffa03ed4:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900000 <_l1_data_a>(-7340032) */
-ffa03ed8:	00 e1 44 05 	R0.L = 0x544;		/* (1348)	R0=0xff900544(-7338684) */
-ffa03edc:	ff e3 16 ed 	CALL 0xffa01908 <_printf_hex>;
-ffa03ee0:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900544(-7338684) */
-ffa03ee4:	0f 30       	R1 = R7;
-ffa03ee6:	00 e1 60 05 	R0.L = 0x560;		/* (1376)	R0=0xff900560(-7338656) */
-ffa03eea:	ff e3 0f ed 	CALL 0xffa01908 <_printf_hex>;
-ffa03eee:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900560(-7338656) */
-ffa03ef2:	00 e1 9c 07 	R0.L = 0x79c;		/* (1948)	R0=0xff90079c(-7338084) */
-ffa03ef6:	ff e3 0d ee 	CALL 0xffa01b10 <_printf_str>;
-ffa03efa:	01 e8 00 00 	UNLINK;
-ffa03efe:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa03f00:	38 05       	(R7:7) = [SP++];
-ffa03f02:	10 00       	RTS;
-ffa03f04:	01 e8 00 00 	UNLINK;
-ffa03f08:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
-ffa03f0a:	38 05       	(R7:7) = [SP++];
-ffa03f0c:	10 00       	RTS;
+ffa03f38 <_tcp_checksum_check>:
+ffa03f38:	10 32       	P2 = R0;
+ffa03f3a:	78 05       	[--SP] = (R7:7);
+ffa03f3c:	00 e8 03 00 	LINK 0xc;		/* (12) */
+ffa03f40:	57 e4 1a 00 	R7 = W[P2 + 0x34] (Z);
+ffa03f44:	ff e3 9a ff 	CALL 0xffa03e78 <_tcp_checksum_calc>;
+ffa03f48:	0f 30       	R1 = R7;
+ffa03f4a:	c7 42       	R7 = R0.L (Z);
+ffa03f4c:	39 08       	CC = R1 == R7;
+ffa03f4e:	19 18       	IF CC JUMP 0xffa03f80 <_tcp_checksum_check+0x48>;
+ffa03f50:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900000 <_l1_data_a>(-7340032) */
+ffa03f54:	00 e1 c8 05 	R0.L = 0x5c8;		/* (1480)	R0=0xff9005c8(-7338552) */
+ffa03f58:	ff e3 f8 ec 	CALL 0xffa01948 <_printf_hex>;
+ffa03f5c:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff9005c8(-7338552) */
+ffa03f60:	0f 30       	R1 = R7;
+ffa03f62:	00 e1 e4 05 	R0.L = 0x5e4;		/* (1508)	R0=0xff9005e4(-7338524) */
+ffa03f66:	ff e3 f1 ec 	CALL 0xffa01948 <_printf_hex>;
+ffa03f6a:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff9005e4(-7338524) */
+ffa03f6e:	00 e1 20 08 	R0.L = 0x820;		/* (2080)	R0=0xff900820(-7337952) */
+ffa03f72:	ff e3 ef ed 	CALL 0xffa01b50 <_printf_str>;
+ffa03f76:	01 e8 00 00 	UNLINK;
+ffa03f7a:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa03f7c:	38 05       	(R7:7) = [SP++];
+ffa03f7e:	10 00       	RTS;
+ffa03f80:	01 e8 00 00 	UNLINK;
+ffa03f84:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
+ffa03f86:	38 05       	(R7:7) = [SP++];
+ffa03f88:	10 00       	RTS;
 	...
 
-ffa03f10 <_tcp_packet_setup>:
-ffa03f10:	ed 05       	[--SP] = (R7:5, P5:5);
-ffa03f12:	00 e8 06 00 	LINK 0x18;		/* (24) */
-ffa03f16:	29 32       	P5 = R1;
-ffa03f18:	c0 65       	R0 += 0x38;		/* ( 56) */
-ffa03f1a:	7f 30       	R7 = FP;
-ffa03f1c:	f0 bb       	[FP -0x4] = R0;
-ffa03f1e:	e7 67       	R7 += -0x4;		/* ( -4) */
-ffa03f20:	2a 30       	R5 = R2;
-ffa03f22:	be e5 24 00 	R6 = B[FP + 0x24] (X);
-ffa03f26:	07 30       	R0 = R7;
-ffa03f28:	ff e3 2c f6 	CALL 0xffa02b80 <_eth_header_setup>;
-ffa03f2c:	08 30       	R1 = R0;
-ffa03f2e:	68 99       	R0 = B[P5] (X);
-ffa03f30:	80 0c       	CC = R0 < 0x0;
-ffa03f32:	14 18       	IF CC JUMP 0xffa03f5a <_tcp_packet_setup+0x4a>;
-ffa03f34:	30 60       	R0 = 0x6 (X);		/*		R0=0x6(  6) */
-ffa03f36:	f0 b0       	[SP + 0xc] = R0;
-ffa03f38:	01 30       	R0 = R1;
-ffa03f3a:	0f 30       	R1 = R7;
-ffa03f3c:	15 30       	R2 = R5;
-ffa03f3e:	ff e3 57 f1 	CALL 0xffa021ec <_ip_header_setup>;
-ffa03f42:	b9 a2       	R1 = [FP + 0x28];
-ffa03f44:	f1 b0       	[SP + 0xc] = R1;
-ffa03f46:	f9 a2       	R1 = [FP + 0x2c];
-ffa03f48:	31 b1       	[SP + 0x10] = R1;
-ffa03f4a:	72 43       	R2 = R6.B (Z);
-ffa03f4c:	0f 30       	R1 = R7;
-ffa03f4e:	ff e3 f5 f1 	CALL 0xffa02338 <_tcp_header_setup>;
-ffa03f52:	01 e8 00 00 	UNLINK;
-ffa03f56:	ad 05       	(R7:5, P5:5) = [SP++];
-ffa03f58:	10 00       	RTS;
-ffa03f5a:	01 e8 00 00 	UNLINK;
-ffa03f5e:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa03f60:	ad 05       	(R7:5, P5:5) = [SP++];
-ffa03f62:	10 00       	RTS;
+ffa03f8c <_tcp_packet_setup>:
+ffa03f8c:	ed 05       	[--SP] = (R7:5, P5:5);
+ffa03f8e:	00 e8 06 00 	LINK 0x18;		/* (24) */
+ffa03f92:	29 32       	P5 = R1;
+ffa03f94:	c0 65       	R0 += 0x38;		/* ( 56) */
+ffa03f96:	7f 30       	R7 = FP;
+ffa03f98:	f0 bb       	[FP -0x4] = R0;
+ffa03f9a:	e7 67       	R7 += -0x4;		/* ( -4) */
+ffa03f9c:	2a 30       	R5 = R2;
+ffa03f9e:	be e5 24 00 	R6 = B[FP + 0x24] (X);
+ffa03fa2:	07 30       	R0 = R7;
+ffa03fa4:	ff e3 0e f6 	CALL 0xffa02bc0 <_eth_header_setup>;
+ffa03fa8:	08 30       	R1 = R0;
+ffa03faa:	68 99       	R0 = B[P5] (X);
+ffa03fac:	80 0c       	CC = R0 < 0x0;
+ffa03fae:	14 18       	IF CC JUMP 0xffa03fd6 <_tcp_packet_setup+0x4a>;
+ffa03fb0:	30 60       	R0 = 0x6 (X);		/*		R0=0x6(  6) */
+ffa03fb2:	f0 b0       	[SP + 0xc] = R0;
+ffa03fb4:	01 30       	R0 = R1;
+ffa03fb6:	0f 30       	R1 = R7;
+ffa03fb8:	15 30       	R2 = R5;
+ffa03fba:	ff e3 39 f1 	CALL 0xffa0222c <_ip_header_setup>;
+ffa03fbe:	b9 a2       	R1 = [FP + 0x28];
+ffa03fc0:	f1 b0       	[SP + 0xc] = R1;
+ffa03fc2:	f9 a2       	R1 = [FP + 0x2c];
+ffa03fc4:	31 b1       	[SP + 0x10] = R1;
+ffa03fc6:	72 43       	R2 = R6.B (Z);
+ffa03fc8:	0f 30       	R1 = R7;
+ffa03fca:	ff e3 d7 f1 	CALL 0xffa02378 <_tcp_header_setup>;
+ffa03fce:	01 e8 00 00 	UNLINK;
+ffa03fd2:	ad 05       	(R7:5, P5:5) = [SP++];
+ffa03fd4:	10 00       	RTS;
+ffa03fd6:	01 e8 00 00 	UNLINK;
+ffa03fda:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa03fdc:	ad 05       	(R7:5, P5:5) = [SP++];
+ffa03fde:	10 00       	RTS;
 
-ffa03f64 <_tcp_burst>:
-ffa03f64:	e3 05       	[--SP] = (R7:4, P5:3);
-ffa03f66:	00 e8 08 00 	LINK 0x20;		/* (32) */
-ffa03f6a:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900eb8 <_txIdx> */
-ffa03f6e:	49 e1 90 ff 	P1.H = 0xff90;		/* (-112)	P1=0xff900ebc <_txbuf> */
-ffa03f72:	78 b2       	[FP + 0x24] = R0;
-ffa03f74:	31 30       	R6 = R1;
-ffa03f76:	0a e1 e4 0f 	P2.L = 0xfe4;		/* (4068)	P2=0xff900fe4 <_g_httpContentLen> */
-ffa03f7a:	09 e1 e0 0f 	P1.L = 0xfe0;		/* (4064)	P1=0xff900fe0 <_g_httpHeaderLen> */
-ffa03f7e:	11 91       	R1 = [P2];
-ffa03f80:	08 91       	R0 = [P1];
-ffa03f82:	01 50       	R0 = R1 + R0;
-ffa03f84:	e0 bb       	[FP -0x8] = R0;
-ffa03f86:	78 a2       	R0 = [FP + 0x24];
-ffa03f88:	00 0d       	CC = R0 <= 0x0;
-ffa03f8a:	80 18       	IF CC JUMP 0xffa0408a <_tcp_burst+0x126>;
-ffa03f8c:	4b e1 90 ff 	P3.H = 0xff90;		/* (-112)	P3=0xff900c68 <_g_samples> */
-ffa03f90:	04 68       	P4 = 0x0 (X);		/*		P4=0x0(  0) */
-ffa03f92:	0b e1 c4 0f 	P3.L = 0xfc4;		/* (4036)	P3=0xff900fc4 <_TcpSeqHost> */
-ffa03f96:	85 68       	P5 = 0x10 (X);		/*		P5=0x10( 16) */
-ffa03f98:	e0 b9       	R0 = [FP -0x8];
-ffa03f9a:	30 0a       	CC = R0 <= R6 (IU);
-ffa03f9c:	66 18       	IF CC JUMP 0xffa04068 <_tcp_burst+0x104>;
-ffa03f9e:	30 52       	R0 = R0 - R6;
-ffa03fa0:	21 e1 00 04 	R1 = 0x400 (X);		/*		R1=0x400(1024) */
-ffa03fa4:	08 09       	CC = R0 <= R1;
-ffa03fa6:	07 c4 01 4a 	R5 = MIN (R0, R1);
-ffa03faa:	04 02       	R4 = CC;
-ffa03fac:	49 e1 90 ff 	P1.H = 0xff90;		/* (-112)	P1=0xff900fe0 <_g_httpHeaderLen> */
-ffa03fb0:	09 e1 cc 0f 	P1.L = 0xfcc;		/* (4044)	P1=0xff900fcc <_TcpSeqHttpStart> */
-ffa03fb4:	08 91       	R0 = [P1];
-ffa03fb6:	0c 02       	CC = R4;
-ffa03fb8:	06 50       	R0 = R6 + R0;
-ffa03fba:	c1 60       	R1 = 0x18 (X);		/*		R1=0x18( 24) */
-ffa03fbc:	18 93       	[P3] = R0;
-ffa03fbe:	4d 06       	IF !CC R1 = P5;
-ffa03fc0:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900fe4 <_g_httpContentLen> */
-ffa03fc4:	f1 b0       	[SP + 0xc] = R1;
-ffa03fc6:	30 b1       	[SP + 0x10] = R0;
-ffa03fc8:	0a e1 c8 0f 	P2.L = 0xfc8;		/* (4040)	P2=0xff900fc8 <_TcpSeqClient> */
-ffa03fcc:	10 91       	R0 = [P2];
-ffa03fce:	49 e1 90 ff 	P1.H = 0xff90;		/* (-112)	P1=0xff900fcc <_TcpSeqHttpStart> */
-ffa03fd2:	70 b1       	[SP + 0x14] = R0;
-ffa03fd4:	09 e1 b0 0e 	P1.L = 0xeb0;		/* (3760)	P1=0xff900eb0 <_NetDestIP> */
-ffa03fd8:	4f 30       	R1 = FP;
-ffa03fda:	82 ce 05 c0 	R0 = ROT R5 BY 0x0 || R2 = [P1] || NOP;
-ffa03fde:	0a 91 00 00 
-ffa03fe2:	f9 67       	R1 += -0x1;		/* ( -1) */
-ffa03fe4:	ff e3 96 ff 	CALL 0xffa03f10 <_tcp_packet_setup>;
-ffa03fe8:	38 30       	R7 = R0;
-ffa03fea:	b8 e5 ff ff 	R0 = B[FP + -0x1] (X);
-ffa03fee:	00 0d       	CC = R0 <= 0x0;
-ffa03ff0:	de 1f       	IF CC JUMP 0xffa03fac <_tcp_burst+0x48> (BP);
-ffa03ff2:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900fc8 <_TcpSeqClient> */
-ffa03ff6:	0a e1 e0 0f 	P2.L = 0xfe0;		/* (4064)	P2=0xff900fe0 <_g_httpHeaderLen> */
-ffa03ffa:	10 91       	R0 = [P2];
-ffa03ffc:	30 0a       	CC = R0 <= R6 (IU);
-ffa03ffe:	3a 10       	IF !CC JUMP 0xffa04072 <_tcp_burst+0x10e>;
-ffa04000:	04 60       	R4 = 0x0 (X);		/*		R4=0x0(  0) */
-ffa04002:	49 e1 90 ff 	P1.H = 0xff90;		/* (-112)	P1=0xff900eb0 <_NetDestIP> */
-ffa04006:	09 e1 e0 0f 	P1.L = 0xfe0;		/* (4064)	P1=0xff900fe0 <_g_httpHeaderLen> */
-ffa0400a:	08 91       	R0 = [P1];
-ffa0400c:	06 52       	R0 = R6 - R0;
-ffa0400e:	21 e1 00 41 	R1 = 0x4100 (X);		/*		R1=0x4100(16640) */
-ffa04012:	08 50       	R0 = R0 + R1;
-ffa04014:	0f 30       	R1 = R7;
-ffa04016:	15 30       	R2 = R5;
-ffa04018:	ff e3 ca ed 	CALL 0xffa01bac <_memcpy_>;
-ffa0401c:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900fe0 <_g_httpHeaderLen> */
-ffa04020:	0a e1 cc 0f 	P2.L = 0xfcc;		/* (4044)	P2=0xff900fcc <_TcpSeqHttpStart> */
-ffa04024:	10 91       	R0 = [P2];
-ffa04026:	ae 51       	R6 = R6 + R5;
-ffa04028:	06 50       	R0 = R6 + R0;
-ffa0402a:	18 93       	[P3] = R0;
-ffa0402c:	2c 50       	R0 = R4 + R5;
-ffa0402e:	ff e3 2d ff 	CALL 0xffa03e88 <_tcp_checksum_set>;
-ffa04032:	ff e3 c7 f1 	CALL 0xffa023c0 <_bfin_EMAC_send_nocopy>;
-ffa04036:	49 e1 90 ff 	P1.H = 0xff90;		/* (-112)	P1=0xff900fe0 <_g_httpHeaderLen> */
-ffa0403a:	09 e1 cc 0e 	P1.L = 0xecc;		/* (3788)	P1=0xff900ecc <_rxIdx> */
-ffa0403e:	08 95       	R0 = W[P1] (Z);
-ffa04040:	10 32       	P2 = R0;
-ffa04042:	49 e1 90 ff 	P1.H = 0xff90;		/* (-112)	P1=0xff900ecc <_rxIdx> */
-ffa04046:	09 e1 d0 0e 	P1.L = 0xed0;		/* (3792)	P1=0xff900ed0 <_rxbuf> */
-ffa0404a:	0c 6c       	P4 += 0x1;		/* (  1) */
-ffa0404c:	91 5e       	P2 = P1 + (P2 << 0x2);
-ffa0404e:	52 91       	P2 = [P2];
-ffa04050:	90 a2       	R0 = [P2 + 0x28];
-ffa04052:	60 48       	CC = !BITTST (R0, 0xc);		/* bit 12 */
-ffa04054:	07 1c       	IF CC JUMP 0xffa04062 <_tcp_burst+0xfe> (BP);
-ffa04056:	90 a2       	R0 = [P2 + 0x28];
-ffa04058:	68 48       	CC = !BITTST (R0, 0xd);		/* bit 13 */
-ffa0405a:	4c 30       	R1 = P4;
-ffa0405c:	7a a2       	R2 = [FP + 0x24];
-ffa0405e:	11 50       	R0 = R1 + R2;
-ffa04060:	a0 06       	IF !CC P4 = R0;
-ffa04062:	79 ae       	P1 = [FP + 0x24];
-ffa04064:	61 09       	CC = P1 <= P4;
-ffa04066:	99 17       	IF !CC JUMP 0xffa03f98 <_tcp_burst+0x34> (BP);
-ffa04068:	44 30       	R0 = P4;
-ffa0406a:	01 e8 00 00 	UNLINK;
-ffa0406e:	a3 05       	(R7:4, P5:3) = [SP++];
-ffa04070:	10 00       	RTS;
-ffa04072:	30 53       	R4 = R0 - R6;
-ffa04074:	20 e1 00 40 	R0 = 0x4000 (X);		/*		R0=0x4000(16384) */
-ffa04078:	06 50       	R0 = R6 + R0;
-ffa0407a:	0f 30       	R1 = R7;
-ffa0407c:	14 30       	R2 = R4;
-ffa0407e:	ff e3 97 ed 	CALL 0xffa01bac <_memcpy_>;
-ffa04082:	e7 51       	R7 = R7 + R4;
-ffa04084:	65 53       	R5 = R5 - R4;
-ffa04086:	a6 51       	R6 = R6 + R4;
-ffa04088:	bd 2f       	JUMP.S 0xffa04002 <_tcp_burst+0x9e>;
-ffa0408a:	04 68       	P4 = 0x0 (X);		/*		P4=0x0(  0) */
-ffa0408c:	44 30       	R0 = P4;
-ffa0408e:	01 e8 00 00 	UNLINK;
-ffa04092:	a3 05       	(R7:4, P5:3) = [SP++];
-ffa04094:	10 00       	RTS;
+ffa03fe0 <_tcp_burst>:
+ffa03fe0:	e3 05       	[--SP] = (R7:4, P5:3);
+ffa03fe2:	00 e8 08 00 	LINK 0x20;		/* (32) */
+ffa03fe6:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900f3c <_txIdx> */
+ffa03fea:	49 e1 90 ff 	P1.H = 0xff90;		/* (-112)	P1=0xff900f40 <_txbuf> */
+ffa03fee:	78 b2       	[FP + 0x24] = R0;
+ffa03ff0:	31 30       	R6 = R1;
+ffa03ff2:	0a e1 68 10 	P2.L = 0x1068;		/* (4200)	P2=0xff901068 <_g_httpContentLen> */
+ffa03ff6:	09 e1 64 10 	P1.L = 0x1064;		/* (4196)	P1=0xff901064 <_g_httpHeaderLen> */
+ffa03ffa:	11 91       	R1 = [P2];
+ffa03ffc:	08 91       	R0 = [P1];
+ffa03ffe:	01 50       	R0 = R1 + R0;
+ffa04000:	e0 bb       	[FP -0x8] = R0;
+ffa04002:	78 a2       	R0 = [FP + 0x24];
+ffa04004:	00 0d       	CC = R0 <= 0x0;
+ffa04006:	80 18       	IF CC JUMP 0xffa04106 <_tcp_burst+0x126>;
+ffa04008:	4b e1 90 ff 	P3.H = 0xff90;		/* (-112)	P3=0xff900c68 */
+ffa0400c:	04 68       	P4 = 0x0 (X);		/*		P4=0x0(  0) */
+ffa0400e:	0b e1 48 10 	P3.L = 0x1048;		/* (4168)	P3=0xff901048 <_TcpSeqHost> */
+ffa04012:	85 68       	P5 = 0x10 (X);		/*		P5=0x10( 16) */
+ffa04014:	e0 b9       	R0 = [FP -0x8];
+ffa04016:	30 0a       	CC = R0 <= R6 (IU);
+ffa04018:	66 18       	IF CC JUMP 0xffa040e4 <_tcp_burst+0x104>;
+ffa0401a:	30 52       	R0 = R0 - R6;
+ffa0401c:	21 e1 00 04 	R1 = 0x400 (X);		/*		R1=0x400(1024) */
+ffa04020:	08 09       	CC = R0 <= R1;
+ffa04022:	07 c4 01 4a 	R5 = MIN (R0, R1);
+ffa04026:	04 02       	R4 = CC;
+ffa04028:	49 e1 90 ff 	P1.H = 0xff90;		/* (-112)	P1=0xff901064 <_g_httpHeaderLen> */
+ffa0402c:	09 e1 50 10 	P1.L = 0x1050;		/* (4176)	P1=0xff901050 <_TcpSeqHttpStart> */
+ffa04030:	08 91       	R0 = [P1];
+ffa04032:	0c 02       	CC = R4;
+ffa04034:	06 50       	R0 = R6 + R0;
+ffa04036:	c1 60       	R1 = 0x18 (X);		/*		R1=0x18( 24) */
+ffa04038:	18 93       	[P3] = R0;
+ffa0403a:	4d 06       	IF !CC R1 = P5;
+ffa0403c:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff901068 <_g_httpContentLen> */
+ffa04040:	f1 b0       	[SP + 0xc] = R1;
+ffa04042:	30 b1       	[SP + 0x10] = R0;
+ffa04044:	0a e1 4c 10 	P2.L = 0x104c;		/* (4172)	P2=0xff90104c <_TcpSeqClient> */
+ffa04048:	10 91       	R0 = [P2];
+ffa0404a:	49 e1 90 ff 	P1.H = 0xff90;		/* (-112)	P1=0xff901050 <_TcpSeqHttpStart> */
+ffa0404e:	70 b1       	[SP + 0x14] = R0;
+ffa04050:	09 e1 34 0f 	P1.L = 0xf34;		/* (3892)	P1=0xff900f34 <_NetDestIP> */
+ffa04054:	4f 30       	R1 = FP;
+ffa04056:	82 ce 05 c0 	R0 = ROT R5 BY 0x0 || R2 = [P1] || NOP;
+ffa0405a:	0a 91 00 00 
+ffa0405e:	f9 67       	R1 += -0x1;		/* ( -1) */
+ffa04060:	ff e3 96 ff 	CALL 0xffa03f8c <_tcp_packet_setup>;
+ffa04064:	38 30       	R7 = R0;
+ffa04066:	b8 e5 ff ff 	R0 = B[FP + -0x1] (X);
+ffa0406a:	00 0d       	CC = R0 <= 0x0;
+ffa0406c:	de 1f       	IF CC JUMP 0xffa04028 <_tcp_burst+0x48> (BP);
+ffa0406e:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff90104c <_TcpSeqClient> */
+ffa04072:	0a e1 64 10 	P2.L = 0x1064;		/* (4196)	P2=0xff901064 <_g_httpHeaderLen> */
+ffa04076:	10 91       	R0 = [P2];
+ffa04078:	30 0a       	CC = R0 <= R6 (IU);
+ffa0407a:	3a 10       	IF !CC JUMP 0xffa040ee <_tcp_burst+0x10e>;
+ffa0407c:	04 60       	R4 = 0x0 (X);		/*		R4=0x0(  0) */
+ffa0407e:	49 e1 90 ff 	P1.H = 0xff90;		/* (-112)	P1=0xff900f34 <_NetDestIP> */
+ffa04082:	09 e1 64 10 	P1.L = 0x1064;		/* (4196)	P1=0xff901064 <_g_httpHeaderLen> */
+ffa04086:	08 91       	R0 = [P1];
+ffa04088:	06 52       	R0 = R6 - R0;
+ffa0408a:	21 e1 00 41 	R1 = 0x4100 (X);		/*		R1=0x4100(16640) */
+ffa0408e:	08 50       	R0 = R0 + R1;
+ffa04090:	0f 30       	R1 = R7;
+ffa04092:	15 30       	R2 = R5;
+ffa04094:	ff e3 ac ed 	CALL 0xffa01bec <_memcpy_>;
+ffa04098:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff901064 <_g_httpHeaderLen> */
+ffa0409c:	0a e1 50 10 	P2.L = 0x1050;		/* (4176)	P2=0xff901050 <_TcpSeqHttpStart> */
+ffa040a0:	10 91       	R0 = [P2];
+ffa040a2:	ae 51       	R6 = R6 + R5;
+ffa040a4:	06 50       	R0 = R6 + R0;
+ffa040a6:	18 93       	[P3] = R0;
+ffa040a8:	2c 50       	R0 = R4 + R5;
+ffa040aa:	ff e3 2d ff 	CALL 0xffa03f04 <_tcp_checksum_set>;
+ffa040ae:	ff e3 a9 f1 	CALL 0xffa02400 <_bfin_EMAC_send_nocopy>;
+ffa040b2:	49 e1 90 ff 	P1.H = 0xff90;		/* (-112)	P1=0xff901064 <_g_httpHeaderLen> */
+ffa040b6:	09 e1 50 0f 	P1.L = 0xf50;		/* (3920)	P1=0xff900f50 <_rxIdx> */
+ffa040ba:	08 95       	R0 = W[P1] (Z);
+ffa040bc:	10 32       	P2 = R0;
+ffa040be:	49 e1 90 ff 	P1.H = 0xff90;		/* (-112)	P1=0xff900f50 <_rxIdx> */
+ffa040c2:	09 e1 54 0f 	P1.L = 0xf54;		/* (3924)	P1=0xff900f54 <_rxbuf> */
+ffa040c6:	0c 6c       	P4 += 0x1;		/* (  1) */
+ffa040c8:	91 5e       	P2 = P1 + (P2 << 0x2);
+ffa040ca:	52 91       	P2 = [P2];
+ffa040cc:	90 a2       	R0 = [P2 + 0x28];
+ffa040ce:	60 48       	CC = !BITTST (R0, 0xc);		/* bit 12 */
+ffa040d0:	07 1c       	IF CC JUMP 0xffa040de <_tcp_burst+0xfe> (BP);
+ffa040d2:	90 a2       	R0 = [P2 + 0x28];
+ffa040d4:	68 48       	CC = !BITTST (R0, 0xd);		/* bit 13 */
+ffa040d6:	4c 30       	R1 = P4;
+ffa040d8:	7a a2       	R2 = [FP + 0x24];
+ffa040da:	11 50       	R0 = R1 + R2;
+ffa040dc:	a0 06       	IF !CC P4 = R0;
+ffa040de:	79 ae       	P1 = [FP + 0x24];
+ffa040e0:	61 09       	CC = P1 <= P4;
+ffa040e2:	99 17       	IF !CC JUMP 0xffa04014 <_tcp_burst+0x34> (BP);
+ffa040e4:	44 30       	R0 = P4;
+ffa040e6:	01 e8 00 00 	UNLINK;
+ffa040ea:	a3 05       	(R7:4, P5:3) = [SP++];
+ffa040ec:	10 00       	RTS;
+ffa040ee:	30 53       	R4 = R0 - R6;
+ffa040f0:	20 e1 00 40 	R0 = 0x4000 (X);		/*		R0=0x4000(16384) */
+ffa040f4:	06 50       	R0 = R6 + R0;
+ffa040f6:	0f 30       	R1 = R7;
+ffa040f8:	14 30       	R2 = R4;
+ffa040fa:	ff e3 79 ed 	CALL 0xffa01bec <_memcpy_>;
+ffa040fe:	e7 51       	R7 = R7 + R4;
+ffa04100:	65 53       	R5 = R5 - R4;
+ffa04102:	a6 51       	R6 = R6 + R4;
+ffa04104:	bd 2f       	JUMP.S 0xffa0407e <_tcp_burst+0x9e>;
+ffa04106:	04 68       	P4 = 0x0 (X);		/*		P4=0x0(  0) */
+ffa04108:	44 30       	R0 = P4;
+ffa0410a:	01 e8 00 00 	UNLINK;
+ffa0410e:	a3 05       	(R7:4, P5:3) = [SP++];
+ffa04110:	10 00       	RTS;
 	...
 
-ffa04098 <_tcp_rx>:
-ffa04098:	e3 05       	[--SP] = (R7:4, P5:3);
-ffa0409a:	20 32       	P4 = R0;
-ffa0409c:	00 e8 07 00 	LINK 0x1c;		/* (28) */
-ffa040a0:	20 e1 00 08 	R0 = 0x800 (X);		/*		R0=0x800(2048) */
-ffa040a4:	e7 a5       	R7 = W[P4 + 0xe] (Z);
-ffa040a6:	ff e3 71 f0 	CALL 0xffa02188 <_htons>;
-ffa040aa:	c0 42       	R0 = R0.L (Z);
-ffa040ac:	07 08       	CC = R7 == R0;
-ffa040ae:	06 18       	IF CC JUMP 0xffa040ba <_tcp_rx+0x22>;
-ffa040b0:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa040b2:	01 e8 00 00 	UNLINK;
-ffa040b6:	a3 05       	(R7:4, P5:3) = [SP++];
-ffa040b8:	10 00       	RTS;
-ffa040ba:	a0 e4 19 00 	R0 = B[P4 + 0x19] (Z);
-ffa040be:	31 60       	R1 = 0x6 (X);		/*		R1=0x6(  6) */
-ffa040c0:	08 08       	CC = R0 == R1;
-ffa040c2:	f7 17       	IF !CC JUMP 0xffa040b0 <_tcp_rx+0x18> (BP);
-ffa040c4:	67 e4 13 00 	R7 = W[P4 + 0x26] (Z);
-ffa040c8:	20 e1 50 00 	R0 = 0x50 (X);		/*		R0=0x50( 80) */
-ffa040cc:	ff e3 5e f0 	CALL 0xffa02188 <_htons>;
-ffa040d0:	c0 42       	R0 = R0.L (Z);
-ffa040d2:	07 08       	CC = R7 == R0;
-ffa040d4:	ee 17       	IF !CC JUMP 0xffa040b0 <_tcp_rx+0x18> (BP);
-ffa040d6:	44 30       	R0 = P4;
-ffa040d8:	80 64       	R0 += 0x10;		/* ( 16) */
-ffa040da:	ff e3 d5 f0 	CALL 0xffa02284 <_ip_header_checksum>;
-ffa040de:	40 43       	R0 = R0.B (Z);
-ffa040e0:	00 0c       	CC = R0 == 0x0;
-ffa040e2:	e7 1f       	IF CC JUMP 0xffa040b0 <_tcp_rx+0x18> (BP);
-ffa040e4:	4c 30       	R1 = P4;
-ffa040e6:	41 64       	R1 += 0x8;		/* (  8) */
-ffa040e8:	e0 a1       	R0 = [P4 + 0x1c];
-ffa040ea:	ff e3 c3 fb 	CALL 0xffa03870 <_ARP_lut_add>;
-ffa040ee:	44 30       	R0 = P4;
-ffa040f0:	ff e3 6e fe 	CALL 0xffa03dcc <_tcp_length>;
-ffa040f4:	30 30       	R6 = R0;
-ffa040f6:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900050(-7339952) */
-ffa040fa:	0e 30       	R1 = R6;
-ffa040fc:	00 e1 70 05 	R0.L = 0x570;		/* (1392)	R0=0xff900570(-7338640) */
-ffa04100:	ff e3 60 ec 	CALL 0xffa019c0 <_printf_int>;
-ffa04104:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900570(-7338640) */
-ffa04108:	00 e1 9c 07 	R0.L = 0x79c;		/* (1948)	R0=0xff90079c(-7338084) */
-ffa0410c:	ff e3 02 ed 	CALL 0xffa01b10 <_printf_str>;
-ffa04110:	44 30       	R0 = P4;
-ffa04112:	0e 30       	R1 = R6;
-ffa04114:	ff e3 d4 fe 	CALL 0xffa03ebc <_tcp_checksum_check>;
-ffa04118:	40 43       	R0 = R0.B (Z);
-ffa0411a:	00 0c       	CC = R0 == 0x0;
-ffa0411c:	ca 1b       	IF CC JUMP 0xffa040b0 <_tcp_rx+0x18>;
-ffa0411e:	00 00       	NOP;
-ffa04120:	00 00       	NOP;
-ffa04122:	22 60       	R2 = 0x4 (X);		/*		R2=0x4(  4) */
-ffa04124:	a0 e4 31 00 	R0 = B[P4 + 0x31] (Z);
-ffa04128:	10 08       	CC = R0 == R2;
-ffa0412a:	3c 19       	IF CC JUMP 0xffa043a2 <_tcp_rx+0x30a>;
-ffa0412c:	10 0c       	CC = R0 == 0x2;
-ffa0412e:	f8 18       	IF CC JUMP 0xffa0431e <_tcp_rx+0x286>;
-ffa04130:	81 60       	R1 = 0x10 (X);		/*		R1=0x10( 16) */
-ffa04132:	08 08       	CC = R0 == R1;
-ffa04134:	80 18       	IF CC JUMP 0xffa04234 <_tcp_rx+0x19c>;
-ffa04136:	00 48       	CC = !BITTST (R0, 0x0);		/* bit  0 */
-ffa04138:	a6 10       	IF !CC JUMP 0xffa04284 <_tcp_rx+0x1ec>;
-ffa0413a:	4d e1 90 ff 	P5.H = 0xff90;		/* (-112)	P5=0xff900010 */
-ffa0413e:	0d e1 d0 0f 	P5.L = 0xfd0;		/* (4048)	P5=0xff900fd0 <_TcpState> */
-ffa04142:	20 48       	CC = !BITTST (R0, 0x4);		/* bit  4 */
-ffa04144:	38 10       	IF !CC JUMP 0xffa041b4 <_tcp_rx+0x11c>;
-ffa04146:	28 91       	R0 = [P5];
-ffa04148:	10 0c       	CC = R0 == 0x2;
-ffa0414a:	b3 17       	IF !CC JUMP 0xffa040b0 <_tcp_rx+0x18> (BP);
-ffa0414c:	a4 e5 30 00 	R4 = B[P4 + 0x30] (X);
-ffa04150:	a0 a2       	R0 = [P4 + 0x28];
-ffa04152:	45 e1 90 ff 	R5.H = 0xff90;		/* (-112)	R5=0xff900ed0 <_rxbuf>(-7336240) */
-ffa04156:	ff e3 23 f0 	CALL 0xffa0219c <_htonl>;
-ffa0415a:	05 e1 b0 0e 	R5.L = 0xeb0;		/* (3760)	R5=0xff900eb0 <_NetDestIP>(-7336272) */
-ffa0415e:	15 32       	P2 = R5;
-ffa04160:	4b e1 90 ff 	P3.H = 0xff90;		/* (-112)	P3=0xff900fc4 <_TcpSeqHost> */
-ffa04164:	30 50       	R0 = R0 + R6;
-ffa04166:	0b e1 c8 0f 	P3.L = 0xfc8;		/* (4040)	P3=0xff900fc8 <_TcpSeqClient> */
-ffa0416a:	18 93       	[P3] = R0;
-ffa0416c:	e0 a1       	R0 = [P4 + 0x1c];
-ffa0416e:	10 93       	[P2] = R0;
-ffa04170:	e0 a2       	R0 = [P4 + 0x2c];
-ffa04172:	ff e3 15 f0 	CALL 0xffa0219c <_htonl>;
-ffa04176:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900fcc <_TcpSeqHttpStart> */
-ffa0417a:	0a e1 cc 0f 	P2.L = 0xfcc;		/* (4044)	P2=0xff900fcc <_TcpSeqHttpStart> */
-ffa0417e:	11 91       	R1 = [P2];
-ffa04180:	c8 53       	R7 = R0 - R1;
-ffa04182:	a1 e4 31 00 	R1 = B[P4 + 0x31] (Z);
-ffa04186:	21 48       	CC = !BITTST (R1, 0x4);		/* bit  4 */
-ffa04188:	28 1d       	IF CC JUMP 0xffa043d8 <_tcp_rx+0x340> (BP);
-ffa0418a:	06 0c       	CC = R6 == 0x0;
-ffa0418c:	26 15       	IF !CC JUMP 0xffa043d8 <_tcp_rx+0x340> (BP);
-ffa0418e:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900fcc <_TcpSeqHttpStart> */
-ffa04192:	0a e1 e4 0f 	P2.L = 0xfe4;		/* (4068)	P2=0xff900fe4 <_g_httpContentLen> */
-ffa04196:	10 91       	R0 = [P2];
-ffa04198:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900fe4 <_g_httpContentLen> */
-ffa0419c:	0a e1 e0 0f 	P2.L = 0xfe0;		/* (4064)	P2=0xff900fe0 <_g_httpHeaderLen> */
-ffa041a0:	11 91       	R1 = [P2];
-ffa041a2:	08 50       	R0 = R0 + R1;
-ffa041a4:	38 08       	CC = R0 == R7;
-ffa041a6:	ba 1c       	IF CC JUMP 0xffa0431a <_tcp_rx+0x282> (BP);
-ffa041a8:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
-ffa041aa:	0f 30       	R1 = R7;
-ffa041ac:	ff e3 dc fe 	CALL 0xffa03f64 <_tcp_burst>;
-ffa041b0:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
-ffa041b2:	80 2f       	JUMP.S 0xffa040b2 <_tcp_rx+0x1a>;
-ffa041b4:	21 60       	R1 = 0x4 (X);		/*		R1=0x4(  4) */
-ffa041b6:	28 91       	R0 = [P5];
-ffa041b8:	08 08       	CC = R0 == R1;
-ffa041ba:	5d 19       	IF CC JUMP 0xffa04474 <_tcp_rx+0x3dc>;
-ffa041bc:	00 0c       	CC = R0 == 0x0;
-ffa041be:	c4 17       	IF !CC JUMP 0xffa04146 <_tcp_rx+0xae> (BP);
-ffa041c0:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900001(-7340031) */
-ffa041c4:	00 e1 ec 05 	R0.L = 0x5ec;		/* (1516)	R0=0xff9005ec(-7338516) */
-ffa041c8:	ff e3 a4 ec 	CALL 0xffa01b10 <_printf_str>;
-ffa041cc:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900fe0 <_g_httpHeaderLen> */
-ffa041d0:	0a e1 e8 0f 	P2.L = 0xfe8;		/* (4072)	P2=0xff900fe8 <_g_httpRxed> */
-ffa041d4:	07 60       	R7 = 0x0 (X);		/*		R7=0x0(  0) */
-ffa041d6:	17 93       	[P2] = R7;
-ffa041d8:	a0 a2       	R0 = [P4 + 0x28];
-ffa041da:	ff e3 e1 ef 	CALL 0xffa0219c <_htonl>;
-ffa041de:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900fe8 <_g_httpRxed> */
-ffa041e2:	0a e1 c8 0f 	P2.L = 0xfc8;		/* (4040)	P2=0xff900fc8 <_TcpSeqClient> */
-ffa041e6:	10 93       	[P2] = R0;
-ffa041e8:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900fc8 <_TcpSeqClient> */
-ffa041ec:	e2 a1       	R2 = [P4 + 0x1c];
-ffa041ee:	0a e1 b0 0e 	P2.L = 0xeb0;		/* (3760)	P2=0xff900eb0 <_NetDestIP> */
-ffa041f2:	12 93       	[P2] = R2;
-ffa041f4:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900eb0 <_NetDestIP> */
-ffa041f8:	61 e5 12 00 	R1 = W[P4 + 0x24] (X);
-ffa041fc:	0a e1 dc 0f 	P2.L = 0xfdc;		/* (4060)	P2=0xff900fdc <_TcpClientPort> */
-ffa04200:	11 97       	W[P2] = R1;
-ffa04202:	21 60       	R1 = 0x4 (X);		/*		R1=0x4(  4) */
-ffa04204:	f1 b0       	[SP + 0xc] = R1;
-ffa04206:	30 b1       	[SP + 0x10] = R0;
-ffa04208:	4f 30       	R1 = FP;
-ffa0420a:	77 b1       	[SP + 0x14] = R7;
-ffa0420c:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa0420e:	f9 67       	R1 += -0x1;		/* ( -1) */
-ffa04210:	ff e3 80 fe 	CALL 0xffa03f10 <_tcp_packet_setup>;
-ffa04214:	b8 e5 ff ff 	R0 = B[FP + -0x1] (X);
-ffa04218:	00 0d       	CC = R0 <= 0x0;
-ffa0421a:	96 1f       	IF CC JUMP 0xffa04146 <_tcp_rx+0xae> (BP);
-ffa0421c:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900fdc <_TcpClientPort> */
-ffa04220:	0a e1 d0 0f 	P2.L = 0xfd0;		/* (4048)	P2=0xff900fd0 <_TcpState> */
-ffa04224:	17 93       	[P2] = R7;
-ffa04226:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa04228:	ff e3 30 fe 	CALL 0xffa03e88 <_tcp_checksum_set>;
-ffa0422c:	ff e3 ca f0 	CALL 0xffa023c0 <_bfin_EMAC_send_nocopy>;
-ffa04230:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
-ffa04232:	40 2f       	JUMP.S 0xffa040b2 <_tcp_rx+0x1a>;
-ffa04234:	4d e1 90 ff 	P5.H = 0xff90;		/* (-112)	P5=0xff900fd0 <_TcpState> */
-ffa04238:	0d e1 d0 0f 	P5.L = 0xfd0;		/* (4048)	P5=0xff900fd0 <_TcpState> */
-ffa0423c:	28 91       	R0 = [P5];
-ffa0423e:	08 0c       	CC = R0 == 0x1;
-ffa04240:	ba 17       	IF !CC JUMP 0xffa041b4 <_tcp_rx+0x11c> (BP);
-ffa04242:	e0 a2       	R0 = [P4 + 0x2c];
-ffa04244:	ff e3 ac ef 	CALL 0xffa0219c <_htonl>;
-ffa04248:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900fd0 <_TcpState> */
-ffa0424c:	0a e1 c4 0f 	P2.L = 0xfc4;		/* (4036)	P2=0xff900fc4 <_TcpSeqHost> */
-ffa04250:	11 91       	R1 = [P2];
-ffa04252:	08 08       	CC = R0 == R1;
-ffa04254:	33 19       	IF CC JUMP 0xffa044ba <_tcp_rx+0x422>;
-ffa04256:	00 00       	NOP;
-ffa04258:	00 00       	NOP;
-ffa0425a:	00 00       	NOP;
-ffa0425c:	e0 a2       	R0 = [P4 + 0x2c];
-ffa0425e:	ff e3 9f ef 	CALL 0xffa0219c <_htonl>;
-ffa04262:	08 30       	R1 = R0;
-ffa04264:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900001(-7340031) */
-ffa04268:	00 e1 9c 05 	R0.L = 0x59c;		/* (1436)	R0=0xff90059c(-7338596) */
-ffa0426c:	ff e3 58 ec 	CALL 0xffa01b1c <_printf_ip>;
-ffa04270:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa04272:	28 93       	[P5] = R0;
-ffa04274:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900000 <_l1_data_a>(-7340032) */
-ffa04278:	00 e1 9c 07 	R0.L = 0x79c;		/* (1948)	R0=0xff90079c(-7338084) */
-ffa0427c:	ff e3 4a ec 	CALL 0xffa01b10 <_printf_str>;
-ffa04280:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
-ffa04282:	18 2f       	JUMP.S 0xffa040b2 <_tcp_rx+0x1a>;
-ffa04284:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900001(-7340031) */
-ffa04288:	00 e1 c8 05 	R0.L = 0x5c8;		/* (1480)	R0=0xff9005c8(-7338552) */
-ffa0428c:	ff e3 42 ec 	CALL 0xffa01b10 <_printf_str>;
-ffa04290:	a0 a2       	R0 = [P4 + 0x28];
-ffa04292:	45 e1 90 ff 	R5.H = 0xff90;		/* (-112)	R5=0xff900eb0 <_NetDestIP>(-7336272) */
-ffa04296:	ff e3 83 ef 	CALL 0xffa0219c <_htonl>;
-ffa0429a:	05 e1 b0 0e 	R5.L = 0xeb0;		/* (3760)	R5=0xff900eb0 <_NetDestIP>(-7336272) */
-ffa0429e:	15 32       	P2 = R5;
-ffa042a0:	4d e1 90 ff 	P5.H = 0xff90;		/* (-112)	P5=0xff900fd0 <_TcpState> */
-ffa042a4:	82 ce 00 c2 	R1 = ROT R0 BY 0x0 || R2 = [P4 + 0x1c] || NOP;
-ffa042a8:	e2 a1 00 00 
-ffa042ac:	4b e1 90 ff 	P3.H = 0xff90;		/* (-112)	P3=0xff900fc8 <_TcpSeqClient> */
-ffa042b0:	0d e1 d0 0f 	P5.L = 0xfd0;		/* (4048)	P5=0xff900fd0 <_TcpState> */
-ffa042b4:	09 64       	R1 += 0x1;		/* (  1) */
-ffa042b6:	0b e1 c8 0f 	P3.L = 0xfc8;		/* (4040)	P3=0xff900fc8 <_TcpSeqClient> */
-ffa042ba:	28 91       	R0 = [P5];
-ffa042bc:	12 93       	[P2] = R2;
-ffa042be:	19 93       	[P3] = R1;
-ffa042c0:	10 0c       	CC = R0 == 0x2;
-ffa042c2:	03 18       	IF CC JUMP 0xffa042c8 <_tcp_rx+0x230>;
-ffa042c4:	00 0c       	CC = R0 == 0x0;
-ffa042c6:	13 14       	IF !CC JUMP 0xffa042ec <_tcp_rx+0x254> (BP);
-ffa042c8:	88 60       	R0 = 0x11 (X);		/*		R0=0x11( 17) */
-ffa042ca:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900fc4 <_TcpSeqHost> */
-ffa042ce:	f0 b0       	[SP + 0xc] = R0;
-ffa042d0:	0a e1 c4 0f 	P2.L = 0xfc4;		/* (4036)	P2=0xff900fc4 <_TcpSeqHost> */
-ffa042d4:	10 91       	R0 = [P2];
-ffa042d6:	71 b1       	[SP + 0x14] = R1;
-ffa042d8:	30 b1       	[SP + 0x10] = R0;
-ffa042da:	4f 30       	R1 = FP;
-ffa042dc:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa042de:	f9 67       	R1 += -0x1;		/* ( -1) */
-ffa042e0:	ff e3 18 fe 	CALL 0xffa03f10 <_tcp_packet_setup>;
-ffa042e4:	b8 e5 ff ff 	R0 = B[FP + -0x1] (X);
-ffa042e8:	00 0d       	CC = R0 <= 0x0;
-ffa042ea:	9d 10       	IF !CC JUMP 0xffa04424 <_tcp_rx+0x38c>;
-ffa042ec:	28 91       	R0 = [P5];
-ffa042ee:	18 0c       	CC = R0 == 0x3;
-ffa042f0:	a3 18       	IF CC JUMP 0xffa04436 <_tcp_rx+0x39e>;
-ffa042f2:	00 00       	NOP;
-ffa042f4:	00 00       	NOP;
-ffa042f6:	00 00       	NOP;
-ffa042f8:	a0 e4 31 00 	R0 = B[P4 + 0x31] (Z);
-ffa042fc:	23 2f       	JUMP.S 0xffa04142 <_tcp_rx+0xaa>;
-ffa042fe:	28 91       	R0 = [P5];
-ffa04300:	08 64       	R0 += 0x1;		/* (  1) */
-ffa04302:	28 93       	[P5] = R0;
-ffa04304:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
-ffa04306:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900fc4 <_TcpSeqHost> */
-ffa0430a:	0a e1 d0 0f 	P2.L = 0xfd0;		/* (4048)	P2=0xff900fd0 <_TcpState> */
-ffa0430e:	10 93       	[P2] = R0;
-ffa04310:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa04312:	ff e3 bb fd 	CALL 0xffa03e88 <_tcp_checksum_set>;
-ffa04316:	ff e3 55 f0 	CALL 0xffa023c0 <_bfin_EMAC_send_nocopy>;
-ffa0431a:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
-ffa0431c:	cb 2e       	JUMP.S 0xffa040b2 <_tcp_rx+0x1a>;
-ffa0431e:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900001(-7340031) */
-ffa04322:	00 e1 90 05 	R0.L = 0x590;		/* (1424)	R0=0xff900590(-7338608) */
-ffa04326:	ff e3 f5 eb 	CALL 0xffa01b10 <_printf_str>;
-ffa0432a:	a0 a2       	R0 = [P4 + 0x28];
-ffa0432c:	4d e1 90 ff 	P5.H = 0xff90;		/* (-112)	P5=0xff900fd0 <_TcpState> */
-ffa04330:	ff e3 36 ef 	CALL 0xffa0219c <_htonl>;
-ffa04334:	0d e1 c8 0f 	P5.L = 0xfc8;		/* (4040)	P5=0xff900fc8 <_TcpSeqClient> */
-ffa04338:	28 93       	[P5] = R0;
-ffa0433a:	44 30       	R0 = P4;
-ffa0433c:	ff e3 48 fd 	CALL 0xffa03dcc <_tcp_length>;
-ffa04340:	29 91       	R1 = [P5];
-ffa04342:	09 64       	R1 += 0x1;		/* (  1) */
-ffa04344:	41 50       	R1 = R1 + R0;
-ffa04346:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900fd0 <_TcpState> */
-ffa0434a:	60 e5 12 00 	R0 = W[P4 + 0x24] (X);
-ffa0434e:	0a e1 dc 0f 	P2.L = 0xfdc;		/* (4060)	P2=0xff900fdc <_TcpClientPort> */
-ffa04352:	10 97       	W[P2] = R0;
-ffa04354:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900fdc <_TcpClientPort> */
-ffa04358:	00 cc 00 c0 	R0 = R0 -|- R0 || [P5] = R1 || NOP;
-ffa0435c:	29 93 00 00 
-ffa04360:	0a e1 e8 0f 	P2.L = 0xfe8;		/* (4072)	P2=0xff900fe8 <_g_httpRxed> */
-ffa04364:	10 93       	[P2] = R0;
-ffa04366:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900fe8 <_g_httpRxed> */
-ffa0436a:	e2 a1       	R2 = [P4 + 0x1c];
-ffa0436c:	0a e1 b0 0e 	P2.L = 0xeb0;		/* (3760)	P2=0xff900eb0 <_NetDestIP> */
-ffa04370:	12 93       	[P2] = R2;
-ffa04372:	90 60       	R0 = 0x12 (X);		/*		R0=0x12( 18) */
-ffa04374:	4d e1 90 ff 	P5.H = 0xff90;		/* (-112)	P5=0xff900fc8 <_TcpSeqClient> */
-ffa04378:	f0 b0       	[SP + 0xc] = R0;
-ffa0437a:	0d e1 c4 0f 	P5.L = 0xfc4;		/* (4036)	P5=0xff900fc4 <_TcpSeqHost> */
-ffa0437e:	28 91       	R0 = [P5];
-ffa04380:	71 b1       	[SP + 0x14] = R1;
-ffa04382:	30 b1       	[SP + 0x10] = R0;
-ffa04384:	4f 30       	R1 = FP;
-ffa04386:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa04388:	f9 67       	R1 += -0x1;		/* ( -1) */
-ffa0438a:	ff e3 c3 fd 	CALL 0xffa03f10 <_tcp_packet_setup>;
-ffa0438e:	b8 e5 ff ff 	R0 = B[FP + -0x1] (X);
-ffa04392:	00 0d       	CC = R0 <= 0x0;
-ffa04394:	b5 13       	IF !CC JUMP 0xffa042fe <_tcp_rx+0x266>;
-ffa04396:	00 00       	NOP;
-ffa04398:	00 00       	NOP;
-ffa0439a:	00 00       	NOP;
-ffa0439c:	a0 e4 31 00 	R0 = B[P4 + 0x31] (Z);
-ffa043a0:	c8 2e       	JUMP.S 0xffa04130 <_tcp_rx+0x98>;
-ffa043a2:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900000 <_l1_data_a>(-7340032) */
-ffa043a6:	00 e1 84 05 	R0.L = 0x584;		/* (1412)	R0=0xff900584(-7338620) */
-ffa043aa:	ff e3 b3 eb 	CALL 0xffa01b10 <_printf_str>;
-ffa043ae:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900eb0 <_NetDestIP> */
-ffa043b2:	0a e1 d0 0f 	P2.L = 0xfd0;		/* (4048)	P2=0xff900fd0 <_TcpState> */
-ffa043b6:	07 60       	R7 = 0x0 (X);		/*		R7=0x0(  0) */
-ffa043b8:	17 93       	[P2] = R7;
-ffa043ba:	a0 a2       	R0 = [P4 + 0x28];
-ffa043bc:	ff e3 f0 ee 	CALL 0xffa0219c <_htonl>;
-ffa043c0:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900fd0 <_TcpState> */
-ffa043c4:	0a e1 c8 0f 	P2.L = 0xfc8;		/* (4040)	P2=0xff900fc8 <_TcpSeqClient> */
-ffa043c8:	10 93       	[P2] = R0;
-ffa043ca:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900fc8 <_TcpSeqClient> */
-ffa043ce:	0a e1 e8 0f 	P2.L = 0xfe8;		/* (4072)	P2=0xff900fe8 <_g_httpRxed> */
-ffa043d2:	17 93       	[P2] = R7;
-ffa043d4:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
-ffa043d6:	6e 2e       	JUMP.S 0xffa040b2 <_tcp_rx+0x1a>;
-ffa043d8:	20 e1 f0 00 	R0 = 0xf0 (X);		/*		R0=0xf0(240) */
-ffa043dc:	24 6d       	P4 += 0x24;		/* ( 36) */
-ffa043de:	20 54       	R0 = R0 & R4;
-ffa043e0:	10 4d       	R0 >>>= 0x2;
-ffa043e2:	54 30       	R2 = P4;
-ffa043e4:	02 50       	R0 = R2 + R0;
-ffa043e6:	19 48       	CC = !BITTST (R1, 0x3);		/* bit  3 */
-ffa043e8:	4e 1c       	IF CC JUMP 0xffa04484 <_tcp_rx+0x3ec> (BP);
-ffa043ea:	0e 30       	R1 = R6;
-ffa043ec:	00 e3 3e 05 	CALL 0xffa04e68 <_httpCollate>;
-ffa043f0:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900fe8 <_g_httpRxed> */
-ffa043f4:	0a e1 cc 0f 	P2.L = 0xfcc;		/* (4044)	P2=0xff900fcc <_TcpSeqHttpStart> */
-ffa043f8:	10 91       	R0 = [P2];
-ffa043fa:	4d e1 90 ff 	P5.H = 0xff90;		/* (-112)	P5=0xff900fc4 <_TcpSeqHost> */
-ffa043fe:	07 50       	R0 = R7 + R0;
-ffa04400:	0d e1 c4 0f 	P5.L = 0xfc4;		/* (4036)	P5=0xff900fc4 <_TcpSeqHost> */
-ffa04404:	28 93       	[P5] = R0;
-ffa04406:	4c e1 90 ff 	P4.H = 0xff90;		/* (-112)	P4=0xff900000 <_l1_data_a> */
-ffa0440a:	0c e1 e8 0f 	P4.L = 0xfe8;		/* (4072)	P4=0xff900fe8 <_g_httpRxed> */
-ffa0440e:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
-ffa04410:	80 4f       	R0 <<= 0x10;
-ffa04412:	21 91       	R1 = [P4];
-ffa04414:	00 e3 12 03 	CALL 0xffa04a38 <_httpResp>;
-ffa04418:	00 0c       	CC = R0 == 0x0;
-ffa0441a:	62 10       	IF !CC JUMP 0xffa044de <_tcp_rx+0x446>;
-ffa0441c:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa0441e:	20 93       	[P4] = R0;
-ffa04420:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
-ffa04422:	48 2e       	JUMP.S 0xffa040b2 <_tcp_rx+0x1a>;
-ffa04424:	18 60       	R0 = 0x3 (X);		/*		R0=0x3(  3) */
-ffa04426:	28 93       	[P5] = R0;
-ffa04428:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa0442a:	ff e3 2f fd 	CALL 0xffa03e88 <_tcp_checksum_set>;
-ffa0442e:	ff e3 c9 ef 	CALL 0xffa023c0 <_bfin_EMAC_send_nocopy>;
-ffa04432:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
-ffa04434:	3f 2e       	JUMP.S 0xffa040b2 <_tcp_rx+0x1a>;
-ffa04436:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900fcc <_TcpSeqHttpStart> */
-ffa0443a:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa0443c:	0a e1 e8 0f 	P2.L = 0xfe8;		/* (4072)	P2=0xff900fe8 <_g_httpRxed> */
-ffa04440:	10 93       	[P2] = R0;
-ffa04442:	80 60       	R0 = 0x10 (X);		/*		R0=0x10( 16) */
-ffa04444:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900fe8 <_g_httpRxed> */
-ffa04448:	f0 b0       	[SP + 0xc] = R0;
-ffa0444a:	0a e1 c4 0f 	P2.L = 0xfc4;		/* (4036)	P2=0xff900fc4 <_TcpSeqHost> */
-ffa0444e:	10 91       	R0 = [P2];
-ffa04450:	15 32       	P2 = R5;
-ffa04452:	30 b1       	[SP + 0x10] = R0;
-ffa04454:	18 91       	R0 = [P3];
-ffa04456:	70 b1       	[SP + 0x14] = R0;
-ffa04458:	4f 30       	R1 = FP;
-ffa0445a:	00 cc 00 c0 	R0 = R0 -|- R0 || R2 = [P2] || NOP;
-ffa0445e:	12 91 00 00 
-ffa04462:	f9 67       	R1 += -0x1;		/* ( -1) */
-ffa04464:	ff e3 56 fd 	CALL 0xffa03f10 <_tcp_packet_setup>;
-ffa04468:	b8 e5 ff ff 	R0 = B[FP + -0x1] (X);
-ffa0446c:	00 0d       	CC = R0 <= 0x0;
-ffa0446e:	44 1f       	IF CC JUMP 0xffa042f6 <_tcp_rx+0x25e> (BP);
-ffa04470:	20 60       	R0 = 0x4 (X);		/*		R0=0x4(  4) */
-ffa04472:	4a 2f       	JUMP.S 0xffa04306 <_tcp_rx+0x26e>;
-ffa04474:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900004(-7340028) */
-ffa04478:	00 e1 d8 05 	R0.L = 0x5d8;		/* (1496)	R0=0xff9005d8(-7338536) */
-ffa0447c:	ff e3 4a eb 	CALL 0xffa01b10 <_printf_str>;
-ffa04480:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
-ffa04482:	18 2e       	JUMP.S 0xffa040b2 <_tcp_rx+0x1a>;
-ffa04484:	0e 30       	R1 = R6;
-ffa04486:	00 e3 f1 04 	CALL 0xffa04e68 <_httpCollate>;
-ffa0448a:	80 60       	R0 = 0x10 (X);		/*		R0=0x10( 16) */
-ffa0448c:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900fc4 <_TcpSeqHost> */
-ffa04490:	f0 b0       	[SP + 0xc] = R0;
-ffa04492:	0a e1 c4 0f 	P2.L = 0xfc4;		/* (4036)	P2=0xff900fc4 <_TcpSeqHost> */
-ffa04496:	10 91       	R0 = [P2];
-ffa04498:	15 32       	P2 = R5;
-ffa0449a:	30 b1       	[SP + 0x10] = R0;
-ffa0449c:	18 91       	R0 = [P3];
-ffa0449e:	70 b1       	[SP + 0x14] = R0;
-ffa044a0:	4f 30       	R1 = FP;
-ffa044a2:	00 cc 00 c0 	R0 = R0 -|- R0 || R2 = [P2] || NOP;
-ffa044a6:	12 91 00 00 
-ffa044aa:	f9 67       	R1 += -0x1;		/* ( -1) */
-ffa044ac:	ff e3 32 fd 	CALL 0xffa03f10 <_tcp_packet_setup>;
-ffa044b0:	b8 e5 ff ff 	R0 = B[FP + -0x1] (X);
-ffa044b4:	00 0d       	CC = R0 <= 0x0;
-ffa044b6:	2d 17       	IF !CC JUMP 0xffa04310 <_tcp_rx+0x278> (BP);
-ffa044b8:	fc 2d       	JUMP.S 0xffa040b0 <_tcp_rx+0x18>;
-ffa044ba:	10 60       	R0 = 0x2 (X);		/*		R0=0x2(  2) */
-ffa044bc:	28 93       	[P5] = R0;
-ffa044be:	a0 a2       	R0 = [P4 + 0x28];
-ffa044c0:	ff e3 6e ee 	CALL 0xffa0219c <_htonl>;
-ffa044c4:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900fc4 <_TcpSeqHost> */
-ffa044c8:	0a e1 c8 0f 	P2.L = 0xfc8;		/* (4040)	P2=0xff900fc8 <_TcpSeqClient> */
-ffa044cc:	10 93       	[P2] = R0;
-ffa044ce:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900002(-7340030) */
-ffa044d2:	00 e1 b8 05 	R0.L = 0x5b8;		/* (1464)	R0=0xff9005b8(-7338568) */
-ffa044d6:	ff e3 1d eb 	CALL 0xffa01b10 <_printf_str>;
-ffa044da:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
-ffa044dc:	eb 2d       	JUMP.S 0xffa040b2 <_tcp_rx+0x1a>;
-ffa044de:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900fc8 <_TcpSeqClient> */
-ffa044e2:	28 91       	R0 = [P5];
-ffa044e4:	0a e1 cc 0f 	P2.L = 0xfcc;		/* (4044)	P2=0xff900fcc <_TcpSeqHttpStart> */
-ffa044e8:	10 93       	[P2] = R0;
-ffa044ea:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900fcc <_TcpSeqHttpStart> */
-ffa044ee:	0a e1 e4 0f 	P2.L = 0xfe4;		/* (4068)	P2=0xff900fe4 <_g_httpContentLen> */
-ffa044f2:	11 91       	R1 = [P2];
-ffa044f4:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900fe4 <_g_httpContentLen> */
-ffa044f8:	0a e1 e0 0f 	P2.L = 0xfe0;		/* (4064)	P2=0xff900fe0 <_g_httpHeaderLen> */
-ffa044fc:	10 91       	R0 = [P2];
-ffa044fe:	41 50       	R1 = R1 + R0;
-ffa04500:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900001(-7340031) */
-ffa04504:	00 e1 08 06 	R0.L = 0x608;		/* (1544)	R0=0xff900608(-7338488) */
-ffa04508:	ff e3 5c ea 	CALL 0xffa019c0 <_printf_int>;
-ffa0450c:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900608(-7338488) */
-ffa04510:	00 e1 9c 07 	R0.L = 0x79c;		/* (1948)	R0=0xff90079c(-7338084) */
-ffa04514:	ff e3 fe ea 	CALL 0xffa01b10 <_printf_str>;
-ffa04518:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
-ffa0451a:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
-ffa0451c:	ff e3 24 fd 	CALL 0xffa03f64 <_tcp_burst>;
-ffa04520:	7e 2f       	JUMP.S 0xffa0441c <_tcp_rx+0x384>;
+ffa04114 <_tcp_rx>:
+ffa04114:	e3 05       	[--SP] = (R7:4, P5:3);
+ffa04116:	20 32       	P4 = R0;
+ffa04118:	00 e8 07 00 	LINK 0x1c;		/* (28) */
+ffa0411c:	20 e1 00 08 	R0 = 0x800 (X);		/*		R0=0x800(2048) */
+ffa04120:	e7 a5       	R7 = W[P4 + 0xe] (Z);
+ffa04122:	ff e3 53 f0 	CALL 0xffa021c8 <_htons>;
+ffa04126:	c0 42       	R0 = R0.L (Z);
+ffa04128:	07 08       	CC = R7 == R0;
+ffa0412a:	06 18       	IF CC JUMP 0xffa04136 <_tcp_rx+0x22>;
+ffa0412c:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa0412e:	01 e8 00 00 	UNLINK;
+ffa04132:	a3 05       	(R7:4, P5:3) = [SP++];
+ffa04134:	10 00       	RTS;
+ffa04136:	a0 e4 19 00 	R0 = B[P4 + 0x19] (Z);
+ffa0413a:	31 60       	R1 = 0x6 (X);		/*		R1=0x6(  6) */
+ffa0413c:	08 08       	CC = R0 == R1;
+ffa0413e:	f7 17       	IF !CC JUMP 0xffa0412c <_tcp_rx+0x18> (BP);
+ffa04140:	67 e4 13 00 	R7 = W[P4 + 0x26] (Z);
+ffa04144:	20 e1 50 00 	R0 = 0x50 (X);		/*		R0=0x50( 80) */
+ffa04148:	ff e3 40 f0 	CALL 0xffa021c8 <_htons>;
+ffa0414c:	c0 42       	R0 = R0.L (Z);
+ffa0414e:	07 08       	CC = R7 == R0;
+ffa04150:	ee 17       	IF !CC JUMP 0xffa0412c <_tcp_rx+0x18> (BP);
+ffa04152:	44 30       	R0 = P4;
+ffa04154:	80 64       	R0 += 0x10;		/* ( 16) */
+ffa04156:	ff e3 b7 f0 	CALL 0xffa022c4 <_ip_header_checksum>;
+ffa0415a:	40 43       	R0 = R0.B (Z);
+ffa0415c:	00 0c       	CC = R0 == 0x0;
+ffa0415e:	e7 1f       	IF CC JUMP 0xffa0412c <_tcp_rx+0x18> (BP);
+ffa04160:	4c 30       	R1 = P4;
+ffa04162:	41 64       	R1 += 0x8;		/* (  8) */
+ffa04164:	e0 a1       	R0 = [P4 + 0x1c];
+ffa04166:	ff e3 c3 fb 	CALL 0xffa038ec <_ARP_lut_add>;
+ffa0416a:	44 30       	R0 = P4;
+ffa0416c:	ff e3 6e fe 	CALL 0xffa03e48 <_tcp_length>;
+ffa04170:	30 30       	R6 = R0;
+ffa04172:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900050(-7339952) */
+ffa04176:	0e 30       	R1 = R6;
+ffa04178:	00 e1 f4 05 	R0.L = 0x5f4;		/* (1524)	R0=0xff9005f4(-7338508) */
+ffa0417c:	ff e3 42 ec 	CALL 0xffa01a00 <_printf_int>;
+ffa04180:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff9005f4(-7338508) */
+ffa04184:	00 e1 20 08 	R0.L = 0x820;		/* (2080)	R0=0xff900820(-7337952) */
+ffa04188:	ff e3 e4 ec 	CALL 0xffa01b50 <_printf_str>;
+ffa0418c:	44 30       	R0 = P4;
+ffa0418e:	0e 30       	R1 = R6;
+ffa04190:	ff e3 d4 fe 	CALL 0xffa03f38 <_tcp_checksum_check>;
+ffa04194:	40 43       	R0 = R0.B (Z);
+ffa04196:	00 0c       	CC = R0 == 0x0;
+ffa04198:	ca 1b       	IF CC JUMP 0xffa0412c <_tcp_rx+0x18>;
+ffa0419a:	00 00       	NOP;
+ffa0419c:	00 00       	NOP;
+ffa0419e:	22 60       	R2 = 0x4 (X);		/*		R2=0x4(  4) */
+ffa041a0:	a0 e4 31 00 	R0 = B[P4 + 0x31] (Z);
+ffa041a4:	10 08       	CC = R0 == R2;
+ffa041a6:	3c 19       	IF CC JUMP 0xffa0441e <_tcp_rx+0x30a>;
+ffa041a8:	10 0c       	CC = R0 == 0x2;
+ffa041aa:	f8 18       	IF CC JUMP 0xffa0439a <_tcp_rx+0x286>;
+ffa041ac:	81 60       	R1 = 0x10 (X);		/*		R1=0x10( 16) */
+ffa041ae:	08 08       	CC = R0 == R1;
+ffa041b0:	80 18       	IF CC JUMP 0xffa042b0 <_tcp_rx+0x19c>;
+ffa041b2:	00 48       	CC = !BITTST (R0, 0x0);		/* bit  0 */
+ffa041b4:	a6 10       	IF !CC JUMP 0xffa04300 <_tcp_rx+0x1ec>;
+ffa041b6:	4d e1 90 ff 	P5.H = 0xff90;		/* (-112)	P5=0xff900010 */
+ffa041ba:	0d e1 54 10 	P5.L = 0x1054;		/* (4180)	P5=0xff901054 <_TcpState> */
+ffa041be:	20 48       	CC = !BITTST (R0, 0x4);		/* bit  4 */
+ffa041c0:	38 10       	IF !CC JUMP 0xffa04230 <_tcp_rx+0x11c>;
+ffa041c2:	28 91       	R0 = [P5];
+ffa041c4:	10 0c       	CC = R0 == 0x2;
+ffa041c6:	b3 17       	IF !CC JUMP 0xffa0412c <_tcp_rx+0x18> (BP);
+ffa041c8:	a4 e5 30 00 	R4 = B[P4 + 0x30] (X);
+ffa041cc:	a0 a2       	R0 = [P4 + 0x28];
+ffa041ce:	45 e1 90 ff 	R5.H = 0xff90;		/* (-112)	R5=0xff900f54 <_rxbuf>(-7336108) */
+ffa041d2:	ff e3 05 f0 	CALL 0xffa021dc <_htonl>;
+ffa041d6:	05 e1 34 0f 	R5.L = 0xf34;		/* (3892)	R5=0xff900f34 <_NetDestIP>(-7336140) */
+ffa041da:	15 32       	P2 = R5;
+ffa041dc:	4b e1 90 ff 	P3.H = 0xff90;		/* (-112)	P3=0xff901048 <_TcpSeqHost> */
+ffa041e0:	30 50       	R0 = R0 + R6;
+ffa041e2:	0b e1 4c 10 	P3.L = 0x104c;		/* (4172)	P3=0xff90104c <_TcpSeqClient> */
+ffa041e6:	18 93       	[P3] = R0;
+ffa041e8:	e0 a1       	R0 = [P4 + 0x1c];
+ffa041ea:	10 93       	[P2] = R0;
+ffa041ec:	e0 a2       	R0 = [P4 + 0x2c];
+ffa041ee:	ff e3 f7 ef 	CALL 0xffa021dc <_htonl>;
+ffa041f2:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff901050 <_TcpSeqHttpStart> */
+ffa041f6:	0a e1 50 10 	P2.L = 0x1050;		/* (4176)	P2=0xff901050 <_TcpSeqHttpStart> */
+ffa041fa:	11 91       	R1 = [P2];
+ffa041fc:	c8 53       	R7 = R0 - R1;
+ffa041fe:	a1 e4 31 00 	R1 = B[P4 + 0x31] (Z);
+ffa04202:	21 48       	CC = !BITTST (R1, 0x4);		/* bit  4 */
+ffa04204:	28 1d       	IF CC JUMP 0xffa04454 <_tcp_rx+0x340> (BP);
+ffa04206:	06 0c       	CC = R6 == 0x0;
+ffa04208:	26 15       	IF !CC JUMP 0xffa04454 <_tcp_rx+0x340> (BP);
+ffa0420a:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff901050 <_TcpSeqHttpStart> */
+ffa0420e:	0a e1 68 10 	P2.L = 0x1068;		/* (4200)	P2=0xff901068 <_g_httpContentLen> */
+ffa04212:	10 91       	R0 = [P2];
+ffa04214:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff901068 <_g_httpContentLen> */
+ffa04218:	0a e1 64 10 	P2.L = 0x1064;		/* (4196)	P2=0xff901064 <_g_httpHeaderLen> */
+ffa0421c:	11 91       	R1 = [P2];
+ffa0421e:	08 50       	R0 = R0 + R1;
+ffa04220:	38 08       	CC = R0 == R7;
+ffa04222:	ba 1c       	IF CC JUMP 0xffa04396 <_tcp_rx+0x282> (BP);
+ffa04224:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
+ffa04226:	0f 30       	R1 = R7;
+ffa04228:	ff e3 dc fe 	CALL 0xffa03fe0 <_tcp_burst>;
+ffa0422c:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
+ffa0422e:	80 2f       	JUMP.S 0xffa0412e <_tcp_rx+0x1a>;
+ffa04230:	21 60       	R1 = 0x4 (X);		/*		R1=0x4(  4) */
+ffa04232:	28 91       	R0 = [P5];
+ffa04234:	08 08       	CC = R0 == R1;
+ffa04236:	5d 19       	IF CC JUMP 0xffa044f0 <_tcp_rx+0x3dc>;
+ffa04238:	00 0c       	CC = R0 == 0x0;
+ffa0423a:	c4 17       	IF !CC JUMP 0xffa041c2 <_tcp_rx+0xae> (BP);
+ffa0423c:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900001(-7340031) */
+ffa04240:	00 e1 70 06 	R0.L = 0x670;		/* (1648)	R0=0xff900670(-7338384) */
+ffa04244:	ff e3 86 ec 	CALL 0xffa01b50 <_printf_str>;
+ffa04248:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff901064 <_g_httpHeaderLen> */
+ffa0424c:	0a e1 6c 10 	P2.L = 0x106c;		/* (4204)	P2=0xff90106c <_g_httpRxed> */
+ffa04250:	07 60       	R7 = 0x0 (X);		/*		R7=0x0(  0) */
+ffa04252:	17 93       	[P2] = R7;
+ffa04254:	a0 a2       	R0 = [P4 + 0x28];
+ffa04256:	ff e3 c3 ef 	CALL 0xffa021dc <_htonl>;
+ffa0425a:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff90106c <_g_httpRxed> */
+ffa0425e:	0a e1 4c 10 	P2.L = 0x104c;		/* (4172)	P2=0xff90104c <_TcpSeqClient> */
+ffa04262:	10 93       	[P2] = R0;
+ffa04264:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff90104c <_TcpSeqClient> */
+ffa04268:	e2 a1       	R2 = [P4 + 0x1c];
+ffa0426a:	0a e1 34 0f 	P2.L = 0xf34;		/* (3892)	P2=0xff900f34 <_NetDestIP> */
+ffa0426e:	12 93       	[P2] = R2;
+ffa04270:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900f34 <_NetDestIP> */
+ffa04274:	61 e5 12 00 	R1 = W[P4 + 0x24] (X);
+ffa04278:	0a e1 60 10 	P2.L = 0x1060;		/* (4192)	P2=0xff901060 <_TcpClientPort> */
+ffa0427c:	11 97       	W[P2] = R1;
+ffa0427e:	21 60       	R1 = 0x4 (X);		/*		R1=0x4(  4) */
+ffa04280:	f1 b0       	[SP + 0xc] = R1;
+ffa04282:	30 b1       	[SP + 0x10] = R0;
+ffa04284:	4f 30       	R1 = FP;
+ffa04286:	77 b1       	[SP + 0x14] = R7;
+ffa04288:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa0428a:	f9 67       	R1 += -0x1;		/* ( -1) */
+ffa0428c:	ff e3 80 fe 	CALL 0xffa03f8c <_tcp_packet_setup>;
+ffa04290:	b8 e5 ff ff 	R0 = B[FP + -0x1] (X);
+ffa04294:	00 0d       	CC = R0 <= 0x0;
+ffa04296:	96 1f       	IF CC JUMP 0xffa041c2 <_tcp_rx+0xae> (BP);
+ffa04298:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff901060 <_TcpClientPort> */
+ffa0429c:	0a e1 54 10 	P2.L = 0x1054;		/* (4180)	P2=0xff901054 <_TcpState> */
+ffa042a0:	17 93       	[P2] = R7;
+ffa042a2:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa042a4:	ff e3 30 fe 	CALL 0xffa03f04 <_tcp_checksum_set>;
+ffa042a8:	ff e3 ac f0 	CALL 0xffa02400 <_bfin_EMAC_send_nocopy>;
+ffa042ac:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
+ffa042ae:	40 2f       	JUMP.S 0xffa0412e <_tcp_rx+0x1a>;
+ffa042b0:	4d e1 90 ff 	P5.H = 0xff90;		/* (-112)	P5=0xff901054 <_TcpState> */
+ffa042b4:	0d e1 54 10 	P5.L = 0x1054;		/* (4180)	P5=0xff901054 <_TcpState> */
+ffa042b8:	28 91       	R0 = [P5];
+ffa042ba:	08 0c       	CC = R0 == 0x1;
+ffa042bc:	ba 17       	IF !CC JUMP 0xffa04230 <_tcp_rx+0x11c> (BP);
+ffa042be:	e0 a2       	R0 = [P4 + 0x2c];
+ffa042c0:	ff e3 8e ef 	CALL 0xffa021dc <_htonl>;
+ffa042c4:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff901054 <_TcpState> */
+ffa042c8:	0a e1 48 10 	P2.L = 0x1048;		/* (4168)	P2=0xff901048 <_TcpSeqHost> */
+ffa042cc:	11 91       	R1 = [P2];
+ffa042ce:	08 08       	CC = R0 == R1;
+ffa042d0:	33 19       	IF CC JUMP 0xffa04536 <_tcp_rx+0x422>;
+ffa042d2:	00 00       	NOP;
+ffa042d4:	00 00       	NOP;
+ffa042d6:	00 00       	NOP;
+ffa042d8:	e0 a2       	R0 = [P4 + 0x2c];
+ffa042da:	ff e3 81 ef 	CALL 0xffa021dc <_htonl>;
+ffa042de:	08 30       	R1 = R0;
+ffa042e0:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900001(-7340031) */
+ffa042e4:	00 e1 20 06 	R0.L = 0x620;		/* (1568)	R0=0xff900620(-7338464) */
+ffa042e8:	ff e3 3a ec 	CALL 0xffa01b5c <_printf_ip>;
+ffa042ec:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa042ee:	28 93       	[P5] = R0;
+ffa042f0:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900000 <_l1_data_a>(-7340032) */
+ffa042f4:	00 e1 20 08 	R0.L = 0x820;		/* (2080)	R0=0xff900820(-7337952) */
+ffa042f8:	ff e3 2c ec 	CALL 0xffa01b50 <_printf_str>;
+ffa042fc:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
+ffa042fe:	18 2f       	JUMP.S 0xffa0412e <_tcp_rx+0x1a>;
+ffa04300:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900001(-7340031) */
+ffa04304:	00 e1 4c 06 	R0.L = 0x64c;		/* (1612)	R0=0xff90064c(-7338420) */
+ffa04308:	ff e3 24 ec 	CALL 0xffa01b50 <_printf_str>;
+ffa0430c:	a0 a2       	R0 = [P4 + 0x28];
+ffa0430e:	45 e1 90 ff 	R5.H = 0xff90;		/* (-112)	R5=0xff900f34 <_NetDestIP>(-7336140) */
+ffa04312:	ff e3 65 ef 	CALL 0xffa021dc <_htonl>;
+ffa04316:	05 e1 34 0f 	R5.L = 0xf34;		/* (3892)	R5=0xff900f34 <_NetDestIP>(-7336140) */
+ffa0431a:	15 32       	P2 = R5;
+ffa0431c:	4d e1 90 ff 	P5.H = 0xff90;		/* (-112)	P5=0xff901054 <_TcpState> */
+ffa04320:	82 ce 00 c2 	R1 = ROT R0 BY 0x0 || R2 = [P4 + 0x1c] || NOP;
+ffa04324:	e2 a1 00 00 
+ffa04328:	4b e1 90 ff 	P3.H = 0xff90;		/* (-112)	P3=0xff90104c <_TcpSeqClient> */
+ffa0432c:	0d e1 54 10 	P5.L = 0x1054;		/* (4180)	P5=0xff901054 <_TcpState> */
+ffa04330:	09 64       	R1 += 0x1;		/* (  1) */
+ffa04332:	0b e1 4c 10 	P3.L = 0x104c;		/* (4172)	P3=0xff90104c <_TcpSeqClient> */
+ffa04336:	28 91       	R0 = [P5];
+ffa04338:	12 93       	[P2] = R2;
+ffa0433a:	19 93       	[P3] = R1;
+ffa0433c:	10 0c       	CC = R0 == 0x2;
+ffa0433e:	03 18       	IF CC JUMP 0xffa04344 <_tcp_rx+0x230>;
+ffa04340:	00 0c       	CC = R0 == 0x0;
+ffa04342:	13 14       	IF !CC JUMP 0xffa04368 <_tcp_rx+0x254> (BP);
+ffa04344:	88 60       	R0 = 0x11 (X);		/*		R0=0x11( 17) */
+ffa04346:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff901048 <_TcpSeqHost> */
+ffa0434a:	f0 b0       	[SP + 0xc] = R0;
+ffa0434c:	0a e1 48 10 	P2.L = 0x1048;		/* (4168)	P2=0xff901048 <_TcpSeqHost> */
+ffa04350:	10 91       	R0 = [P2];
+ffa04352:	71 b1       	[SP + 0x14] = R1;
+ffa04354:	30 b1       	[SP + 0x10] = R0;
+ffa04356:	4f 30       	R1 = FP;
+ffa04358:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa0435a:	f9 67       	R1 += -0x1;		/* ( -1) */
+ffa0435c:	ff e3 18 fe 	CALL 0xffa03f8c <_tcp_packet_setup>;
+ffa04360:	b8 e5 ff ff 	R0 = B[FP + -0x1] (X);
+ffa04364:	00 0d       	CC = R0 <= 0x0;
+ffa04366:	9d 10       	IF !CC JUMP 0xffa044a0 <_tcp_rx+0x38c>;
+ffa04368:	28 91       	R0 = [P5];
+ffa0436a:	18 0c       	CC = R0 == 0x3;
+ffa0436c:	a3 18       	IF CC JUMP 0xffa044b2 <_tcp_rx+0x39e>;
+ffa0436e:	00 00       	NOP;
+ffa04370:	00 00       	NOP;
+ffa04372:	00 00       	NOP;
+ffa04374:	a0 e4 31 00 	R0 = B[P4 + 0x31] (Z);
+ffa04378:	23 2f       	JUMP.S 0xffa041be <_tcp_rx+0xaa>;
+ffa0437a:	28 91       	R0 = [P5];
+ffa0437c:	08 64       	R0 += 0x1;		/* (  1) */
+ffa0437e:	28 93       	[P5] = R0;
+ffa04380:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
+ffa04382:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff901048 <_TcpSeqHost> */
+ffa04386:	0a e1 54 10 	P2.L = 0x1054;		/* (4180)	P2=0xff901054 <_TcpState> */
+ffa0438a:	10 93       	[P2] = R0;
+ffa0438c:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa0438e:	ff e3 bb fd 	CALL 0xffa03f04 <_tcp_checksum_set>;
+ffa04392:	ff e3 37 f0 	CALL 0xffa02400 <_bfin_EMAC_send_nocopy>;
+ffa04396:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
+ffa04398:	cb 2e       	JUMP.S 0xffa0412e <_tcp_rx+0x1a>;
+ffa0439a:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900001(-7340031) */
+ffa0439e:	00 e1 14 06 	R0.L = 0x614;		/* (1556)	R0=0xff900614(-7338476) */
+ffa043a2:	ff e3 d7 eb 	CALL 0xffa01b50 <_printf_str>;
+ffa043a6:	a0 a2       	R0 = [P4 + 0x28];
+ffa043a8:	4d e1 90 ff 	P5.H = 0xff90;		/* (-112)	P5=0xff901054 <_TcpState> */
+ffa043ac:	ff e3 18 ef 	CALL 0xffa021dc <_htonl>;
+ffa043b0:	0d e1 4c 10 	P5.L = 0x104c;		/* (4172)	P5=0xff90104c <_TcpSeqClient> */
+ffa043b4:	28 93       	[P5] = R0;
+ffa043b6:	44 30       	R0 = P4;
+ffa043b8:	ff e3 48 fd 	CALL 0xffa03e48 <_tcp_length>;
+ffa043bc:	29 91       	R1 = [P5];
+ffa043be:	09 64       	R1 += 0x1;		/* (  1) */
+ffa043c0:	41 50       	R1 = R1 + R0;
+ffa043c2:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff901054 <_TcpState> */
+ffa043c6:	60 e5 12 00 	R0 = W[P4 + 0x24] (X);
+ffa043ca:	0a e1 60 10 	P2.L = 0x1060;		/* (4192)	P2=0xff901060 <_TcpClientPort> */
+ffa043ce:	10 97       	W[P2] = R0;
+ffa043d0:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff901060 <_TcpClientPort> */
+ffa043d4:	00 cc 00 c0 	R0 = R0 -|- R0 || [P5] = R1 || NOP;
+ffa043d8:	29 93 00 00 
+ffa043dc:	0a e1 6c 10 	P2.L = 0x106c;		/* (4204)	P2=0xff90106c <_g_httpRxed> */
+ffa043e0:	10 93       	[P2] = R0;
+ffa043e2:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff90106c <_g_httpRxed> */
+ffa043e6:	e2 a1       	R2 = [P4 + 0x1c];
+ffa043e8:	0a e1 34 0f 	P2.L = 0xf34;		/* (3892)	P2=0xff900f34 <_NetDestIP> */
+ffa043ec:	12 93       	[P2] = R2;
+ffa043ee:	90 60       	R0 = 0x12 (X);		/*		R0=0x12( 18) */
+ffa043f0:	4d e1 90 ff 	P5.H = 0xff90;		/* (-112)	P5=0xff90104c <_TcpSeqClient> */
+ffa043f4:	f0 b0       	[SP + 0xc] = R0;
+ffa043f6:	0d e1 48 10 	P5.L = 0x1048;		/* (4168)	P5=0xff901048 <_TcpSeqHost> */
+ffa043fa:	28 91       	R0 = [P5];
+ffa043fc:	71 b1       	[SP + 0x14] = R1;
+ffa043fe:	30 b1       	[SP + 0x10] = R0;
+ffa04400:	4f 30       	R1 = FP;
+ffa04402:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa04404:	f9 67       	R1 += -0x1;		/* ( -1) */
+ffa04406:	ff e3 c3 fd 	CALL 0xffa03f8c <_tcp_packet_setup>;
+ffa0440a:	b8 e5 ff ff 	R0 = B[FP + -0x1] (X);
+ffa0440e:	00 0d       	CC = R0 <= 0x0;
+ffa04410:	b5 13       	IF !CC JUMP 0xffa0437a <_tcp_rx+0x266>;
+ffa04412:	00 00       	NOP;
+ffa04414:	00 00       	NOP;
+ffa04416:	00 00       	NOP;
+ffa04418:	a0 e4 31 00 	R0 = B[P4 + 0x31] (Z);
+ffa0441c:	c8 2e       	JUMP.S 0xffa041ac <_tcp_rx+0x98>;
+ffa0441e:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900000 <_l1_data_a>(-7340032) */
+ffa04422:	00 e1 08 06 	R0.L = 0x608;		/* (1544)	R0=0xff900608(-7338488) */
+ffa04426:	ff e3 95 eb 	CALL 0xffa01b50 <_printf_str>;
+ffa0442a:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900f34 <_NetDestIP> */
+ffa0442e:	0a e1 54 10 	P2.L = 0x1054;		/* (4180)	P2=0xff901054 <_TcpState> */
+ffa04432:	07 60       	R7 = 0x0 (X);		/*		R7=0x0(  0) */
+ffa04434:	17 93       	[P2] = R7;
+ffa04436:	a0 a2       	R0 = [P4 + 0x28];
+ffa04438:	ff e3 d2 ee 	CALL 0xffa021dc <_htonl>;
+ffa0443c:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff901054 <_TcpState> */
+ffa04440:	0a e1 4c 10 	P2.L = 0x104c;		/* (4172)	P2=0xff90104c <_TcpSeqClient> */
+ffa04444:	10 93       	[P2] = R0;
+ffa04446:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff90104c <_TcpSeqClient> */
+ffa0444a:	0a e1 6c 10 	P2.L = 0x106c;		/* (4204)	P2=0xff90106c <_g_httpRxed> */
+ffa0444e:	17 93       	[P2] = R7;
+ffa04450:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
+ffa04452:	6e 2e       	JUMP.S 0xffa0412e <_tcp_rx+0x1a>;
+ffa04454:	20 e1 f0 00 	R0 = 0xf0 (X);		/*		R0=0xf0(240) */
+ffa04458:	24 6d       	P4 += 0x24;		/* ( 36) */
+ffa0445a:	20 54       	R0 = R0 & R4;
+ffa0445c:	10 4d       	R0 >>>= 0x2;
+ffa0445e:	54 30       	R2 = P4;
+ffa04460:	02 50       	R0 = R2 + R0;
+ffa04462:	19 48       	CC = !BITTST (R1, 0x3);		/* bit  3 */
+ffa04464:	4e 1c       	IF CC JUMP 0xffa04500 <_tcp_rx+0x3ec> (BP);
+ffa04466:	0e 30       	R1 = R6;
+ffa04468:	00 e3 3e 05 	CALL 0xffa04ee4 <_httpCollate>;
+ffa0446c:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff90106c <_g_httpRxed> */
+ffa04470:	0a e1 50 10 	P2.L = 0x1050;		/* (4176)	P2=0xff901050 <_TcpSeqHttpStart> */
+ffa04474:	10 91       	R0 = [P2];
+ffa04476:	4d e1 90 ff 	P5.H = 0xff90;		/* (-112)	P5=0xff901048 <_TcpSeqHost> */
+ffa0447a:	07 50       	R0 = R7 + R0;
+ffa0447c:	0d e1 48 10 	P5.L = 0x1048;		/* (4168)	P5=0xff901048 <_TcpSeqHost> */
+ffa04480:	28 93       	[P5] = R0;
+ffa04482:	4c e1 90 ff 	P4.H = 0xff90;		/* (-112)	P4=0xff900000 <_l1_data_a> */
+ffa04486:	0c e1 6c 10 	P4.L = 0x106c;		/* (4204)	P4=0xff90106c <_g_httpRxed> */
+ffa0448a:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
+ffa0448c:	80 4f       	R0 <<= 0x10;
+ffa0448e:	21 91       	R1 = [P4];
+ffa04490:	00 e3 12 03 	CALL 0xffa04ab4 <_httpResp>;
+ffa04494:	00 0c       	CC = R0 == 0x0;
+ffa04496:	62 10       	IF !CC JUMP 0xffa0455a <_tcp_rx+0x446>;
+ffa04498:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa0449a:	20 93       	[P4] = R0;
+ffa0449c:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
+ffa0449e:	48 2e       	JUMP.S 0xffa0412e <_tcp_rx+0x1a>;
+ffa044a0:	18 60       	R0 = 0x3 (X);		/*		R0=0x3(  3) */
+ffa044a2:	28 93       	[P5] = R0;
+ffa044a4:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa044a6:	ff e3 2f fd 	CALL 0xffa03f04 <_tcp_checksum_set>;
+ffa044aa:	ff e3 ab ef 	CALL 0xffa02400 <_bfin_EMAC_send_nocopy>;
+ffa044ae:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
+ffa044b0:	3f 2e       	JUMP.S 0xffa0412e <_tcp_rx+0x1a>;
+ffa044b2:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff901050 <_TcpSeqHttpStart> */
+ffa044b6:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa044b8:	0a e1 6c 10 	P2.L = 0x106c;		/* (4204)	P2=0xff90106c <_g_httpRxed> */
+ffa044bc:	10 93       	[P2] = R0;
+ffa044be:	80 60       	R0 = 0x10 (X);		/*		R0=0x10( 16) */
+ffa044c0:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff90106c <_g_httpRxed> */
+ffa044c4:	f0 b0       	[SP + 0xc] = R0;
+ffa044c6:	0a e1 48 10 	P2.L = 0x1048;		/* (4168)	P2=0xff901048 <_TcpSeqHost> */
+ffa044ca:	10 91       	R0 = [P2];
+ffa044cc:	15 32       	P2 = R5;
+ffa044ce:	30 b1       	[SP + 0x10] = R0;
+ffa044d0:	18 91       	R0 = [P3];
+ffa044d2:	70 b1       	[SP + 0x14] = R0;
+ffa044d4:	4f 30       	R1 = FP;
+ffa044d6:	00 cc 00 c0 	R0 = R0 -|- R0 || R2 = [P2] || NOP;
+ffa044da:	12 91 00 00 
+ffa044de:	f9 67       	R1 += -0x1;		/* ( -1) */
+ffa044e0:	ff e3 56 fd 	CALL 0xffa03f8c <_tcp_packet_setup>;
+ffa044e4:	b8 e5 ff ff 	R0 = B[FP + -0x1] (X);
+ffa044e8:	00 0d       	CC = R0 <= 0x0;
+ffa044ea:	44 1f       	IF CC JUMP 0xffa04372 <_tcp_rx+0x25e> (BP);
+ffa044ec:	20 60       	R0 = 0x4 (X);		/*		R0=0x4(  4) */
+ffa044ee:	4a 2f       	JUMP.S 0xffa04382 <_tcp_rx+0x26e>;
+ffa044f0:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900004(-7340028) */
+ffa044f4:	00 e1 5c 06 	R0.L = 0x65c;		/* (1628)	R0=0xff90065c(-7338404) */
+ffa044f8:	ff e3 2c eb 	CALL 0xffa01b50 <_printf_str>;
+ffa044fc:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
+ffa044fe:	18 2e       	JUMP.S 0xffa0412e <_tcp_rx+0x1a>;
+ffa04500:	0e 30       	R1 = R6;
+ffa04502:	00 e3 f1 04 	CALL 0xffa04ee4 <_httpCollate>;
+ffa04506:	80 60       	R0 = 0x10 (X);		/*		R0=0x10( 16) */
+ffa04508:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff901048 <_TcpSeqHost> */
+ffa0450c:	f0 b0       	[SP + 0xc] = R0;
+ffa0450e:	0a e1 48 10 	P2.L = 0x1048;		/* (4168)	P2=0xff901048 <_TcpSeqHost> */
+ffa04512:	10 91       	R0 = [P2];
+ffa04514:	15 32       	P2 = R5;
+ffa04516:	30 b1       	[SP + 0x10] = R0;
+ffa04518:	18 91       	R0 = [P3];
+ffa0451a:	70 b1       	[SP + 0x14] = R0;
+ffa0451c:	4f 30       	R1 = FP;
+ffa0451e:	00 cc 00 c0 	R0 = R0 -|- R0 || R2 = [P2] || NOP;
+ffa04522:	12 91 00 00 
+ffa04526:	f9 67       	R1 += -0x1;		/* ( -1) */
+ffa04528:	ff e3 32 fd 	CALL 0xffa03f8c <_tcp_packet_setup>;
+ffa0452c:	b8 e5 ff ff 	R0 = B[FP + -0x1] (X);
+ffa04530:	00 0d       	CC = R0 <= 0x0;
+ffa04532:	2d 17       	IF !CC JUMP 0xffa0438c <_tcp_rx+0x278> (BP);
+ffa04534:	fc 2d       	JUMP.S 0xffa0412c <_tcp_rx+0x18>;
+ffa04536:	10 60       	R0 = 0x2 (X);		/*		R0=0x2(  2) */
+ffa04538:	28 93       	[P5] = R0;
+ffa0453a:	a0 a2       	R0 = [P4 + 0x28];
+ffa0453c:	ff e3 50 ee 	CALL 0xffa021dc <_htonl>;
+ffa04540:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff901048 <_TcpSeqHost> */
+ffa04544:	0a e1 4c 10 	P2.L = 0x104c;		/* (4172)	P2=0xff90104c <_TcpSeqClient> */
+ffa04548:	10 93       	[P2] = R0;
+ffa0454a:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900002(-7340030) */
+ffa0454e:	00 e1 3c 06 	R0.L = 0x63c;		/* (1596)	R0=0xff90063c(-7338436) */
+ffa04552:	ff e3 ff ea 	CALL 0xffa01b50 <_printf_str>;
+ffa04556:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
+ffa04558:	eb 2d       	JUMP.S 0xffa0412e <_tcp_rx+0x1a>;
+ffa0455a:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff90104c <_TcpSeqClient> */
+ffa0455e:	28 91       	R0 = [P5];
+ffa04560:	0a e1 50 10 	P2.L = 0x1050;		/* (4176)	P2=0xff901050 <_TcpSeqHttpStart> */
+ffa04564:	10 93       	[P2] = R0;
+ffa04566:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff901050 <_TcpSeqHttpStart> */
+ffa0456a:	0a e1 68 10 	P2.L = 0x1068;		/* (4200)	P2=0xff901068 <_g_httpContentLen> */
+ffa0456e:	11 91       	R1 = [P2];
+ffa04570:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff901068 <_g_httpContentLen> */
+ffa04574:	0a e1 64 10 	P2.L = 0x1064;		/* (4196)	P2=0xff901064 <_g_httpHeaderLen> */
+ffa04578:	10 91       	R0 = [P2];
+ffa0457a:	41 50       	R1 = R1 + R0;
+ffa0457c:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900001(-7340031) */
+ffa04580:	00 e1 8c 06 	R0.L = 0x68c;		/* (1676)	R0=0xff90068c(-7338356) */
+ffa04584:	ff e3 3e ea 	CALL 0xffa01a00 <_printf_int>;
+ffa04588:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff90068c(-7338356) */
+ffa0458c:	00 e1 20 08 	R0.L = 0x820;		/* (2080)	R0=0xff900820(-7337952) */
+ffa04590:	ff e3 e0 ea 	CALL 0xffa01b50 <_printf_str>;
+ffa04594:	01 60       	R1 = 0x0 (X);		/*		R1=0x0(  0) */
+ffa04596:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
+ffa04598:	ff e3 24 fd 	CALL 0xffa03fe0 <_tcp_burst>;
+ffa0459c:	7e 2f       	JUMP.S 0xffa04498 <_tcp_rx+0x384>;
 	...
 
-ffa04524 <_htmlForm>:
-ffa04524:	00 e8 00 00 	LINK 0x0;		/* (0) */
-ffa04528:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900004(-7340028) */
-ffa0452c:	02 e1 24 06 	R2.L = 0x624;		/* (1572)	R2=0xff900624(-7338460) */
-ffa04530:	01 e8 00 00 	UNLINK;
-ffa04534:	ff e2 6c eb 	JUMP.L 0xffa01c0c <_strcpy_>;
+ffa045a0 <_htmlForm>:
+ffa045a0:	00 e8 00 00 	LINK 0x0;		/* (0) */
+ffa045a4:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900004(-7340028) */
+ffa045a8:	02 e1 a8 06 	R2.L = 0x6a8;		/* (1704)	R2=0xff9006a8(-7338328) */
+ffa045ac:	01 e8 00 00 	UNLINK;
+ffa045b0:	ff e2 4e eb 	JUMP.L 0xffa01c4c <_strcpy_>;
 
-ffa04538 <_htmlDiv>:
-ffa04538:	12 43       	R2 = R2.B (X);
-ffa0453a:	23 e1 62 00 	R3 = 0x62 (X);		/*		R3=0x62( 98) */
-ffa0453e:	00 e8 00 00 	LINK 0x0;		/* (0) */
-ffa04542:	1a 08       	CC = R2 == R3;
-ffa04544:	09 18       	IF CC JUMP 0xffa04556 <_htmlDiv+0x1e>;
-ffa04546:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900624(-7338460) */
-ffa0454a:	02 e1 78 06 	R2.L = 0x678;		/* (1656)	R2=0xff900678(-7338376) */
-ffa0454e:	01 e8 00 00 	UNLINK;
-ffa04552:	ff e2 5d eb 	JUMP.L 0xffa01c0c <_strcpy_>;
-ffa04556:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900678(-7338376) */
-ffa0455a:	02 e1 44 06 	R2.L = 0x644;		/* (1604)	R2=0xff900644(-7338428) */
-ffa0455e:	01 e8 00 00 	UNLINK;
-ffa04562:	ff e2 55 eb 	JUMP.L 0xffa01c0c <_strcpy_>;
+ffa045b4 <_htmlDiv>:
+ffa045b4:	12 43       	R2 = R2.B (X);
+ffa045b6:	23 e1 62 00 	R3 = 0x62 (X);		/*		R3=0x62( 98) */
+ffa045ba:	00 e8 00 00 	LINK 0x0;		/* (0) */
+ffa045be:	1a 08       	CC = R2 == R3;
+ffa045c0:	09 18       	IF CC JUMP 0xffa045d2 <_htmlDiv+0x1e>;
+ffa045c2:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff9006a8(-7338328) */
+ffa045c6:	02 e1 fc 06 	R2.L = 0x6fc;		/* (1788)	R2=0xff9006fc(-7338244) */
+ffa045ca:	01 e8 00 00 	UNLINK;
+ffa045ce:	ff e2 3f eb 	JUMP.L 0xffa01c4c <_strcpy_>;
+ffa045d2:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff9006fc(-7338244) */
+ffa045d6:	02 e1 c8 06 	R2.L = 0x6c8;		/* (1736)	R2=0xff9006c8(-7338296) */
+ffa045da:	01 e8 00 00 	UNLINK;
+ffa045de:	ff e2 37 eb 	JUMP.L 0xffa01c4c <_strcpy_>;
 	...
 
-ffa04568 <_html404>:
-ffa04568:	00 e8 04 00 	LINK 0x10;		/* (16) */
-ffa0456c:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa0456e:	f0 bb       	[FP -0x4] = R0;
-ffa04570:	4f 30       	R1 = FP;
-ffa04572:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900644(-7338428) */
-ffa04576:	20 e1 00 41 	R0 = 0x4100 (X);		/*		R0=0x4100(16640) */
-ffa0457a:	e1 67       	R1 += -0x4;		/* ( -4) */
-ffa0457c:	02 e1 ac 06 	R2.L = 0x6ac;		/* (1708)	R2=0xff9006ac(-7338324) */
-ffa04580:	ff e3 46 eb 	CALL 0xffa01c0c <_strcpy_>;
-ffa04584:	f0 b9       	R0 = [FP -0x4];
-ffa04586:	01 e8 00 00 	UNLINK;
-ffa0458a:	10 00       	RTS;
+ffa045e4 <_html404>:
+ffa045e4:	00 e8 04 00 	LINK 0x10;		/* (16) */
+ffa045e8:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa045ea:	f0 bb       	[FP -0x4] = R0;
+ffa045ec:	4f 30       	R1 = FP;
+ffa045ee:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff9006c8(-7338296) */
+ffa045f2:	20 e1 00 41 	R0 = 0x4100 (X);		/*		R0=0x4100(16640) */
+ffa045f6:	e1 67       	R1 += -0x4;		/* ( -4) */
+ffa045f8:	02 e1 30 07 	R2.L = 0x730;		/* (1840)	R2=0xff900730(-7338192) */
+ffa045fc:	ff e3 28 eb 	CALL 0xffa01c4c <_strcpy_>;
+ffa04600:	f0 b9       	R0 = [FP -0x4];
+ffa04602:	01 e8 00 00 	UNLINK;
+ffa04606:	10 00       	RTS;
 
-ffa0458c <_htmlCursorOption>:
-ffa0458c:	68 05       	[--SP] = (R7:5);
-ffa0458e:	2a 30       	R5 = R2;
-ffa04590:	00 e8 03 00 	LINK 0xc;		/* (12) */
-ffa04594:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff9006ac(-7338324) */
-ffa04598:	82 ce 01 cc 	R6 = ROT R1 BY 0x0 || R7 = [FP + 0x20] || NOP;
-ffa0459c:	3f a2 00 00 
-ffa045a0:	02 e1 c8 06 	R2.L = 0x6c8;		/* (1736)	R2=0xff9006c8(-7338296) */
-ffa045a4:	ff e3 34 eb 	CALL 0xffa01c0c <_strcpy_>;
-ffa045a8:	0e 30       	R1 = R6;
-ffa045aa:	15 30       	R2 = R5;
-ffa045ac:	ff e3 82 ec 	CALL 0xffa01eb0 <_strprintf_int>;
-ffa045b0:	3d 08       	CC = R5 == R7;
-ffa045b2:	16 18       	IF CC JUMP 0xffa045de <_htmlCursorOption+0x52>;
-ffa045b4:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff9006c8(-7338296) */
-ffa045b8:	0e 30       	R1 = R6;
-ffa045ba:	02 e1 f0 06 	R2.L = 0x6f0;		/* (1776)	R2=0xff9006f0(-7338256) */
-ffa045be:	ff e3 27 eb 	CALL 0xffa01c0c <_strcpy_>;
-ffa045c2:	0e 30       	R1 = R6;
-ffa045c4:	15 30       	R2 = R5;
-ffa045c6:	ff e3 75 ec 	CALL 0xffa01eb0 <_strprintf_int>;
-ffa045ca:	0e 30       	R1 = R6;
-ffa045cc:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff9006f0(-7338256) */
-ffa045d0:	01 e8 00 00 	UNLINK;
-ffa045d4:	02 e1 f4 06 	R2.L = 0x6f4;		/* (1780)	R2=0xff9006f4(-7338252) */
-ffa045d8:	28 05       	(R7:5) = [SP++];
-ffa045da:	ff e2 19 eb 	JUMP.L 0xffa01c0c <_strcpy_>;
-ffa045de:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff9006f4(-7338252) */
-ffa045e2:	0e 30       	R1 = R6;
-ffa045e4:	02 e1 d8 06 	R2.L = 0x6d8;		/* (1752)	R2=0xff9006d8(-7338280) */
-ffa045e8:	ff e3 12 eb 	CALL 0xffa01c0c <_strcpy_>;
-ffa045ec:	e4 2f       	JUMP.S 0xffa045b4 <_htmlCursorOption+0x28>;
+ffa04608 <_htmlCursorOption>:
+ffa04608:	68 05       	[--SP] = (R7:5);
+ffa0460a:	2a 30       	R5 = R2;
+ffa0460c:	00 e8 03 00 	LINK 0xc;		/* (12) */
+ffa04610:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900730(-7338192) */
+ffa04614:	82 ce 01 cc 	R6 = ROT R1 BY 0x0 || R7 = [FP + 0x20] || NOP;
+ffa04618:	3f a2 00 00 
+ffa0461c:	02 e1 4c 07 	R2.L = 0x74c;		/* (1868)	R2=0xff90074c(-7338164) */
+ffa04620:	ff e3 16 eb 	CALL 0xffa01c4c <_strcpy_>;
+ffa04624:	0e 30       	R1 = R6;
+ffa04626:	15 30       	R2 = R5;
+ffa04628:	ff e3 64 ec 	CALL 0xffa01ef0 <_strprintf_int>;
+ffa0462c:	3d 08       	CC = R5 == R7;
+ffa0462e:	16 18       	IF CC JUMP 0xffa0465a <_htmlCursorOption+0x52>;
+ffa04630:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff90074c(-7338164) */
+ffa04634:	0e 30       	R1 = R6;
+ffa04636:	02 e1 74 07 	R2.L = 0x774;		/* (1908)	R2=0xff900774(-7338124) */
+ffa0463a:	ff e3 09 eb 	CALL 0xffa01c4c <_strcpy_>;
+ffa0463e:	0e 30       	R1 = R6;
+ffa04640:	15 30       	R2 = R5;
+ffa04642:	ff e3 57 ec 	CALL 0xffa01ef0 <_strprintf_int>;
+ffa04646:	0e 30       	R1 = R6;
+ffa04648:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900774(-7338124) */
+ffa0464c:	01 e8 00 00 	UNLINK;
+ffa04650:	02 e1 78 07 	R2.L = 0x778;		/* (1912)	R2=0xff900778(-7338120) */
+ffa04654:	28 05       	(R7:5) = [SP++];
+ffa04656:	ff e2 fb ea 	JUMP.L 0xffa01c4c <_strcpy_>;
+ffa0465a:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900778(-7338120) */
+ffa0465e:	0e 30       	R1 = R6;
+ffa04660:	02 e1 5c 07 	R2.L = 0x75c;		/* (1884)	R2=0xff90075c(-7338148) */
+ffa04664:	ff e3 f4 ea 	CALL 0xffa01c4c <_strcpy_>;
+ffa04668:	e4 2f       	JUMP.S 0xffa04630 <_htmlCursorOption+0x28>;
 	...
 
-ffa045f0 <_htmlCursorSelect>:
-ffa045f0:	60 05       	[--SP] = (R7:4);
-ffa045f2:	3a 30       	R7 = R2;
-ffa045f4:	00 e8 04 00 	LINK 0x10;		/* (16) */
-ffa045f8:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff9006d8(-7338280) */
-ffa045fc:	82 ce 01 ca 	R5 = ROT R1 BY 0x0 || R6 = [FP + 0x24] || NOP;
-ffa04600:	7e a2 00 00 
-ffa04604:	02 e1 00 07 	R2.L = 0x700;		/* (1792)	R2=0xff900700(-7338240) */
-ffa04608:	bc a2       	R4 = [FP + 0x28];
-ffa0460a:	ff e3 01 eb 	CALL 0xffa01c0c <_strcpy_>;
-ffa0460e:	17 30       	R2 = R7;
-ffa04610:	0d 30       	R1 = R5;
-ffa04612:	ff e3 fd ea 	CALL 0xffa01c0c <_strcpy_>;
-ffa04616:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900700(-7338240) */
-ffa0461a:	0d 30       	R1 = R5;
-ffa0461c:	02 e1 0c 07 	R2.L = 0x70c;		/* (1804)	R2=0xff90070c(-7338228) */
-ffa04620:	ff e3 f6 ea 	CALL 0xffa01c0c <_strcpy_>;
-ffa04624:	0d 30       	R1 = R5;
-ffa04626:	16 30       	R2 = R6;
-ffa04628:	ff e3 f2 ea 	CALL 0xffa01c0c <_strcpy_>;
-ffa0462c:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff90070c(-7338228) */
-ffa04630:	0d 30       	R1 = R5;
-ffa04632:	02 e1 28 07 	R2.L = 0x728;		/* (1832)	R2=0xff900728(-7338200) */
-ffa04636:	ff e3 eb ea 	CALL 0xffa01c0c <_strcpy_>;
-ffa0463a:	07 60       	R7 = 0x0 (X);		/*		R7=0x0(  0) */
-ffa0463c:	82 ce 05 c2 	R1 = ROT R5 BY 0x0 || [SP + 0xc] = R4 || NOP;
-ffa04640:	f4 b0 00 00 
-ffa04644:	17 30       	R2 = R7;
-ffa04646:	ff e3 a3 ff 	CALL 0xffa0458c <_htmlCursorOption>;
-ffa0464a:	0f 64       	R7 += 0x1;		/* (  1) */
-ffa0464c:	81 60       	R1 = 0x10 (X);		/*		R1=0x10( 16) */
-ffa0464e:	0f 08       	CC = R7 == R1;
-ffa04650:	f6 17       	IF !CC JUMP 0xffa0463c <_htmlCursorSelect+0x4c> (BP);
-ffa04652:	0d 30       	R1 = R5;
-ffa04654:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900728(-7338200) */
-ffa04658:	01 e8 00 00 	UNLINK;
-ffa0465c:	02 e1 2c 07 	R2.L = 0x72c;		/* (1836)	R2=0xff90072c(-7338196) */
-ffa04660:	20 05       	(R7:4) = [SP++];
-ffa04662:	ff e2 d5 ea 	JUMP.L 0xffa01c0c <_strcpy_>;
+ffa0466c <_htmlCursorSelect>:
+ffa0466c:	60 05       	[--SP] = (R7:4);
+ffa0466e:	3a 30       	R7 = R2;
+ffa04670:	00 e8 04 00 	LINK 0x10;		/* (16) */
+ffa04674:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff90075c(-7338148) */
+ffa04678:	82 ce 01 ca 	R5 = ROT R1 BY 0x0 || R6 = [FP + 0x24] || NOP;
+ffa0467c:	7e a2 00 00 
+ffa04680:	02 e1 84 07 	R2.L = 0x784;		/* (1924)	R2=0xff900784(-7338108) */
+ffa04684:	bc a2       	R4 = [FP + 0x28];
+ffa04686:	ff e3 e3 ea 	CALL 0xffa01c4c <_strcpy_>;
+ffa0468a:	17 30       	R2 = R7;
+ffa0468c:	0d 30       	R1 = R5;
+ffa0468e:	ff e3 df ea 	CALL 0xffa01c4c <_strcpy_>;
+ffa04692:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900784(-7338108) */
+ffa04696:	0d 30       	R1 = R5;
+ffa04698:	02 e1 90 07 	R2.L = 0x790;		/* (1936)	R2=0xff900790(-7338096) */
+ffa0469c:	ff e3 d8 ea 	CALL 0xffa01c4c <_strcpy_>;
+ffa046a0:	0d 30       	R1 = R5;
+ffa046a2:	16 30       	R2 = R6;
+ffa046a4:	ff e3 d4 ea 	CALL 0xffa01c4c <_strcpy_>;
+ffa046a8:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900790(-7338096) */
+ffa046ac:	0d 30       	R1 = R5;
+ffa046ae:	02 e1 ac 07 	R2.L = 0x7ac;		/* (1964)	R2=0xff9007ac(-7338068) */
+ffa046b2:	ff e3 cd ea 	CALL 0xffa01c4c <_strcpy_>;
+ffa046b6:	07 60       	R7 = 0x0 (X);		/*		R7=0x0(  0) */
+ffa046b8:	82 ce 05 c2 	R1 = ROT R5 BY 0x0 || [SP + 0xc] = R4 || NOP;
+ffa046bc:	f4 b0 00 00 
+ffa046c0:	17 30       	R2 = R7;
+ffa046c2:	ff e3 a3 ff 	CALL 0xffa04608 <_htmlCursorOption>;
+ffa046c6:	0f 64       	R7 += 0x1;		/* (  1) */
+ffa046c8:	81 60       	R1 = 0x10 (X);		/*		R1=0x10( 16) */
+ffa046ca:	0f 08       	CC = R7 == R1;
+ffa046cc:	f6 17       	IF !CC JUMP 0xffa046b8 <_htmlCursorSelect+0x4c> (BP);
+ffa046ce:	0d 30       	R1 = R5;
+ffa046d0:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff9007ac(-7338068) */
+ffa046d4:	01 e8 00 00 	UNLINK;
+ffa046d8:	02 e1 b0 07 	R2.L = 0x7b0;		/* (1968)	R2=0xff9007b0(-7338064) */
+ffa046dc:	20 05       	(R7:4) = [SP++];
+ffa046de:	ff e2 b7 ea 	JUMP.L 0xffa01c4c <_strcpy_>;
 	...
 
-ffa04668 <_httpHeader>:
-ffa04668:	78 05       	[--SP] = (R7:7);
-ffa0466a:	00 e8 04 00 	LINK 0x10;		/* (16) */
-ffa0466e:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa04670:	7f 30       	R7 = FP;
-ffa04672:	e7 67       	R7 += -0x4;		/* ( -4) */
-ffa04674:	f0 bb       	[FP -0x4] = R0;
-ffa04676:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff90072c(-7338196) */
-ffa0467a:	0f 30       	R1 = R7;
-ffa0467c:	02 e1 44 07 	R2.L = 0x744;		/* (1860)	R2=0xff900744(-7338172) */
-ffa04680:	20 e1 00 40 	R0 = 0x4000 (X);		/*		R0=0x4000(16384) */
-ffa04684:	ff e3 c4 ea 	CALL 0xffa01c0c <_strcpy_>;
-ffa04688:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900744(-7338172) */
-ffa0468c:	0f 30       	R1 = R7;
-ffa0468e:	02 e1 58 07 	R2.L = 0x758;		/* (1880)	R2=0xff900758(-7338152) */
-ffa04692:	ff e3 bd ea 	CALL 0xffa01c0c <_strcpy_>;
-ffa04696:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900758(-7338152) */
-ffa0469a:	0f 30       	R1 = R7;
-ffa0469c:	02 e1 6c 07 	R2.L = 0x76c;		/* (1900)	R2=0xff90076c(-7338132) */
-ffa046a0:	ff e3 b6 ea 	CALL 0xffa01c0c <_strcpy_>;
-ffa046a4:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900fe0 <_g_httpHeaderLen> */
-ffa046a8:	0a e1 e4 0f 	P2.L = 0xfe4;		/* (4068)	P2=0xff900fe4 <_g_httpContentLen> */
-ffa046ac:	12 91       	R2 = [P2];
-ffa046ae:	0f 30       	R1 = R7;
-ffa046b0:	ff e3 00 ec 	CALL 0xffa01eb0 <_strprintf_int>;
-ffa046b4:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff90076c(-7338132) */
-ffa046b8:	0f 30       	R1 = R7;
-ffa046ba:	02 e1 80 07 	R2.L = 0x780;		/* (1920)	R2=0xff900780(-7338112) */
-ffa046be:	ff e3 a7 ea 	CALL 0xffa01c0c <_strcpy_>;
-ffa046c2:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900fe4 <_g_httpContentLen> */
-ffa046c6:	f0 b9       	R0 = [FP -0x4];
-ffa046c8:	0a e1 e0 0f 	P2.L = 0xfe0;		/* (4064)	P2=0xff900fe0 <_g_httpHeaderLen> */
-ffa046cc:	10 93       	[P2] = R0;
-ffa046ce:	01 e8 00 00 	UNLINK;
-ffa046d2:	38 05       	(R7:7) = [SP++];
-ffa046d4:	10 00       	RTS;
+ffa046e4 <_httpHeader>:
+ffa046e4:	78 05       	[--SP] = (R7:7);
+ffa046e6:	00 e8 04 00 	LINK 0x10;		/* (16) */
+ffa046ea:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa046ec:	7f 30       	R7 = FP;
+ffa046ee:	e7 67       	R7 += -0x4;		/* ( -4) */
+ffa046f0:	f0 bb       	[FP -0x4] = R0;
+ffa046f2:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff9007b0(-7338064) */
+ffa046f6:	0f 30       	R1 = R7;
+ffa046f8:	02 e1 c8 07 	R2.L = 0x7c8;		/* (1992)	R2=0xff9007c8(-7338040) */
+ffa046fc:	20 e1 00 40 	R0 = 0x4000 (X);		/*		R0=0x4000(16384) */
+ffa04700:	ff e3 a6 ea 	CALL 0xffa01c4c <_strcpy_>;
+ffa04704:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff9007c8(-7338040) */
+ffa04708:	0f 30       	R1 = R7;
+ffa0470a:	02 e1 dc 07 	R2.L = 0x7dc;		/* (2012)	R2=0xff9007dc(-7338020) */
+ffa0470e:	ff e3 9f ea 	CALL 0xffa01c4c <_strcpy_>;
+ffa04712:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff9007dc(-7338020) */
+ffa04716:	0f 30       	R1 = R7;
+ffa04718:	02 e1 f0 07 	R2.L = 0x7f0;		/* (2032)	R2=0xff9007f0(-7338000) */
+ffa0471c:	ff e3 98 ea 	CALL 0xffa01c4c <_strcpy_>;
+ffa04720:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff901064 <_g_httpHeaderLen> */
+ffa04724:	0a e1 68 10 	P2.L = 0x1068;		/* (4200)	P2=0xff901068 <_g_httpContentLen> */
+ffa04728:	12 91       	R2 = [P2];
+ffa0472a:	0f 30       	R1 = R7;
+ffa0472c:	ff e3 e2 eb 	CALL 0xffa01ef0 <_strprintf_int>;
+ffa04730:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff9007f0(-7338000) */
+ffa04734:	0f 30       	R1 = R7;
+ffa04736:	02 e1 04 08 	R2.L = 0x804;		/* (2052)	R2=0xff900804(-7337980) */
+ffa0473a:	ff e3 89 ea 	CALL 0xffa01c4c <_strcpy_>;
+ffa0473e:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff901068 <_g_httpContentLen> */
+ffa04742:	f0 b9       	R0 = [FP -0x4];
+ffa04744:	0a e1 64 10 	P2.L = 0x1064;		/* (4196)	P2=0xff901064 <_g_httpHeaderLen> */
+ffa04748:	10 93       	[P2] = R0;
+ffa0474a:	01 e8 00 00 	UNLINK;
+ffa0474e:	38 05       	(R7:7) = [SP++];
+ffa04750:	10 00       	RTS;
 	...
 
-ffa046d8 <_htmlGeneric>:
-ffa046d8:	10 30       	R2 = R0;
-ffa046da:	00 e8 04 00 	LINK 0x10;		/* (16) */
-ffa046de:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa046e0:	f0 bb       	[FP -0x4] = R0;
-ffa046e2:	4f 30       	R1 = FP;
-ffa046e4:	e1 67       	R1 += -0x4;		/* ( -4) */
-ffa046e6:	20 e1 00 41 	R0 = 0x4100 (X);		/*		R0=0x4100(16640) */
-ffa046ea:	ff e3 91 ea 	CALL 0xffa01c0c <_strcpy_>;
-ffa046ee:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900fe0 <_g_httpHeaderLen> */
-ffa046f2:	f0 b9       	R0 = [FP -0x4];
-ffa046f4:	0a e1 e4 0f 	P2.L = 0xfe4;		/* (4068)	P2=0xff900fe4 <_g_httpContentLen> */
-ffa046f8:	10 93       	[P2] = R0;
-ffa046fa:	ff e3 b7 ff 	CALL 0xffa04668 <_httpHeader>;
-ffa046fe:	f0 b9       	R0 = [FP -0x4];
-ffa04700:	01 e8 00 00 	UNLINK;
-ffa04704:	10 00       	RTS;
+ffa04754 <_htmlGeneric>:
+ffa04754:	10 30       	R2 = R0;
+ffa04756:	00 e8 04 00 	LINK 0x10;		/* (16) */
+ffa0475a:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa0475c:	f0 bb       	[FP -0x4] = R0;
+ffa0475e:	4f 30       	R1 = FP;
+ffa04760:	e1 67       	R1 += -0x4;		/* ( -4) */
+ffa04762:	20 e1 00 41 	R0 = 0x4100 (X);		/*		R0=0x4100(16640) */
+ffa04766:	ff e3 73 ea 	CALL 0xffa01c4c <_strcpy_>;
+ffa0476a:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff901064 <_g_httpHeaderLen> */
+ffa0476e:	f0 b9       	R0 = [FP -0x4];
+ffa04770:	0a e1 68 10 	P2.L = 0x1068;		/* (4200)	P2=0xff901068 <_g_httpContentLen> */
+ffa04774:	10 93       	[P2] = R0;
+ffa04776:	ff e3 b7 ff 	CALL 0xffa046e4 <_httpHeader>;
+ffa0477a:	f0 b9       	R0 = [FP -0x4];
+ffa0477c:	01 e8 00 00 	UNLINK;
+ffa04780:	10 00       	RTS;
 	...
 
-ffa04708 <_htmlDefault>:
-ffa04708:	e4 05       	[--SP] = (R7:4, P5:4);
-ffa0470a:	00 e8 06 00 	LINK 0x18;		/* (24) */
-ffa0470e:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa04710:	6f 32       	P5 = FP;
-ffa04712:	e5 6f       	P5 += -0x4;		/* ( -4) */
-ffa04714:	f0 bb       	[FP -0x4] = R0;
-ffa04716:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900780(-7338112) */
-ffa0471a:	4d 30       	R1 = P5;
-ffa0471c:	02 e1 a0 07 	R2.L = 0x7a0;		/* (1952)	R2=0xff9007a0(-7338080) */
-ffa04720:	20 e1 00 41 	R0 = 0x4100 (X);		/*		R0=0x4100(16640) */
-ffa04724:	ff e3 74 ea 	CALL 0xffa01c0c <_strcpy_>;
-ffa04728:	4d 30       	R1 = P5;
-ffa0472a:	22 e1 62 00 	R2 = 0x62 (X);		/*		R2=0x62( 98) */
-ffa0472e:	ff e3 05 ff 	CALL 0xffa04538 <_htmlDiv>;
-ffa04732:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900062(-7339934) */
-ffa04736:	4d 30       	R1 = P5;
-ffa04738:	02 e1 24 06 	R2.L = 0x624;		/* (1572)	R2=0xff900624(-7338460) */
-ffa0473c:	ff e3 68 ea 	CALL 0xffa01c0c <_strcpy_>;
-ffa04740:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900624(-7338460) */
-ffa04744:	4d 30       	R1 = P5;
-ffa04746:	02 e1 f0 07 	R2.L = 0x7f0;		/* (2032)	R2=0xff9007f0(-7338000) */
-ffa0474a:	ff e3 61 ea 	CALL 0xffa01c0c <_strcpy_>;
-ffa0474e:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900fe4 <_g_httpContentLen> */
-ffa04752:	08 30       	R1 = R0;
-ffa04754:	0a e1 40 0c 	P2.L = 0xc40;		/* (3136)	P2=0xff900c40 <_g_streamEnabled> */
-ffa04758:	10 99       	R0 = B[P2] (Z);
-ffa0475a:	00 0c       	CC = R0 == 0x0;
-ffa0475c:	5c 1d       	IF CC JUMP 0xffa04a14 <_htmlDefault+0x30c> (BP);
-ffa0475e:	01 30       	R0 = R1;
-ffa04760:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff9007f0(-7338000) */
-ffa04764:	4d 30       	R1 = P5;
-ffa04766:	02 e1 40 08 	R2.L = 0x840;		/* (2112)	R2=0xff900840(-7337920) */
-ffa0476a:	ff e3 51 ea 	CALL 0xffa01c0c <_strcpy_>;
-ffa0476e:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900840(-7337920) */
-ffa04772:	4d 30       	R1 = P5;
-ffa04774:	02 e1 58 08 	R2.L = 0x858;		/* (2136)	R2=0xff900858(-7337896) */
-ffa04778:	ff e3 4a ea 	CALL 0xffa01c0c <_strcpy_>;
-ffa0477c:	4d 30       	R1 = P5;
-ffa0477e:	22 e1 62 00 	R2 = 0x62 (X);		/*		R2=0x62( 98) */
-ffa04782:	ff e3 db fe 	CALL 0xffa04538 <_htmlDiv>;
-ffa04786:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900062(-7339934) */
-ffa0478a:	4d 30       	R1 = P5;
-ffa0478c:	02 e1 24 06 	R2.L = 0x624;		/* (1572)	R2=0xff900624(-7338460) */
-ffa04790:	ff e3 3e ea 	CALL 0xffa01c0c <_strcpy_>;
-ffa04794:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900624(-7338460) */
-ffa04798:	4d 30       	R1 = P5;
-ffa0479a:	02 e1 6c 08 	R2.L = 0x86c;		/* (2156)	R2=0xff90086c(-7337876) */
-ffa0479e:	4c e1 90 ff 	P4.H = 0xff90;		/* (-112)	P4=0xff900fe8 <_g_httpRxed> */
-ffa047a2:	ff e3 35 ea 	CALL 0xffa01c0c <_strcpy_>;
-ffa047a6:	0f 60       	R7 = 0x1 (X);		/*		R7=0x1(  1) */
-ffa047a8:	06 60       	R6 = 0x0 (X);		/*		R6=0x0(  0) */
-ffa047aa:	0c e1 f0 0e 	P4.L = 0xef0;		/* (3824)	P4=0xff900ef0 <_NetDataDestIP> */
-ffa047ae:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff90086c(-7337876) */
+ffa04784 <_htmlDefault>:
+ffa04784:	e4 05       	[--SP] = (R7:4, P5:4);
+ffa04786:	00 e8 06 00 	LINK 0x18;		/* (24) */
+ffa0478a:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa0478c:	6f 32       	P5 = FP;
+ffa0478e:	e5 6f       	P5 += -0x4;		/* ( -4) */
+ffa04790:	f0 bb       	[FP -0x4] = R0;
+ffa04792:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900804(-7337980) */
+ffa04796:	4d 30       	R1 = P5;
+ffa04798:	02 e1 24 08 	R2.L = 0x824;		/* (2084)	R2=0xff900824(-7337948) */
+ffa0479c:	20 e1 00 41 	R0 = 0x4100 (X);		/*		R0=0x4100(16640) */
+ffa047a0:	ff e3 56 ea 	CALL 0xffa01c4c <_strcpy_>;
+ffa047a4:	4d 30       	R1 = P5;
+ffa047a6:	22 e1 62 00 	R2 = 0x62 (X);		/*		R2=0x62( 98) */
+ffa047aa:	ff e3 05 ff 	CALL 0xffa045b4 <_htmlDiv>;
+ffa047ae:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900062(-7339934) */
 ffa047b2:	4d 30       	R1 = P5;
-ffa047b4:	02 e1 88 08 	R2.L = 0x888;		/* (2184)	R2=0xff900888(-7337848) */
-ffa047b8:	ff e3 2a ea 	CALL 0xffa01c0c <_strcpy_>;
-ffa047bc:	17 30       	R2 = R7;
-ffa047be:	4d 30       	R1 = P5;
-ffa047c0:	ff e3 78 eb 	CALL 0xffa01eb0 <_strprintf_int>;
-ffa047c4:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900888(-7337848) */
-ffa047c8:	4d 30       	R1 = P5;
-ffa047ca:	02 e1 a4 08 	R2.L = 0x8a4;		/* (2212)	R2=0xff9008a4(-7337820) */
-ffa047ce:	ff e3 1f ea 	CALL 0xffa01c0c <_strcpy_>;
-ffa047d2:	22 91       	R2 = [P4];
-ffa047d4:	72 40       	R2 >>= R6;
-ffa047d6:	52 43       	R2 = R2.B (Z);
-ffa047d8:	4d 30       	R1 = P5;
-ffa047da:	ff e3 6b eb 	CALL 0xffa01eb0 <_strprintf_int>;
-ffa047de:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff9008a4(-7337820) */
-ffa047e2:	4d 30       	R1 = P5;
-ffa047e4:	02 e1 b8 08 	R2.L = 0x8b8;		/* (2232)	R2=0xff9008b8(-7337800) */
-ffa047e8:	ff e3 12 ea 	CALL 0xffa01c0c <_strcpy_>;
-ffa047ec:	0f 64       	R7 += 0x1;		/* (  1) */
-ffa047ee:	29 60       	R1 = 0x5 (X);		/*		R1=0x5(  5) */
-ffa047f0:	46 64       	R6 += 0x8;		/* (  8) */
-ffa047f2:	0f 08       	CC = R7 == R1;
-ffa047f4:	dd 17       	IF !CC JUMP 0xffa047ae <_htmlDefault+0xa6> (BP);
-ffa047f6:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff9008b8(-7337800) */
-ffa047fa:	4d 30       	R1 = P5;
-ffa047fc:	02 e1 c0 08 	R2.L = 0x8c0;		/* (2240)	R2=0xff9008c0(-7337792) */
-ffa04800:	ff e3 06 ea 	CALL 0xffa01c0c <_strcpy_>;
-ffa04804:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff9008c0(-7337792) */
-ffa04808:	4d 30       	R1 = P5;
-ffa0480a:	02 e1 58 08 	R2.L = 0x858;		/* (2136)	R2=0xff900858(-7337896) */
-ffa0480e:	ff e3 ff e9 	CALL 0xffa01c0c <_strcpy_>;
-ffa04812:	4d 30       	R1 = P5;
-ffa04814:	22 e1 67 00 	R2 = 0x67 (X);		/*		R2=0x67(103) */
-ffa04818:	ff e3 90 fe 	CALL 0xffa04538 <_htmlDiv>;
-ffa0481c:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900067(-7339929) */
-ffa04820:	4d 30       	R1 = P5;
-ffa04822:	02 e1 24 06 	R2.L = 0x624;		/* (1572)	R2=0xff900624(-7338460) */
-ffa04826:	ff e3 f3 e9 	CALL 0xffa01c0c <_strcpy_>;
-ffa0482a:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900624(-7338460) */
+ffa047b4:	02 e1 a8 06 	R2.L = 0x6a8;		/* (1704)	R2=0xff9006a8(-7338328) */
+ffa047b8:	ff e3 4a ea 	CALL 0xffa01c4c <_strcpy_>;
+ffa047bc:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff9006a8(-7338328) */
+ffa047c0:	4d 30       	R1 = P5;
+ffa047c2:	02 e1 74 08 	R2.L = 0x874;		/* (2164)	R2=0xff900874(-7337868) */
+ffa047c6:	ff e3 43 ea 	CALL 0xffa01c4c <_strcpy_>;
+ffa047ca:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff901068 <_g_httpContentLen> */
+ffa047ce:	08 30       	R1 = R0;
+ffa047d0:	0a e1 c4 0c 	P2.L = 0xcc4;		/* (3268)	P2=0xff900cc4 <_g_streamEnabled> */
+ffa047d4:	10 99       	R0 = B[P2] (Z);
+ffa047d6:	00 0c       	CC = R0 == 0x0;
+ffa047d8:	5c 1d       	IF CC JUMP 0xffa04a90 <_htmlDefault+0x30c> (BP);
+ffa047da:	01 30       	R0 = R1;
+ffa047dc:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900874(-7337868) */
+ffa047e0:	4d 30       	R1 = P5;
+ffa047e2:	02 e1 c4 08 	R2.L = 0x8c4;		/* (2244)	R2=0xff9008c4(-7337788) */
+ffa047e6:	ff e3 33 ea 	CALL 0xffa01c4c <_strcpy_>;
+ffa047ea:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff9008c4(-7337788) */
+ffa047ee:	4d 30       	R1 = P5;
+ffa047f0:	02 e1 dc 08 	R2.L = 0x8dc;		/* (2268)	R2=0xff9008dc(-7337764) */
+ffa047f4:	ff e3 2c ea 	CALL 0xffa01c4c <_strcpy_>;
+ffa047f8:	4d 30       	R1 = P5;
+ffa047fa:	22 e1 62 00 	R2 = 0x62 (X);		/*		R2=0x62( 98) */
+ffa047fe:	ff e3 db fe 	CALL 0xffa045b4 <_htmlDiv>;
+ffa04802:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900062(-7339934) */
+ffa04806:	4d 30       	R1 = P5;
+ffa04808:	02 e1 a8 06 	R2.L = 0x6a8;		/* (1704)	R2=0xff9006a8(-7338328) */
+ffa0480c:	ff e3 20 ea 	CALL 0xffa01c4c <_strcpy_>;
+ffa04810:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff9006a8(-7338328) */
+ffa04814:	4d 30       	R1 = P5;
+ffa04816:	02 e1 f0 08 	R2.L = 0x8f0;		/* (2288)	R2=0xff9008f0(-7337744) */
+ffa0481a:	4c e1 90 ff 	P4.H = 0xff90;		/* (-112)	P4=0xff90106c <_g_httpRxed> */
+ffa0481e:	ff e3 17 ea 	CALL 0xffa01c4c <_strcpy_>;
+ffa04822:	0f 60       	R7 = 0x1 (X);		/*		R7=0x1(  1) */
+ffa04824:	06 60       	R6 = 0x0 (X);		/*		R6=0x0(  0) */
+ffa04826:	0c e1 74 0f 	P4.L = 0xf74;		/* (3956)	P4=0xff900f74 <_NetDataDestIP> */
+ffa0482a:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff9008f0(-7337744) */
 ffa0482e:	4d 30       	R1 = P5;
-ffa04830:	02 e1 e4 08 	R2.L = 0x8e4;		/* (2276)	R2=0xff9008e4(-7337756) */
-ffa04834:	ff e3 ec e9 	CALL 0xffa01c0c <_strcpy_>;
-ffa04838:	4a e1 80 ff 	P2.H = 0xff80;		/* (-128)	P2=0xff800c40 */
-ffa0483c:	08 30       	R1 = R0;
-ffa0483e:	0a e1 08 08 	P2.L = 0x808;		/* (2056)	P2=0xff800808 */
-ffa04842:	10 99       	R0 = B[P2] (Z);
-ffa04844:	00 48       	CC = !BITTST (R0, 0x0);		/* bit  0 */
-ffa04846:	f0 10       	IF !CC JUMP 0xffa04a26 <_htmlDefault+0x31e>;
-ffa04848:	01 30       	R0 = R1;
-ffa0484a:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff9008e4(-7337756) */
-ffa0484e:	4d 30       	R1 = P5;
-ffa04850:	02 e1 40 08 	R2.L = 0x840;		/* (2112)	R2=0xff900840(-7337920) */
-ffa04854:	ff e3 dc e9 	CALL 0xffa01c0c <_strcpy_>;
-ffa04858:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900840(-7337920) */
-ffa0485c:	4d 30       	R1 = P5;
-ffa0485e:	02 e1 58 08 	R2.L = 0x858;		/* (2136)	R2=0xff900858(-7337896) */
-ffa04862:	ff e3 d5 e9 	CALL 0xffa01c0c <_strcpy_>;
-ffa04866:	4d 30       	R1 = P5;
-ffa04868:	22 e1 62 00 	R2 = 0x62 (X);		/*		R2=0x62( 98) */
-ffa0486c:	ff e3 66 fe 	CALL 0xffa04538 <_htmlDiv>;
-ffa04870:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900062(-7339934) */
-ffa04874:	4d 30       	R1 = P5;
-ffa04876:	02 e1 24 06 	R2.L = 0x624;		/* (1572)	R2=0xff900624(-7338460) */
-ffa0487a:	ff e3 c9 e9 	CALL 0xffa01c0c <_strcpy_>;
-ffa0487e:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900624(-7338460) */
-ffa04882:	4d 30       	R1 = P5;
-ffa04884:	02 e1 24 09 	R2.L = 0x924;		/* (2340)	R2=0xff900924(-7337692) */
-ffa04888:	ff e3 c2 e9 	CALL 0xffa01c0c <_strcpy_>;
-ffa0488c:	41 e1 90 ff 	R1.H = 0xff90;		/* (-112)	R1=0xff900005(-7340027) */
-ffa04890:	01 e1 54 09 	R1.L = 0x954;		/* (2388)	R1=0xff900954(-7337644) */
-ffa04894:	00 cc 3f ce 	R7 = R7 -|- R7 || [SP + 0xc] = R1 || NOP;
-ffa04898:	f1 b0 00 00 
-ffa0489c:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900924(-7337692) */
-ffa048a0:	37 b1       	[SP + 0x10] = R7;
-ffa048a2:	4d 30       	R1 = P5;
-ffa048a4:	02 e1 48 09 	R2.L = 0x948;		/* (2376)	R2=0xff900948(-7337656) */
-ffa048a8:	ff e3 a4 fe 	CALL 0xffa045f0 <_htmlCursorSelect>;
-ffa048ac:	41 e1 90 ff 	R1.H = 0xff90;		/* (-112)	R1=0xff900954(-7337644) */
-ffa048b0:	01 e1 6c 09 	R1.L = 0x96c;		/* (2412)	R1=0xff90096c(-7337620) */
-ffa048b4:	f1 b0       	[SP + 0xc] = R1;
-ffa048b6:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900948(-7337656) */
-ffa048ba:	37 b1       	[SP + 0x10] = R7;
-ffa048bc:	4d 30       	R1 = P5;
-ffa048be:	02 e1 60 09 	R2.L = 0x960;		/* (2400)	R2=0xff900960(-7337632) */
-ffa048c2:	ff e3 97 fe 	CALL 0xffa045f0 <_htmlCursorSelect>;
-ffa048c6:	41 e1 90 ff 	R1.H = 0xff90;		/* (-112)	R1=0xff90096c(-7337620) */
-ffa048ca:	01 e1 84 09 	R1.L = 0x984;		/* (2436)	R1=0xff900984(-7337596) */
-ffa048ce:	f1 b0       	[SP + 0xc] = R1;
-ffa048d0:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900960(-7337632) */
-ffa048d4:	37 b1       	[SP + 0x10] = R7;
-ffa048d6:	4d 30       	R1 = P5;
-ffa048d8:	02 e1 78 09 	R2.L = 0x978;		/* (2424)	R2=0xff900978(-7337608) */
-ffa048dc:	ff e3 8a fe 	CALL 0xffa045f0 <_htmlCursorSelect>;
-ffa048e0:	41 e1 90 ff 	R1.H = 0xff90;		/* (-112)	R1=0xff900984(-7337596) */
-ffa048e4:	01 e1 98 09 	R1.L = 0x998;		/* (2456)	R1=0xff900998(-7337576) */
-ffa048e8:	f1 b0       	[SP + 0xc] = R1;
-ffa048ea:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900978(-7337608) */
-ffa048ee:	37 b1       	[SP + 0x10] = R7;
+ffa04830:	02 e1 0c 09 	R2.L = 0x90c;		/* (2316)	R2=0xff90090c(-7337716) */
+ffa04834:	ff e3 0c ea 	CALL 0xffa01c4c <_strcpy_>;
+ffa04838:	17 30       	R2 = R7;
+ffa0483a:	4d 30       	R1 = P5;
+ffa0483c:	ff e3 5a eb 	CALL 0xffa01ef0 <_strprintf_int>;
+ffa04840:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff90090c(-7337716) */
+ffa04844:	4d 30       	R1 = P5;
+ffa04846:	02 e1 28 09 	R2.L = 0x928;		/* (2344)	R2=0xff900928(-7337688) */
+ffa0484a:	ff e3 01 ea 	CALL 0xffa01c4c <_strcpy_>;
+ffa0484e:	22 91       	R2 = [P4];
+ffa04850:	72 40       	R2 >>= R6;
+ffa04852:	52 43       	R2 = R2.B (Z);
+ffa04854:	4d 30       	R1 = P5;
+ffa04856:	ff e3 4d eb 	CALL 0xffa01ef0 <_strprintf_int>;
+ffa0485a:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900928(-7337688) */
+ffa0485e:	4d 30       	R1 = P5;
+ffa04860:	02 e1 3c 09 	R2.L = 0x93c;		/* (2364)	R2=0xff90093c(-7337668) */
+ffa04864:	ff e3 f4 e9 	CALL 0xffa01c4c <_strcpy_>;
+ffa04868:	0f 64       	R7 += 0x1;		/* (  1) */
+ffa0486a:	29 60       	R1 = 0x5 (X);		/*		R1=0x5(  5) */
+ffa0486c:	46 64       	R6 += 0x8;		/* (  8) */
+ffa0486e:	0f 08       	CC = R7 == R1;
+ffa04870:	dd 17       	IF !CC JUMP 0xffa0482a <_htmlDefault+0xa6> (BP);
+ffa04872:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff90093c(-7337668) */
+ffa04876:	4d 30       	R1 = P5;
+ffa04878:	02 e1 44 09 	R2.L = 0x944;		/* (2372)	R2=0xff900944(-7337660) */
+ffa0487c:	ff e3 e8 e9 	CALL 0xffa01c4c <_strcpy_>;
+ffa04880:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900944(-7337660) */
+ffa04884:	4d 30       	R1 = P5;
+ffa04886:	02 e1 dc 08 	R2.L = 0x8dc;		/* (2268)	R2=0xff9008dc(-7337764) */
+ffa0488a:	ff e3 e1 e9 	CALL 0xffa01c4c <_strcpy_>;
+ffa0488e:	4d 30       	R1 = P5;
+ffa04890:	22 e1 67 00 	R2 = 0x67 (X);		/*		R2=0x67(103) */
+ffa04894:	ff e3 90 fe 	CALL 0xffa045b4 <_htmlDiv>;
+ffa04898:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900067(-7339929) */
+ffa0489c:	4d 30       	R1 = P5;
+ffa0489e:	02 e1 a8 06 	R2.L = 0x6a8;		/* (1704)	R2=0xff9006a8(-7338328) */
+ffa048a2:	ff e3 d5 e9 	CALL 0xffa01c4c <_strcpy_>;
+ffa048a6:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff9006a8(-7338328) */
+ffa048aa:	4d 30       	R1 = P5;
+ffa048ac:	02 e1 68 09 	R2.L = 0x968;		/* (2408)	R2=0xff900968(-7337624) */
+ffa048b0:	ff e3 ce e9 	CALL 0xffa01c4c <_strcpy_>;
+ffa048b4:	4a e1 80 ff 	P2.H = 0xff80;		/* (-128)	P2=0xff800cc4 */
+ffa048b8:	08 30       	R1 = R0;
+ffa048ba:	0a e1 08 08 	P2.L = 0x808;		/* (2056)	P2=0xff800808 */
+ffa048be:	10 99       	R0 = B[P2] (Z);
+ffa048c0:	00 48       	CC = !BITTST (R0, 0x0);		/* bit  0 */
+ffa048c2:	f0 10       	IF !CC JUMP 0xffa04aa2 <_htmlDefault+0x31e>;
+ffa048c4:	01 30       	R0 = R1;
+ffa048c6:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900968(-7337624) */
+ffa048ca:	4d 30       	R1 = P5;
+ffa048cc:	02 e1 c4 08 	R2.L = 0x8c4;		/* (2244)	R2=0xff9008c4(-7337788) */
+ffa048d0:	ff e3 be e9 	CALL 0xffa01c4c <_strcpy_>;
+ffa048d4:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff9008c4(-7337788) */
+ffa048d8:	4d 30       	R1 = P5;
+ffa048da:	02 e1 dc 08 	R2.L = 0x8dc;		/* (2268)	R2=0xff9008dc(-7337764) */
+ffa048de:	ff e3 b7 e9 	CALL 0xffa01c4c <_strcpy_>;
+ffa048e2:	4d 30       	R1 = P5;
+ffa048e4:	22 e1 62 00 	R2 = 0x62 (X);		/*		R2=0x62( 98) */
+ffa048e8:	ff e3 66 fe 	CALL 0xffa045b4 <_htmlDiv>;
+ffa048ec:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900062(-7339934) */
 ffa048f0:	4d 30       	R1 = P5;
-ffa048f2:	02 e1 90 09 	R2.L = 0x990;		/* (2448)	R2=0xff900990(-7337584) */
-ffa048f6:	ff e3 7d fe 	CALL 0xffa045f0 <_htmlCursorSelect>;
-ffa048fa:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900990(-7337584) */
+ffa048f2:	02 e1 a8 06 	R2.L = 0x6a8;		/* (1704)	R2=0xff9006a8(-7338328) */
+ffa048f6:	ff e3 ab e9 	CALL 0xffa01c4c <_strcpy_>;
+ffa048fa:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff9006a8(-7338328) */
 ffa048fe:	4d 30       	R1 = P5;
-ffa04900:	02 e1 a4 09 	R2.L = 0x9a4;		/* (2468)	R2=0xff9009a4(-7337564) */
-ffa04904:	ff e3 84 e9 	CALL 0xffa01c0c <_strcpy_>;
-ffa04908:	4d 30       	R1 = P5;
-ffa0490a:	22 e1 67 00 	R2 = 0x67 (X);		/*		R2=0x67(103) */
-ffa0490e:	ff e3 15 fe 	CALL 0xffa04538 <_htmlDiv>;
-ffa04912:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900067(-7339929) */
-ffa04916:	4d 30       	R1 = P5;
-ffa04918:	02 e1 24 06 	R2.L = 0x624;		/* (1572)	R2=0xff900624(-7338460) */
-ffa0491c:	ff e3 78 e9 	CALL 0xffa01c0c <_strcpy_>;
-ffa04920:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900624(-7338460) */
-ffa04924:	4d 30       	R1 = P5;
-ffa04926:	02 e1 e0 09 	R2.L = 0x9e0;		/* (2528)	R2=0xff9009e0(-7337504) */
-ffa0492a:	ff e3 71 e9 	CALL 0xffa01c0c <_strcpy_>;
-ffa0492e:	4d 30       	R1 = P5;
-ffa04930:	22 e1 62 00 	R2 = 0x62 (X);		/*		R2=0x62( 98) */
-ffa04934:	ff e3 02 fe 	CALL 0xffa04538 <_htmlDiv>;
-ffa04938:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900062(-7339934) */
-ffa0493c:	4d 30       	R1 = P5;
-ffa0493e:	02 e1 38 0a 	R2.L = 0xa38;		/* (2616)	R2=0xff900a38(-7337416) */
-ffa04942:	ff e3 65 e9 	CALL 0xffa01c0c <_strcpy_>;
-ffa04946:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900a38(-7337416) */
-ffa0494a:	4d 30       	R1 = P5;
-ffa0494c:	02 e1 60 0a 	R2.L = 0xa60;		/* (2656)	R2=0xff900a60(-7337376) */
-ffa04950:	ff e3 5e e9 	CALL 0xffa01c0c <_strcpy_>;
-ffa04954:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900a60(-7337376) */
-ffa04958:	4d 30       	R1 = P5;
-ffa0495a:	02 e1 58 08 	R2.L = 0x858;		/* (2136)	R2=0xff900858(-7337896) */
-ffa0495e:	ff e3 57 e9 	CALL 0xffa01c0c <_strcpy_>;
-ffa04962:	38 30       	R7 = R0;
-ffa04964:	ff e3 22 dc 	CALL 0xffa001a8 <_ustimer>;
-ffa04968:	41 e1 e3 38 	R1.H = 0x38e3;		/* (14563)	R1=0x38e30998(954403224) */
-ffa0496c:	01 e1 39 8e 	R1.L = 0x8e39;		/* (-29127)	R1=0x38e38e39(954437177) */
-ffa04970:	80 c0 01 18 	A1 = R0.L * R1.L (FU);
-ffa04974:	83 c6 80 51 	A1 = A1 >> 0x10;
-ffa04978:	81 c0 01 86 	A1 += R0.H * R1.L, A0 = R0.H * R1.H (FU);
-ffa0497c:	81 c0 08 98 	A1 += R1.H * R0.L (FU);
-ffa04980:	83 c6 80 51 	A1 = A1 >> 0x10;
-ffa04984:	0b c4 3f 80 	A0 += A1;
-ffa04988:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900858(-7337896) */
-ffa0498c:	8b c0 00 39 	R4 = A0 (FU);
-ffa04990:	02 e1 a8 0a 	R2.L = 0xaa8;		/* (2728)	R2=0xff900aa8(-7337304) */
-ffa04994:	4d 30       	R1 = P5;
-ffa04996:	07 30       	R0 = R7;
-ffa04998:	ff e3 3a e9 	CALL 0xffa01c0c <_strcpy_>;
-ffa0499c:	0c 4e       	R4 >>= 0x1;
-ffa0499e:	28 30       	R5 = R0;
-ffa049a0:	04 30       	R0 = R4;
-ffa049a2:	21 e1 e8 03 	R1 = 0x3e8 (X);		/*		R1=0x3e8(1000) */
-ffa049a6:	ff e3 ef e5 	CALL 0xffa01584 <___divsi3>;
-ffa049aa:	30 30       	R6 = R0;
-ffa049ac:	e1 61       	R1 = 0x3c (X);		/*		R1=0x3c( 60) */
-ffa049ae:	ff e3 eb e5 	CALL 0xffa01584 <___divsi3>;
-ffa049b2:	38 30       	R7 = R0;
-ffa049b4:	4d 30       	R1 = P5;
-ffa049b6:	17 30       	R2 = R7;
-ffa049b8:	05 30       	R0 = R5;
-ffa049ba:	ff e3 7b ea 	CALL 0xffa01eb0 <_strprintf_int>;
-ffa049be:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900aa8(-7337304) */
-ffa049c2:	4d 30       	R1 = P5;
-ffa049c4:	02 e1 ac 00 	R2.L = 0xac;		/* (172)	R2=0xff9000ac(-7339860) */
-ffa049c8:	ff e3 22 e9 	CALL 0xffa01c0c <_strcpy_>;
-ffa049cc:	82 c6 27 82 	R1 = R7 << 0x4;
-ffa049d0:	cf 53       	R7 = R7 - R1;
-ffa049d2:	07 32       	P0 = R7;
-ffa049d4:	0e 32       	P1 = R6;
-ffa049d6:	4d 30       	R1 = P5;
-ffa049d8:	81 5e       	P2 = P1 + (P0 << 0x2);
-ffa049da:	52 30       	R2 = P2;
-ffa049dc:	ff e3 6a ea 	CALL 0xffa01eb0 <_strprintf_int>;
-ffa049e0:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff9000ac(-7339860) */
-ffa049e4:	4d 30       	R1 = P5;
-ffa049e6:	02 e1 f0 00 	R2.L = 0xf0;		/* (240)	R2=0xff9000f0(-7339792) */
-ffa049ea:	ff e3 11 e9 	CALL 0xffa01c0c <_strcpy_>;
-ffa049ee:	22 e1 18 fc 	R2 = -0x3e8 (X);		/*		R2=0xfffffc18(-1000) */
-ffa049f2:	f2 40       	R2 *= R6;
-ffa049f4:	4d 30       	R1 = P5;
-ffa049f6:	a2 50       	R2 = R2 + R4;
-ffa049f8:	ff e3 5c ea 	CALL 0xffa01eb0 <_strprintf_int>;
-ffa049fc:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff90fc18(-7275496) */
-ffa04a00:	4d 30       	R1 = P5;
-ffa04a02:	02 e1 b4 0a 	R2.L = 0xab4;		/* (2740)	R2=0xff900ab4(-7337292) */
-ffa04a06:	ff e3 03 e9 	CALL 0xffa01c0c <_strcpy_>;
-ffa04a0a:	f0 b9       	R0 = [FP -0x4];
-ffa04a0c:	01 e8 00 00 	UNLINK;
-ffa04a10:	a4 05       	(R7:4, P5:4) = [SP++];
-ffa04a12:	10 00       	RTS;
-ffa04a14:	01 30       	R0 = R1;
-ffa04a16:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900ab4(-7337292) */
-ffa04a1a:	4d 30       	R1 = P5;
-ffa04a1c:	02 e1 4c 08 	R2.L = 0x84c;		/* (2124)	R2=0xff90084c(-7337908) */
-ffa04a20:	ff e3 f6 e8 	CALL 0xffa01c0c <_strcpy_>;
-ffa04a24:	a5 2e       	JUMP.S 0xffa0476e <_htmlDefault+0x66>;
-ffa04a26:	01 30       	R0 = R1;
-ffa04a28:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff90084c(-7337908) */
-ffa04a2c:	4d 30       	R1 = P5;
-ffa04a2e:	02 e1 4c 08 	R2.L = 0x84c;		/* (2124)	R2=0xff90084c(-7337908) */
-ffa04a32:	ff e3 ed e8 	CALL 0xffa01c0c <_strcpy_>;
-ffa04a36:	11 2f       	JUMP.S 0xffa04858 <_htmlDefault+0x150>;
+ffa04900:	02 e1 a8 09 	R2.L = 0x9a8;		/* (2472)	R2=0xff9009a8(-7337560) */
+ffa04904:	ff e3 a4 e9 	CALL 0xffa01c4c <_strcpy_>;
+ffa04908:	41 e1 90 ff 	R1.H = 0xff90;		/* (-112)	R1=0xff900005(-7340027) */
+ffa0490c:	01 e1 d8 09 	R1.L = 0x9d8;		/* (2520)	R1=0xff9009d8(-7337512) */
+ffa04910:	00 cc 3f ce 	R7 = R7 -|- R7 || [SP + 0xc] = R1 || NOP;
+ffa04914:	f1 b0 00 00 
+ffa04918:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff9009a8(-7337560) */
+ffa0491c:	37 b1       	[SP + 0x10] = R7;
+ffa0491e:	4d 30       	R1 = P5;
+ffa04920:	02 e1 cc 09 	R2.L = 0x9cc;		/* (2508)	R2=0xff9009cc(-7337524) */
+ffa04924:	ff e3 a4 fe 	CALL 0xffa0466c <_htmlCursorSelect>;
+ffa04928:	41 e1 90 ff 	R1.H = 0xff90;		/* (-112)	R1=0xff9009d8(-7337512) */
+ffa0492c:	01 e1 f0 09 	R1.L = 0x9f0;		/* (2544)	R1=0xff9009f0(-7337488) */
+ffa04930:	f1 b0       	[SP + 0xc] = R1;
+ffa04932:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff9009cc(-7337524) */
+ffa04936:	37 b1       	[SP + 0x10] = R7;
+ffa04938:	4d 30       	R1 = P5;
+ffa0493a:	02 e1 e4 09 	R2.L = 0x9e4;		/* (2532)	R2=0xff9009e4(-7337500) */
+ffa0493e:	ff e3 97 fe 	CALL 0xffa0466c <_htmlCursorSelect>;
+ffa04942:	41 e1 90 ff 	R1.H = 0xff90;		/* (-112)	R1=0xff9009f0(-7337488) */
+ffa04946:	01 e1 08 0a 	R1.L = 0xa08;		/* (2568)	R1=0xff900a08(-7337464) */
+ffa0494a:	f1 b0       	[SP + 0xc] = R1;
+ffa0494c:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff9009e4(-7337500) */
+ffa04950:	37 b1       	[SP + 0x10] = R7;
+ffa04952:	4d 30       	R1 = P5;
+ffa04954:	02 e1 fc 09 	R2.L = 0x9fc;		/* (2556)	R2=0xff9009fc(-7337476) */
+ffa04958:	ff e3 8a fe 	CALL 0xffa0466c <_htmlCursorSelect>;
+ffa0495c:	41 e1 90 ff 	R1.H = 0xff90;		/* (-112)	R1=0xff900a08(-7337464) */
+ffa04960:	01 e1 1c 0a 	R1.L = 0xa1c;		/* (2588)	R1=0xff900a1c(-7337444) */
+ffa04964:	f1 b0       	[SP + 0xc] = R1;
+ffa04966:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff9009fc(-7337476) */
+ffa0496a:	37 b1       	[SP + 0x10] = R7;
+ffa0496c:	4d 30       	R1 = P5;
+ffa0496e:	02 e1 14 0a 	R2.L = 0xa14;		/* (2580)	R2=0xff900a14(-7337452) */
+ffa04972:	ff e3 7d fe 	CALL 0xffa0466c <_htmlCursorSelect>;
+ffa04976:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900a14(-7337452) */
+ffa0497a:	4d 30       	R1 = P5;
+ffa0497c:	02 e1 28 0a 	R2.L = 0xa28;		/* (2600)	R2=0xff900a28(-7337432) */
+ffa04980:	ff e3 66 e9 	CALL 0xffa01c4c <_strcpy_>;
+ffa04984:	4d 30       	R1 = P5;
+ffa04986:	22 e1 67 00 	R2 = 0x67 (X);		/*		R2=0x67(103) */
+ffa0498a:	ff e3 15 fe 	CALL 0xffa045b4 <_htmlDiv>;
+ffa0498e:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900067(-7339929) */
+ffa04992:	4d 30       	R1 = P5;
+ffa04994:	02 e1 a8 06 	R2.L = 0x6a8;		/* (1704)	R2=0xff9006a8(-7338328) */
+ffa04998:	ff e3 5a e9 	CALL 0xffa01c4c <_strcpy_>;
+ffa0499c:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff9006a8(-7338328) */
+ffa049a0:	4d 30       	R1 = P5;
+ffa049a2:	02 e1 64 0a 	R2.L = 0xa64;		/* (2660)	R2=0xff900a64(-7337372) */
+ffa049a6:	ff e3 53 e9 	CALL 0xffa01c4c <_strcpy_>;
+ffa049aa:	4d 30       	R1 = P5;
+ffa049ac:	22 e1 62 00 	R2 = 0x62 (X);		/*		R2=0x62( 98) */
+ffa049b0:	ff e3 02 fe 	CALL 0xffa045b4 <_htmlDiv>;
+ffa049b4:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900062(-7339934) */
+ffa049b8:	4d 30       	R1 = P5;
+ffa049ba:	02 e1 bc 0a 	R2.L = 0xabc;		/* (2748)	R2=0xff900abc(-7337284) */
+ffa049be:	ff e3 47 e9 	CALL 0xffa01c4c <_strcpy_>;
+ffa049c2:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900abc(-7337284) */
+ffa049c6:	4d 30       	R1 = P5;
+ffa049c8:	02 e1 e4 0a 	R2.L = 0xae4;		/* (2788)	R2=0xff900ae4(-7337244) */
+ffa049cc:	ff e3 40 e9 	CALL 0xffa01c4c <_strcpy_>;
+ffa049d0:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900ae4(-7337244) */
+ffa049d4:	4d 30       	R1 = P5;
+ffa049d6:	02 e1 dc 08 	R2.L = 0x8dc;		/* (2268)	R2=0xff9008dc(-7337764) */
+ffa049da:	ff e3 39 e9 	CALL 0xffa01c4c <_strcpy_>;
+ffa049de:	38 30       	R7 = R0;
+ffa049e0:	ff e3 e4 db 	CALL 0xffa001a8 <_ustimer>;
+ffa049e4:	41 e1 e3 38 	R1.H = 0x38e3;		/* (14563)	R1=0x38e30a1c(954403356) */
+ffa049e8:	01 e1 39 8e 	R1.L = 0x8e39;		/* (-29127)	R1=0x38e38e39(954437177) */
+ffa049ec:	80 c0 01 18 	A1 = R0.L * R1.L (FU);
+ffa049f0:	83 c6 80 51 	A1 = A1 >> 0x10;
+ffa049f4:	81 c0 01 86 	A1 += R0.H * R1.L, A0 = R0.H * R1.H (FU);
+ffa049f8:	81 c0 08 98 	A1 += R1.H * R0.L (FU);
+ffa049fc:	83 c6 80 51 	A1 = A1 >> 0x10;
+ffa04a00:	0b c4 3f 80 	A0 += A1;
+ffa04a04:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff9008dc(-7337764) */
+ffa04a08:	8b c0 00 39 	R4 = A0 (FU);
+ffa04a0c:	02 e1 2c 0b 	R2.L = 0xb2c;		/* (2860)	R2=0xff900b2c(-7337172) */
+ffa04a10:	4d 30       	R1 = P5;
+ffa04a12:	07 30       	R0 = R7;
+ffa04a14:	ff e3 1c e9 	CALL 0xffa01c4c <_strcpy_>;
+ffa04a18:	0c 4e       	R4 >>= 0x1;
+ffa04a1a:	28 30       	R5 = R0;
+ffa04a1c:	04 30       	R0 = R4;
+ffa04a1e:	21 e1 e8 03 	R1 = 0x3e8 (X);		/*		R1=0x3e8(1000) */
+ffa04a22:	ff e3 d1 e5 	CALL 0xffa015c4 <___divsi3>;
+ffa04a26:	30 30       	R6 = R0;
+ffa04a28:	e1 61       	R1 = 0x3c (X);		/*		R1=0x3c( 60) */
+ffa04a2a:	ff e3 cd e5 	CALL 0xffa015c4 <___divsi3>;
+ffa04a2e:	38 30       	R7 = R0;
+ffa04a30:	4d 30       	R1 = P5;
+ffa04a32:	17 30       	R2 = R7;
+ffa04a34:	05 30       	R0 = R5;
+ffa04a36:	ff e3 5d ea 	CALL 0xffa01ef0 <_strprintf_int>;
+ffa04a3a:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900b2c(-7337172) */
+ffa04a3e:	4d 30       	R1 = P5;
+ffa04a40:	02 e1 bc 00 	R2.L = 0xbc;		/* (188)	R2=0xff9000bc(-7339844) */
+ffa04a44:	ff e3 04 e9 	CALL 0xffa01c4c <_strcpy_>;
+ffa04a48:	82 c6 27 82 	R1 = R7 << 0x4;
+ffa04a4c:	cf 53       	R7 = R7 - R1;
+ffa04a4e:	07 32       	P0 = R7;
+ffa04a50:	0e 32       	P1 = R6;
+ffa04a52:	4d 30       	R1 = P5;
+ffa04a54:	81 5e       	P2 = P1 + (P0 << 0x2);
+ffa04a56:	52 30       	R2 = P2;
+ffa04a58:	ff e3 4c ea 	CALL 0xffa01ef0 <_strprintf_int>;
+ffa04a5c:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff9000bc(-7339844) */
+ffa04a60:	4d 30       	R1 = P5;
+ffa04a62:	02 e1 2c 01 	R2.L = 0x12c;		/* (300)	R2=0xff90012c(-7339732) */
+ffa04a66:	ff e3 f3 e8 	CALL 0xffa01c4c <_strcpy_>;
+ffa04a6a:	22 e1 18 fc 	R2 = -0x3e8 (X);		/*		R2=0xfffffc18(-1000) */
+ffa04a6e:	f2 40       	R2 *= R6;
+ffa04a70:	4d 30       	R1 = P5;
+ffa04a72:	a2 50       	R2 = R2 + R4;
+ffa04a74:	ff e3 3e ea 	CALL 0xffa01ef0 <_strprintf_int>;
+ffa04a78:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff90fc18(-7275496) */
+ffa04a7c:	4d 30       	R1 = P5;
+ffa04a7e:	02 e1 38 0b 	R2.L = 0xb38;		/* (2872)	R2=0xff900b38(-7337160) */
+ffa04a82:	ff e3 e5 e8 	CALL 0xffa01c4c <_strcpy_>;
+ffa04a86:	f0 b9       	R0 = [FP -0x4];
+ffa04a88:	01 e8 00 00 	UNLINK;
+ffa04a8c:	a4 05       	(R7:4, P5:4) = [SP++];
+ffa04a8e:	10 00       	RTS;
+ffa04a90:	01 30       	R0 = R1;
+ffa04a92:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900b38(-7337160) */
+ffa04a96:	4d 30       	R1 = P5;
+ffa04a98:	02 e1 d0 08 	R2.L = 0x8d0;		/* (2256)	R2=0xff9008d0(-7337776) */
+ffa04a9c:	ff e3 d8 e8 	CALL 0xffa01c4c <_strcpy_>;
+ffa04aa0:	a5 2e       	JUMP.S 0xffa047ea <_htmlDefault+0x66>;
+ffa04aa2:	01 30       	R0 = R1;
+ffa04aa4:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff9008d0(-7337776) */
+ffa04aa8:	4d 30       	R1 = P5;
+ffa04aaa:	02 e1 d0 08 	R2.L = 0x8d0;		/* (2256)	R2=0xff9008d0(-7337776) */
+ffa04aae:	ff e3 cf e8 	CALL 0xffa01c4c <_strcpy_>;
+ffa04ab2:	11 2f       	JUMP.S 0xffa048d4 <_htmlDefault+0x150>;
 
-ffa04a38 <_httpResp>:
-ffa04a38:	e4 05       	[--SP] = (R7:4, P5:4);
-ffa04a3a:	30 30       	R6 = R0;
-ffa04a3c:	70 60       	R0 = 0xe (X);		/*		R0=0xe( 14) */
-ffa04a3e:	00 e8 14 00 	LINK 0x50;		/* (80) */
-ffa04a42:	39 30       	R7 = R1;
-ffa04a44:	01 09       	CC = R1 <= R0;
-ffa04a46:	1e 10       	IF !CC JUMP 0xffa04a82 <_httpResp+0x4a>;
-ffa04a48:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff90000e(-7340018) */
-ffa04a4c:	00 e1 c4 0a 	R0.L = 0xac4;		/* (2756)	R0=0xff900ac4(-7337276) */
-ffa04a50:	0e 30       	R1 = R6;
-ffa04a52:	17 30       	R2 = R7;
-ffa04a54:	ff e3 54 e9 	CALL 0xffa01cfc <_substr>;
-ffa04a58:	00 0c       	CC = R0 == 0x0;
-ffa04a5a:	06 10       	IF !CC JUMP 0xffa04a66 <_httpResp+0x2e>;
-ffa04a5c:	01 e8 00 00 	UNLINK;
-ffa04a60:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa04a62:	a4 05       	(R7:4, P5:4) = [SP++];
-ffa04a64:	10 00       	RTS;
-ffa04a66:	ff e3 81 fd 	CALL 0xffa04568 <_html404>;
-ffa04a6a:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900808 */
-ffa04a6e:	0a e1 e4 0f 	P2.L = 0xfe4;		/* (4068)	P2=0xff900fe4 <_g_httpContentLen> */
-ffa04a72:	10 93       	[P2] = R0;
-ffa04a74:	ff e3 fa fd 	CALL 0xffa04668 <_httpHeader>;
-ffa04a78:	01 e8 00 00 	UNLINK;
-ffa04a7c:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
-ffa04a7e:	a4 05       	(R7:4, P5:4) = [SP++];
-ffa04a80:	10 00       	RTS;
-ffa04a82:	41 e1 90 ff 	R1.H = 0xff90;		/* (-112)	R1=0xff90003c(-7339972) */
-ffa04a86:	06 30       	R0 = R6;
-ffa04a88:	01 e1 cc 0a 	R1.L = 0xacc;		/* (2764)	R1=0xff900acc(-7337268) */
-ffa04a8c:	ff e3 0a e9 	CALL 0xffa01ca0 <_strcmp>;
-ffa04a90:	00 0c       	CC = R0 == 0x0;
-ffa04a92:	34 11       	IF !CC JUMP 0xffa04cfa <_httpResp+0x2c2>;
-ffa04a94:	89 60       	R1 = 0x11 (X);		/*		R1=0x11( 17) */
-ffa04a96:	0f 09       	CC = R7 <= R1;
-ffa04a98:	d8 1b       	IF CC JUMP 0xffa04a48 <_httpResp+0x10>;
-ffa04a9a:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900001(-7340031) */
-ffa04a9e:	00 e1 d8 0a 	R0.L = 0xad8;		/* (2776)	R0=0xff900ad8(-7337256) */
-ffa04aa2:	0e 30       	R1 = R6;
-ffa04aa4:	17 30       	R2 = R7;
-ffa04aa6:	ff e3 2b e9 	CALL 0xffa01cfc <_substr>;
-ffa04aaa:	00 0c       	CC = R0 == 0x0;
-ffa04aac:	f3 10       	IF !CC JUMP 0xffa04c92 <_httpResp+0x25a>;
-ffa04aae:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900ad8(-7337256) */
-ffa04ab2:	00 e1 18 0b 	R0.L = 0xb18;		/* (2840)	R0=0xff900b18(-7337192) */
-ffa04ab6:	0e 30       	R1 = R6;
-ffa04ab8:	17 30       	R2 = R7;
-ffa04aba:	ff e3 21 e9 	CALL 0xffa01cfc <_substr>;
-ffa04abe:	00 0c       	CC = R0 == 0x0;
-ffa04ac0:	c4 1f       	IF CC JUMP 0xffa04a48 <_httpResp+0x10> (BP);
-ffa04ac2:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900b18(-7337192) */
-ffa04ac6:	0e 30       	R1 = R6;
-ffa04ac8:	17 30       	R2 = R7;
-ffa04aca:	00 e1 18 0b 	R0.L = 0xb18;		/* (2840)	R0=0xff900b18(-7337192) */
-ffa04ace:	ff e3 17 e9 	CALL 0xffa01cfc <_substr>;
-ffa04ad2:	46 51       	R5 = R6 + R0;
-ffa04ad4:	07 53       	R4 = R7 - R0;
-ffa04ad6:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900b18(-7337192) */
-ffa04ada:	00 e1 20 0b 	R0.L = 0xb20;		/* (2848)	R0=0xff900b20(-7337184) */
-ffa04ade:	0d 30       	R1 = R5;
-ffa04ae0:	14 30       	R2 = R4;
-ffa04ae2:	ff e3 0d e9 	CALL 0xffa01cfc <_substr>;
-ffa04ae6:	00 0c       	CC = R0 == 0x0;
-ffa04ae8:	51 11       	IF !CC JUMP 0xffa04d8a <_httpResp+0x352>;
-ffa04aea:	06 60       	R6 = 0x0 (X);		/*		R6=0x0(  0) */
-ffa04aec:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900b20(-7337184) */
-ffa04af0:	00 e1 44 0b 	R0.L = 0xb44;		/* (2884)	R0=0xff900b44(-7337148) */
-ffa04af4:	0d 30       	R1 = R5;
-ffa04af6:	14 30       	R2 = R4;
-ffa04af8:	ff e3 02 e9 	CALL 0xffa01cfc <_substr>;
-ffa04afc:	00 0c       	CC = R0 == 0x0;
-ffa04afe:	75 11       	IF !CC JUMP 0xffa04de8 <_httpResp+0x3b0>;
-ffa04b00:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900b44(-7337148) */
-ffa04b04:	0d 30       	R1 = R5;
-ffa04b06:	00 e1 50 0b 	R0.L = 0xb50;		/* (2896)	R0=0xff900b50(-7337136) */
-ffa04b0a:	14 30       	R2 = R4;
-ffa04b0c:	ff e3 f8 e8 	CALL 0xffa01cfc <_substr>;
-ffa04b10:	00 0c       	CC = R0 == 0x0;
-ffa04b12:	0f 60       	R7 = 0x1 (X);		/*		R7=0x1(  1) */
-ffa04b14:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900b50(-7337136) */
-ffa04b18:	37 06       	IF !CC R6 = R7;
-ffa04b1a:	0d 30       	R1 = R5;
-ffa04b1c:	14 30       	R2 = R4;
-ffa04b1e:	00 e1 5c 0b 	R0.L = 0xb5c;		/* (2908)	R0=0xff900b5c(-7337124) */
-ffa04b22:	ff e3 ed e8 	CALL 0xffa01cfc <_substr>;
+ffa04ab4 <_httpResp>:
+ffa04ab4:	e4 05       	[--SP] = (R7:4, P5:4);
+ffa04ab6:	30 30       	R6 = R0;
+ffa04ab8:	70 60       	R0 = 0xe (X);		/*		R0=0xe( 14) */
+ffa04aba:	00 e8 14 00 	LINK 0x50;		/* (80) */
+ffa04abe:	39 30       	R7 = R1;
+ffa04ac0:	01 09       	CC = R1 <= R0;
+ffa04ac2:	1e 10       	IF !CC JUMP 0xffa04afe <_httpResp+0x4a>;
+ffa04ac4:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff90000e(-7340018) */
+ffa04ac8:	00 e1 48 0b 	R0.L = 0xb48;		/* (2888)	R0=0xff900b48(-7337144) */
+ffa04acc:	0e 30       	R1 = R6;
+ffa04ace:	17 30       	R2 = R7;
+ffa04ad0:	ff e3 36 e9 	CALL 0xffa01d3c <_substr>;
+ffa04ad4:	00 0c       	CC = R0 == 0x0;
+ffa04ad6:	06 10       	IF !CC JUMP 0xffa04ae2 <_httpResp+0x2e>;
+ffa04ad8:	01 e8 00 00 	UNLINK;
+ffa04adc:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa04ade:	a4 05       	(R7:4, P5:4) = [SP++];
+ffa04ae0:	10 00       	RTS;
+ffa04ae2:	ff e3 81 fd 	CALL 0xffa045e4 <_html404>;
+ffa04ae6:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900808 */
+ffa04aea:	0a e1 68 10 	P2.L = 0x1068;		/* (4200)	P2=0xff901068 <_g_httpContentLen> */
+ffa04aee:	10 93       	[P2] = R0;
+ffa04af0:	ff e3 fa fd 	CALL 0xffa046e4 <_httpHeader>;
+ffa04af4:	01 e8 00 00 	UNLINK;
+ffa04af8:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
+ffa04afa:	a4 05       	(R7:4, P5:4) = [SP++];
+ffa04afc:	10 00       	RTS;
+ffa04afe:	41 e1 90 ff 	R1.H = 0xff90;		/* (-112)	R1=0xff90003c(-7339972) */
+ffa04b02:	06 30       	R0 = R6;
+ffa04b04:	01 e1 50 0b 	R1.L = 0xb50;		/* (2896)	R1=0xff900b50(-7337136) */
+ffa04b08:	ff e3 ec e8 	CALL 0xffa01ce0 <_strcmp>;
+ffa04b0c:	00 0c       	CC = R0 == 0x0;
+ffa04b0e:	34 11       	IF !CC JUMP 0xffa04d76 <_httpResp+0x2c2>;
+ffa04b10:	89 60       	R1 = 0x11 (X);		/*		R1=0x11( 17) */
+ffa04b12:	0f 09       	CC = R7 <= R1;
+ffa04b14:	d8 1b       	IF CC JUMP 0xffa04ac4 <_httpResp+0x10>;
+ffa04b16:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900001(-7340031) */
+ffa04b1a:	00 e1 5c 0b 	R0.L = 0xb5c;		/* (2908)	R0=0xff900b5c(-7337124) */
+ffa04b1e:	0e 30       	R1 = R6;
+ffa04b20:	17 30       	R2 = R7;
+ffa04b22:	ff e3 0d e9 	CALL 0xffa01d3c <_substr>;
 ffa04b26:	00 0c       	CC = R0 == 0x0;
-ffa04b28:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900b5c(-7337124) */
-ffa04b2c:	37 06       	IF !CC R6 = R7;
-ffa04b2e:	0d 30       	R1 = R5;
-ffa04b30:	14 30       	R2 = R4;
-ffa04b32:	00 e1 68 0b 	R0.L = 0xb68;		/* (2920)	R0=0xff900b68(-7337112) */
-ffa04b36:	ff e3 e3 e8 	CALL 0xffa01cfc <_substr>;
+ffa04b28:	f3 10       	IF !CC JUMP 0xffa04d0e <_httpResp+0x25a>;
+ffa04b2a:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900b5c(-7337124) */
+ffa04b2e:	00 e1 9c 0b 	R0.L = 0xb9c;		/* (2972)	R0=0xff900b9c(-7337060) */
+ffa04b32:	0e 30       	R1 = R6;
+ffa04b34:	17 30       	R2 = R7;
+ffa04b36:	ff e3 03 e9 	CALL 0xffa01d3c <_substr>;
 ffa04b3a:	00 0c       	CC = R0 == 0x0;
-ffa04b3c:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900b68(-7337112) */
-ffa04b40:	37 06       	IF !CC R6 = R7;
-ffa04b42:	0d 30       	R1 = R5;
-ffa04b44:	14 30       	R2 = R4;
-ffa04b46:	00 e1 74 0b 	R0.L = 0xb74;		/* (2932)	R0=0xff900b74(-7337100) */
-ffa04b4a:	ff e3 d9 e8 	CALL 0xffa01cfc <_substr>;
-ffa04b4e:	00 0c       	CC = R0 == 0x0;
-ffa04b50:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900b74(-7337100) */
-ffa04b54:	37 06       	IF !CC R6 = R7;
-ffa04b56:	00 e1 80 0b 	R0.L = 0xb80;		/* (2944)	R0=0xff900b80(-7337088) */
+ffa04b3c:	c4 1f       	IF CC JUMP 0xffa04ac4 <_httpResp+0x10> (BP);
+ffa04b3e:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900b9c(-7337060) */
+ffa04b42:	0e 30       	R1 = R6;
+ffa04b44:	17 30       	R2 = R7;
+ffa04b46:	00 e1 9c 0b 	R0.L = 0xb9c;		/* (2972)	R0=0xff900b9c(-7337060) */
+ffa04b4a:	ff e3 f9 e8 	CALL 0xffa01d3c <_substr>;
+ffa04b4e:	46 51       	R5 = R6 + R0;
+ffa04b50:	07 53       	R4 = R7 - R0;
+ffa04b52:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900b9c(-7337060) */
+ffa04b56:	00 e1 a4 0b 	R0.L = 0xba4;		/* (2980)	R0=0xff900ba4(-7337052) */
 ffa04b5a:	0d 30       	R1 = R5;
 ffa04b5c:	14 30       	R2 = R4;
-ffa04b5e:	ff e3 cf e8 	CALL 0xffa01cfc <_substr>;
+ffa04b5e:	ff e3 ef e8 	CALL 0xffa01d3c <_substr>;
 ffa04b62:	00 0c       	CC = R0 == 0x0;
-ffa04b64:	30 11       	IF !CC JUMP 0xffa04dc4 <_httpResp+0x38c>;
-ffa04b66:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900b80(-7337088) */
-ffa04b6a:	00 e1 88 0b 	R0.L = 0xb88;		/* (2952)	R0=0xff900b88(-7337080) */
-ffa04b6e:	0d 30       	R1 = R5;
-ffa04b70:	14 30       	R2 = R4;
-ffa04b72:	ff e3 c5 e8 	CALL 0xffa01cfc <_substr>;
-ffa04b76:	00 0c       	CC = R0 == 0x0;
-ffa04b78:	e3 10       	IF !CC JUMP 0xffa04d3e <_httpResp+0x306>;
-ffa04b7a:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900b88(-7337080) */
-ffa04b7e:	00 e1 90 0b 	R0.L = 0xb90;		/* (2960)	R0=0xff900b90(-7337072) */
-ffa04b82:	0d 30       	R1 = R5;
-ffa04b84:	14 30       	R2 = R4;
-ffa04b86:	ff e3 bb e8 	CALL 0xffa01cfc <_substr>;
-ffa04b8a:	00 0c       	CC = R0 == 0x0;
-ffa04b8c:	c4 10       	IF !CC JUMP 0xffa04d14 <_httpResp+0x2dc>;
-ffa04b8e:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900b90(-7337072) */
-ffa04b92:	00 e1 98 0b 	R0.L = 0xb98;		/* (2968)	R0=0xff900b98(-7337064) */
+ffa04b64:	51 11       	IF !CC JUMP 0xffa04e06 <_httpResp+0x352>;
+ffa04b66:	06 60       	R6 = 0x0 (X);		/*		R6=0x0(  0) */
+ffa04b68:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900ba4(-7337052) */
+ffa04b6c:	00 e1 c8 0b 	R0.L = 0xbc8;		/* (3016)	R0=0xff900bc8(-7337016) */
+ffa04b70:	0d 30       	R1 = R5;
+ffa04b72:	14 30       	R2 = R4;
+ffa04b74:	ff e3 e4 e8 	CALL 0xffa01d3c <_substr>;
+ffa04b78:	00 0c       	CC = R0 == 0x0;
+ffa04b7a:	75 11       	IF !CC JUMP 0xffa04e64 <_httpResp+0x3b0>;
+ffa04b7c:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900bc8(-7337016) */
+ffa04b80:	0d 30       	R1 = R5;
+ffa04b82:	00 e1 d4 0b 	R0.L = 0xbd4;		/* (3028)	R0=0xff900bd4(-7337004) */
+ffa04b86:	14 30       	R2 = R4;
+ffa04b88:	ff e3 da e8 	CALL 0xffa01d3c <_substr>;
+ffa04b8c:	00 0c       	CC = R0 == 0x0;
+ffa04b8e:	0f 60       	R7 = 0x1 (X);		/*		R7=0x1(  1) */
+ffa04b90:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900bd4(-7337004) */
+ffa04b94:	37 06       	IF !CC R6 = R7;
 ffa04b96:	0d 30       	R1 = R5;
 ffa04b98:	14 30       	R2 = R4;
-ffa04b9a:	ff e3 b1 e8 	CALL 0xffa01cfc <_substr>;
-ffa04b9e:	00 0c       	CC = R0 == 0x0;
-ffa04ba0:	e4 10       	IF !CC JUMP 0xffa04d68 <_httpResp+0x330>;
-ffa04ba2:	30 43       	R0 = R6.B (X);
-ffa04ba4:	00 0c       	CC = R0 == 0x0;
-ffa04ba6:	b4 10       	IF !CC JUMP 0xffa04d0e <_httpResp+0x2d6>;
-ffa04ba8:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900b98(-7337064) */
-ffa04bac:	00 e1 a0 0b 	R0.L = 0xba0;		/* (2976)	R0=0xff900ba0(-7337056) */
-ffa04bb0:	0d 30       	R1 = R5;
-ffa04bb2:	14 30       	R2 = R4;
-ffa04bb4:	ff e3 a4 e8 	CALL 0xffa01cfc <_substr>;
-ffa04bb8:	00 0c       	CC = R0 == 0x0;
-ffa04bba:	51 1b       	IF CC JUMP 0xffa04a5c <_httpResp+0x24>;
-ffa04bbc:	2a e1 bc ff 	P2 = -0x44 (X);		/*		P2=0xffffffbc(-68) */
-ffa04bc0:	17 5b       	P4 = FP + P2;
-ffa04bc2:	77 30       	R6 = FP;
-ffa04bc4:	44 32       	P0 = P4;
-ffa04bc6:	e6 67       	R6 += -0x4;		/* ( -4) */
-ffa04bc8:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa04bca:	82 68       	P2 = 0x10 (X);		/*		P2=0x10( 16) */
-ffa04bcc:	b2 e0 02 20 	LSETUP(0xffa04bd0 <_httpResp+0x198>, 0xffa04bd0 <_httpResp+0x198>) LC1 = P2;
-ffa04bd0:	00 92       	[P0++] = R0;
-ffa04bd2:	4a e1 80 ff 	P2.H = 0xff80;		/* (-128)	P2=0xff800010 */
-ffa04bd6:	0a e1 00 08 	P2.L = 0x800;		/* (2048)	P2=0xff800800 */
-ffa04bda:	21 e1 ff 1f 	R1 = 0x1fff (X);		/*		R1=0x1fff(8191) */
-ffa04bde:	29 4f       	R1 <<= 0x5;
-ffa04be0:	10 91       	R0 = [P2];
-ffa04be2:	08 54       	R0 = R0 & R1;
-ffa04be4:	f9 63       	R1 = -0x1 (X);		/*		R1=0xffffffff( -1) */
-ffa04be6:	81 4f       	R1 <<= 0x10;
-ffa04be8:	08 50       	R0 = R0 + R1;
-ffa04bea:	f9 63       	R1 = -0x1 (X);		/*		R1=0xffffffff( -1) */
-ffa04bec:	41 e1 03 00 	R1.H = 0x3;		/* (  3)	R1=0x3ffff(262143) */
-ffa04bf0:	08 54       	R0 = R0 & R1;
-ffa04bf2:	11 30       	R2 = R1;
-ffa04bf4:	2d e1 00 08 	P5 = 0x800 (X);		/*		P5=0x800(2048) */
-ffa04bf8:	b2 e0 0c 50 	LSETUP(0xffa04bfc <_httpResp+0x1c4>, 0xffa04c10 <_httpResp+0x1d8>) LC1 = P5;
-ffa04bfc:	4c 32       	P1 = P4;
-ffa04bfe:	10 32       	P2 = R0;
-ffa04c00:	08 91       	R0 = [P1];
-ffa04c02:	11 94       	R1 = W[P2++] (Z);
-ffa04c04:	08 50       	R0 = R0 + R1;
-ffa04c06:	08 92       	[P1++] = R0;
-ffa04c08:	4a 30       	R1 = P2;
-ffa04c0a:	11 54       	R0 = R1 & R2;
-ffa04c0c:	48 08       	CC = P0 == P1;
-ffa04c0e:	f8 17       	IF !CC JUMP 0xffa04bfe <_httpResp+0x1c6> (BP);
-ffa04c10:	00 00       	NOP;
-ffa04c12:	00 00       	NOP;
-ffa04c14:	20 91       	R0 = [P4];
-ffa04c16:	58 4d       	R0 >>>= 0xb;
-ffa04c18:	20 92       	[P4++] = R0;
-ffa04c1a:	44 08       	CC = P4 == P0;
-ffa04c1c:	fb 17       	IF !CC JUMP 0xffa04c12 <_httpResp+0x1da> (BP);
-ffa04c1e:	ff e3 75 fd 	CALL 0xffa04708 <_htmlDefault>;
-ffa04c22:	68 67       	R0 += -0x13;		/* (-19) */
-ffa04c24:	f0 bb       	[FP -0x4] = R0;
-ffa04c26:	21 e1 00 41 	R1 = 0x4100 (X);		/*		R1=0x4100(16640) */
-ffa04c2a:	08 50       	R0 = R0 + R1;
-ffa04c2c:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff90084c(-7337908) */
-ffa04c30:	0e 30       	R1 = R6;
-ffa04c32:	02 e1 b0 0b 	R2.L = 0xbb0;		/* (2992)	R2=0xff900bb0(-7337040) */
-ffa04c36:	ff e3 eb e7 	CALL 0xffa01c0c <_strcpy_>;
-ffa04c3a:	f5 b8       	R5 = [FP -0x44];
-ffa04c3c:	07 60       	R7 = 0x0 (X);		/*		R7=0x0(  0) */
-ffa04c3e:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900bb0(-7337040) */
-ffa04c42:	0e 30       	R1 = R6;
-ffa04c44:	02 e1 bc 0b 	R2.L = 0xbbc;		/* (3004)	R2=0xff900bbc(-7337028) */
-ffa04c48:	ff e3 e2 e7 	CALL 0xffa01c0c <_strcpy_>;
-ffa04c4c:	17 30       	R2 = R7;
-ffa04c4e:	0e 30       	R1 = R6;
-ffa04c50:	ff e3 30 e9 	CALL 0xffa01eb0 <_strprintf_int>;
-ffa04c54:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900bbc(-7337028) */
-ffa04c58:	0e 30       	R1 = R6;
-ffa04c5a:	02 e1 d0 0b 	R2.L = 0xbd0;		/* (3024)	R2=0xff900bd0(-7337008) */
-ffa04c5e:	ff e3 d7 e7 	CALL 0xffa01c0c <_strcpy_>;
-ffa04c62:	0e 30       	R1 = R6;
-ffa04c64:	15 30       	R2 = R5;
-ffa04c66:	ff e3 25 e9 	CALL 0xffa01eb0 <_strprintf_int>;
-ffa04c6a:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900bd0(-7337008) */
-ffa04c6e:	0e 30       	R1 = R6;
-ffa04c70:	02 e1 e0 0b 	R2.L = 0xbe0;		/* (3040)	R2=0xff900be0(-7336992) */
-ffa04c74:	ff e3 cc e7 	CALL 0xffa01c0c <_strcpy_>;
-ffa04c78:	0f 64       	R7 += 0x1;		/* (  1) */
-ffa04c7a:	81 60       	R1 = 0x10 (X);		/*		R1=0x10( 16) */
-ffa04c7c:	0f 08       	CC = R7 == R1;
-ffa04c7e:	e0 17       	IF !CC JUMP 0xffa04c3e <_httpResp+0x206> (BP);
-ffa04c80:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900be0(-7336992) */
-ffa04c84:	0e 30       	R1 = R6;
-ffa04c86:	02 e1 ec 0b 	R2.L = 0xbec;		/* (3052)	R2=0xff900bec(-7336980) */
-ffa04c8a:	ff e3 c1 e7 	CALL 0xffa01c0c <_strcpy_>;
-ffa04c8e:	f0 b9       	R0 = [FP -0x4];
-ffa04c90:	ed 2e       	JUMP.S 0xffa04a6a <_httpResp+0x32>;
-ffa04c92:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900000 <_l1_data_a>(-7340032) */
-ffa04c96:	00 e1 e4 0a 	R0.L = 0xae4;		/* (2788)	R0=0xff900ae4(-7337244) */
-ffa04c9a:	0e 30       	R1 = R6;
-ffa04c9c:	17 30       	R2 = R7;
-ffa04c9e:	ff e3 2f e8 	CALL 0xffa01cfc <_substr>;
-ffa04ca2:	00 0c       	CC = R0 == 0x0;
-ffa04ca4:	dc 1e       	IF CC JUMP 0xffa04a5c <_httpResp+0x24> (BP);
-ffa04ca6:	51 60       	R1 = 0xa (X);		/*		R1=0xa( 10) */
-ffa04ca8:	06 50       	R0 = R6 + R0;
-ffa04caa:	ff e3 2b e9 	CALL 0xffa01f00 <_atoi_>;
-ffa04cae:	10 30       	R2 = R0;
-ffa04cb0:	00 67       	R0 += -0x20;		/* (-32) */
-ffa04cb2:	21 e1 80 0f 	R1 = 0xf80 (X);		/*		R1=0xf80(3968) */
-ffa04cb6:	08 0a       	CC = R0 <= R1 (IU);
-ffa04cb8:	ca 10       	IF !CC JUMP 0xffa04e4c <_httpResp+0x414>;
-ffa04cba:	4a e1 80 ff 	P2.H = 0xff80;		/* (-128)	P2=0xff800800 */
-ffa04cbe:	0a e1 00 08 	P2.L = 0x800;		/* (2048)	P2=0xff800800 */
-ffa04cc2:	82 c6 1a 86 	R3 = R2 << 0x3;
-ffa04cc6:	17 91       	R7 = [P2];
-ffa04cc8:	03 0d       	CC = R3 <= 0x0;
-ffa04cca:	15 18       	IF CC JUMP 0xffa04cf4 <_httpResp+0x2bc>;
-ffa04ccc:	20 e1 ff 1f 	R0 = 0x1fff (X);		/*		R0=0x1fff(8191) */
-ffa04cd0:	28 4f       	R0 <<= 0x5;
-ffa04cd2:	07 54       	R0 = R7 & R0;
-ffa04cd4:	82 c6 2a 82 	R1 = R2 << 0x5;
-ffa04cd8:	ff 63       	R7 = -0x1 (X);		/*		R7=0xffffffff( -1) */
-ffa04cda:	48 52       	R1 = R0 - R1;
-ffa04cdc:	29 e1 00 41 	P1 = 0x4100 (X);		/*		P1=0x4100(16640) */
-ffa04ce0:	47 e1 03 00 	R7.H = 0x3;		/* (  3)	R7=0x3ffff(262143) */
-ffa04ce4:	13 32       	P2 = R3;
-ffa04ce6:	b2 e0 06 20 	LSETUP(0xffa04cea <_httpResp+0x2b2>, 0xffa04cf2 <_httpResp+0x2ba>) LC1 = P2;
-ffa04cea:	79 54       	R1 = R1 & R7;
-ffa04cec:	01 32       	P0 = R1;
-ffa04cee:	21 64       	R1 += 0x4;		/* (  4) */
-ffa04cf0:	00 90       	R0 = [P0++];
-ffa04cf2:	08 92       	[P1++] = R0;
-ffa04cf4:	82 c6 2a 80 	R0 = R2 << 0x5;
-ffa04cf8:	b9 2e       	JUMP.S 0xffa04a6a <_httpResp+0x32>;
-ffa04cfa:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff901fff(-7331841) */
-ffa04cfe:	00 e1 c4 0a 	R0.L = 0xac4;		/* (2756)	R0=0xff900ac4(-7337276) */
-ffa04d02:	0e 30       	R1 = R6;
-ffa04d04:	17 30       	R2 = R7;
-ffa04d06:	ff e3 fb e7 	CALL 0xffa01cfc <_substr>;
-ffa04d0a:	00 0c       	CC = R0 == 0x0;
-ffa04d0c:	a8 1e       	IF CC JUMP 0xffa04a5c <_httpResp+0x24> (BP);
-ffa04d0e:	ff e3 fd fc 	CALL 0xffa04708 <_htmlDefault>;
-ffa04d12:	ac 2e       	JUMP.S 0xffa04a6a <_httpResp+0x32>;
-ffa04d14:	45 51       	R5 = R5 + R0;
-ffa04d16:	04 53       	R4 = R4 - R0;
-ffa04d18:	19 60       	R1 = 0x3 (X);		/*		R1=0x3(  3) */
-ffa04d1a:	05 30       	R0 = R5;
-ffa04d1c:	ff e3 f2 e8 	CALL 0xffa01f00 <_atoi_>;
-ffa04d20:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900800 */
-ffa04d24:	0a e1 f0 0e 	P2.L = 0xef0;		/* (3824)	P2=0xff900ef0 <_NetDataDestIP> */
-ffa04d28:	f9 63       	R1 = -0x1 (X);		/*		R1=0xffffffff( -1) */
-ffa04d2a:	12 91       	R2 = [P2];
-ffa04d2c:	41 e1 00 ff 	R1.H = 0xff00;		/* (-256)	R1=0xff00ffff(-16711681) */
-ffa04d30:	40 43       	R0 = R0.B (Z);
-ffa04d32:	8a 54       	R2 = R2 & R1;
-ffa04d34:	80 4f       	R0 <<= 0x10;
-ffa04d36:	10 50       	R0 = R0 + R2;
-ffa04d38:	10 93       	[P2] = R0;
-ffa04d3a:	0e 60       	R6 = 0x1 (X);		/*		R6=0x1(  1) */
-ffa04d3c:	29 2f       	JUMP.S 0xffa04b8e <_httpResp+0x156>;
-ffa04d3e:	45 51       	R5 = R5 + R0;
-ffa04d40:	04 53       	R4 = R4 - R0;
-ffa04d42:	19 60       	R1 = 0x3 (X);		/*		R1=0x3(  3) */
-ffa04d44:	05 30       	R0 = R5;
-ffa04d46:	ff e3 dd e8 	CALL 0xffa01f00 <_atoi_>;
-ffa04d4a:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900ef0 <_NetDataDestIP> */
-ffa04d4e:	0a e1 f0 0e 	P2.L = 0xef0;		/* (3824)	P2=0xff900ef0 <_NetDataDestIP> */
-ffa04d52:	f9 63       	R1 = -0x1 (X);		/*		R1=0xffffffff( -1) */
-ffa04d54:	12 91       	R2 = [P2];
-ffa04d56:	01 e1 ff 00 	R1.L = 0xff;		/* (255)	R1=0xffff00ff(-65281) */
-ffa04d5a:	40 43       	R0 = R0.B (Z);
-ffa04d5c:	8a 54       	R2 = R2 & R1;
-ffa04d5e:	40 4f       	R0 <<= 0x8;
-ffa04d60:	10 50       	R0 = R0 + R2;
-ffa04d62:	10 93       	[P2] = R0;
-ffa04d64:	0e 60       	R6 = 0x1 (X);		/*		R6=0x1(  1) */
-ffa04d66:	0a 2f       	JUMP.S 0xffa04b7a <_httpResp+0x142>;
-ffa04d68:	19 60       	R1 = 0x3 (X);		/*		R1=0x3(  3) */
-ffa04d6a:	05 50       	R0 = R5 + R0;
-ffa04d6c:	ff e3 ca e8 	CALL 0xffa01f00 <_atoi_>;
-ffa04d70:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900ef0 <_NetDataDestIP> */
-ffa04d74:	0a e1 f0 0e 	P2.L = 0xef0;		/* (3824)	P2=0xff900ef0 <_NetDataDestIP> */
-ffa04d78:	fa 63       	R2 = -0x1 (X);		/*		R2=0xffffffff( -1) */
-ffa04d7a:	11 91       	R1 = [P2];
-ffa04d7c:	42 e1 ff 00 	R2.H = 0xff;		/* (255)	R2=0xffffff(16777215) */
-ffa04d80:	51 54       	R1 = R1 & R2;
-ffa04d82:	c0 4f       	R0 <<= 0x18;
-ffa04d84:	08 50       	R0 = R0 + R1;
-ffa04d86:	10 93       	[P2] = R0;
-ffa04d88:	c3 2f       	JUMP.S 0xffa04d0e <_httpResp+0x2d6>;
-ffa04d8a:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900ac4(-7337276) */
-ffa04d8e:	00 e1 30 0b 	R0.L = 0xb30;		/* (2864)	R0=0xff900b30(-7337168) */
-ffa04d92:	0d 30       	R1 = R5;
-ffa04d94:	14 30       	R2 = R4;
-ffa04d96:	ff e3 b3 e7 	CALL 0xffa01cfc <_substr>;
-ffa04d9a:	00 0c       	CC = R0 == 0x0;
-ffa04d9c:	49 14       	IF !CC JUMP 0xffa04e2e <_httpResp+0x3f6> (BP);
-ffa04d9e:	06 60       	R6 = 0x0 (X);		/*		R6=0x0(  0) */
-ffa04da0:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900b30(-7337168) */
-ffa04da4:	00 e1 38 0b 	R0.L = 0xb38;		/* (2872)	R0=0xff900b38(-7337160) */
-ffa04da8:	0d 30       	R1 = R5;
-ffa04daa:	14 30       	R2 = R4;
-ffa04dac:	ff e3 a8 e7 	CALL 0xffa01cfc <_substr>;
-ffa04db0:	00 0c       	CC = R0 == 0x0;
-ffa04db2:	9d 1e       	IF CC JUMP 0xffa04aec <_httpResp+0xb4> (BP);
-ffa04db4:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900ef0 <_NetDataDestIP> */
-ffa04db8:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa04dba:	0a e1 40 0c 	P2.L = 0xc40;		/* (3136)	P2=0xff900c40 <_g_streamEnabled> */
-ffa04dbe:	10 9b       	B[P2] = R0;
-ffa04dc0:	0e 60       	R6 = 0x1 (X);		/*		R6=0x1(  1) */
-ffa04dc2:	95 2e       	JUMP.S 0xffa04aec <_httpResp+0xb4>;
-ffa04dc4:	45 51       	R5 = R5 + R0;
-ffa04dc6:	04 53       	R4 = R4 - R0;
-ffa04dc8:	19 60       	R1 = 0x3 (X);		/*		R1=0x3(  3) */
-ffa04dca:	05 30       	R0 = R5;
-ffa04dcc:	ff e3 9a e8 	CALL 0xffa01f00 <_atoi_>;
-ffa04dd0:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900c40 <_g_streamEnabled> */
-ffa04dd4:	0a e1 f0 0e 	P2.L = 0xef0;		/* (3824)	P2=0xff900ef0 <_NetDataDestIP> */
-ffa04dd8:	11 91       	R1 = [P2];
-ffa04dda:	41 4d       	R1 >>>= 0x8;
-ffa04ddc:	41 4f       	R1 <<= 0x8;
-ffa04dde:	40 43       	R0 = R0.B (Z);
-ffa04de0:	08 50       	R0 = R0 + R1;
-ffa04de2:	10 93       	[P2] = R0;
-ffa04de4:	0e 60       	R6 = 0x1 (X);		/*		R6=0x1(  1) */
-ffa04de6:	c0 2e       	JUMP.S 0xffa04b66 <_httpResp+0x12e>;
-ffa04de8:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900000 <_l1_data_a>(-7340032) */
-ffa04dec:	00 e1 30 0b 	R0.L = 0xb30;		/* (2864)	R0=0xff900b30(-7337168) */
-ffa04df0:	0d 30       	R1 = R5;
-ffa04df2:	14 30       	R2 = R4;
-ffa04df4:	ff e3 84 e7 	CALL 0xffa01cfc <_substr>;
-ffa04df8:	00 0c       	CC = R0 == 0x0;
-ffa04dfa:	08 1c       	IF CC JUMP 0xffa04e0a <_httpResp+0x3d2> (BP);
-ffa04dfc:	4a e1 80 ff 	P2.H = 0xff80;		/* (-128)	P2=0xff800ef0 */
-ffa04e00:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa04e02:	0a e1 08 08 	P2.L = 0x808;		/* (2056)	P2=0xff800808 */
-ffa04e06:	10 9b       	B[P2] = R0;
-ffa04e08:	0e 60       	R6 = 0x1 (X);		/*		R6=0x1(  1) */
-ffa04e0a:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900000 <_l1_data_a>(-7340032) */
-ffa04e0e:	00 e1 38 0b 	R0.L = 0xb38;		/* (2872)	R0=0xff900b38(-7337160) */
-ffa04e12:	0d 30       	R1 = R5;
-ffa04e14:	14 30       	R2 = R4;
-ffa04e16:	ff e3 73 e7 	CALL 0xffa01cfc <_substr>;
-ffa04e1a:	00 0c       	CC = R0 == 0x0;
-ffa04e1c:	72 1e       	IF CC JUMP 0xffa04b00 <_httpResp+0xc8> (BP);
-ffa04e1e:	4a e1 80 ff 	P2.H = 0xff80;		/* (-128)	P2=0xff800808 */
-ffa04e22:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
-ffa04e24:	0a e1 08 08 	P2.L = 0x808;		/* (2056)	P2=0xff800808 */
-ffa04e28:	10 9b       	B[P2] = R0;
-ffa04e2a:	0e 60       	R6 = 0x1 (X);		/*		R6=0x1(  1) */
-ffa04e2c:	6a 2e       	JUMP.S 0xffa04b00 <_httpResp+0xc8>;
-ffa04e2e:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900808 */
-ffa04e32:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
-ffa04e34:	0a e1 40 0c 	P2.L = 0xc40;		/* (3136)	P2=0xff900c40 <_g_streamEnabled> */
-ffa04e38:	10 9b       	B[P2] = R0;
-ffa04e3a:	4a e1 80 ff 	P2.H = 0xff80;		/* (-128)	P2=0xff800c40 */
-ffa04e3e:	0a e1 00 08 	P2.L = 0x800;		/* (2048)	P2=0xff800800 */
-ffa04e42:	10 91       	R0 = [P2];
-ffa04e44:	22 6c       	P2 += 0x4;		/* (  4) */
-ffa04e46:	10 93       	[P2] = R0;
-ffa04e48:	0e 60       	R6 = 0x1 (X);		/*		R6=0x1(  1) */
-ffa04e4a:	ab 2f       	JUMP.S 0xffa04da0 <_httpResp+0x368>;
-ffa04e4c:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa04e4e:	f0 bb       	[FP -0x4] = R0;
-ffa04e50:	4f 30       	R1 = FP;
-ffa04e52:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff90ffff(-7274497) */
-ffa04e56:	20 e1 00 41 	R0 = 0x4100 (X);		/*		R0=0x4100(16640) */
-ffa04e5a:	e1 67       	R1 += -0x4;		/* ( -4) */
-ffa04e5c:	02 e1 ec 0a 	R2.L = 0xaec;		/* (2796)	R2=0xff900aec(-7337236) */
-ffa04e60:	ff e3 d6 e6 	CALL 0xffa01c0c <_strcpy_>;
-ffa04e64:	f0 b9       	R0 = [FP -0x4];
-ffa04e66:	02 2e       	JUMP.S 0xffa04a6a <_httpResp+0x32>;
+ffa04b9a:	00 e1 e0 0b 	R0.L = 0xbe0;		/* (3040)	R0=0xff900be0(-7336992) */
+ffa04b9e:	ff e3 cf e8 	CALL 0xffa01d3c <_substr>;
+ffa04ba2:	00 0c       	CC = R0 == 0x0;
+ffa04ba4:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900be0(-7336992) */
+ffa04ba8:	37 06       	IF !CC R6 = R7;
+ffa04baa:	0d 30       	R1 = R5;
+ffa04bac:	14 30       	R2 = R4;
+ffa04bae:	00 e1 ec 0b 	R0.L = 0xbec;		/* (3052)	R0=0xff900bec(-7336980) */
+ffa04bb2:	ff e3 c5 e8 	CALL 0xffa01d3c <_substr>;
+ffa04bb6:	00 0c       	CC = R0 == 0x0;
+ffa04bb8:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900bec(-7336980) */
+ffa04bbc:	37 06       	IF !CC R6 = R7;
+ffa04bbe:	0d 30       	R1 = R5;
+ffa04bc0:	14 30       	R2 = R4;
+ffa04bc2:	00 e1 f8 0b 	R0.L = 0xbf8;		/* (3064)	R0=0xff900bf8(-7336968) */
+ffa04bc6:	ff e3 bb e8 	CALL 0xffa01d3c <_substr>;
+ffa04bca:	00 0c       	CC = R0 == 0x0;
+ffa04bcc:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900bf8(-7336968) */
+ffa04bd0:	37 06       	IF !CC R6 = R7;
+ffa04bd2:	00 e1 04 0c 	R0.L = 0xc04;		/* (3076)	R0=0xff900c04(-7336956) */
+ffa04bd6:	0d 30       	R1 = R5;
+ffa04bd8:	14 30       	R2 = R4;
+ffa04bda:	ff e3 b1 e8 	CALL 0xffa01d3c <_substr>;
+ffa04bde:	00 0c       	CC = R0 == 0x0;
+ffa04be0:	30 11       	IF !CC JUMP 0xffa04e40 <_httpResp+0x38c>;
+ffa04be2:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900c04(-7336956) */
+ffa04be6:	00 e1 0c 0c 	R0.L = 0xc0c;		/* (3084)	R0=0xff900c0c(-7336948) */
+ffa04bea:	0d 30       	R1 = R5;
+ffa04bec:	14 30       	R2 = R4;
+ffa04bee:	ff e3 a7 e8 	CALL 0xffa01d3c <_substr>;
+ffa04bf2:	00 0c       	CC = R0 == 0x0;
+ffa04bf4:	e3 10       	IF !CC JUMP 0xffa04dba <_httpResp+0x306>;
+ffa04bf6:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900c0c(-7336948) */
+ffa04bfa:	00 e1 14 0c 	R0.L = 0xc14;		/* (3092)	R0=0xff900c14(-7336940) */
+ffa04bfe:	0d 30       	R1 = R5;
+ffa04c00:	14 30       	R2 = R4;
+ffa04c02:	ff e3 9d e8 	CALL 0xffa01d3c <_substr>;
+ffa04c06:	00 0c       	CC = R0 == 0x0;
+ffa04c08:	c4 10       	IF !CC JUMP 0xffa04d90 <_httpResp+0x2dc>;
+ffa04c0a:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900c14(-7336940) */
+ffa04c0e:	00 e1 1c 0c 	R0.L = 0xc1c;		/* (3100)	R0=0xff900c1c(-7336932) */
+ffa04c12:	0d 30       	R1 = R5;
+ffa04c14:	14 30       	R2 = R4;
+ffa04c16:	ff e3 93 e8 	CALL 0xffa01d3c <_substr>;
+ffa04c1a:	00 0c       	CC = R0 == 0x0;
+ffa04c1c:	e4 10       	IF !CC JUMP 0xffa04de4 <_httpResp+0x330>;
+ffa04c1e:	30 43       	R0 = R6.B (X);
+ffa04c20:	00 0c       	CC = R0 == 0x0;
+ffa04c22:	b4 10       	IF !CC JUMP 0xffa04d8a <_httpResp+0x2d6>;
+ffa04c24:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900c1c(-7336932) */
+ffa04c28:	00 e1 24 0c 	R0.L = 0xc24;		/* (3108)	R0=0xff900c24(-7336924) */
+ffa04c2c:	0d 30       	R1 = R5;
+ffa04c2e:	14 30       	R2 = R4;
+ffa04c30:	ff e3 86 e8 	CALL 0xffa01d3c <_substr>;
+ffa04c34:	00 0c       	CC = R0 == 0x0;
+ffa04c36:	51 1b       	IF CC JUMP 0xffa04ad8 <_httpResp+0x24>;
+ffa04c38:	2a e1 bc ff 	P2 = -0x44 (X);		/*		P2=0xffffffbc(-68) */
+ffa04c3c:	17 5b       	P4 = FP + P2;
+ffa04c3e:	77 30       	R6 = FP;
+ffa04c40:	44 32       	P0 = P4;
+ffa04c42:	e6 67       	R6 += -0x4;		/* ( -4) */
+ffa04c44:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa04c46:	82 68       	P2 = 0x10 (X);		/*		P2=0x10( 16) */
+ffa04c48:	b2 e0 02 20 	LSETUP(0xffa04c4c <_httpResp+0x198>, 0xffa04c4c <_httpResp+0x198>) LC1 = P2;
+ffa04c4c:	00 92       	[P0++] = R0;
+ffa04c4e:	4a e1 80 ff 	P2.H = 0xff80;		/* (-128)	P2=0xff800010 */
+ffa04c52:	0a e1 00 08 	P2.L = 0x800;		/* (2048)	P2=0xff800800 */
+ffa04c56:	21 e1 ff 1f 	R1 = 0x1fff (X);		/*		R1=0x1fff(8191) */
+ffa04c5a:	29 4f       	R1 <<= 0x5;
+ffa04c5c:	10 91       	R0 = [P2];
+ffa04c5e:	08 54       	R0 = R0 & R1;
+ffa04c60:	f9 63       	R1 = -0x1 (X);		/*		R1=0xffffffff( -1) */
+ffa04c62:	81 4f       	R1 <<= 0x10;
+ffa04c64:	08 50       	R0 = R0 + R1;
+ffa04c66:	f9 63       	R1 = -0x1 (X);		/*		R1=0xffffffff( -1) */
+ffa04c68:	41 e1 03 00 	R1.H = 0x3;		/* (  3)	R1=0x3ffff(262143) */
+ffa04c6c:	08 54       	R0 = R0 & R1;
+ffa04c6e:	11 30       	R2 = R1;
+ffa04c70:	2d e1 00 08 	P5 = 0x800 (X);		/*		P5=0x800(2048) */
+ffa04c74:	b2 e0 0c 50 	LSETUP(0xffa04c78 <_httpResp+0x1c4>, 0xffa04c8c <_httpResp+0x1d8>) LC1 = P5;
+ffa04c78:	4c 32       	P1 = P4;
+ffa04c7a:	10 32       	P2 = R0;
+ffa04c7c:	08 91       	R0 = [P1];
+ffa04c7e:	11 94       	R1 = W[P2++] (Z);
+ffa04c80:	08 50       	R0 = R0 + R1;
+ffa04c82:	08 92       	[P1++] = R0;
+ffa04c84:	4a 30       	R1 = P2;
+ffa04c86:	11 54       	R0 = R1 & R2;
+ffa04c88:	48 08       	CC = P0 == P1;
+ffa04c8a:	f8 17       	IF !CC JUMP 0xffa04c7a <_httpResp+0x1c6> (BP);
+ffa04c8c:	00 00       	NOP;
+ffa04c8e:	00 00       	NOP;
+ffa04c90:	20 91       	R0 = [P4];
+ffa04c92:	58 4d       	R0 >>>= 0xb;
+ffa04c94:	20 92       	[P4++] = R0;
+ffa04c96:	44 08       	CC = P4 == P0;
+ffa04c98:	fb 17       	IF !CC JUMP 0xffa04c8e <_httpResp+0x1da> (BP);
+ffa04c9a:	ff e3 75 fd 	CALL 0xffa04784 <_htmlDefault>;
+ffa04c9e:	68 67       	R0 += -0x13;		/* (-19) */
+ffa04ca0:	f0 bb       	[FP -0x4] = R0;
+ffa04ca2:	21 e1 00 41 	R1 = 0x4100 (X);		/*		R1=0x4100(16640) */
+ffa04ca6:	08 50       	R0 = R0 + R1;
+ffa04ca8:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff9008d0(-7337776) */
+ffa04cac:	0e 30       	R1 = R6;
+ffa04cae:	02 e1 34 0c 	R2.L = 0xc34;		/* (3124)	R2=0xff900c34(-7336908) */
+ffa04cb2:	ff e3 cd e7 	CALL 0xffa01c4c <_strcpy_>;
+ffa04cb6:	f5 b8       	R5 = [FP -0x44];
+ffa04cb8:	07 60       	R7 = 0x0 (X);		/*		R7=0x0(  0) */
+ffa04cba:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900c34(-7336908) */
+ffa04cbe:	0e 30       	R1 = R6;
+ffa04cc0:	02 e1 40 0c 	R2.L = 0xc40;		/* (3136)	R2=0xff900c40(-7336896) */
+ffa04cc4:	ff e3 c4 e7 	CALL 0xffa01c4c <_strcpy_>;
+ffa04cc8:	17 30       	R2 = R7;
+ffa04cca:	0e 30       	R1 = R6;
+ffa04ccc:	ff e3 12 e9 	CALL 0xffa01ef0 <_strprintf_int>;
+ffa04cd0:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900c40(-7336896) */
+ffa04cd4:	0e 30       	R1 = R6;
+ffa04cd6:	02 e1 54 0c 	R2.L = 0xc54;		/* (3156)	R2=0xff900c54(-7336876) */
+ffa04cda:	ff e3 b9 e7 	CALL 0xffa01c4c <_strcpy_>;
+ffa04cde:	0e 30       	R1 = R6;
+ffa04ce0:	15 30       	R2 = R5;
+ffa04ce2:	ff e3 07 e9 	CALL 0xffa01ef0 <_strprintf_int>;
+ffa04ce6:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900c54(-7336876) */
+ffa04cea:	0e 30       	R1 = R6;
+ffa04cec:	02 e1 64 0c 	R2.L = 0xc64;		/* (3172)	R2=0xff900c64(-7336860) */
+ffa04cf0:	ff e3 ae e7 	CALL 0xffa01c4c <_strcpy_>;
+ffa04cf4:	0f 64       	R7 += 0x1;		/* (  1) */
+ffa04cf6:	81 60       	R1 = 0x10 (X);		/*		R1=0x10( 16) */
+ffa04cf8:	0f 08       	CC = R7 == R1;
+ffa04cfa:	e0 17       	IF !CC JUMP 0xffa04cba <_httpResp+0x206> (BP);
+ffa04cfc:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff900c64(-7336860) */
+ffa04d00:	0e 30       	R1 = R6;
+ffa04d02:	02 e1 70 0c 	R2.L = 0xc70;		/* (3184)	R2=0xff900c70(-7336848) */
+ffa04d06:	ff e3 a3 e7 	CALL 0xffa01c4c <_strcpy_>;
+ffa04d0a:	f0 b9       	R0 = [FP -0x4];
+ffa04d0c:	ed 2e       	JUMP.S 0xffa04ae6 <_httpResp+0x32>;
+ffa04d0e:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900000 <_l1_data_a>(-7340032) */
+ffa04d12:	00 e1 68 0b 	R0.L = 0xb68;		/* (2920)	R0=0xff900b68(-7337112) */
+ffa04d16:	0e 30       	R1 = R6;
+ffa04d18:	17 30       	R2 = R7;
+ffa04d1a:	ff e3 11 e8 	CALL 0xffa01d3c <_substr>;
+ffa04d1e:	00 0c       	CC = R0 == 0x0;
+ffa04d20:	dc 1e       	IF CC JUMP 0xffa04ad8 <_httpResp+0x24> (BP);
+ffa04d22:	51 60       	R1 = 0xa (X);		/*		R1=0xa( 10) */
+ffa04d24:	06 50       	R0 = R6 + R0;
+ffa04d26:	ff e3 0d e9 	CALL 0xffa01f40 <_atoi_>;
+ffa04d2a:	10 30       	R2 = R0;
+ffa04d2c:	00 67       	R0 += -0x20;		/* (-32) */
+ffa04d2e:	21 e1 80 0f 	R1 = 0xf80 (X);		/*		R1=0xf80(3968) */
+ffa04d32:	08 0a       	CC = R0 <= R1 (IU);
+ffa04d34:	ca 10       	IF !CC JUMP 0xffa04ec8 <_httpResp+0x414>;
+ffa04d36:	4a e1 80 ff 	P2.H = 0xff80;		/* (-128)	P2=0xff800800 */
+ffa04d3a:	0a e1 00 08 	P2.L = 0x800;		/* (2048)	P2=0xff800800 */
+ffa04d3e:	82 c6 1a 86 	R3 = R2 << 0x3;
+ffa04d42:	17 91       	R7 = [P2];
+ffa04d44:	03 0d       	CC = R3 <= 0x0;
+ffa04d46:	15 18       	IF CC JUMP 0xffa04d70 <_httpResp+0x2bc>;
+ffa04d48:	20 e1 ff 1f 	R0 = 0x1fff (X);		/*		R0=0x1fff(8191) */
+ffa04d4c:	28 4f       	R0 <<= 0x5;
+ffa04d4e:	07 54       	R0 = R7 & R0;
+ffa04d50:	82 c6 2a 82 	R1 = R2 << 0x5;
+ffa04d54:	ff 63       	R7 = -0x1 (X);		/*		R7=0xffffffff( -1) */
+ffa04d56:	48 52       	R1 = R0 - R1;
+ffa04d58:	29 e1 00 41 	P1 = 0x4100 (X);		/*		P1=0x4100(16640) */
+ffa04d5c:	47 e1 03 00 	R7.H = 0x3;		/* (  3)	R7=0x3ffff(262143) */
+ffa04d60:	13 32       	P2 = R3;
+ffa04d62:	b2 e0 06 20 	LSETUP(0xffa04d66 <_httpResp+0x2b2>, 0xffa04d6e <_httpResp+0x2ba>) LC1 = P2;
+ffa04d66:	79 54       	R1 = R1 & R7;
+ffa04d68:	01 32       	P0 = R1;
+ffa04d6a:	21 64       	R1 += 0x4;		/* (  4) */
+ffa04d6c:	00 90       	R0 = [P0++];
+ffa04d6e:	08 92       	[P1++] = R0;
+ffa04d70:	82 c6 2a 80 	R0 = R2 << 0x5;
+ffa04d74:	b9 2e       	JUMP.S 0xffa04ae6 <_httpResp+0x32>;
+ffa04d76:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff901fff(-7331841) */
+ffa04d7a:	00 e1 48 0b 	R0.L = 0xb48;		/* (2888)	R0=0xff900b48(-7337144) */
+ffa04d7e:	0e 30       	R1 = R6;
+ffa04d80:	17 30       	R2 = R7;
+ffa04d82:	ff e3 dd e7 	CALL 0xffa01d3c <_substr>;
+ffa04d86:	00 0c       	CC = R0 == 0x0;
+ffa04d88:	a8 1e       	IF CC JUMP 0xffa04ad8 <_httpResp+0x24> (BP);
+ffa04d8a:	ff e3 fd fc 	CALL 0xffa04784 <_htmlDefault>;
+ffa04d8e:	ac 2e       	JUMP.S 0xffa04ae6 <_httpResp+0x32>;
+ffa04d90:	45 51       	R5 = R5 + R0;
+ffa04d92:	04 53       	R4 = R4 - R0;
+ffa04d94:	19 60       	R1 = 0x3 (X);		/*		R1=0x3(  3) */
+ffa04d96:	05 30       	R0 = R5;
+ffa04d98:	ff e3 d4 e8 	CALL 0xffa01f40 <_atoi_>;
+ffa04d9c:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900800 */
+ffa04da0:	0a e1 74 0f 	P2.L = 0xf74;		/* (3956)	P2=0xff900f74 <_NetDataDestIP> */
+ffa04da4:	f9 63       	R1 = -0x1 (X);		/*		R1=0xffffffff( -1) */
+ffa04da6:	12 91       	R2 = [P2];
+ffa04da8:	41 e1 00 ff 	R1.H = 0xff00;		/* (-256)	R1=0xff00ffff(-16711681) */
+ffa04dac:	40 43       	R0 = R0.B (Z);
+ffa04dae:	8a 54       	R2 = R2 & R1;
+ffa04db0:	80 4f       	R0 <<= 0x10;
+ffa04db2:	10 50       	R0 = R0 + R2;
+ffa04db4:	10 93       	[P2] = R0;
+ffa04db6:	0e 60       	R6 = 0x1 (X);		/*		R6=0x1(  1) */
+ffa04db8:	29 2f       	JUMP.S 0xffa04c0a <_httpResp+0x156>;
+ffa04dba:	45 51       	R5 = R5 + R0;
+ffa04dbc:	04 53       	R4 = R4 - R0;
+ffa04dbe:	19 60       	R1 = 0x3 (X);		/*		R1=0x3(  3) */
+ffa04dc0:	05 30       	R0 = R5;
+ffa04dc2:	ff e3 bf e8 	CALL 0xffa01f40 <_atoi_>;
+ffa04dc6:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900f74 <_NetDataDestIP> */
+ffa04dca:	0a e1 74 0f 	P2.L = 0xf74;		/* (3956)	P2=0xff900f74 <_NetDataDestIP> */
+ffa04dce:	f9 63       	R1 = -0x1 (X);		/*		R1=0xffffffff( -1) */
+ffa04dd0:	12 91       	R2 = [P2];
+ffa04dd2:	01 e1 ff 00 	R1.L = 0xff;		/* (255)	R1=0xffff00ff(-65281) */
+ffa04dd6:	40 43       	R0 = R0.B (Z);
+ffa04dd8:	8a 54       	R2 = R2 & R1;
+ffa04dda:	40 4f       	R0 <<= 0x8;
+ffa04ddc:	10 50       	R0 = R0 + R2;
+ffa04dde:	10 93       	[P2] = R0;
+ffa04de0:	0e 60       	R6 = 0x1 (X);		/*		R6=0x1(  1) */
+ffa04de2:	0a 2f       	JUMP.S 0xffa04bf6 <_httpResp+0x142>;
+ffa04de4:	19 60       	R1 = 0x3 (X);		/*		R1=0x3(  3) */
+ffa04de6:	05 50       	R0 = R5 + R0;
+ffa04de8:	ff e3 ac e8 	CALL 0xffa01f40 <_atoi_>;
+ffa04dec:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900f74 <_NetDataDestIP> */
+ffa04df0:	0a e1 74 0f 	P2.L = 0xf74;		/* (3956)	P2=0xff900f74 <_NetDataDestIP> */
+ffa04df4:	fa 63       	R2 = -0x1 (X);		/*		R2=0xffffffff( -1) */
+ffa04df6:	11 91       	R1 = [P2];
+ffa04df8:	42 e1 ff 00 	R2.H = 0xff;		/* (255)	R2=0xffffff(16777215) */
+ffa04dfc:	51 54       	R1 = R1 & R2;
+ffa04dfe:	c0 4f       	R0 <<= 0x18;
+ffa04e00:	08 50       	R0 = R0 + R1;
+ffa04e02:	10 93       	[P2] = R0;
+ffa04e04:	c3 2f       	JUMP.S 0xffa04d8a <_httpResp+0x2d6>;
+ffa04e06:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900b48(-7337144) */
+ffa04e0a:	00 e1 b4 0b 	R0.L = 0xbb4;		/* (2996)	R0=0xff900bb4(-7337036) */
+ffa04e0e:	0d 30       	R1 = R5;
+ffa04e10:	14 30       	R2 = R4;
+ffa04e12:	ff e3 95 e7 	CALL 0xffa01d3c <_substr>;
+ffa04e16:	00 0c       	CC = R0 == 0x0;
+ffa04e18:	49 14       	IF !CC JUMP 0xffa04eaa <_httpResp+0x3f6> (BP);
+ffa04e1a:	06 60       	R6 = 0x0 (X);		/*		R6=0x0(  0) */
+ffa04e1c:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900bb4(-7337036) */
+ffa04e20:	00 e1 bc 0b 	R0.L = 0xbbc;		/* (3004)	R0=0xff900bbc(-7337028) */
+ffa04e24:	0d 30       	R1 = R5;
+ffa04e26:	14 30       	R2 = R4;
+ffa04e28:	ff e3 8a e7 	CALL 0xffa01d3c <_substr>;
+ffa04e2c:	00 0c       	CC = R0 == 0x0;
+ffa04e2e:	9d 1e       	IF CC JUMP 0xffa04b68 <_httpResp+0xb4> (BP);
+ffa04e30:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900f74 <_NetDataDestIP> */
+ffa04e34:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa04e36:	0a e1 c4 0c 	P2.L = 0xcc4;		/* (3268)	P2=0xff900cc4 <_g_streamEnabled> */
+ffa04e3a:	10 9b       	B[P2] = R0;
+ffa04e3c:	0e 60       	R6 = 0x1 (X);		/*		R6=0x1(  1) */
+ffa04e3e:	95 2e       	JUMP.S 0xffa04b68 <_httpResp+0xb4>;
+ffa04e40:	45 51       	R5 = R5 + R0;
+ffa04e42:	04 53       	R4 = R4 - R0;
+ffa04e44:	19 60       	R1 = 0x3 (X);		/*		R1=0x3(  3) */
+ffa04e46:	05 30       	R0 = R5;
+ffa04e48:	ff e3 7c e8 	CALL 0xffa01f40 <_atoi_>;
+ffa04e4c:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900cc4 <_g_streamEnabled> */
+ffa04e50:	0a e1 74 0f 	P2.L = 0xf74;		/* (3956)	P2=0xff900f74 <_NetDataDestIP> */
+ffa04e54:	11 91       	R1 = [P2];
+ffa04e56:	41 4d       	R1 >>>= 0x8;
+ffa04e58:	41 4f       	R1 <<= 0x8;
+ffa04e5a:	40 43       	R0 = R0.B (Z);
+ffa04e5c:	08 50       	R0 = R0 + R1;
+ffa04e5e:	10 93       	[P2] = R0;
+ffa04e60:	0e 60       	R6 = 0x1 (X);		/*		R6=0x1(  1) */
+ffa04e62:	c0 2e       	JUMP.S 0xffa04be2 <_httpResp+0x12e>;
+ffa04e64:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900000 <_l1_data_a>(-7340032) */
+ffa04e68:	00 e1 b4 0b 	R0.L = 0xbb4;		/* (2996)	R0=0xff900bb4(-7337036) */
+ffa04e6c:	0d 30       	R1 = R5;
+ffa04e6e:	14 30       	R2 = R4;
+ffa04e70:	ff e3 66 e7 	CALL 0xffa01d3c <_substr>;
+ffa04e74:	00 0c       	CC = R0 == 0x0;
+ffa04e76:	08 1c       	IF CC JUMP 0xffa04e86 <_httpResp+0x3d2> (BP);
+ffa04e78:	4a e1 80 ff 	P2.H = 0xff80;		/* (-128)	P2=0xff800f74 */
+ffa04e7c:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa04e7e:	0a e1 08 08 	P2.L = 0x808;		/* (2056)	P2=0xff800808 */
+ffa04e82:	10 9b       	B[P2] = R0;
+ffa04e84:	0e 60       	R6 = 0x1 (X);		/*		R6=0x1(  1) */
+ffa04e86:	40 e1 90 ff 	R0.H = 0xff90;		/* (-112)	R0=0xff900000 <_l1_data_a>(-7340032) */
+ffa04e8a:	00 e1 bc 0b 	R0.L = 0xbbc;		/* (3004)	R0=0xff900bbc(-7337028) */
+ffa04e8e:	0d 30       	R1 = R5;
+ffa04e90:	14 30       	R2 = R4;
+ffa04e92:	ff e3 55 e7 	CALL 0xffa01d3c <_substr>;
+ffa04e96:	00 0c       	CC = R0 == 0x0;
+ffa04e98:	72 1e       	IF CC JUMP 0xffa04b7c <_httpResp+0xc8> (BP);
+ffa04e9a:	4a e1 80 ff 	P2.H = 0xff80;		/* (-128)	P2=0xff800808 */
+ffa04e9e:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
+ffa04ea0:	0a e1 08 08 	P2.L = 0x808;		/* (2056)	P2=0xff800808 */
+ffa04ea4:	10 9b       	B[P2] = R0;
+ffa04ea6:	0e 60       	R6 = 0x1 (X);		/*		R6=0x1(  1) */
+ffa04ea8:	6a 2e       	JUMP.S 0xffa04b7c <_httpResp+0xc8>;
+ffa04eaa:	4a e1 90 ff 	P2.H = 0xff90;		/* (-112)	P2=0xff900808 */
+ffa04eae:	08 60       	R0 = 0x1 (X);		/*		R0=0x1(  1) */
+ffa04eb0:	0a e1 c4 0c 	P2.L = 0xcc4;		/* (3268)	P2=0xff900cc4 <_g_streamEnabled> */
+ffa04eb4:	10 9b       	B[P2] = R0;
+ffa04eb6:	4a e1 80 ff 	P2.H = 0xff80;		/* (-128)	P2=0xff800cc4 */
+ffa04eba:	0a e1 00 08 	P2.L = 0x800;		/* (2048)	P2=0xff800800 */
+ffa04ebe:	10 91       	R0 = [P2];
+ffa04ec0:	22 6c       	P2 += 0x4;		/* (  4) */
+ffa04ec2:	10 93       	[P2] = R0;
+ffa04ec4:	0e 60       	R6 = 0x1 (X);		/*		R6=0x1(  1) */
+ffa04ec6:	ab 2f       	JUMP.S 0xffa04e1c <_httpResp+0x368>;
+ffa04ec8:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa04eca:	f0 bb       	[FP -0x4] = R0;
+ffa04ecc:	4f 30       	R1 = FP;
+ffa04ece:	42 e1 90 ff 	R2.H = 0xff90;		/* (-112)	R2=0xff90ffff(-7274497) */
+ffa04ed2:	20 e1 00 41 	R0 = 0x4100 (X);		/*		R0=0x4100(16640) */
+ffa04ed6:	e1 67       	R1 += -0x4;		/* ( -4) */
+ffa04ed8:	02 e1 70 0b 	R2.L = 0xb70;		/* (2928)	R2=0xff900b70(-7337104) */
+ffa04edc:	ff e3 b8 e6 	CALL 0xffa01c4c <_strcpy_>;
+ffa04ee0:	f0 b9       	R0 = [FP -0x4];
+ffa04ee2:	02 2e       	JUMP.S 0xffa04ae6 <_httpResp+0x32>;
 
-ffa04e68 <_httpCollate>:
-ffa04e68:	fd 05       	[--SP] = (R7:7, P5:5);
-ffa04e6a:	4d e1 90 ff 	P5.H = 0xff90;		/* (-112)	P5=0xff900800 */
-ffa04e6e:	0d e1 e8 0f 	P5.L = 0xfe8;		/* (4072)	P5=0xff900fe8 <_g_httpRxed> */
-ffa04e72:	39 30       	R7 = R1;
-ffa04e74:	0a 60       	R2 = 0x1 (X);		/*		R2=0x1(  1) */
-ffa04e76:	29 91       	R1 = [P5];
-ffa04e78:	82 4f       	R2 <<= 0x10;
-ffa04e7a:	51 50       	R1 = R1 + R2;
-ffa04e7c:	00 e8 03 00 	LINK 0xc;		/* (12) */
-ffa04e80:	17 30       	R2 = R7;
-ffa04e82:	ff e3 95 e6 	CALL 0xffa01bac <_memcpy_>;
-ffa04e86:	28 91       	R0 = [P5];
-ffa04e88:	c7 51       	R7 = R7 + R0;
-ffa04e8a:	2f 93       	[P5] = R7;
-ffa04e8c:	01 e8 00 00 	UNLINK;
-ffa04e90:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
-ffa04e92:	bd 05       	(R7:7, P5:5) = [SP++];
-ffa04e94:	10 00       	RTS;
+ffa04ee4 <_httpCollate>:
+ffa04ee4:	fd 05       	[--SP] = (R7:7, P5:5);
+ffa04ee6:	4d e1 90 ff 	P5.H = 0xff90;		/* (-112)	P5=0xff900800 */
+ffa04eea:	0d e1 6c 10 	P5.L = 0x106c;		/* (4204)	P5=0xff90106c <_g_httpRxed> */
+ffa04eee:	39 30       	R7 = R1;
+ffa04ef0:	0a 60       	R2 = 0x1 (X);		/*		R2=0x1(  1) */
+ffa04ef2:	29 91       	R1 = [P5];
+ffa04ef4:	82 4f       	R2 <<= 0x10;
+ffa04ef6:	51 50       	R1 = R1 + R2;
+ffa04ef8:	00 e8 03 00 	LINK 0xc;		/* (12) */
+ffa04efc:	17 30       	R2 = R7;
+ffa04efe:	ff e3 77 e6 	CALL 0xffa01bec <_memcpy_>;
+ffa04f02:	28 91       	R0 = [P5];
+ffa04f04:	c7 51       	R7 = R7 + R0;
+ffa04f06:	2f 93       	[P5] = R7;
+ffa04f08:	01 e8 00 00 	UNLINK;
+ffa04f0c:	00 60       	R0 = 0x0 (X);		/*		R0=0x0(  0) */
+ffa04f0e:	bd 05       	(R7:7, P5:5) = [SP++];
+ffa04f10:	10 00       	RTS;
 	...

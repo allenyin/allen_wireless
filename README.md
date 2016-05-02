@@ -971,7 +971,7 @@ This section has only covered using gtkclient compiled with `HEADSTAGE_TIM` opti
 
 Compilations of gtkclient with the other RHD-headstage options contains a subset of the `RADIO_AGC_IIR_SAA` gtkclient's functions.
 
-##<a name="Quick Start">Quick Start</a>
+##<a name="quickstart">Quick Start</a>
 
 Here are steps to use 2 RHD-headstages with deployment firmware:
 

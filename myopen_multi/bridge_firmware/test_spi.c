@@ -460,6 +460,7 @@ int main(void){
 	}
 	p = 0; 
 	unsigned short s; 
+    printf_str("!here 1.......\n");
 	for(i=0; i<4*1024*1024; i++){
 		s = *p++; 
 		if(s!= 0xDECA) {
@@ -500,10 +501,13 @@ int main(void){
 		//this depends on the board, of course! 
 		*pTIMER_ENABLE = 0x20; //enable  timer 5.
 	}
-	
+    printf_str("!here2......\n");	
 	//startup the ethernet..
 	int etherr = bfin_EMAC_init(); 
+    printf_str("!etherr ");
+    printf_int("!", etherr);
 	if(!etherr) DHCP_req();
+    printf_str("!here4......\n");
 	printf_int( "!", (NetOurIP)& 0xff); 
 	printf_int( "!.", (NetOurIP>>8)& 0xff); 
 	printf_int( "!.", (NetOurIP>>16)& 0xff); 

@@ -917,7 +917,7 @@ void DHCP_tx_discover(){
 	options[2] = DHCPDISCOVER; 
 	options[3] = DHCP_END;
 	
-	printf_str("Send DHCPDISCOVER\n");
+	printf_str("!Send DHCPDISCOVER\n");
 	DHCP_tx(4, &options[0], NetDHCPserv); 
 }
 int DHCP_rx(){
@@ -929,11 +929,13 @@ int DHCP_rx(){
 	
 	while(gotit == 0){
 		//now, listen for a response. 
+        printf_str("!DHCP_rx loop1\n");
 		length = bfin_EMAC_recv_poll( &data ); 
-		printf_int("options length: ", length - sizeof(dhcp_packet) ); 
+		printf_int("!options len: ", length - sizeof(dhcp_packet) ); 
 		p = (dhcp_packet*)data; 
 		if( length > 0 && length >= sizeof(dhcp_packet) 
 				  && htons(p->eth.protLen) == ETH_PROTO_IP4){
+            printf_str("!DHCP_rx loop2\n");
 			if( p->udp.src == htons(67) &&
 				p->udp.dest == htons(68) && 
 				p->dhcp.xid == *pEMAC_ADDRLO && 
@@ -961,7 +963,7 @@ int DHCP_rx(){
 				gotit = 1; 
 			}
 		}else{
-			printf_str("not an ip packet try again\n");
+			printf_str("!not an ip packet try again\n");
 			non_dhcp++; 
 		}
 		if(non_dhcp > 12){
@@ -973,10 +975,13 @@ int DHCP_rx(){
 }
 int DHCP_req(){
 	u8 options [10]; 
-	
+
+    printf_str("!DHCP_req1..\n");    
 	DHCP_tx_discover(); 
+    printf_str("!DHCP_req2..\n");
 	
 	DHCP_rx(); 
+    printf_str("!DHCP_req3..\n");
 	
 	if(NetDHCPserv == 0xffffffff){
 		printf_str("no DHCP server responded\n");
