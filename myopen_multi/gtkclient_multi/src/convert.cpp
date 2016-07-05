@@ -147,6 +147,7 @@ int main(int argn, char **argc){
 		u64 strobelength = 0;
 		u64 spikes = 0;
 		bool done = false;
+        u64 totalDropped = 0;
 		while(!done){
 			fread((void*)&u,4,1,in);
 			if(ferror(in)){
@@ -169,6 +170,7 @@ int main(int argn, char **argc){
 						unsigned int dropped = 0;
 						fread((void*)&rxtime,8,1,in); //rx time in seconds.
 						fread((void*)&dropped,4,1,in);
+                        totalDropped += dropped;
 						unsigned int npak = (siz-4)/(4+32);
 						
 						rxpackets += npak;
@@ -226,8 +228,8 @@ int main(int argn, char **argc){
 			}
 		}
 		
-		printf("total %lld rxpackets, %lld txpackets, %lld spikes, %lld messages\n",
-			   rxpackets, txpackets, spikes, msgpackets);
+		printf("total %lld rxpackets, %lld txpackets, %lld spikes, %lld messages, %lld dropped packets\n",
+			   rxpackets, txpackets, spikes, msgpackets, totalDropped);
 		if(rxpackets > 0x7fffffff){
 			printf("you will not be able to save packet timestamps.\n");
 		}
