@@ -503,7 +503,7 @@ _clearirq_asm: //just write the status register via spi to clear.
 
 _waitirq_asm:
 	[--sp] = rets;
-	r7 = 160; // should take max 360us = 178. min @ 1msps = 160; original value=182
+	r7 = 182; // should take max 360us = 178. min @ 1msps = 160; original value=182
 	[fp - FP_TIMER] = r7;
 waitirq_loop:
 	r6 = w[p1];

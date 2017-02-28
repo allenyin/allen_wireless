@@ -134,7 +134,7 @@ int main()
     // PF0=PF1=PF2=1: Nordic CE pin, Nordic CS deselect (active low), Flash CS deselect
 	*pFIO_FLAG_D = 0x0187; 
 	
-	radio_init(84);      // radio channel, match with what gtkclient expects 
+	radio_init(124);      // radio channel, match with what gtkclient expects 
 	*FIO_CLEAR = SPI_CE; // CE on radio 
 	*FIO_CLEAR = 0x0080; //Clear PF3 - captured state from NRF-IRQ
 	for(k=0; k<1000; k++){

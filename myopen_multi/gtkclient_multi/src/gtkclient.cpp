@@ -74,7 +74,7 @@ float		g_viewportSize[2] = {640, 480}; //width, height.
 
 char g_bridgeIP[NSCALE][256];
 pthread_mutex_t mutex_bridge_IP = PTHREAD_MUTEX_INITIALIZER;
-unsigned int  g_radioChannel[NSCALE] = {84};
+unsigned int  g_radioChannel[NSCALE] = {124, 84};
 
 static float	g_fbuf[NFBUF][NSAMP*3]; //continuous waveform. range [-1 .. 1]
 i64				g_fbufW[NFBUF]; //where to write to (always increment), might not be thread safe
@@ -127,7 +127,8 @@ std::atomic<int> g_totalPackets(0);
 std::atomic<int> g_totalDropped(0);
 int          g_strobePackets = 0;
 unsigned int g_dropped[NSCALE] = {0}; //compare against the bridge.
-
+double g_lagTime = 0;
+	
 class Channel;
 //Channel*	g_c[NSCALE*128];
 std::vector<Channel*> g_c(NSCALE*128);
@@ -175,6 +176,7 @@ GtkAdjustment* g_rasterSpanSpin;
 GtkAdjustment* g_rasterWindowSpin;
 GtkWidget*     g_pktpsLabel;
 GtkWidget*     g_stbpsLabel; //strobe per second label, todo: put in raster
+GtkWidget*     g_lagTimeLabel;   // latency from bridge to gtkclient
 GtkWidget*     g_fileSizeLabel;
 GtkWidget*     g_confFileLabel;
 GtkWidget*     g_audioFileLabel;
@@ -769,9 +771,12 @@ static gboolean rotate (gpointer user_data){
 			1e6*(double)g_totalDropped.load()/((double)g_totalPackets.load()*32*8));
 	gtk_label_set_text(GTK_LABEL(g_pktpsLabel), str); //works!
 
-		snprintf(str, 256, "strobe/sec: %.2f",
+    snprintf(str, 256, "strobe/sec: %.2f",
 			(double)g_strobePackets/(double)(gettime()));
 	gtk_label_set_text(GTK_LABEL(g_stbpsLabel), str); //works!
+
+    snprintf(str, 256, "latency change: %0.3f ms", g_lagTime*1000);
+    gtk_label_set_text(GTK_LABEL(g_lagTimeLabel), str);
 
     if(!savingTestFile) {
         snprintf(str, 256, "%.2f MB", (double)g_spkwriter.bytes()/1e6);
@@ -906,6 +911,9 @@ void* sock_thread(void* param){
 	int tid = (intptr_t) param;
 	
 	double g_timeOffset = 0.0; //offset between local time and bridge time.
+
+    double prevPktTime = 0.0;    // gtkclient time when last packet was received
+    double prevBridgeTime = 0.0; // bridge timestamp on the last packet
 
 	char destName[256]; destName[0] = 0;
 	char buf[1024+128+4];
@@ -1068,6 +1076,8 @@ packet format in the file, as saved here:
 
 			int channels[32]; char match[32];
 			Spike_msg smsg;
+
+            double bridgeTime;  // timestamp on the packet from the bridge, in seconds.
 			for(int i=0; i<npack && g_pause <=0.0; i++){
 				//see if it matched a template.
 				float z = 0;
@@ -1094,8 +1104,17 @@ packet format in the file, as saved here:
                  if it is off by a lot, just replace.
                 */
 				if(i == npack-1){ //update the offset.
-					double off = rxtime - ((double)p->ms / BRIDGE_CLOCK);
+                    bridgeTime = (double)p->ms / BRIDGE_CLOCK;
+					double off = rxtime - bridgeTime;
 					if(abs(off - g_timeOffset) > 1.0) g_timeOffset = off;
+                    
+                    // calculate latency change
+                    g_lagTime = (rxtime - prevPktTime) - (bridgeTime - prevBridgeTime);
+                    //printf("rxtime=%f, bridge=%f, offset=%f, latency=%f\n", 
+                    //        (double)rxtime, bridgeTime, off, g_lagTime);
+                    prevPktTime = rxtime;
+                    prevBridgeTime = bridgeTime;
+
 					//not sure what the correct level of smoothing is:
 					//we want to reject noise, but we don't want to lag behind the
 					//changing clock skew by too much (the xtal osc on the bridge is not
@@ -1115,7 +1134,7 @@ packet format in the file, as saved here:
 					g_templMatch[tid][j][0] = false;
                     g_templMatch[tid][j][1] = false;
 				}
-				double time = ((double)p->ms / BRIDGE_CLOCK) + g_timeOffset;
+                double time = bridgeTime + g_timeOffset;
 				unsigned int headecho = g_headstage->getHeadecho(tid);
 				decodePacket(p, channels, match, headecho);
 				for(int j=0; j<32; j++){
@@ -2194,6 +2213,12 @@ int main(int argn, char **argc)
 	gtk_misc_set_alignment (GTK_MISC (g_stbpsLabel), 0, 0);
 	gtk_box_pack_start (GTK_BOX (bx), g_stbpsLabel, FALSE, FALSE, 0);
 	gtk_widget_show(g_stbpsLabel);
+
+    //add in a bridge to client latency label
+    g_lagTimeLabel = gtk_label_new(" ms offset");
+    gtk_misc_set_alignment(GTK_MISC(g_lagTimeLabel),0,0);
+    gtk_box_pack_start(GTK_BOX(bx), g_lagTimeLabel, FALSE, FALSE, 0);
+    gtk_widget_show(g_lagTimeLabel);
 
 	
 	gtk_box_pack_start (GTK_BOX (v1), bx, FALSE, FALSE, 0);
