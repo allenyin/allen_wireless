@@ -74,7 +74,7 @@ float		g_viewportSize[2] = {640, 480}; //width, height.
 
 char g_bridgeIP[NSCALE][256];
 pthread_mutex_t mutex_bridge_IP = PTHREAD_MUTEX_INITIALIZER;
-unsigned int  g_radioChannel[NSCALE] = {124, 84};
+unsigned int  g_radioChannel[NSCALE] = {124};
 
 static float	g_fbuf[NFBUF][NSAMP*3]; //continuous waveform. range [-1 .. 1]
 i64				g_fbufW[NFBUF]; //where to write to (always increment), might not be thread safe
@@ -2352,7 +2352,7 @@ int main(int argn, char **argc)
 	button = gtk_button_new_with_label ("Set all AGC targets from A");
 	g_signal_connect(button, "clicked", G_CALLBACK (agcSetAll),0);
 	gtk_box_pack_start (GTK_BOX (box1), button, TRUE, TRUE, 0);
-#elif defined(RADIO_AGC_IIR) || defined(RADIO_AGC_IIR_SAA)
+#elif defined(RADIO_AGC_IIR)// || defined(RADIO_AGC_IIR_SAA)
     //and a AGC set-all button.
 	button = gtk_button_new_with_label ("Set all AGC targets from A");
 	g_signal_connect(button, "clicked", G_CALLBACK (agcSetAll),0);
@@ -2362,6 +2362,16 @@ int main(int argn, char **argc)
     
     //mk_radio("500-7kHz,osc",2,box1,true,"filter",filterRadioCB);
     mk_radio("250-9kHz,osc",2,box1,true,"filter",filterRadioCB);
+
+#elif defined(RADIO_AGC_IIR_SAA)
+    //and a AGC set-all button.
+	button = gtk_button_new_with_label ("Set all AGC targets from A");
+	g_signal_connect(button, "clicked", G_CALLBACK (agcSetAll),0);
+	gtk_box_pack_start (GTK_BOX (box1), button, TRUE, TRUE, 0);
+    
+    //add osc / reset radio buttons
+    
+    mk_radio("500-9kHz,osc",2,box1,true,"filter",filterRadioCB);
 
 #elif RADIO_GAIN_IIR_SAA
     // set all gain button

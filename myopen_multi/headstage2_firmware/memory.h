@@ -1,32 +1,29 @@
 #ifndef __MEMORY_H__
 #define __MEMORY_H__
 
-/* memory header file for radio_gain_IIR_SAA.asm
-   Signal-chain = fixed-gain + IIR (2 biquads, LPF1 and HPF1)
+/* memory header file for radio_AGC_IIR_SAA.asm -- final version
+   Signal-chain = integrator-highpass + AGC + IIR (2 biquads, LPF1 and HPF1)
    SAA template matching is also included.
 
-   The fixed-gain Q7.8 is set by gtkclient -- amplifies Intan samples before IIR. Motivation is
-   AGC can introduce too much noise.
-
-   W1 stores original-samples, amplified-output, 3 pairs of delayed samples for biquads.
-   A1 = the signal chain coef/param buffer, including gain and biquad coefficients.
+   W1 stores original-samples, integrator mean, AGC gain, AGC-out, 3 pairs of delayed samples for biquads.
+   A1 = the signal chain coef/param buffer, including integrator, AGC, and biquad coefficients.
         Also the template and aperture values.
 */
 
 #define A1 				0xFF904000  /** BANK B **/ //i0 accesses.
-#define A1_AGC			1			//units: not actually AGC, just 2 16-bit gain
+#define A1_AGC			4			//units: end of AGC coefs is end of 4 32-bits words.
 #define A1_LMS			0           // No LMS
 #define A1_IIR		    8			// 4 coefs per biquad, 2 biquads.
 #define A1_TEMPLATE	    16 	
 #define A1_APERTURE		2			// 4 16-bit words
-#define A1_IIRSTARTA	(A1_AGC + A1_LMS)            //1
-#define A1_AGCB		    (A1_IIRSTARTA + A1_IIR)      //9 
-#define A1_IIRSTARTB	(A1_AGCB + A1_AGC + A1_LMS)  //10
-#define A1_TEMPA		(A1_IIRSTARTB + A1_IIR)      //18
-#define A1_APERTUREA	(A1_TEMPA + A1_TEMPLATE)     //34
-#define A1_TEMPB		(A1_APERTUREA + A1_APERTURE) //36
-#define A1_APERTUREB	(A1_TEMPB + A1_TEMPLATE)     //52
-#define A1_STRIDE		(A1_APERTUREB + A1_APERTURE) //54 
+#define A1_IIRSTARTA	(A1_AGC + A1_LMS)            //4 
+#define A1_AGCB		    (A1_IIRSTARTA + A1_IIR)      //12 
+#define A1_IIRSTARTB	(A1_AGCB + A1_AGC + A1_LMS)  //16
+#define A1_TEMPA		(A1_IIRSTARTB + A1_IIR)      //24
+#define A1_APERTUREA	(A1_TEMPA + A1_TEMPLATE)     //40
+#define A1_TEMPB		(A1_APERTUREA + A1_APERTURE) //42
+#define A1_APERTUREB	(A1_TEMPB + A1_TEMPLATE)     //58
+#define A1_STRIDE		(A1_APERTUREB + A1_APERTURE) //60 
 
 
 #define FP_BASE			0xFF906F00 //length: 0x200, 512 bytes.
@@ -40,12 +37,12 @@
 #define W1 				0xFF804000  /** BANK A **/
 
 /* 
-  1 sample + 1 gained-sample + 
+  1 sample + 1 integrator mean + 1 AGC gain + 1 gained-sample + 
   IIR related: x0(n-1), x0(n-2), y1(n-1), y1(n-2), y2(n-1), y2(n-2)
-  = 8 16-bit words per channel.
-  8 32-bit words per 2 channels --> 16 32-bit words per group of 4.
+  = 10 16-bit words per channel.
+  10 32-bit words per 2 channels --> 20 32-bit words per group of 4.
 */
-#define	W1_STRIDE		8
+#define	W1_STRIDE		10
 
 // T1, dont really care. Initiate as 0's and leave them
 #define T1				0xFF805000  //accessed by i3, read/write delayed filtered signal

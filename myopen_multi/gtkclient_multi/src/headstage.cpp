@@ -641,7 +641,7 @@ void Headstage::resetBiquads(int chan){
 	int i,j;
 	int tid = chan/128;
 	//(to send, needs to keep correct channel name)
-    //The following is for bandpass of [2500Hz, 9kHz]
+    //The following is for setting LPF to 9kHz.
 	b[0] = 6004.f; 
 	b[1] = 12008.f; 
 	b[2] = -4594.f; 

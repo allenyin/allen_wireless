@@ -26,6 +26,7 @@
 #define REG4_DSP_SIGNED   0x84D4 // get back 0xffD4 - DSP, signed output
 #define REG4_SIGNED       0x84C4 // get back 0xffC4 - no DSP, signed output
 #define REG4_DSP_SIGNED_1Hz 0x84DC // get back 0xffDC - DSP 1Hz, signed output
+#define REG4_DSP_SIGNED_300Hz 0x84D4 // get back 0xffD4 - DSP 300Hz, signed output
 
 #define REG5  0x8500    // get back 0xff00
 #define REG6  0x8600    // get back 0xff00
@@ -33,12 +34,12 @@
 
 //----------- Hardware bandpass settings ------------
 // Intan REG8-13, configured for [250Hz, 10kHz]
-//#define REG8  0x8811    // get back 0xff11. 
-//#define REG9  0x8900    // get back 0xff00
-//#define REG10 0x8a10    // get back 0xff10. 
-//#define REG11 0x8b00    // get back 0xff00
-//#define REG12 0x8c11    // get back 0xff11. 
-//#define REG13 0x8d00    // get back 0xff00
+#define REG8  0x8811    // get back 0xff11. 
+#define REG9  0x8900    // get back 0xff00
+#define REG10 0x8a10    // get back 0xff10. 
+#define REG11 0x8b00    // get back 0xff00
+#define REG12 0x8c11    // get back 0xff11. 
+#define REG13 0x8d00    // get back 0xff00
 
 // Intan REG8-13, configured for [250Hz, 7.5kHz]
 //#define REG8  0x8816    // get back 0xff16
@@ -49,12 +50,12 @@
 //#define REG13 0x8d00    // get back 0xff00
 
 // Intan REG8-13, configured for [1Hz, 10kHz]
-#define REG8  0x8811      // get back 0xff11
-#define REG9  0x8900      // get back 0xff00
-#define REG10 0x8a10      // get back 0xff10
-#define REG11 0x8b00      // get back 0xff00
-#define REG12 0x8c2c      // get back 0xff2c
-#define REG13 0x8d06      // get back 0xff06
+//#define REG8  0x8811      // get back 0xff11
+//#define REG9  0x8900      // get back 0xff00
+//#define REG10 0x8a10      // get back 0xff10
+//#define REG11 0x8b00      // get back 0xff00
+//#define REG12 0x8c2c      // get back 0xff2c
+//#define REG13 0x8d06      // get back 0xff06
 
 //---------------------------------------------------
 
@@ -781,16 +782,16 @@ lt2_top:
     r0 = -3039(x); w[i0++] = r0.l; w[i0++] = r0.l;  // a1
     
     // HPF1: 250Hz cutoff
-    r0 = 15812 (x);	w[i0++] = r0.l; w[i0++] = r0.l; // b0
-	r0 = -31624(x); w[i0++] = r0.l; w[i0++] = r0.l; // b1
-	r0 = 31604 (x);	w[i0++] = r0.l; w[i0++] = r0.l; // a0
-	r0 = -15260(x); w[i0++] = r0.l; w[i0++] = r0.l; // a1
+    //r0 = 15812 (x);	w[i0++] = r0.l; w[i0++] = r0.l; // b0
+	//r0 = -31624(x); w[i0++] = r0.l; w[i0++] = r0.l; // b1
+	//r0 = 31604 (x);	w[i0++] = r0.l; w[i0++] = r0.l; // a0
+	//r0 = -15260(x); w[i0++] = r0.l; w[i0++] = r0.l; // a1
 
     // HPF1: 500Hz cutoff
-	//r0 = 15260 (x);	w[i0++] = r0.l; w[i0++] = r0.l; // b0
-	//r0 = -30519(x); w[i0++] = r0.l; w[i0++] = r0.l; // b1
-	//r0 = 30442 (x);	w[i0++] = r0.l; w[i0++] = r0.l; // a0
-	//r0 = -14213(x); w[i0++] = r0.l; w[i0++] = r0.l; // a1
+	r0 = 15260 (x);	w[i0++] = r0.l; w[i0++] = r0.l; // b0
+	r0 = -30519(x); w[i0++] = r0.l; w[i0++] = r0.l; // b1
+	r0 = 30442 (x);	w[i0++] = r0.l; w[i0++] = r0.l; // a0
+	r0 = -14213(x); w[i0++] = r0.l; w[i0++] = r0.l; // a1
 
     lt2_bot: nop;
 
@@ -1018,7 +1019,7 @@ sport_configs:
     call wait_samples;                     // call 4
     
     //r0 = REG4 (z);
-    r0 = REG4_DSP_SIGNED_1Hz (z);  // this with DSP filter enabled, signed samples
+    r0 = REG4_DSP_SIGNED_300Hz (z);  // this with DSP filter enabled, signed samples
     r0 = r0 << SHIFT_BITS;
     [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
     [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
