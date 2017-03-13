@@ -999,7 +999,7 @@ void* sock_thread(void* param){
 
 packet format in the file, as saved here:
 4 byte magic number
-2 bytes uint svn version
+2 bytes uint svn version ... might be 2 byte radiochannel and 2 byte tid
 2 bytes uint ensuing packet data size
 8 bytes double RX time
 	-- If magic number is 0xdecafbad, packet is exactly as what comes in on the

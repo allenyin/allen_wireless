@@ -149,6 +149,8 @@ int main(int argn, char **argc){
 		bool done = false;
         unsigned int totalDropped = 0;
         unsigned int oldDrop = 0;
+        unsigned int badMagicNumBytes = 0;  // keep trakc of how many bytes we skip because bad magic number
+        printf("----First pass through file----\n");
 		while(!done){
 			fread((void*)&u,4,1,in);
 			if(ferror(in)){
@@ -189,6 +191,7 @@ int main(int argn, char **argc){
 							}
 						}
 						pos += 20+siz;
+
 					}else if(u == 0xc0edfad0){
 						fseeko(in,4, SEEK_CUR); // don't use yet, radiochannel and id
 						fread((void*)&u,4,1,in);
@@ -209,20 +212,21 @@ int main(int argn, char **argc){
 						pos += 20+siz;
 						
 					}else if(u == 0x1eafbabe){
-					//tracking info.
-					fread((void*)&u,4,1,in);
-					unsigned int siz = u;
-					//printf("u 0x%x\n",u);
-					strobepackets += 1;
-					strobelength += siz + 8;
-					fseeko(in,siz+8, SEEK_CUR); //8 byte double timestamp.
-					pos += 16+siz;
-				}else {
-					printf("magic number seems off, is 0x%x, %lld bytes, %lld packets\n",
-						   u,pos,rxpackets);
-						   
-					exit(0);
-				}
+                        //tracking info.
+                        fread((void*)&u,4,1,in);
+                        unsigned int siz = u;
+                        //printf("u 0x%x\n",u);
+                        strobepackets += 1;
+                        strobelength += siz + 8;
+                        fseeko(in,siz+8, SEEK_CUR); //8 byte double timestamp.
+                        pos += 16+siz;
+				    }else {
+                        printf("magic number seems off, is 0x%x, @%lld bytes, %lld packets\n",
+                               u,pos,rxpackets);
+                        badMagicNumBytes += 4;
+                        pos += 4;   // advance 4 bytes at a time at bad magic number
+                        //exit(0);
+				    }
 			
 				if(ferror(in) || feof(in)){
 					printf("done\n");
@@ -232,8 +236,8 @@ int main(int argn, char **argc){
 			}
 		}
 		
-		printf("total %lld rxpackets, %lld txpackets, %lld spikes, %lld messages, %d dropped packets\n",
-			   rxpackets, txpackets, spikes, msgpackets, totalDropped);
+		printf("total %lld rxpackets, %lld txpackets, %lld spikes, %lld messages, %d dropped packets, %d bytes skipped for bad magic numbers\n",
+			   rxpackets, txpackets, spikes, msgpackets, totalDropped, badMagicNumBytes);
 		if(rxpackets > 0x7fffffff){
 			printf("you will not be able to save packet timestamps.\n");
 		}
@@ -290,6 +294,8 @@ int main(int argn, char **argc){
 		}
 		int chans[4] = {0,32,64,96};
 		done = false;
+        printf("------Second Pass Saving Packets-----\n");
+        badMagicNumBytes = 0;    // reset bad magic number counter
 		while(!done){
 			unsigned int echo;
 			fread((void*)&u,4,1,in);
@@ -435,10 +441,12 @@ int main(int argn, char **argc){
 
 					pos += 16+siz;
 				} else {
-					printf("magic number seems off, is 0x%x, %lld bytes\n",
+					printf("magic number seems off, is 0x%x, @%lld bytes\n",
 						u,pos);
-					exit(0);
-					}
+                    pos += 4;
+                    badMagicNumBytes += 4;
+					//exit(0);
+				}
 			}
 		}
 		printf("finished reading in data file, now writing matlab file.\n");
