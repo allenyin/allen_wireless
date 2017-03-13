@@ -131,7 +131,7 @@ wait_samples_main:
     r1 = [p0 + (SPORT1_RX - SPORT0_RX)];   // SPORT1-primary: Ch32-63
     r0 = [p0 + (SPORT1_RX - SPORT0_RX)];   // SPORT1-sec:     Ch0-31
 
-    r1 <<= 15;              
+    r1 <<= 15;                             // Shift 15 bits because I read in 17 bits in lower 2 bytes
     r0 >>= SHIFT_BITS;
     r1 = r1 & r2;           
     r2 = r0 + r1;                          // r2 = Ch32, Ch0 (lo, hi). 16-bits samples
