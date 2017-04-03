@@ -117,6 +117,7 @@ wait_samples_main:
     [p0 + (SPORT1_TX - SPORT0_RX)] = r7;   // SPORT1 primary TX
     [p0 + (SPORT1_TX - SPORT0_RX)] = r7;   // SPORT1 sec TX
 
+/*
 nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
 nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
 nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
@@ -127,7 +128,7 @@ nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
 nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
 nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
 nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-
+*/
    
 //---------------------------------------------------------------------------------------
     // Process the other two channels in this group. Pretty much identical as before.
@@ -138,13 +139,13 @@ nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
     r1 >>= SHIFT_BITS;      
     w[p4++] = r1;           // save ch96-127
 
+/*
 nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
 nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
 nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
 nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
 nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-
-//nop;nop;nop;nop;nop;nop;
+*/
 //----------------------------------------------------------------------------------------  
     p0 = [FP - FP_CHAN];
     r6 = p0;            // r6 = current group of channels

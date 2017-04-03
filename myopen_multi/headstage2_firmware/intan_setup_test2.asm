@@ -97,21 +97,22 @@
 
 */
 
-/*
-#define TESTFREQ                3200 // Hz
-#define STORAGE                 2480
-#define SAMPLE_PER_CH           150
-#define SAMPLE_PER_CH_MINUS_3   147
-#define TOTAL_CONVERT           4800   // 32*SAMPLE_PER_CH
-#define TOTAL_CONVERT_MINUS_3   4797
-*/
+#define TESTFREQ                4200 // Hz
+#define STORAGE                 330
+#define SAMPLE_PER_CH           16
+#define SAMPLE_PER_CH_MINUS_3   13
+#define TOTAL_CONVERT           512   // 32*SAMPLE_PER_CH
+#define TOTAL_CONVERT_MINUS_3   509
+
 
 // For Jneuron signal testing..
+/*
 #define STORAGE                 4008 
 #define SAMPLE_PER_CH           246
 #define SAMPLE_PER_CH_MINUS_3   243
 #define TOTAL_CONVERT           7872
 #define TOTAL_CONVERT_MINUS_3   7869
+*/
 
 /* Note in here, the first Intan sample saved is ch0! No need for correction later */
 
@@ -199,8 +200,8 @@ intan_setup:
     [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
     call wait_samples;
     
-    //r0 = REG4 (z);
-    r0 = REG4_DSP_SIGNED (z);  // this with DSP filter enabled
+    r0 = REG4_DSP (z);
+    //r0 = REG4_DSP_SIGNED (z);  // this with DSP filter enabled
     r0 = r0 << SHIFT_BITS;
     [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
     [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
@@ -550,6 +551,23 @@ save_one_amp:
     r3 >>= SHIFT_BITS;
     w[p1++] = r3;                           // save 1st amp
     //w[p1++] = r2;                           // save 2nd amp
+    
+    nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+    nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+    nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+    nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+    nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+    nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+    nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+    nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+    nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+    nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+
+    nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+    nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+    nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+    nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+    nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
 
     r2 = [p0];                              // SPORT0 pri - 4th amp
     r3 = [p0];                              // SPORT0 sec - 3rd amp
@@ -557,5 +575,17 @@ save_one_amp:
     r3 >>= SHIFT_BITS;
     //w[p1++] = r3;                           // save 3rd amp
     //w[p1++] = r2;                           // save 4th amp
+    
+    nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+    nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+    nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+    nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+    nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+    nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+    nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+    nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+    nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+    nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+
     rts;
 
