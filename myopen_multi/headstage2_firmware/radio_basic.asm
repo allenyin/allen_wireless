@@ -123,21 +123,24 @@ wait_samples_main:
     r1 = [i1++];
     r2 = r1 + r2;
     [i2++] = r2;   // save sample, should be ramp.
-*/ 
-    
+*/
+   
+/* Actual acquisition code */
     r1 <<= 15;
     r0 >>= SHIFT_BITS;
     r1 = r1 & r2;
-    r2 = r0 + r1;                          // r2 = Ch32, Ch0 (lo, hi). 16-bits samples
-    r2 = r2 << 3 (v,s);   // multiple signal by 16
+    r2 = r0 + r1;         // r2 = Ch32, Ch0 (lo, hi). 16-bits samples
+    r2 = r2 << 3 (v,s);   // multiply signal by 8
     [i1++] = r2;    // save new sample
 
     // load in new convert command
+/*
     r7 = NEXT_CHANNEL_SHIFTED;
     [p0 + (SPORT1_TX - SPORT0_RX)] = r7;   // SPORT1 primary TX
     [p0 + (SPORT1_TX - SPORT0_RX)] = r7;   // SPORT1 sec TX
     [p0 + (SPORT0_TX - SPORT0_RX)] = r7;   // SPORT0 primary TX
     [p0 + (SPORT0_TX - SPORT0_RX)] = r7;   // SPORT0 sec TX
+*/
 
 
 nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
@@ -148,6 +151,9 @@ nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
 
 nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
 nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+nop;nop;nop;nop;nop;nop;
 
 //---------------------------------------------------------------------------------------
     r2.h = 0XFFFF;
@@ -164,15 +170,20 @@ nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
     r2 = r1 + r2;
     [i2++] = r2;
 */
-    
+
     r1 <<= 15;
     r0 >>= SHIFT_BITS;
     r1 = r1 & r2;
     r2 = r0 + r1;
-
     r2 = r2 << 3 (v,s);
-        
     [i1++] = r2;    // save new sample
+    
+/* Just give the last two amps 0 values for test.
+    r2.h = 0x0000;
+    r2.l = 0x0000;
+    [i1++] = r2;
+*/
+
 
 nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
 nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
@@ -180,14 +191,31 @@ nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
 nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
 nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
 
-nop;nop;nop;nop;nop;nop;
-
+nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
 
 //----------------------------------------------------------------------------------------  
     r0 = 0; // not doing template match, so this is the dummy match
 
     p0 = [FP - FP_CHAN];
+    p1 = [FP- FP_ENC_LUT_BASE];
+    p5 = [FP - FP_MATCH_BASE];
     r6 = p0;            // r6 = current group of channels
+    p5 = p5+p0;
+    r1 = b[p5];
+    r1 = r1 | r0;
+    p0 = r1;
+    b[p5] = r1;
+
+    // dummy update of 7bit encoding, 7bits byte added to radio packet
+    p3 = 32;
+    p5 = p5+p3;
+    p1 = p1+p0;
+    r2 = b[p1];
+    b[p5] = r2;
     
     /*
         r4 = packet byte count (qs)
@@ -218,6 +246,7 @@ nop;nop;nop;nop;nop;nop;
     r4 = [FP - FP_QS];
     r7 = 6;
     r4 += 1;
+    i3 += 4;
     cc = r4 == r7;
     // if we don't have 6 samples for each TXCHANx yet, then continue;
     // otherwise add the template matches and finish constructing the pkt
@@ -226,6 +255,7 @@ nop;nop;nop;nop;nop;nop;
     r5 = [FP - FP_QPACKETS];
     p1 = r5;                        // used to index to state_lut; hide 4 cycle latency
     p0 = [FP - FP_STATE_LUT_BASE];
+    p5 = [FP - FP_MATCH_PTR7];
     r5 += 1;                        // one more packet on the queue.
     [FP - FP_QPACKETS] = r5;        // write-back num-pkt
     p0 = (p0 + p1) << 2;            // 4 byte align
@@ -234,17 +264,33 @@ nop;nop;nop;nop;nop;nop;
     
     // p5 and and anyting related to FP_MATCH_PTR7 is set to 0, if edited it fucks with the 
     // echo bits in the template match bytes, and screws with the transmission.
-    r0 = 0;
-    r1 = 0;
+    //r0 = 0;
+    //r1 = 0;
+// ----- This part is weird ---
+    r0 = [p5++];
+    r1 = [p5++];
+// -----------------------------
 
     // flag upper bit in each byte with QS & echo
     r0 = r0 | r7;
     r1 = r1 | r5;
+
+    // Reset the area just read in 7bit and 8bit MATCH memory
+    r7 = p5;                   // r7 = Address in 7bit area right now
+    p0 = -36;
+    p5 = p5 + p0;              // p5 = corresponding address in 8bit (32+4 for post-inc)
+    bitclr(r7,6);              // Reset r7 pointer
+    bitset(r7,5);              // to keep it within 7b-encoding region
+    [FP - FP_MATCH_PTR7] = r7; // and write it back
     
     // write template match to pkt
     [p4++] = r0;
     [p4++] = r1;
     r4 = 0;         // clear sample count in qs (also reset templat match in 8b region).
+
+    // reset template match
+    [p5--] = r4;
+    [p5--] = r4;
 
 end_txchan_qs:
     [FP - FP_QS] = r4;  // if we just finished a pkt, QS=0, otherwise it was incremented already.
@@ -276,7 +322,7 @@ _clearirq_asm: //just write the status register via spi to clear.
 
 _waitirq_asm:
 	[--sp] = rets;
-	r7 = 180; 
+	r7 = 178; 
 	[fp - FP_TIMER] = r7;
 waitirq_loop:
 	r6 = w[p1];
@@ -1066,8 +1112,9 @@ spell_intan:
     call wait_samples;                  // call 34 
 
     r4 += 1;
-    r0 = r4 << 8;
-    r0 = r0 << SHIFT_BITS;
+    //r0 = r4 << 8;
+    //r0 = r0 << SHIFT_BITS;
+    r0 = NEXT_CHANNEL_SHIFTED;
     [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
     [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
     [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
@@ -1075,8 +1122,9 @@ spell_intan:
     call wait_samples;                  // call 35
 
     r4 += 1;
-    r0 = r4 << 8;
-    r0 = r0 << SHIFT_BITS;
+    //r0 = r4 << 8;
+    //r0 = r0 << SHIFT_BITS;
+    r0 = NEXT_CHANNEL_SHIFTED;
     [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
     [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
     [p0 + (SPORT1_TX - SPORT0_RX)] = r0;

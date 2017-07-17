@@ -1,45 +1,10 @@
 #ifndef __MEMORY_H__
 #define __MEMORY_H__
 
-//memory.h --have to clean this up, it's crufty!
-/* BF-532 has two (data SRAM) memory banks -
-0xff904000 (B) and 0xff804000 (A)
-rules for memory conflicts:  (from Analog EE-197, look it up!)
-A one cycle stall is incurred during a collision of simultaneous
-accesses only if the accesses are to
-* the same 32-bit word polarity (address bits 2 match),
-* the same 4 KB sub-bank (address bits 13 and 12 match),
-	4kb = 0x1000, e.g. one bank = 0xff904000 - 0xff904fff.
-* the same 16 KB half-bank (address bits 16 match),
-* the same bank (address bits 21 and 20 match).
-"
-hence, the weights and taps should, at least, be on different sub-banks.*/
-/* Bank B */
-/*
-memory map:
-	0xFF90 4000	filter coeficients, b[0] b[1] a[0] a[1] ordering.
-			4864 bytes = length 0x1300; end at 0xff90 5300
-	
-    0xFF80 4000	mean		-- different bank so we don't get collisions.
-				x1 n-1
-				x1 n-2
-				y1 n-1	x2 n-1
-				y1 n-2	x2 n-2
-				y2 n-1	x3 n-1
-				y2 n-2	x3 n-2
-				y3 n-1	x4 n-1
-				y3 n-2	x4 n-2
-				y4 n-1
-				y4 n-2		--total: 11 32 bit words. 2816 bytes total buffer for 64 chan.
-	length b00
-	0xFF80 4b00	end of delay buffer.
+/* memory header file for radio_basic.asm
+   no signal chain, so W1 stores only samples
+   A1 = the signal chain coef/param buffer, this can stay, but we are not using it.
 */
-
-/*
- * Allen's comments:
- * In the firmware comments written by Tim, "channel" in fact refers to one set of 
- * SPORT0 and SPORT1 samples, which corresponds to sampling from 4 physical channels.
- */
 
 #define A1 				0xFF904000  /** BANK B **/ //i0 accesses.
 #define A1_AGC			4			//units: 32bit words.
@@ -66,23 +31,24 @@ memory map:
 #define GCC_RESERVED 	0xFF907000 //above this GCC stomps around on.
 
 #define W1 				0xFF804000  /** BANK A **/
-#define	W1_STRIDE		14 // (10 words per IIR, 1 mean, 1 gain, 2 lms).
-						  //total length = W1_STRIDE * 2 * 32 * 4 = 3584 = 0xE00
-#define T1				0xFF805000 //accessed by i3, read/write delayed filtered signal
-#define T1_LENGTH		(16*32*4) // 16 delays, both templates matched to same delay,
+#define	W1_STRIDE		1           // 1 16-bit sample per channel is saved. 1 32-bits word per 2 channels.
+
+// T1, dont really care. Initiate as 0's and leave them
+#define T1				0xFF805000  //accessed by i3, read/write delayed filtered signal
+#define T1_LENGTH		(16*32*4)   // 16 delays, both templates matched to same delay,
 									//32 channels, 4 bytes each ch.
 									// 2048 = 0x800
+
+// Also going to be 0's, not transmitting matching info
 #define MATCH			0xFF806000 //256 bits, 128 channels * 2 templates.
-#define MATCH_LENGTH	64    // 32 bytes. 8 words, TWICE -
-							//second half is 7-b encoded.
+#define MATCH_LENGTH	64         // 32 bytes. 8 words, TWICE -
+							       //second half is 7-b encoded.
 
 #define ENC_LUT			0xff806100 //256 bytes, map 8 bits -> 7 bits.
 #define STATE_LUT		0xff806200 // 16 32bit words; length = 64 bytes.
 
 #define WFBUF			0xFF807000  //really the transmit buffer.
 #define WFBUF_LEN		1024		// length = 2 frames * 512 byte/frame; 512 bytes =  16-packet frames * (32bytes/pkt)
-
-
 
 //use the frame pointer to store local variables for fast access.
 #define FP_CHAN			4

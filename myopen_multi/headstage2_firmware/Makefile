@@ -4,8 +4,8 @@
 #FIRMWARE_VERSION = firmware1
 #FIRMWARE_VERSION = firmware2
 #FIRMWARE_VERSION = intan_setup_test
-FIRMWARE_VERSION = intan_setup_test2
-#FIRMWARE_VERSION = radio_basic
+#FIRMWARE_VERSION = intan_setup_test2
+FIRMWARE_VERSION = radio_basic
 #FIRMWARE_VERSION = radio_AGC
 #FIRMWARE_VERSION = radio_AGC_IIR
 #FIRMWARE_VERSION = IIR_oscillator_test
