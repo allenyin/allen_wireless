@@ -137,11 +137,13 @@ wait_samples_main:
     r2 = r0 + r1;                          // r2 = Ch32, Ch0 (lo, hi). 16-bits samples
 
     // load in new convert command
+/*
     r7 = NEXT_CHANNEL_SHIFTED; 
     [p0 + (SPORT1_TX - SPORT0_RX)] = r7;   // SPORT1 primary TX
     [p0 + (SPORT1_TX - SPORT0_RX)] = r7;   // SPORT1 sec TX
     [p0 + (SPORT0_TX - SPORT0_RX)] = r7;   // SPORT0 primary TX
     [p0 + (SPORT0_TX - SPORT0_RX)] = r7;   // SPORT0 sec TX
+*/
 
     r5 = [i0++];    // r5.l=0x7fff, r5.h=0x8000. i0 @2nd inte coefs after.
 .align 8
@@ -194,6 +196,12 @@ wait_samples_main:
     r3 = abs r3 (v);
     [i2++] = r3 || r2 = [i1++];    // Save AGC-gain, i2@final sample. i1@ x0(n-1)
     [i2++] = r0;                   // Save final sample, i2@ x0(n-1)
+
+.align 8
+    // nops for LMS?
+    nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+    nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+    nop;nop;nop;nop;nop;nop;nop;
 
 .align 8
     /* Start 2 back-to-back direct-form 1 biquads. At this point,
@@ -312,6 +320,12 @@ wait_samples_main:
    r4 = r4 ^ r0;          // convert to unsigned offset binary. SAA works on unsigned numbers.
    r0 = r4;               // save a copy for later
 
+.align 8
+    // nops for LMS?
+    nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+    nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+    nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+
 .align 8;   // template A: load order is t, t-15, t-14,...t-1
     a0 = a1 = 0 || r2 = [i0++]; //r2=template_A(t), r0 and r4 contains byte-packed samples just collected
     saa( r1:0, r3:2 ) || r0 = [i3++] || r2 = [i0++]; //r2=template_A(t-15), r0=bytepack(t-15)
@@ -378,9 +392,6 @@ wait_samples_main:
     r0 <<= 2;
     r0 = r0 + r1; // r0=[12 zeros][amp4B][amp2B][14 zeros][amp3B][amp1B][2 zeros]
     r0 = r0 + r6; // add to tempA matches.
-
-    // Extra nops the signal path can tolerate.
-    nop;nop;nop;nop;nop;nop;
 
     /* 
     r0 currently is:
@@ -1258,8 +1269,9 @@ spell_intan:
     call wait_samples;                  // call 34 
 
     r4 += 1;
-    r0 = r4 << 8;
-    r0 = r0 << SHIFT_BITS;
+    //r0 = r4 << 8;
+    //r0 = r0 << SHIFT_BITS;
+    r0 = NEXT_CHANNEL_SHIFTED;
     [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
     [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
     [p0 + (SPORT1_TX - SPORT0_RX)] = r0;
@@ -1267,8 +1279,9 @@ spell_intan:
     call wait_samples;                  // call 35
 
     r4 += 1;
-    r0 = r4 << 8;
-    r0 = r0 << SHIFT_BITS;
+    //r0 = r4 << 8;
+    //r0 = r0 << SHIFT_BITS;
+    r0 = NEXT_CHANNEL_SHIFTED;
     [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
     [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
     [p0 + (SPORT1_TX - SPORT0_RX)] = r0;

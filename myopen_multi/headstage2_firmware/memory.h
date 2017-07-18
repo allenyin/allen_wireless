@@ -1,27 +1,31 @@
 #ifndef __MEMORY_H__
 #define __MEMORY_H__
 
-/* memory header file for radio_basic.asm
-   no signal chain, so W1 stores only samples
-   A1 = the signal chain coef/param buffer, this can stay, but we are not using it.
+/* memory header file for radio_AGC_IIR_SAA.asm -- final version
+   Signal-chain = integrator-highpass + AGC + IIR (2 biquads, LPF1 and HPF1)
+   SAA template matching is also included.
+
+   W1 stores original-samples, integrator mean, AGC gain, AGC-out, 3 pairs of delayed samples for biquads.
+   A1 = the signal chain coef/param buffer, including integrator, AGC, and biquad coefficients.
+        Also the template and aperture values.
 */
 
 #define A1 				0xFF904000  /** BANK B **/ //i0 accesses.
-#define A1_AGC			4			//units: 32bit words.
-#define A1_LMS			7
-#define A1_IIR			16			//4 coefs per 4 biquads.
-#define A1_TEMPLATE		16
+#define A1_AGC			4			//units: end of AGC coefs is end of 4 32-bits words.
+#define A1_LMS			0           // No LMS
+#define A1_IIR		    8			// 4 coefs per biquad, 2 biquads.
+#define A1_TEMPLATE	    16 	
 #define A1_APERTURE		2			// 4 16-bit words
-#define A1_IIRSTARTA	(A1_AGC + A1_LMS) //11
-#define A1_AGCB		(A1_IIRSTARTA + A1_IIR)
-#define A1_IIRSTARTB	(A1_AGCB + A1_AGC + A1_LMS) //38
-#define A1_TEMPA		(A1_IIRSTARTB + A1_IIR) //54
-#define A1_APERTUREA	(A1_TEMPA + A1_TEMPLATE) //68
-#define A1_TEMPB		(A1_APERTUREA + A1_APERTURE) //72
-#define A1_APERTUREB	(A1_TEMPB + A1_TEMPLATE) //88
-#define A1_STRIDE		(A1_APERTUREB + A1_APERTURE) // 90; 
-/* (agc+lms+iir)*2 + (template + aperture)*2 = 90 ok! 32-bits words per channel
-    total = 90*(4 bytes/word)*32 channels = 11520 = 0x2D00 (32-bit aligned memory) */
+#define A1_IIRSTARTA	(A1_AGC + A1_LMS)            //4 
+#define A1_AGCB		    (A1_IIRSTARTA + A1_IIR)      //12 
+#define A1_IIRSTARTB	(A1_AGCB + A1_AGC + A1_LMS)  //16
+#define A1_TEMPA		(A1_IIRSTARTB + A1_IIR)      //24
+#define A1_APERTUREA	(A1_TEMPA + A1_TEMPLATE)     //40
+#define A1_TEMPB		(A1_APERTUREA + A1_APERTURE) //42
+#define A1_APERTUREB	(A1_TEMPB + A1_TEMPLATE)     //58
+#define A1_STRIDE		(A1_APERTUREB + A1_APERTURE) //60 
+
+
 #define FP_BASE			0xFF906F00 //length: 0x200, 512 bytes.
 // ** Frame pointer counts down! **
 
@@ -31,7 +35,14 @@
 #define GCC_RESERVED 	0xFF907000 //above this GCC stomps around on.
 
 #define W1 				0xFF804000  /** BANK A **/
-#define	W1_STRIDE		1           // 1 16-bit sample per channel is saved. 1 32-bits word per 2 channels.
+
+/* 
+  1 sample + 1 integrator mean + 1 AGC gain + 1 gained-sample + 
+  IIR related: x0(n-1), x0(n-2), y1(n-1), y1(n-2), y2(n-1), y2(n-2)
+  = 10 16-bit words per channel.
+  10 32-bit words per 2 channels --> 20 32-bit words per group of 4.
+*/
+#define	W1_STRIDE		10
 
 // T1, dont really care. Initiate as 0's and leave them
 #define T1				0xFF805000  //accessed by i3, read/write delayed filtered signal
