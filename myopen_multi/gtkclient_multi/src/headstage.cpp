@@ -317,10 +317,10 @@ void Headstage::setOsc(int chan){
 	//(to send, needs to keep correct channel name)
 	b[0] = 0.f; //assume there is already energy in the
 	b[1] = 0.f; //delay line.
-#if defined(RADIO_AGC_IIR) || defined(RADIO_AGC_IIR_SAA) || defined(RADIO_GAIN_IIR_SAA)
+#if defined(RADIO_AGC_IIR) || defined(RADIO_AGC_IIR_SAA) || defined(RADIO_GAIN_IIR_SAA) || defined(RADIO_AGC_LMS_IIR_SAA)
 	b[2] = 32768.f - 573; //10 -> should be about 919Hz @ fs = 31250Hz
     printf("Here we have special coef\n");
-#else
+#elif defined(HEADSTAGE_TIM)
     printf("Setting 250Hz osc\n");
     b[2] = 32768.f - 45; // Should be about 250Hz @ fs = 31250Hz
 #endif
@@ -345,6 +345,9 @@ void Headstage::setOsc(int chan){
 			j = (int)(b[i]);
 			u = (unsigned int)((j&0xffff) | ((j&0xffff)<<16));
 			ptr[i*2+1] = htonl(u);
+            printf("Address %#010x = %#010x\n", 
+                (A1 + (A1_STRIDE*(kchan & 31) + A1_IIRSTARTA + p*(A1_IIRSTARTB-A1_IIRSTARTA) + i)*4),
+                u);
 	}
 	m_sendW[tid]++;
 	saveMessage(tid, "osc %d and %d thread %d", chan, chan+32, tid);
@@ -516,6 +519,7 @@ void Headstage::setLMS(bool on){
 		m_echo[tid]++;
 	}
 	saveMessage("lms %d", (on ? 1 : 0));
+    printf("lms %d\n", (on ? 1 : 0));
 }
 void Headstage::setTemplate(int ch, int aB){
 	
@@ -628,7 +632,7 @@ void Headstage::resetBiquads(int chan){
 	setBiquad(chan, &(m_lowpass_coefs[4]), 2);
 	setBiquad(chan, &(m_highpass_coefs[4]), 3);
 
-#elif defined(RADIO_AGC_IIR) || defined(RADIO_AGC_IIR_SAA) || defined(RADIO_GAIN_IIR_SAA)
+#elif defined(RADIO_AGC_IIR) || defined(RADIO_AGC_IIR_SAA) || defined(RADIO_GAIN_IIR_SAA) || defined(RADIO_AGC_LMS_IIR_SAA)
     /* The only change that would happen is turning it into an oscillator
      * Thus resetting just change the coefficients of the first biquad back.
      *

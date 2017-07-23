@@ -1515,7 +1515,7 @@ void updateChannelUI(int k){
 	gtk_adjustment_set_value(g_agcSpin[k], g_c[ch]->getAGC());  // include AGC settings
 #elif RADIO_AGC_IIR
     gtk_adjustment_set_value(g_agcSpin[k], g_c[ch]->getAGC());  // include AGC settings
-#elif RADIO_AGC_IIR_SAA
+#elif defined(RADIO_AGC_IIR_SAA) || defined(RADIO_AGC_LMS_IIR_SAA)
     // include everything except IIR based gain setting
     gtk_adjustment_set_value(g_agcSpin[k], g_c[ch]->getAGC());
 	gtk_adjustment_set_value(g_apertureSpin[k*2+0], g_c[ch]->getAperture(0));
@@ -1710,7 +1710,7 @@ static void filterRadioCB(GtkWidget *button, gpointer p){
 		}
 	}
 }
-#elif defined (RADIO_AGC_IIR) || defined(RADIO_AGC_IIR_SAA) || defined(RADIO_GAIN_IIR_SAA)
+#elif defined (RADIO_AGC_IIR) || defined(RADIO_AGC_IIR_SAA) || defined(RADIO_GAIN_IIR_SAA) || defined(RADIO_AGC_LMS_IIR_SAA)
 static void filterRadioCB(GtkWidget *button, gpointer p) {
     // only sets the currently viewed channels.
     if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(button))) {
@@ -2242,7 +2242,7 @@ int main(int argn, char **argc)
 									  channelSpinCB, i);
 		//right of that, a gain spinner. (need to update depending on ch)
 #ifdef RADIO_BASIC
-#elif defined(RADIO_AGC) || defined(RADIO_AGC_IIR) || defined(RADIO_AGC_IIR_SAA)
+#elif defined(RADIO_AGC) || defined(RADIO_AGC_IIR) || defined(RADIO_AGC_IIR_SAA) || defined(RADIO_AGC_LMS_IIR_SAA)
         // The AGC target.
 		g_agcSpin[i] = mk_spinner("AGC target", bx2,
 								  	g_c[g_channel[i]]->getAGC(),
@@ -2288,14 +2288,14 @@ int main(int argn, char **argc)
 #elif RADIO_AGC
     const char* signalNames[W1_STRIDE] = {
         "0 Samples from Intan",   // value is signed.
-        "1 Integrated mean",      // value is signed.
+        "1 Integrator mean",      // value is signed.
         "2 AGC gain",             // value is always positive, between 0-127.
         "3 AGC out"               // value is AGCgain*(sample-mean), signed.
     };
 #elif defined(RADIO_AGC_IIR) || defined(RADIO_AGC_IIR_SAA)
     const char* signalNames[W1_STRIDE] = {
         "0 Samples from Intan", // value is signed
-        "1 Integrated mean",    // value is signed
+        "1 Integrator mean",    // value is signed
         "2 AGC gain",           // value is always positive, between 0-127
         "3 AGC out",            // value is AGCgain*(sample-mean), signed.
         "4 x1(n-1)/AGC out",        
@@ -2315,6 +2315,20 @@ int main(int argn, char **argc)
         "5 y1(n-2) LPF",
         "6 y2(n-1)/final output HPF",
         "7 y2(n-2) HPF"
+    };
+#elif RADIO_AGC_LMS_IIR_SAA
+    const char* signalNames[W1_STRIDE] = {
+        "0 Samples from Intan", // value is signed
+        "1 Integrator mean",    // value is signed
+        "2 AGC gain",           // always positive, between 0-127
+        "3 saturated AGC out",  // signed
+        "4 AGC / LMS out",      // is AGC out if LMS disabled, otherwise LMS out
+        "5 x1(n-1) / LMS out",  // next iteration's delayed biquad input=last stage's output
+        "6 x1(n-2)",
+        "7 y1(n-1) LPF",
+        "8 y1(n-2) LFP",
+        "9 y2(n-1) / final output HPF",
+        "10 y2(n-2) HPF"
     };
 #else
 	const char* signalNames[W1_STRIDE] = {
@@ -2345,63 +2359,31 @@ int main(int argn, char **argc)
 	g_signal_connect( G_OBJECT( combo ), "changed",
                       G_CALLBACK( signalChainCB ), NULL );
 	
-	//add a gain set-all button.
-#ifdef RADIO_BASIC
-#elif RADIO_AGC
-    //and a AGC set-all button.
-	button = gtk_button_new_with_label ("Set all AGC targets from A");
+#if defined(RADIO_GAIN_IIR_SAA) || defined(HEADSTAGE_TIM)
+    // add a gain set-all button
+    button = gtk_button_new_with_label("Set all gains from A");
+    g_signal_connect(button, "clicked", G_CALLBACK (gainSetAll),0);
+	gtk_box_pack_start (GTK_BOX (box1), button, TRUE, TRUE, 0);
+#endif
+
+#if defined(RADIO_AGC) || defined(RADIO_AGC_IIR) || defined(RADIO_AGC_IIR_SAA) || defined(RADIO_AGC_LMS_IIR_SAA) || defined(HEADSTAGE_TIM)
+    // add a AGC set-all button
+    button = gtk_button_new_with_label ("Set all AGC targets from A");
 	g_signal_connect(button, "clicked", G_CALLBACK (agcSetAll),0);
 	gtk_box_pack_start (GTK_BOX (box1), button, TRUE, TRUE, 0);
-#elif defined(RADIO_AGC_IIR)// || defined(RADIO_AGC_IIR_SAA)
-    //and a AGC set-all button.
-	button = gtk_button_new_with_label ("Set all AGC targets from A");
-	g_signal_connect(button, "clicked", G_CALLBACK (agcSetAll),0);
-	gtk_box_pack_start (GTK_BOX (box1), button, TRUE, TRUE, 0);
-    
-    //add osc / reset radio buttons
-    
-    //mk_radio("500-7kHz,osc",2,box1,true,"filter",filterRadioCB);
-    mk_radio("250-9kHz,osc",2,box1,true,"filter",filterRadioCB);
+#endif
 
-#elif defined(RADIO_AGC_IIR_SAA)
-    //and a AGC set-all button.
-	button = gtk_button_new_with_label ("Set all AGC targets from A");
-	g_signal_connect(button, "clicked", G_CALLBACK (agcSetAll),0);
-	gtk_box_pack_start (GTK_BOX (box1), button, TRUE, TRUE, 0);
-    
-    //add osc / reset radio buttons
-    
-    mk_radio("500-9kHz,osc",2,box1,true,"filter",filterRadioCB);
+#if defined(RADIO_AGC_LMS_IIR_SAA) || defined(HEADSTAGE_TIM)
+    // add LMS on/off
+    mk_radio("on,off", 2, box1, false, "LMS", lmsRadioCB);
+#endif
 
-#elif RADIO_GAIN_IIR_SAA
-    // set all gain button
-    button = gtk_button_new_with_label ("Set all gains from A");
-	g_signal_connect(button, "clicked", G_CALLBACK (gainSetAll),0);
-	gtk_box_pack_start (GTK_BOX (box1), button, TRUE, TRUE, 0);
-
-    // add osc/reset radio buttons
-    //mk_radio("500-7kHz,osc",2,box1,true,"filter",filterRadioCB);
-    //mk_radio("500-9kHz,osc",2,box1,true,"filter",filterRadioCB);
-    mk_radio("250-9kHz,osc",2,box1,true,"filter",filterRadioCB);
-
-#else
-    button = gtk_button_new_with_label ("Set all gains from A");
-	g_signal_connect(button, "clicked", G_CALLBACK (gainSetAll),0);
-	gtk_box_pack_start (GTK_BOX (box1), button, TRUE, TRUE, 0);
-    
-    //and a AGC set-all button.
-	button = gtk_button_new_with_label ("Set all AGC targets from A");
-	g_signal_connect(button, "clicked", G_CALLBACK (agcSetAll),0);
-	gtk_box_pack_start (GTK_BOX (box1), button, TRUE, TRUE, 0);
-
-    
-	//add LMS on/off.. (global .. for now)
-	mk_radio("on,off", 2,
-			 box1, false, "LMS", lmsRadioCB);
-	
-	//add osc / reset radio buttons
-	mk_radio("500-6.7k,150-10k,osc,flat", 4,
-			 box1, true, "filter", filterRadioCB);
+#if defined(RADIO_AGC_IIR) || defined(RADIO_AGC_IIR_SAA) || defined(RADIO_AGC_LMS_IIR_SAA) || defined(RADIO_GAIN_IIR_SAA)
+    // add oscillator/reset from 2 biquads
+    mk_radio("250-9kHz,osc", 2, box1, true, "filter", filterRadioCB);
+#elif defined(HEADSTAGE_TIM)
+    // add oscillator/reset from 4 biquads
+	mk_radio("500-6.7k,150-10k,osc,flat", 4, box1, true, "filter", filterRadioCB);
 #endif
 
 	//add in a zoom spinner.
@@ -2716,6 +2698,8 @@ int main(int argn, char **argc)
     gtk_combo_box_set_active(GTK_COMBO_BOX(combo), 3);
 #elif defined(RADIO_AGC_IIR) || defined(RADIO_AGC_IIR_SAA)
     gtk_combo_box_set_active(GTK_COMBO_BOX(combo), 8);
+#elif defined(RADIO_AGC_LMS_IIR_SAA)
+    gtk_combo_box_set_active(GTK_COMBO_BOX(combo), 9);
 #elif RADIO_GAIN_IIR_SAA
     gtk_combo_box_set_active(GTK_COMBO_BOX(combo), 6);
 #else

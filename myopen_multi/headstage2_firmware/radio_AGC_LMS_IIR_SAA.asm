@@ -21,11 +21,12 @@
 #define REG2  0x8204    // get back 0xff04
 #define REG3  0x8300    // get back 0xff00
 
-#define REG4              0x8480   // get back 0xff80 - no DSP, offset binary
-#define REG4_DSP_UNSIGNED 0x8494   // get back 0xff94 - DSP 300Hz, offset binary
-#define REG4_DSP_SIGNED   0x84D4   // get back 0xffD4 - DSP 300Hz, signed output
-#define REG4_SIGNED       0x84C4   // get back 0xffC4 - no DSP, signed output
+#define REG4              0x8480 // get back 0xff80 - no DSP, offset binary
+#define REG4_DSP_UNSIGNED 0x8494 // get back 0xff94 - DSP, offset binary
+#define REG4_DSP_SIGNED   0x84D4 // get back 0xffD4 - DSP, signed output
+#define REG4_SIGNED       0x84C4 // get back 0xffC4 - no DSP, signed output
 #define REG4_DSP_SIGNED_1Hz 0x84DC // get back 0xffDC - DSP 1Hz, signed output
+#define REG4_DSP_SIGNED_300Hz 0x84D4 // get back 0xffD4 - DSP 300Hz, signed output
 
 #define REG5  0x8500    // get back 0xff00
 #define REG6  0x8600    // get back 0xff00
@@ -33,12 +34,12 @@
 
 //----------- Hardware bandpass settings ------------
 // Intan REG8-13, configured for [250Hz, 10kHz]
-//#define REG8  0x8811    // get back 0xff11. 
-//#define REG9  0x8900    // get back 0xff00
-//#define REG10 0x8a10    // get back 0xff10. 
-//#define REG11 0x8b00    // get back 0xff00
-//#define REG12 0x8c11    // get back 0xff11. 
-//#define REG13 0x8d00    // get back 0xff00
+#define REG8  0x8811    // get back 0xff11. 
+#define REG9  0x8900    // get back 0xff00
+#define REG10 0x8a10    // get back 0xff10. 
+#define REG11 0x8b00    // get back 0xff00
+#define REG12 0x8c11    // get back 0xff11. 
+#define REG13 0x8d00    // get back 0xff00
 
 // Intan REG8-13, configured for [250Hz, 7.5kHz]
 //#define REG8  0x8816    // get back 0xff16
@@ -49,12 +50,12 @@
 //#define REG13 0x8d00    // get back 0xff00
 
 // Intan REG8-13, configured for [1Hz, 10kHz]
-#define REG8  0x8811      // get back 0xff11
-#define REG9  0x8900      // get back 0xff00
-#define REG10 0x8a10      // get back 0xff10
-#define REG11 0x8b00      // get back 0xff00
-#define REG12 0x8c2c      // get back 0xff2c
-#define REG13 0x8d06      // get back 0xff06
+//#define REG8  0x8811      // get back 0xff11
+//#define REG9  0x8900      // get back 0xff00
+//#define REG10 0x8a10      // get back 0xff10
+//#define REG11 0x8b00      // get back 0xff00
+//#define REG12 0x8c2c      // get back 0xff2c
+//#define REG13 0x8d06      // get back 0xff06
 
 //---------------------------------------------------
 
@@ -130,24 +131,29 @@ wait_samples_main:
     r1 = [p0 + (SPORT1_RX - SPORT0_RX)];   // SPORT1-primary: Ch32-63
     r0 = [p0 + (SPORT1_RX - SPORT0_RX)];   // SPORT1-sec:     Ch0-31
 
-    r1 <<= 15;              
+    r1 <<= 15;                             // Shift 15 bits because I read in 17 bits in lower 2 bytes
     r0 >>= SHIFT_BITS;
     r1 = r1 & r2;           
     r2 = r0 + r1;                          // r2 = Ch32, Ch0 (lo, hi). 16-bits samples
 
-    // load in new convert command
-/*
-    r7 = NEXT_CHANNEL_SHIFTED; 
-    [p0 + (SPORT1_TX - SPORT0_RX)] = r7;   // SPORT1 primary TX
-    [p0 + (SPORT1_TX - SPORT0_RX)] = r7;   // SPORT1 sec TX
-    [p0 + (SPORT0_TX - SPORT0_RX)] = r7;   // SPORT0 primary TX
-    [p0 + (SPORT0_TX - SPORT0_RX)] = r7;   // SPORT0 sec TX
-*/
-
-    r5 = [i0++];    // r5.l=ch0 gain, r5.h=ch32 gain. i0@LPF1 b0
+    r5 = [i0++];    // r5.l=0x7fff, r5.h=0x8000. i0 @2nd inte coefs after.
 .align 8
-    [i2++] = r2 || r0 = [i1++]; // save new sample. i1,i2 @ gained-sample
-    a0 = r2.l * r5.l, a1 = r2.h * r5.h || r0 = [i1++]; // a0,a1=gain*sample. i1@x0(n-1)
+    // integrator stage - the incoming samples are alreayd in Q1.15 format.
+
+    [i2++] = r2 || r0 = [i1++]; // save new sample. i1,i2 @ integrator mean after
+    a0 = r2.l * r5.l, a1 = r2.h * r5.l || r1 = [i1++];  // a0=(Q31)sample. r1=integrated mean. i1@AGCgain
+
+    // r0=how much sample deviates from integrated mean. r6.l=0x7fff, r6.h=0x0640
+    r0.l = (a0 += r1.l * r5.h), r0.h = (a1 += r1.h * r5.h) || r6=[i0++]; // i0@AGC_target after
+    
+    a0 = r1.l * r6.l, a1 = r1.h * r6.l; // a0=mean in Q31
+
+    // r2=updated mean. r5=AGC-gain, r7=AGC-target. i1@saturated AGCout, i0@AGC-scaler/enable. 
+    r2.l = (a0 += r0.l * r6.h), r2.h = (a1 += r0.h * r6.h) || r5=[i1++] || r7=[i0++];
+
+    // AGC-stage
+
+    a0 = r0.l * r5.l, a1 = r0.h * r5.h || [i2++] = r2; //a0,a1=AGCgain*devFromMean. Save new mean. i2@AGCgain
     
     /* Result in accumulator is Q1.31. Multiplication treated as (Q1.31)*(Q7.8). Q7.8 has
        8 bits before the decimal point. The result should have 9 bits before the decimal point.
@@ -160,18 +166,125 @@ wait_samples_main:
     a0 = a0 << 8;   
     a1 = a1 << 8;
     r0.l = a0, r0.h = a1;     // Move half reg, treat result as signe frac. Round to bit 16 and extract.
+    a0 = abs a0, a1 = abs a1; // Need to compare abs-scaled deviation to target.
+    
+    // Signed-int mode for MAC. Result should be 0x7fff or 0x8000, tell us if target is smaller or not.
+    // r6.l = 16384 (0.5), r6.h = 1 (AGC-enable). i0@LMS w6 (for channel (c-7)%32)
+    r4.l = (a0 -= r7.l * r7.l), r4.h = (a1 -= r7.h * r7.h) (is) || r6 = [i0++];
 
-    [i2++] = r0;              // Save gained-sample. i2@x0(n-1)
+    /* Update AGC-gain (trick math here):
+       r5 = AGC-gain, which is in Q8.8 format. r6.l=0x4000=0.5 in Q1.15 format.
+       Turns out if we do 
+            a0=r5.l*r6.l, r3.l=(a0-=0*0) (s2rnd)
+       Then the result in r3.l is the same value in Q8.8 format.
+
+       In the second line below, r4.l/h is either 0x7fff or 0x8000. So it acts as 
+       either subtracting 2^-8 from the original Q8.8 gain's value; Or as adding
+       2^-7 to the original Q8.8 gain's value after extraction.
+   */
+    a0 = r5.l * r6.l, a1 = r5.h * r6.l;     // load a0 with scaled AGC-gain
+    r3.l = (a0 -= r4.l * r6.h), r3.h = (a1 -= r4.h * r6.h) (s2rnd); // within certain range gain doesnt change
 
 .align 8
-    // nops for LMS?
-    nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-    nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-    nop;nop;nop;nop;nop;nop;nop;
+    r3 = abs r3 (v) || r7 = [FP-FP_WEIGHTDECAY];    // r3=updated AGC gain; r7=1 if LMS
+    
+/* Start LMS, at this point:
+   i0 @ LMS w6, for channel (c-7)%32. Current channel is c (bank A1)
+   i1 @ saturated AGCout (bank W1)
+   i2 @ AGCgain (bank W1)
 
+   r0=AGC-gained sample
+   r1=integrated mean 
+   r2=new integrator mean
+   r3=new AGCgain
+   r4=AGC-target comparison result
+   r5=old AGCgain
+   r6=AGC enable and coefs
+   r7=LMS enable/Weightdecay
+
+   m0 = -28 (moving back 7 LMS weights in A1)
+   m1 = -7*W1_STRIDE*2*4 (moving back 7 channels on same amplifier, in W1)
+   m2 = W1_STRIDE*2*4 (moving forward 1 channel on same amplifier, in W1)
+   m3 = 8 (jump forward two 32-bit words).
+*/
+
+    // ------ Steps to skip LMS gracefully -----
+    // saturate the sample (r4), save the AGCgain (r3), i2@saturated AGCout
+    // move i1 to x0(n-1), 
+/*    r4.l = (a0 = r0.l * r7.l), r4.h = (a1 = r0.h * r7.l) (is) || i1 += m3 || [i2++] = r3;
+    mnop || r2 = [i0++m3] || [i2++] = r4;   // move i0 to w4, save sat samp (r4), i2@AGC/LMS-out
+    mnop || r2 = [i0++m3] || [i2++] = r0;   // move i0 to w2, save AGC samp (r0), i2@x0(n-1)
+    r2 = [i0++m3];  // move i0 to w0
+    r2 = [i0++];    // move i0 to LPF1 b0
+    nop; nop; nop; nop; nop; nop; nop; nop; nop; nop;
+    nop; nop; nop; nop; nop; nop; nop; nop; nop; nop;
+    nop; nop;
+*/
+    // -------------------------------------------
+
+    // saturate the sample (r4), save the AGCgain (r3), 
+    // move i1 to saturated AGCout 7 channels before, i2@saturated AGCout
+    r4.l = (a0 = r0.l * r7.l), r4.h = (a1 = r0.h * r7.l) (is) || i1 += m1 || [i2++] = r3;
+
+    mnop || r1 = [i1++] || [i2++] = r4; // i1@AGCout of c-7, save sat sample (r4), i2@AGCout of c
+    mnop || r1 = [i1++m2] || r2 = [i0++];  // r1=AGCout(c-7), i1@AGCout(c-6), r2=LMS w6, i0@LMS w5
+    
+    // LMS summation
+    a0 = r1.l * r2.l, a1 = r1.h * r2.h || r1 = [i1++m2] || r2 = [i0++];
+    a0+= r1.l * r2.l, a1+= r1.h * r2.h || r1 = [i1++m2] || r2 = [i0++];
+	a0+= r1.l * r2.l, a1+= r1.h * r2.h || r1 = [i1++m2] || r2 = [i0++];
+	a0+= r1.l * r2.l, a1+= r1.h * r2.h || r1 = [i1++m2] || r2 = [i0++];
+	a0+= r1.l * r2.l, a1+= r1.h * r2.h || r1 = [i1++m2] || r2 = [i0++];
+	a0+= r1.l * r2.l, a1+= r1.h * r2.h || r1 = [i1++m2] || r2 = [i0++]; 
+      // r1=AGCout(c-1), i1@AGCout(c), r2=LMS w0, i0@LPF b0
+
+	r6.l = (a0+= r1.l * r2.l), r6.h = (a1+= r1.h * r2.h) || r1 = [i1++m1] || r2 = [i0++m0];
+      // r6=summation result, move i1 to AGCout(c-7), move i0 to LMS w6
+    nop;
+
+    r0 = r0 -|- r6 (s) || [i2++] = r0 || r1 = [i1--];  
+      // compute error (r0), save AGCout (r0), i2@x0(n-1), move i1 to sat-AGCout(c-7).
+    r6 = r0 >>> 15 (v,s) || r1 = [i1++m2] || r2 = [i0++];
+      // r6=sign(error), r1=sat-AGCout(c-7), i1@sat-AGCout(c-6), r2=LMS w6, i0@LMS w5
+.align 8
+    a0 = r2.l * r7.h, a1 = r2.h * r7.h || nop || nop;   // weight*LMS_enable
+    r5.l = (a0 += r1.l * r6.l), r5.h = (a1 += r1.h * r6.h) || r1 = [i1++m2] || r2 = [i0--]; 
+      //r5=new w6, r1=satAGCout(c-6), i1@satAGCout(c-5), r2=w5, i0@w6
+    
+    a0 = r2.l * r7.h, a1 = r2.h * r7.h || [i0++m3] = r5;
+      // save w6 (r5), i0@w4 
+    r5.l = (a0 += r1.l * r6.l), r5.h = (a1 += r1.h * r6.h) || r1 = [i1++m2] || r2 = [i0--];
+      // r1=satAGCout(c-5), i1@satAGCout(c-4), r2=w4, i0@w5
+	
+    a0 = r2.l * r7.h, a1 = r2.h * r7.h || [i0++m3] = r5; 
+      // save w5, i0@w3
+    r5.l = (a0 += r1.l * r6.l), r5.h = (a1 += r1.h * r6.h) || r1 = [i1++m2] || r2 = [i0--];
+      // r1=satAGCout(c-4), i1@satAGCout(c-3), r2=w3, i0@w4
+
+	a0 = r2.l * r7.h, a1 = r2.h * r7.h || [i0++m3] = r5; 
+      // save w4, i0@w2
+    r5.l = (a0 += r1.l * r6.l), r5.h = (a1 += r1.h * r6.h) || r1 = [i1++m2] || r2 = [i0--];
+      // r1=satAGCout(c-3), i1@satAGCout(c-2), r2=w2, i0@w3
+
+	a0 = r2.l * r7.h, a1 = r2.h * r7.h || [i0++m3] = r5; 
+      // save w3, i0@w1
+    r5.l = (a0 += r1.l * r6.l), r5.h = (a1 += r1.h * r6.h) || r1 = [i1++m2] || r2 = [i0--];
+      // r1=satAGCout(c-2), i1@satAGCout(c-1), r2=w1, i0@w2
+
+	a0 = r2.l * r7.h, a1 = r2.h * r7.h || [i0++m3] = r5; 
+      // save w2, i0@w0
+    r5.l = (a0 += r1.l * r6.l), r5.h = (a1 += r1.h * r6.h) || r1 = [i1++m2] || r2 = [i0--];
+      // r1=satAGCout(c-1), i1@satAGCout(c), r2=w0, i0@w1
+
+	a0 = r2.l * r7.h, a1 = r2.h * r7.h || [i0++m3] = r5; 
+      // save w1, i0@LPF1 b0
+    r5.l = (a0 += r1.l * r6.l), r5.h = (a1 += r1.h * r6.h) || r1 = [i1++m3] || r2 = [i0--];
+      // r1=satAGCout(c), i1@x0(n-1), r2=LPF1_b0, i0@w0
+
+    mnop || [i0++] = r5;    // save w0, i0@LPF1 b0
 .align 8
     /* Start 2 back-to-back direct-form 1 biquads. At this point,
-        r0 = final gained sample
+        r0 = LMS sample
         i0 @ LPF1 b0
         i1 @ x0(n-1) of current channel.
         i2 @ x0(n-1) of current channel.
@@ -215,25 +328,93 @@ wait_samples_main:
     r1 = r1 & r2;
     r2 = r0 + r1;
 
-    r5 = [i0++];    // r5.l = ch64 gain, r5.h=ch96 gain. i0@LPF1 b0
+    r5 = [i0++];
 .align 8    
-    [i2++] = r2 || r0 = [i1++]; // save new sample. i1,i2 @ gained-sample
-    a0 = r2.l * r5.l, a1 = r2.h * r5.h || r0 = [i1++];  // a0,a1=gain*sample. i1@x0(n-1)
+    // integrator stage
+    [i2++] = r2 || r0 = [i1++]; // save new sample. i1,i2 @ integrator mean after.
+    a0 = r2.l * r5.l, a1 = r2.h * r5.l || r1 = [i1++];  // a0=(Q15)sample. r1=integrated mean. i1@AGCgain
+    
+    // r0=how much sample deviates from mean. r6.l=0x7fff, r6.h=0x0640
+    r0.l = (a0 += r1.l * r5.h), r0.h = (a1 += r1.h * r5.h) || r6=[i0++]; // i0@AGCTargert after
+
+    a0 = r1.l * r6.l, a1 = r1.h * r6.l; // a0=mean
+
+    // r2=updated mean. r5=AGCgain, r7=AGCTarget. i1@final-sample, i0@AGC-scaler/enable.
+    r2.l = (a0 += r0.l * r6.h), r2.h = (a1 += r0.h * r6.h) || r5=[i1++] || r7=[i0++];
+
+    // AGC-stage
+    a0 = r0.l * r5.l, a1 = r0.h * r5.h || [i2++] = r2; //a0,a1=AGCgain*devFromMean. Save new mean. i2@AGCgain
     a0 = a0 << 8;
     a1 = a1 << 8;
     r0.l = a0, r0.h = a1;     // Move half reg, treat result as signed frac. Round to bit 16 and extract.
+    a0 = abs a0, a1 = abs a1; // Compare abs-scaled deviation to target.
 
-    [i2++] = r0;              // Save gained-sample. i2@x0(n-1)
+    // signed-int mode MAC. Result should be 0x7fff or 0x8000 - tells if target is smaller or not.
+    // r6.l = 0x4000, r6.h=1 (AGC-enable). i0@integ_coef1
+    r4.l = (a0 -= r7.l * r7.l), r4.h = (a1 -= r7.h * r7.h) (is) || r6 = [i0++];
+
+    // update AGCgain
+    a0 = r5.l * r6.l, a1 = r5.h * r6.l; // convert AGCgain to Q1.15
+    r3.l = (a0 -= r4.l * r6.h), r3.h = (a1 -= r4.h * r6.h) (s2rnd);
 
 .align 8
-    // nops for LMS?
-    nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-    nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
-    nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;
+    r3 = abs r3 (v) || r7 = [FP-FP_WEIGHTDECAY];
+
+    // ------ Steps to skip LMS gracefully -----
+    // saturate the sample (r4), save the AGCgain (r3), i2@saturated AGCout
+    // move i1 to x0(n-1), 
+/*    r4.l = (a0 = r0.l * r7.l), r4.h = (a1 = r0.h * r7.l) (is) || i1 += m3 || [i2++] = r3;
+    mnop || r2 = [i0++m3] || [i2++] = r4;   // move i0 to w4, save sat samp (r4), i2@AGC/LMS-out
+    mnop || r2 = [i0++m3] || [i2++] = r0;   // move i0 to w2, save AGC samp (r0), i2@x0(n-1)
+    r2 = [i0++m3];  // move i0 to w0
+    r2 = [i0++];    // move i0 to LPF1 b0
+    nop; nop; nop; nop; nop; nop; nop; nop; nop; nop;
+    nop; nop; nop; nop; nop; nop; nop; nop; nop; nop;
+    nop; nop;
+*/
+    // -------------------------------------------
+
+    // LMS
+    // saturate the sample (r4), save the AGCgain (r3), 
+    // move i1 to saturated AGCout 7 channels before, i2@saturated AGCout
+    r4.l = (a0 = r0.l * r7.l), r4.h = (a1 = r0.h * r7.l) (is) || i1 += m1 || [i2++] = r3;
+
+    mnop || r1 = [i1++] || [i2++] = r4; // i1@AGCout of c-7, save sat sample (r4), i2@AGCout of c
+    mnop || r1 = [i1++m2] || r2 = [i0++];  // r1=AGCout(c-7), i1@AGCout(c-6), r2=LMS w6, i0@LMS w5
+    
+    // LMS summation
+    a0 = r1.l * r2.l, a1 = r1.h * r2.h || r1 = [i1++m2] || r2 = [i0++];
+    a0+= r1.l * r2.l, a1+= r1.h * r2.h || r1 = [i1++m2] || r2 = [i0++];
+	a0+= r1.l * r2.l, a1+= r1.h * r2.h || r1 = [i1++m2] || r2 = [i0++];
+	a0+= r1.l * r2.l, a1+= r1.h * r2.h || r1 = [i1++m2] || r2 = [i0++];
+	a0+= r1.l * r2.l, a1+= r1.h * r2.h || r1 = [i1++m2] || r2 = [i0++];
+	a0+= r1.l * r2.l, a1+= r1.h * r2.h || r1 = [i1++m2] || r2 = [i0++]; 
+    // r1=AGCout(c-1), i1@AGCout(c), r2=LMS w0, i0@LPF b0
+
+	r6.l = (a0+= r1.l * r2.l), r6.h = (a1+= r1.h * r2.h) || r1 = [i1++m1] || r2 = [i0++m0];
+    r0 = r0 -|- r6 (s) || [i2++] = r0 || r1 = [i1--];  
+    r6 = r0 >>> 15 (v,s) || r1 = [i1++m2] || r2 = [i0++];
+.align 8
+    a0 = r2.l * r7.h, a1 = r2.h * r7.h || nop || nop;   // weight*LMS_enable
+      r5.l = (a0 += r1.l * r6.l), r5.h = (a1 += r1.h * r6.h) || r1 = [i1++m2] || r2 = [i0--]; 
+    a0 = r2.l * r7.h, a1 = r2.h * r7.h || [i0++m3] = r5;
+      r5.l = (a0 += r1.l * r6.l), r5.h = (a1 += r1.h * r6.h) || r1 = [i1++m2] || r2 = [i0--];
+    a0 = r2.l * r7.h, a1 = r2.h * r7.h || [i0++m3] = r5; 
+      r5.l = (a0 += r1.l * r6.l), r5.h = (a1 += r1.h * r6.h) || r1 = [i1++m2] || r2 = [i0--];
+	a0 = r2.l * r7.h, a1 = r2.h * r7.h || [i0++m3] = r5; 
+      r5.l = (a0 += r1.l * r6.l), r5.h = (a1 += r1.h * r6.h) || r1 = [i1++m2] || r2 = [i0--];
+	a0 = r2.l * r7.h, a1 = r2.h * r7.h || [i0++m3] = r5; 
+      r5.l = (a0 += r1.l * r6.l), r5.h = (a1 += r1.h * r6.h) || r1 = [i1++m2] || r2 = [i0--];
+	a0 = r2.l * r7.h, a1 = r2.h * r7.h || [i0++m3] = r5; 
+      r5.l = (a0 += r1.l * r6.l), r5.h = (a1 += r1.h * r6.h) || r1 = [i1++m2] || r2 = [i0--];
+	a0 = r2.l * r7.h, a1 = r2.h * r7.h || [i0++m3] = r5; 
+      r5.l = (a0 += r1.l * r6.l), r5.h = (a1 += r1.h * r6.h) || r1 = [i1++m3] || r2 = [i0--];
+
+    mnop || [i0++] = r5;    // save w0, i0@LPF1 b0
 
 .align 8
     /* Start 2 back-to-back direct-form 1 biquads. At this point,
-        r0 = final gained-sample
+        r0 = final AGC sample
         i0 @ LPF1 b0
         i1 @ x0(n-1) of current channel.
         i2 @ x0(n-1) of current channel.
@@ -291,10 +472,11 @@ wait_samples_main:
 
     // saa results in a0.l, a0.h, a1.l, a1.h (amp4,3,2,1); compare to aperture
     // i0 @ Aperture[amp1A, amp2A]
-    r0 = a0, r1 = a1 (fu) || r2 = [i0++] || i3 -= m3; // r2=aperture[amp1A,amp2A], i3@saved bytepack(t-15)
+    r0 = a0, r1 = a1 (fu) || r2 = [i0++] || i3 += m0; // r2=aperture[amp1A,amp2A], i3@saved bytepack(t-6)
     // subtract and saturate - if the answer is negative-->spike!
-    r0 = r0 -|- r2 (s) || r3 = [i0++]; // r0=[amp1A match, amp2A match], r3=aperture[amp3A,amp4A]
-    r1 = r1 -|- r3 (s);                // r1=[amp3A match, amp4A match]
+    r0 = r0 -|- r2 (s) || r3 = [i0++] || i3 -= m3; // r0=[amp1A match, amp2A match], r3=aperture[amp3A,amp4A]
+                                                   // i3@saved bytepack(t-8)
+    r1 = r1 -|- r3 (s) || i3 += m0;                // r1=[amp3A match, amp4A match]; i3@bytepack(t-15) again.
     // shift to bit 0, sign preserved
     r0 = r0 >>> 15 (v); // r0.h and r0.l will be 0xffff or 0x0000 (match or not)
     r1 = r1 >>> 15 (v);
@@ -336,9 +518,6 @@ wait_samples_main:
     r0 <<= 2;
     r0 = r0 + r1; // r0=[12 zeros][amp4B][amp2B][14 zeros][amp3B][amp1B][2 zeros]
     r0 = r0 + r6; // add to tempA matches.
-
-    // Extra nops the signal path can tolerate.
-    nop;nop;nop;nop;nop;nop;
 
     /* 
     r0 currently is:
@@ -462,7 +641,7 @@ _clearirq_asm: //just write the status register via spi to clear.
 
 _waitirq_asm:
 	[--sp] = rets;
-	r7 = 178; // should take max 360us = 178. min @ 1msps = 160. original=182
+	r7 = 182; // should take max 360us = 178. min @ 1msps = 160; original value=182
 	[fp - FP_TIMER] = r7;
 waitirq_loop:
 	r6 = w[p1];
@@ -649,17 +828,20 @@ _radio_bidi_asm:
     i0.l = LO(A1);
     i0.h = HI(A1);
     l0 = A1_STRIDE*32*4;    // A1_STRIDE: number of 32-bit words * 4 bytes/word * 32 four-channel groups
+    m0 = -7*4;              // for moving back to start of LMS weights (1 group = 7 prev ch for cur samp)
     b0 = i0;
 
     // i1 is for reading the W1 circular buffer -- contains the value of the samples
     i1.l = LO(W1);
     i1.h = HI(W1);
     l1 = W1_STRIDE*2*32*4;  // 2 32-bit words/group, 32 group total. This is number of bytes
+    m1 = -7*W1_STRIDE*2*4;  // Moving back to W1-data slot 7 channels (before current one)
     b1 = i1;
 
     // i2 is for writing delays in the W1 circular buffer. i2 usually lags i1 (i.e. update values).
     i2 = i1;
     l2 = l1;
+    m2 = W1_STRIDE*2*4; // moving forward one channel in W1-data
     b2 = b1;
 
     // i3 is for reading/writing template delays (post-filter)
@@ -667,7 +849,7 @@ _radio_bidi_asm:
     i3.h = HI(T1);
     l3 = T1_LENGTH;
     b3 = i3;
-    m3 = 16*4;    // 16 32-bit words -- used to go back 16 saved samples in T1
+    m3 = 2*4;    // 2 32-bit words -- used to jump to read point for LMS
 
     /* Next, we go through circular buffer A1, and set up the coefficients needed for the 
        signal chain. 
@@ -682,10 +864,14 @@ _radio_bidi_asm:
        Templates B (16 32-bit words)
        Aperture A  (2 32-bit words)
        Templates A (16 32-bit words)
-       IIR coefs   (8 32-bit words) 
-       gain coefs  (1 32-bit words)    
        IIR coefs   (8 32-bit words)
-       gain coefs  (1 32-bit words)  ---    <--- low address
+       LMS coefs   (7 32-bit words) 
+       AGC coefs   (2 32-bit words)    
+       Integ coefs (2 32-bit words)  
+       IIR coefs   (8 32-bit words) 
+       LMS coefs   (7 32-bit words)
+       AGC coefs   (2 32-bit words)    
+       Integ coefs (2 32-bit words)         <--- low address
 
        There are a total of 32 groups of 4-channels. Each each loop of lt_top, we populate 1 A1-stride.
        Each lt2_top loop populates the 2 of the 4-channels in a particular group.
@@ -699,10 +885,43 @@ lt_top:
     p5 = 2;
     lsetup(lt2_top, lt2_bot) lc1 = p5;  // each lt2_top is one set of coefs
 lt2_top:
-    // Fixed signed gain. Assume input samples are 16-bits signed.
-    r0.l = 0x0200; w[i0++] = r0.l;  // initial gain is 2, in Q7.8
-    r0.l = 0x0200; w[i0++] = r0.l;  // initial gain is 2, in Q7.8
-   
+    // gain and integrator
+    
+    // Assuming input samples are 12-bits unsigned.
+    /*
+    r0.l = 32767;   w[i0++] = r0.l;
+    r0.l = -16384;  w[i0++] = r0.l;
+    r0.l = 16384;   w[i0++] = r0.l;
+    r0.l = 800;     w[i0++] = r0.l;
+    */
+
+    // Assuming input samples are 16-bits signed. Diff from before since no s2rnd
+    r0.l = 0x7fff;  w[i0++] = r0.l; // (Q15) 1
+    r0.l = 0x8000;  w[i0++] = r0.l; // (Q15) -1
+    r0.l = 0x7fff;  w[i0++] = r0.l; // (Q15) 1
+    r0.l = 1600;    w[i0++] = r0.l; // (Q15) 0.0488
+
+    /* AGC: 
+        Target is 6000*16384, which in Q15 is ~0.09155. We store just the target's square
+        root (in Q15). This is so we can later accomodate big target values (32 bits).
+    */
+    r0.l = 9915;    w[i0++] = r0.l;     // AGC target sqrt = sqrt(6000*16384), Q15.
+    r0.l = 9915;    w[i0++] = r0.l;     // AGC target sqrt = sqrt(6000*16384), Q15.
+    r0.l = 16384;   w[i0++] = r0.l;     // Q15, =0.5
+    r0.l = 1;       w[i0++] = r0.l;     // Set this to zero to disable AGC. Q7.8
+
+    /* LMS coefs
+        Initialized to be 0 (7 32-bit words)
+    */
+    r0 = 0 (x);
+	[i0++] = r0;
+	[i0++] = r0;
+	[i0++] = r0;
+	[i0++] = r0;
+	[i0++] = r0;
+	[i0++] = r0;
+	[i0++] = r0;
+
     /* IIR filter, biquad implementation. */
     // LPF1: 7000Hz cutoff 
     //r0 = 4041 (x); w[i0++] = r0.l; w[i0++] = r0.l;  // b0
@@ -717,18 +936,18 @@ lt2_top:
     r0 = -3039(x); w[i0++] = r0.l; w[i0++] = r0.l;  // a1
     
     // HPF1: 250Hz cutoff
-    r0 = 15812 (x);	w[i0++] = r0.l; w[i0++] = r0.l; // b0
-	r0 = -31624(x); w[i0++] = r0.l; w[i0++] = r0.l; // b1
-	r0 = 31604 (x);	w[i0++] = r0.l; w[i0++] = r0.l; // a0
-	r0 = -15260(x); w[i0++] = r0.l; w[i0++] = r0.l; // a1
+    //r0 = 15812 (x);	w[i0++] = r0.l; w[i0++] = r0.l; // b0
+	//r0 = -31624(x); w[i0++] = r0.l; w[i0++] = r0.l; // b1
+	//r0 = 31604 (x);	w[i0++] = r0.l; w[i0++] = r0.l; // a0
+	//r0 = -15260(x); w[i0++] = r0.l; w[i0++] = r0.l; // a1
 
     // HPF1: 500Hz cutoff
-	//r0 = 15260 (x);	w[i0++] = r0.l; w[i0++] = r0.l; // b0
-	//r0 = -30519(x); w[i0++] = r0.l; w[i0++] = r0.l; // b1
-	//r0 = 30442 (x);	w[i0++] = r0.l; w[i0++] = r0.l; // a0
-	//r0 = -14213(x); w[i0++] = r0.l; w[i0++] = r0.l; // a1
+	r0 = 15260 (x);	w[i0++] = r0.l; w[i0++] = r0.l; // b0
+	r0 = -30519(x); w[i0++] = r0.l; w[i0++] = r0.l; // b1
+	r0 = 30442 (x);	w[i0++] = r0.l; w[i0++] = r0.l; // a0
+	r0 = -14213(x); w[i0++] = r0.l; w[i0++] = r0.l; // a1
 
-lt2_bot: nop;
+    lt2_bot: nop;
 
     // After all the filtering, templates for each channel/neuron
     // 127 113 102 111 132 155 195 235 250 224 187 160 142 126
@@ -954,7 +1173,7 @@ sport_configs:
     call wait_samples;                     // call 4
     
     //r0 = REG4 (z);
-    r0 = REG4_DSP_SIGNED_1Hz (z);  // this with DSP filter enabled, signed samples
+    r0 = REG4_DSP_SIGNED_300Hz (z);  // this with DSP filter enabled, signed samples
     r0 = r0 << SHIFT_BITS;
     [p0 + (SPORT0_TX - SPORT0_RX)] = r0;
     [p0 + (SPORT0_TX - SPORT0_RX)] = r0;

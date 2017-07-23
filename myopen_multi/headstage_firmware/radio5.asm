@@ -81,7 +81,20 @@ wait_samples:
 		|| r6 = [i0++]; //r6.l = 16384 (1), r6.h = 1 (mu)
 	a0 = r5.l * r6.l, a1 = r5.h * r6.l || nop; //load the gain again & scale.
 	r3.l = (a0 -= r4.l * r6.h), r3.h = (a1 -= r4.h * r6.h) (s2rnd) || nop; //r6.h = 1 (mu); within a certain range gain will not change.
+
 .align 8
+/* LMS adaptive noise remover (above)
+	want to predict the current channel based on samples from the previous 8.
+	at this point i1 will point to x(n-1) of the present channel.
+		(i2 is not used, we do not need to write taps -- IIR will take care of this.)
+	24 32-bit samples are written each time through this loop,
+	so to go back 8 channels add m1 = -784
+	to move forward one channel add m2 = 112
+	for modifying i0, m3 = 8 (move +2 weights)
+		and m0 = -28 (move -7 weights)
+	i0, as usual, points to the filter taps!
+*/
+
 	r3 = abs r3 (v) || r7 = [FP - FP_WEIGHTDECAY]; //set weightdecay to zero to disable LMS.
 	r4.l = (a0 = r0.l * r7.l), r4.h = (a1 = r0.h * r7.l) (is) || i1 += m1 || [i2++] = r3;
 				//saturate the sample (r4), save the gain (r3).
@@ -118,17 +131,6 @@ r5.l = (a0 += r1.l * r6.l), r5.h = (a1 += r1.h * r6.h) || r1 = [i1++m2] || r2 = 
 r5.l = (a0 += r1.l * r6.l), r5.h = (a1 += r1.h * r6.h) || r1 = [i1++m3] || r2 = [i0--];// inc to x1(n-1) r2 = w1, i0 @ 6
 	mnop || [i0++] = r5; //write 6.
 
-/* LMS adaptive noise remover (above)
-	want to predict the current channel based on samples from the previous 8.
-	at this point i1 will point to x(n-1) of the present channel.
-		(i2 is not used, we do not need to write taps -- IIR will take care of this.)
-	24 32-bit samples are written each time through this loop,
-	so to go back 8 channels add m1 = -784
-	to move forward one channel add m2 = 112
-	for modifying i0, m3 = 8 (move +2 weights)
-		and m0 = -28 (move -7 weights)
-	i0, as usual, points to the filter taps!
-*/
 	/*
 	directform 1 biquad; form II saturates 1.15 format.
 	operate on the two samples in parallel (both in 1 32bit reg).

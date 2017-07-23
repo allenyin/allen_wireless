@@ -9,8 +9,9 @@
 #FIRMWARE_VERSION = radio_AGC
 #FIRMWARE_VERSION = radio_AGC_IIR
 #FIRMWARE_VERSION = IIR_oscillator_test
-FIRMWARE_VERSION = radio_AGC_IIR_SAA
+#FIRMWARE_VERSION = radio_AGC_IIR_SAA
 #FIRMWARE_VERSION = radio_gain_IIR_SAA
+FIRMWARE_VERSION = radio_AGC_LMS_IIR_SAA
 
 
 ASMSRCS = crt0.o 
@@ -57,6 +58,9 @@ $(info FIRMWARE_VERSION is RADIO_AGC_IIR_SAA)
 else ifeq ($(FIRMWARE_VERSION), radio_gain_IIR_SAA)
 $(info FIRMWARE_VERSION is RADIO_GAIN_IIR_SAA)
 	ASMSRCS += radio_gain_IIR_SAA.o
+else ifeq ($(FIRMWARE_VERSION), radio_AGC_LMS_IIR_SAA)
+$(info FIRMWARE_VERSION is RADIO_AGC_LMS_IIR_SAA)
+	ASMSRCS += radio_AGC_LMS_IIR_SAA.o
 else
 $(info FIRMWARE_VERSION is DEFAULT)
 	ASMSRCS += firmware1.o
@@ -140,6 +144,8 @@ else ifeq ($(FIRMWARE_VERSION), radio_AGC_IIR_SAA)
 	cp memory_AGC_IIR_SAA.h memory.h
 else ifeq ($(FIRMWARE_VERSION), radio_gain_IIR_SAA)
 	cp memory_gain_IIR_SAA.h memory.h
+else ifeq ($(FIRMWARE_VERSION), radio_AGC_LMS_IIR_SAA)
+	cp memory_AGC_LMS_IIR_SAA.h memory.h
 else
 	cp memory_RHA.h memory.h
 endif
