@@ -136,8 +136,8 @@ void Headstage::saveMessage(int tid, const char *fmt, ...){
 	m_messW[tid]++;
 }
 
-#if defined(HEADSTAGE_TIM)
-void Headstage::updateGain(int chan){
+#if defined(HEADSTAGE_TIM) || defined(RADIO_AGC_IIR) || defined(RADIO_AGC_IIR_SAA) || defined(RADIO_AGC_LMS_IIR_SAA)
+void Headstage::updateIIRGain(int chan){
 	/* remember, channels 0 and 32 are filtered at the same time.
 		then 64 and 96
 		and the biquads are arranged as:
@@ -145,38 +145,52 @@ void Headstage::updateGain(int chan){
 		only can adjust the B coefs of the lowpass filters, though.
 		(the highpass coefs are maxed out)
 		all emitted numbers are base 14.(s2rnd flag)
+
+        For RHD headstages, the biquads are arranged as
+        low1, high1
 	*/
+
 	//thread handles channels in multiples of 128. If 
 	int tid = chan/128; //0 if lower than 128, etc. This should update to the pertinent thread index in the i64 buffers
-	//chan = chan & (0xff ^ 32); //map to the lower channels. Should still map properly to lower channels if > 128
-		// e.g. 42 -> 10,42; 67 -> 67,99 ; 100 -> 68,100. This should be used if chan is indexing m_c
 	chan = chan & ( (128*(tid+1)-1) ^ 32); //the above mapping was not working for anything > 256
 	
-	float gain1 = sqrt(fabs(m_c[chan]->getGain()));
+    float again1, again2; //the actual gains.
+#ifdef HEADSTAGE_TIM
+    float gain1 = sqrt(fabs(m_c[chan]->getGain()));
 	float gain2 = sqrt(fabs(m_c[chan+32]->getGain()));
-	float again1, again2; //the actual gains.
-	int indx [] = {0,1,4,5}; //index the B coefs.
-	float b[8];
+	int indx [] = {0,1,4,5}; // index the B coefs.
+    int nCoefs = 4;          // 4 B coefs total
+#elif defined(RADIO_AGC_IIR) || defined(RADIO_AGC_IIR_SAA) || defined(RADIO_AGC_LMS_IIR_SAA)
+    float gain1 = fabs(m_c[chan]->getGain());
+    float gain2 = fabs(m_c[chan+32]->getGain());
+    int indx [] = {0,1};     // index the B coefs
+    int nCoefs = 2;          // 2 B coefs total
+#endif
+    float b[2*nCoefs];      // nCoefs for each channel, we update two chs at the same time
 	int i,j,k;
 	unsigned int u;
 	
-	for(i=0; i<4; i++){
+	for(i=0; i<nCoefs; i++){
 		j = indx[i];
 		b[i*2+0] = m_lowpass_coefs[j]*gain1*16384.f;
 		b[i*2+1] = m_lowpass_coefs[j]*gain2*16384.f;
 	}
 	//clamp to acceptable values.
-	for(i=0; i<8; i++){
+	for(i=0; i<nCoefs*2; i++){
 		b[i] = b[i] < -32768.f ? -32768.f : b[i];
 		b[i] = b[i] > 32767.f ? 32767.f : b[i];
 	}
 	if(m_c[chan]->getGain() < 0){
-		b[0] *= -1; b[2] *= -1; //change the sign of the first filter.
+		b[0] *= -1; 
+        b[2] *= -1; //change the sign of the first filter.
 	}
 	if(m_c[chan+32]->getGain() < 0){
-		b[1] *= -1; b[3] *= -1;
+		b[1] *= -1; 
+        b[3] *= -1;
 	}
-	//calculate the actual gain. assume static gain = 1
+	
+    //calculate the actual gain. assume static gain = 1
+#ifdef HEADSTAGE_TIM
 	again1 =
 		((b[0]/(m_lowpass_coefs[0]*16384.f) +
 			b[2]/(m_lowpass_coefs[1]*16384.f))/2.f) *
@@ -187,17 +201,30 @@ void Headstage::updateGain(int chan){
 			b[3]/(m_lowpass_coefs[1]*16384.f))/2.f) *
 		((b[5]/(m_lowpass_coefs[4]*16384.f) +
 			b[7]/(m_lowpass_coefs[5]*16384.f))/2.f);
+#elif defined(RADIO_AGC_IIR) || defined(RADIO_AGC_IIR_SAA) || defined(RADIO_AGC_LMS_IIR_SAA)
+    again1 =
+		((b[0]/(m_lowpass_coefs[0]*16384.f) +
+			b[2]/(m_lowpass_coefs[1]*16384.f))/2.f);
+	again2 =
+		((b[1]/(m_lowpass_coefs[0]*16384.f) +
+			b[3]/(m_lowpass_coefs[1]*16384.f))/2.f);
+#endif
+
 	printf("actual gain ch %d %f ; ch %d %f\n",
 		   chan, again1, chan+32, again2);
 	//now form the 4x 32 bit uints to be written.
+#ifdef HEADSTAGE_TIM
 	int indx2[] = {0,1,8,9}; //don't write highpass Bs (4,5,12,13)
+#elif defined(RADIO_AGC_IIR) || defined(RADIO_AGC_IIR_SAA) || defined(RADIO_AGC_LMS_IIR_SAA)
+    int indx2[] = {0, 1};
+#endif
 	
 	unsigned int* ptr = m_sendbuf[tid];
 	ptr += (m_sendW[tid] % m_sendL[tid]) * 8; //8 because we send 8 32-bit ints /pkt.
 	
 	int kchan = chan & 127; //(to send in buf, needs to keep correct channel name) (0-127)
 	//use kchan when not indexing m_c, thus, bitwise AND for 127 maps channels > 128 to 0-127.
-	for(i=0; i<4; i++){
+	for(i=0; i<nCoefs; i++){
 		//remember, chan mapped to 0-31 & 64-95 (above)
 		unsigned int p = 0;
 		if(kchan >= 64) p += 1; //chs 64-127 pocessed following 0-63, or 192-255 following 128 to 191
@@ -214,8 +241,9 @@ void Headstage::updateGain(int chan){
 	saveMessage(tid, "gain %d %3.2f %d %3.2f thread %d", chan, again1, chan+32, again2, tid);
 	m_echo[tid]++;
 }
+#endif
 
-#elif RADIO_GAIN_IIR_SAA
+#ifdef RADIO_GAIN_IIR_SAA
 // Method to convert Q7.8 gain values to binary. 
 // Not a class method
 unsigned int binaryGain(float gain) {
@@ -261,7 +289,7 @@ unsigned int binaryGain(float gain) {
     return (int2bin << 8) + fract2bin;
 }
 
-void Headstage::updateGain(int chan) {
+void Headstage::updatePreGain(int chan) {
     int tid = chan/128;
     chan = chan & ( (128*(tid+1)-1) ^ 32);
     unsigned int p = 0;
@@ -302,10 +330,6 @@ void Headstage::updateGain(int chan) {
     m_sendW[tid]++;
     saveMessage(tid, "preGain %d %3.2f %d %3.2f thread %d", chan, gain1, slot>0?chan-32:chan+32, gain2, tid);
     m_echo[tid]++;
-}
-#elif defined(RADIO_AGC_IIR) || defined(RADIO_AGC_LMS_IIR_SAA) || defined(RADIO_AGC_IIR_SAA)
-// for these firmware versions, only 1 LPF biquad, so set coeffients differently
-void Headstage::updateGain(int chan) {
 }
 #endif
 
@@ -558,6 +582,7 @@ void Headstage::setTemplate(int ch, int aB){
 	}
 	//really should save the templates somewhere else (another file)
 }
+
 void Headstage::setBiquad(int chan, float* biquad, int biquadNum){
 	// biquad num 0 or 1
 	// biquad lo or hi (global)
@@ -626,66 +651,19 @@ void Headstage::setBiquad(int chan, float* biquad, int biquadNum){
 	m_echo[tid]++;
 }
 void Headstage::resetBiquads(int chan){
-#ifdef HEADSTAGE_TIM
+#if defined(HEADSTAGE_TIM) || defined(RADIO_AGC_IIR) || defined(RADIO_AGC_IIR_SAA) || defined(RADIO_GAIN_IIR_SAA) || defined(RADIO_AGC_LMS_IIR_SAA)
 	//reset all coefs in two channels.
 	setBiquad(chan, &(m_lowpass_coefs[0]), 0);
 	setBiquad(chan, &(m_highpass_coefs[0]), 1);
+#endif
+
+#ifdef HEADSTAGE_TIM
 	setBiquad(chan, &(m_lowpass_coefs[4]), 2);
 	setBiquad(chan, &(m_highpass_coefs[4]), 3);
-
-#elif defined(RADIO_AGC_IIR) || defined(RADIO_AGC_IIR_SAA) || defined(RADIO_GAIN_IIR_SAA) || defined(RADIO_AGC_LMS_IIR_SAA)
-    /* The only change that would happen is turning it into an oscillator
-     * Thus resetting just change the coefficients of the second biquad back.
-     *
-     * The first biquad coefficients are unchanged in the firmware onboard the headstage.
-     */
-    // reset all coefs in two channels.
-    //printf("Resetting biquads...\n");
-	float b[4];
-	unsigned int u;
-	int i,j;
-	int tid = chan/128;
-	//(to send, needs to keep correct channel name)
-    //The following is for setting LPF to 9kHz.
-	b[0] = 6004.f; 
-	b[1] = 12008.f; 
-	b[2] = -4594.f; 
-	b[3] = -3039.f;
-
-    // Bandpass of [500Hz, 7kHz]
-    /*
-    b[0] = 4041.f;
-    b[1] = 8081.f;
-    b[2] = 3139.f;
-    b[3] = -2917.f;
-    */
-	
-	unsigned int* ptr = m_sendbuf[tid];
-	ptr += (m_sendW[tid] % m_sendL[tid]) * 8; //8 because we send 8 32-bit ints /pkt.
-	
-	//chan = chan & (0xff ^ 32); //map to the lower channels.
-		// e.g. 42 -> 10,42; 67 -> 67,99 ; 100 -> 68,100
-	chan = chan & ( (128*(tid+1)-1) ^ 32); //the above mapping was not working for anything > 256
-		
-	int kchan = chan & 127; 
-	
-	for(i=0; i<4; i++){
-		
-			unsigned int p = 0;
-			if(kchan >= 64) p += 1; //chs 64-127 pocessed following 0-63.
-			ptr[i*2+0] = htonl(echoHeadstage(m_echo[tid], A1 +
-				(A1_STRIDE*(kchan & 31) +
-				A1_IIRSTARTA + p*(A1_IIRSTARTB-A1_IIRSTARTA) + i)*4));
-			j = (int)(b[i]);
-			u = (unsigned int)((j&0xffff) | ((j&0xffff)<<16));
-			ptr[i*2+1] = htonl(u);
-	}
-	m_sendW[tid]++;
-	saveMessage(tid, "Reset biquads: %d and %d thread %d", chan, chan+32, tid);
-	m_echo[tid]++;
 #endif
 }
 
+#ifdef HEADSTAGE_TIM
 void Headstage::setFilter2(int chan){
 	//reset all coefs in two channels.
 	setBiquad(chan, &(m_lowpass_coefs2[0]), 0);
@@ -707,6 +685,7 @@ void Headstage::setFlat(int chan){
 	saveMessage(tid, "flat %d thread %d", chan, tid);
 	saveMessage(tid, "flat %d thread %d", chan+32, tid);
 }
+#endif
 
 void Headstage::setAll(int signalChain){
 	//update the channels.

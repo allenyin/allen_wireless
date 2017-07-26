@@ -32,7 +32,11 @@ public:
 
 	void saveMessage(const char *fmt, ...); //for all threads
 	void saveMessage(int threadID, const char *fmt, ...); //some messages are thread specific
-	void updateGain(int chan);
+#if defined(HEADSTAGE_TIM) || defined(RADIO_AGC_IIR) || defined(RADIO_AGC_IIR_SAA) || defined(RADIO_AGC_LMS_IIR_SAA)
+	void updateIIRGain(int chan);
+#elif defined(RADIO_GAIN_IIR_SAA)
+    void updatePreGain(int chan);
+#endif
 	void setOsc(int chan);
 	void setChans(int signalChain);
 	void setAGC(int ch1, int ch2, int ch3, int ch4);
@@ -42,8 +46,11 @@ public:
 	void setTemplate(int ch, int aB);
 	void setBiquad(int chan, float* biquad, int biquadNum);
 	void resetBiquads(int chan);
+
+#ifdef HEADSTAGE_TIM
 	void setFilter2(int chan);
 	void setFlat(int chan);
+#endif
 	void setAll(int signalChain);
 	
 	i64 getMessW (int threadID);
@@ -82,9 +89,9 @@ private:
   // These firmware versions only have 1 LPF and 1 HPF
   /** 250 - 9kHz **/
   // equal to [6004, 12008, -4595, -3039]/16384...so they are Q14.
-  float m_lowpass_coefs[4] = [0.366455, 0.732910, -0.280456, -0.185486];
+  float m_lowpass_coefs[4] = {0.366455, 0.732910, -0.280456, -0.185486};
   // equal to [15812, -31624, 31604, -15260]/16384
-  float m_highpass_coefs[4] = [0.965088, -1.930176, 1.928955, -0.931396];
+  float m_highpass_coefs[4] = {0.965088, -1.930176, 1.928955, -0.931396};
 #endif
 	
 };

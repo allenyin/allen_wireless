@@ -1515,21 +1515,14 @@ void updateChannelUI(int k){
 	gtk_adjustment_set_value(g_agcSpin[k], g_c[ch]->getAGC());  // include AGC settings
 #elif RADIO_AGC_IIR
     gtk_adjustment_set_value(g_agcSpin[k], g_c[ch]->getAGC());  // include AGC settings
-#elif defined(RADIO_AGC_IIR_SAA) || defined(RADIO_AGC_LMS_IIR_SAA)
-    // include everything except IIR based gain setting
+#elif defined(RADIO_AGC_IIR_SAA) || defined(RADIO_AGC_LMS_IIR_SAA) || defined(HEADSTAGE_TIM)
     gtk_adjustment_set_value(g_agcSpin[k], g_c[ch]->getAGC());
+	gtk_adjustment_set_value(g_gainSpin[k], g_c[ch]->getGain());    //IIR gain setting
 	gtk_adjustment_set_value(g_apertureSpin[k*2+0], g_c[ch]->getAperture(0));
 	gtk_adjustment_set_value(g_apertureSpin[k*2+1], g_c[ch]->getAperture(1));
 	gtk_adjustment_set_value(g_thresholdSpin[k], g_c[ch]->getThreshold());
 	gtk_adjustment_set_value(g_centeringSpin[k], g_c[ch]->getCentering());
 #elif RADIO_GAIN_IIR_SAA
-	gtk_adjustment_set_value(g_gainSpin[k], g_c[ch]->getGain());
-	gtk_adjustment_set_value(g_apertureSpin[k*2+0], g_c[ch]->getAperture(0));
-	gtk_adjustment_set_value(g_apertureSpin[k*2+1], g_c[ch]->getAperture(1));
-	gtk_adjustment_set_value(g_thresholdSpin[k], g_c[ch]->getThreshold());
-	gtk_adjustment_set_value(g_centeringSpin[k], g_c[ch]->getCentering());
-#else
-	gtk_adjustment_set_value(g_agcSpin[k], g_c[ch]->getAGC());
 	gtk_adjustment_set_value(g_gainSpin[k], g_c[ch]->getGain());
 	gtk_adjustment_set_value(g_apertureSpin[k*2+0], g_c[ch]->getAperture(0));
 	gtk_adjustment_set_value(g_apertureSpin[k*2+1], g_c[ch]->getAperture(1));
@@ -1567,14 +1560,20 @@ static void channelSpinCB( GtkWidget*, gpointer p){
 	}
 }
 
-#if defined(HEADSTAGE_TIM) || defined(RADIO_GAIN_IIR_SAA)
+
+
+#if defined(HEADSTAGE_TIM) || defined(RADIO_AGC_IIR) || defined(RADIO_AGC_IIR_SAA) || defined(RADIO_AGC_LMS_IIR_SAA) || defined(RADIO_GAIN_IIR_SAA)
 static void gainSpinCB( GtkWidget*, gpointer p){
 	int h = (int)((long long)p & 0xf);
 	if(h >= 0 && h < 4 && !g_uiRecursion){
 		float gain = gtk_adjustment_get_value(g_gainSpin[h]);
 		g_c[g_channel[h]]->setGain(gain);
 		printf("\ngainSpinCB: %f\n", gain);
-		g_headstage->updateGain(g_channel[h]);
+#if defined(HEADSTAGE_TIM) || defined(RADIO_AGC_IIR) || defined(RADIO_AGC_IIR_SAA) || defined(RADIO_AGC_LMS_IIR_SAA)
+        g_headstage->updateIIRGain(g_channel[h]);
+#elif defined(RADIO_GAIN_IIR_SAA)
+		g_headstage->updatePreGain(g_channel[h]);
+#endif
 		g_c[g_channel[h]]->resetPca();
 	}
 }
@@ -1583,7 +1582,11 @@ static void gainSetAll(gpointer ){
 	float gain = gtk_adjustment_get_value(g_gainSpin[0]);
 	for(int i=0; i<128*NSCALE; i++){
 		g_c[i]->setGain(gain);
-		g_headstage->updateGain(i);
+#if defined(HEADSTAGE_TIM) || defined(RADIO_AGC_IIR) || defined(RADIO_AGC_IIR_SAA) || defined(RADIO_AGC_LMS_IIR_SAA)
+        g_headstage->updateIIRGain(i);
+#elif defined(RADIO_GAIN_IIR_SAA)
+		g_headstage->updatePreGain(i);
+#endif
 	}
     for(int i=0; i<4; i++) {
 		gtk_adjustment_set_value(g_gainSpin[i], gain);
@@ -1592,11 +1595,9 @@ static void gainSetAll(gpointer ){
         g_c[i]->resetPca();
     }
 
-#ifdef HEADSTAGE_TIM
 	for(int i=0; i<32; i++){
 		g_headstage->resetBiquads(i);
 	}
-#endif
 }
 #endif
 
@@ -1623,19 +1624,7 @@ static void unsortRateSpinCB( GtkWidget* , gpointer){
 	g_unsortrate = t;
 	printf("\nunsortRateSpinCB: %f\n", t);
 }
-static void agcSpinCB( GtkWidget*, gpointer p){
-	int h = (int)((long long)p & 0xf);
-	if(h >= 0 && h < 4 && !g_uiRecursion){
-		float agc = gtk_adjustment_get_value(g_agcSpin[h]);
-		printf("\nagcSpinCB: %f\n", agc);
-		int j = g_channel[h];
-		if(j >= 0 && j < 128*NSCALE){
-			g_c[j]->setAGC(agc);
-			g_headstage->setAGC(j,j,j,j);
-		}
-		g_c[j]->resetPca();
-	}
-}
+
 static void apertureSpinCB( GtkWidget*, gpointer p){
 	int h = (int)((long long)p & 0xf);
 	if(h >= 0 && h < 8 && !g_uiRecursion){
@@ -1661,6 +1650,22 @@ static void apertureOffCB( GtkWidget*, gpointer p){
 		g_headstage->setAperture(j);
 	}
 }
+
+#if defined(HEADSTAGE_TIM) || defined(RADIO_AGC_IIR) || defined(RADIO_AGC_IIR_SAA) || defined(RADIO_AGC_LMS_IIR_SAA)
+static void agcSpinCB( GtkWidget*, gpointer p){
+	int h = (int)((long long)p & 0xf);
+	if(h >= 0 && h < 4 && !g_uiRecursion){
+		float agc = gtk_adjustment_get_value(g_agcSpin[h]);
+		printf("\nagcSpinCB: %f\n", agc);
+		int j = g_channel[h];
+		if(j >= 0 && j < 128*NSCALE){
+			g_c[j]->setAGC(agc);
+			g_headstage->setAGC(j,j,j,j);
+		}
+		g_c[j]->resetPca();
+	}
+}
+
 static void agcSetAll(gpointer ){
 	//sets *all 128* channels.
 	float agc = gtk_adjustment_get_value(g_agcSpin[0]);
@@ -1674,6 +1679,8 @@ static void agcSetAll(gpointer ){
 	for(int i=0; i<4; i++)
 		gtk_adjustment_set_value(g_agcSpin[i], agc);
 }
+#endif
+
 static void drawRadioCB(GtkWidget *button, gpointer p){
 	if(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(button))){
 		int i = (int)((long long)p & 0xf);
@@ -1681,6 +1688,8 @@ static void drawRadioCB(GtkWidget *button, gpointer p){
 		else g_drawmode = GL_POINTS;
 	}
 }
+
+#if defined(HEADSTAGE_TIM) || defined(RADIO_AGC_LMS_IIR_SAA)
 static void lmsRadioCB(GtkWidget *button, gpointer p){
 	if(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(button))){
 		int i = (int)((long long)p & 0xf);
@@ -1688,8 +1697,9 @@ static void lmsRadioCB(GtkWidget *button, gpointer p){
 		else g_headstage->setLMS(false);
 	}
 }
+#endif
 
-#ifdef HEADSTAGE_TIM
+#if defined(HEADSTAGE_TIM) || defined (RADIO_AGC_IIR) || defined(RADIO_AGC_IIR_SAA) || defined(RADIO_GAIN_IIR_SAA) || defined(RADIO_AGC_LMS_IIR_SAA)
 static void filterRadioCB(GtkWidget *button, gpointer p){
 	//only sets the currently viewed channels.
 	if(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(button))){
@@ -1701,34 +1711,23 @@ static void filterRadioCB(GtkWidget *button, gpointer p){
 				if(c == (g_channel[k] & (0 ^ 32)))
 					same = true;
 			}
+#ifdef HEADSTAGE_TIM
 			if(!same){
 				if(i == 2) g_headstage->setOsc(c);
 				else if(i == 3) g_headstage->setFlat(c);
 				else if(i == 1) g_headstage->setFilter2(c);
 				else g_headstage->resetBiquads(c);
 			}
-		}
-	}
-}
 #elif defined (RADIO_AGC_IIR) || defined(RADIO_AGC_IIR_SAA) || defined(RADIO_GAIN_IIR_SAA) || defined(RADIO_AGC_LMS_IIR_SAA)
-static void filterRadioCB(GtkWidget *button, gpointer p) {
-    // only sets the currently viewed channels.
-    if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(button))) {
-        int i = (int)((long long)p & 0xf);
-        for (int j=0; j<4; j++) {
-            int c = g_channel[j];
-            bool same = false;
-            for (int k=j-1; k>=0; k--) {
-                if (c == (g_channel[k] & (0^32)))
-                    same = true;
-            }
             if (!same) {
                 if (i == 0) g_headstage->resetBiquads(c);
                 else if (i == 1) g_headstage->setOsc(c);
                 else g_headstage->resetBiquads(c);
             }
-        }
-    }
+#endif
+
+		}
+	}
 }
 #endif
 
@@ -1766,7 +1765,7 @@ static void cycleButtonCB(GtkWidget *button, gpointer * ){
 		g_cycle = false;
 }
 static void zoomSpinCB( GtkWidget*, gpointer ){
-	  g_rasterZoom = gtk_adjustment_get_value(g_zoomSpin);
+    g_rasterZoom = gtk_adjustment_get_value(g_zoomSpin);
 	g_nsamp = 4096 / g_rasterZoom;
 	//make it multiples of 1024.
 	g_nsamp &= (0xffffffff ^ 127);
@@ -2240,31 +2239,28 @@ int main(int argn, char **argc)
 		g_channelSpin[i] = mk_spinner("ch", bx3,
 									  g_channel[i], 0, ((128*NSCALE)-1), 1,
 									  channelSpinCB, i);
-		//right of that, a gain spinner. (need to update depending on ch)
-#ifdef RADIO_BASIC
-#elif defined(RADIO_AGC) || defined(RADIO_AGC_IIR) || defined(RADIO_AGC_IIR_SAA) || defined(RADIO_AGC_LMS_IIR_SAA)
+#if defined(RADIO_AGC) || defined(RADIO_AGC_IIR) || defined(RADIO_AGC_IIR_SAA) || defined(RADIO_AGC_LMS_IIR_SAA)
         // The AGC target.
 		g_agcSpin[i] = mk_spinner("AGC target", bx2,
 								  	g_c[g_channel[i]]->getAGC(),
 									0, 32000, 1000,
 								  	agcSpinCB, i);
-#elif RADIO_GAIN_IIR_SAA
+#endif 
+
+#ifdef RADIO_GAIN_IIR_SAA
+        // gain spinner. pre-gain
         g_gainSpin[i] = mk_spinner("pre-gain", bx3,
                                    g_c[g_channel[i]]->getGain(),
                                    -128, 127.9, 0.1,
                                    gainSpinCB, i);
-#else
-		g_gainSpin[i] = mk_spinner("gain", bx3,
-                                g_c[g_channel[i]]->getGain(),
-                                -30.0, 30.0, 0.1,
-                                gainSpinCB, i);
-        // The AGC target.
-		g_agcSpin[i] = mk_spinner("AGC target", bx2,
-								  	g_c[g_channel[i]]->getAGC(),
-									0, 32000, 1000,
-								  	agcSpinCB, i);
+#elif defined(HEADSTAGE_TIM) || defined(RADIO_AGC_IIR) || defined(RADIO_AGC_IIR_SAA) || defined(RADIO_AGC_LMS_IIR_SAA)
+        // IIR gain limited by: low_pass_coefs*gain*16384 <= 32767.f, 
+        // smallest low_pass_coefs = 0.24, so max gain=8.
+        // In practice, [-2,2] is probably ok
+        g_gainSpin[i] = mk_spinner("IIR-gain", bx3,
+                                   g_c[g_channel[i]]->getGain(),
+                                   -8, 8, 0.1, gainSpinCB, i);
 #endif
-
 		gtk_box_pack_start (GTK_BOX (frame), bx2, FALSE, FALSE, 1);
 	}
 	//notebook region!
@@ -2359,7 +2355,7 @@ int main(int argn, char **argc)
 	g_signal_connect( G_OBJECT( combo ), "changed",
                       G_CALLBACK( signalChainCB ), NULL );
 	
-#if defined(RADIO_GAIN_IIR_SAA) || defined(HEADSTAGE_TIM)
+#if defined(RADIO_GAIN_IIR_SAA) || defined(HEADSTAGE_TIM) || defined(RADIO_AGC_IIR) || defined(RADIO_AGC_IIR_SAA) || defined(RADIO_AGC_LMS_IIR_SAA)
     // add a gain set-all button
     button = gtk_button_new_with_label("Set all gains from A");
     g_signal_connect(button, "clicked", G_CALLBACK (gainSetAll),0);
