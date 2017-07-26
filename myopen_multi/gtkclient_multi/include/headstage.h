@@ -67,6 +67,7 @@ public:
 	unsigned int echoHeadstage(unsigned int echoID, unsigned int address);
 	
 private:
+#ifdef HEADSTAGE_TIM
   /** 500 - 6.7kHz **/
   float m_lowpass_coefs[8] ={ 0.240833,0.481711,0.323083,-0.456505,
 					  0.240833,0.481619,0.233390,-0.052153};
@@ -77,6 +78,14 @@ private:
 	  0.453447,0.906796,-0.463824,-0.089354};
   float m_highpass_coefs2[8] = {0.980489,-1.960979,1.976285,-0.977184,
 	  0.980489,-1.960979,1.944907,-0.945792};
+#elif defined(RADIO_AGC_IIR) || defined(RADIO_AGC_IIR_SAA) || defined(RADIO_GAIN_IIR_SAA) || defined(RADIO_AGC_LMS_IIR_SAA)
+  // These firmware versions only have 1 LPF and 1 HPF
+  /** 250 - 9kHz **/
+  // equal to [6004, 12008, -4595, -3039]/16384...so they are Q14.
+  float m_lowpass_coefs[4] = [0.366455, 0.732910, -0.280456, -0.185486];
+  // equal to [15812, -31624, 31604, -15260]/16384
+  float m_highpass_coefs[4] = [0.965088, -1.930176, 1.928955, -0.931396];
+#endif
 	
 };
 #endif

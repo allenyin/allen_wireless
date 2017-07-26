@@ -136,7 +136,7 @@ void Headstage::saveMessage(int tid, const char *fmt, ...){
 	m_messW[tid]++;
 }
 
-#ifdef HEADSTAGE_TIM
+#if defined(HEADSTAGE_TIM)
 void Headstage::updateGain(int chan){
 	/* remember, channels 0 and 32 are filtered at the same time.
 		then 64 and 96
@@ -303,10 +303,11 @@ void Headstage::updateGain(int chan) {
     saveMessage(tid, "preGain %d %3.2f %d %3.2f thread %d", chan, gain1, slot>0?chan-32:chan+32, gain2, tid);
     m_echo[tid]++;
 }
+#elif defined(RADIO_AGC_IIR) || defined(RADIO_AGC_LMS_IIR_SAA) || defined(RADIO_AGC_IIR_SAA)
+// for these firmware versions, only 1 LPF biquad, so set coeffients differently
+void Headstage::updateGain(int chan) {
+}
 #endif
-
-
-
 
 void Headstage::setOsc(int chan){
 	//turn two channels e.g. 0 and 32 into oscillators.
@@ -634,9 +635,9 @@ void Headstage::resetBiquads(int chan){
 
 #elif defined(RADIO_AGC_IIR) || defined(RADIO_AGC_IIR_SAA) || defined(RADIO_GAIN_IIR_SAA) || defined(RADIO_AGC_LMS_IIR_SAA)
     /* The only change that would happen is turning it into an oscillator
-     * Thus resetting just change the coefficients of the first biquad back.
+     * Thus resetting just change the coefficients of the second biquad back.
      *
-     * The second biquad coefficients are unchanged in the firmware onboard the headstage.
+     * The first biquad coefficients are unchanged in the firmware onboard the headstage.
      */
     // reset all coefs in two channels.
     //printf("Resetting biquads...\n");
