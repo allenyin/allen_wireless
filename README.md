@@ -1,4 +1,4 @@
-#Wireless Neural Recording System
+**Wireless Neural Recording System**
 
 * [Overview](#Overview)
 * [Hardware](#Hardware)
@@ -18,8 +18,9 @@
 	* [Compilation](#gtkclient-compile)
     * [Running gtkclient](#running-gtkclient)
         * [RHA-headstage gtkclient](#RHAgtkclient)
-        * [RHD-headstage gtkclient with AGC](#RHDgtkclient_AGC)
-        * [RHD-headstage gtkclient with fixed gain](#RHDgtkclient_gain)
+        * [RHD-headstage gtkclient](#RHDgtkclient)
+<!---        * [RHD-headstage gtkclient with AGC](#RHDgtkclient_AGC)
+        * [RHD-headstage gtkclient with fixed gain](#RHDgtkclient_gain) -->
         * [Spike sorting](#SpikeSorting)
         * [Saving recordings](#SavingRecordings)
         * [Test recording](#TestRecording)
@@ -27,7 +28,7 @@
 	* [TODO/possible improvements](#gtkclient-TODO)
 * [Quick Start](#quickstart)
 
-##<a name="Overview">Overview</a>
+## <a name="Overview">Overview</a>
 This project is modified from the multi-branch of the wireless neural recording system of the [myopen project](https://github.com/tlh24/myopen/tree/multi) by Tim Hanson.
 
 As summarized in Hanson's [thesis](http://m8ta.com/tim/dissertation.pdf), the original system 
@@ -85,9 +86,9 @@ This repository contains the following folders:
     * `algs`: Utilities need by gtkclient.
     
 ---
-##<a name="Hardware">Hardware</a>
+## <a name="Hardware">Hardware</a>
 
-###<a name="convertKiCad">Steps to convert old KiCad design files</a>
+## <a name="convertKiCad">Steps to convert old KiCad design files</a>
 The bridge and RHA-headstage PCB were designed with Tim's [kicadocaml](https://github.com/tlh24/kicadocaml), a variant of the opensource [KiCad](http://kicad-pcb.org/) PCB cad program. The design files were ported to KiCad, however the recent changes in KiCad's EESchema introduces some problems in using projects created with older version out of the box. Those impacts include:
 
 0. Updated device library. The new device library footprints are smaller, this can cause older schematics to be displayed with broken connections. Solution: follow the procedures outlined [here](https://lists.launchpad.net/kicad-developers/msg17639.html) to use the rescue-lib.
@@ -113,7 +114,7 @@ The following steps were used to convert the old project files (example using `h
 0. Again remeber to **NOT save the board file!!**
 0. Open the schematic file and run Cvpcb to associate the components and the footprints in our own custom libraries. It's possible that a footprint is found in multiple libraries, chose to associate with the ones in *headstage*.
 
-###<a name="Bridge-hw">Bridge</a>
+## <a name="Bridge-hw">Bridge</a>
 As illustrated by the [Receiver block in the system overview](#figure_overview), the bridge mainly consists of three antenna-2.4GHz radio pairs for wireless communication, Blackfin DSP for processing, Ethernet/MAC chip for communication with gtkclient, and DAC (typo of DAC in Tim's thesis) for outputting received neural signals as audio.
 
 In addition to wireless communication with the headstages, the bridge is also needed to program and debug the headstages.
@@ -171,7 +172,7 @@ Specifically, the parallel port to SPI correspondence is:
 
 The modified flash cable will include the capacitor and the NPN transistor. The polarity of the 7-pin connector can be figured out by probing to see which pin is grounded onboard the bridge.
 
-###<a name="headstages">Headstages</a>
+## <a name="headstages">Headstages</a>
 
 In image below, the fully assembled RHA-headstage is on the left. The RHD-headstage is on the right.
 
@@ -209,10 +210,10 @@ top-row|23|22|21|20|19|18|17|16|15|14|13|12|11|10|9|8|
 -------|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 bot-row|24|25|26|27|28|29|30|31|0|1|2|3|4|5|6|7|
 
-###<a name="Firmware">Firmware</a>
+## <a name="Firmware">Firmware</a>
 The firmware is written in a combination of C and Blackfin assembly language. While Analog Devices (ADI) provides its own software development toolchains, it requires purchasing a pretty expensive license (though it comes with a lot more support). For the myopen and this project, the open source gnu gcc blackfin toolchain is used. Further, all development was done on debian based OS. The Makefiles in this repository are tested only in Ubuntu 14.04. Minor adjustments might be needed to work on other debian-based OS.
 
-####<a name="Firmware-dependency">Dependency</a>
+## <a name="Firmware-dependency">Dependency</a>
 
 Compiling the firmware requires the [Blackfin Toolchain in Linux for Bare Metal](https://blackfin.uclinux.org/doku.php?id=toolchain:installing). For debian-based linux OS:
 
@@ -220,7 +221,7 @@ Compiling the firmware requires the [Blackfin Toolchain in Linux for Bare Metal]
 * Extract and move to `/opt`
 * Add path to `/opt/uClinux/bfin-elf/bin` to the `PATH` variable through `.bashrc`
 
-Two must-have references:
+Two must-have references to understand Blackfin architecture:
 
 * [ADSP-BF5xx/ADSP-BF60x Blackfin Processor Programming Reference](http://www.analog.com/media/en/dsp-documentation/processor-manuals/Blackfin_pgr_rev2.2.pdf), describes all assembly commands and options.
 * [ADSP-BF533 Blackfin Processor Hardware Reference](http://www.analog.com/media/en/dsp-documentation/processor-manuals/ADSP-BF533_hwr_rev3.6.pdf), describes all components and functions of the processor.  BF533 processor is mostly identical with BF532, which are the processors onboard the headstages. For the bridge, see BF537.
@@ -285,7 +286,7 @@ Verifying all..
 
 All pages verified correctly! :)
 ```
-####<a name="Bridge-fw">Bridge</a>
+## <a name="Bridge-fw">Bridge</a>
 
 The bridge firmware was not modified from the original myopen project (except the Makefile, for directory consistency). To flash the bridge, connect the flash cable to the bridge header pins as below, note the direction of cable connection is marked on the red flash cable.
 
@@ -302,7 +303,7 @@ The bridge firmware was not modified from the original myopen project (except th
  
 	`make flash` will use either the libparapin based `flash.c` or pyparallel based `flash.py` to write the firmware to memory, based on what option is enabled in the Makefile under the `flash` rule. The default option will use the Python method.
 
-####<a name="RHA-fw">RHA-headstage</a>
+## <a name="RHA-fw">RHA-headstage</a>
 
 The RHA-headstage firmware was not modified from the original myopen project (except the Makefile, for directory consistency). To flash the heastage, connect the flash cable to the bridge header pins, and the 9-pins Omnetics cable to the bridge as shown below, note the direction of cable connection is marked on the red flash cable.
 
@@ -337,7 +338,7 @@ When powered on, the LED onboard should blink periodically.
 
 The file `memory_map.ods` is a spreadsheet visualizing the memory organization used in the RHA-headstage firmware.
 
-####<a name="RHD-fw">RHD-headstage</a>
+## <a name="RHD-fw">RHD-headstage</a>
 
 The parallel port-to-bridge connections and bridge-to-headstage connections are identical for RHD-headstage as for RHA-headstages. However, there are multiple firmwares available in the `myopen_multi/headstage2_firmware` directory. To program the RHD-headstage to use the final firmware version -- `radio_gain_IIR_SAA.asm`, navigate to that directory and:
 
@@ -364,7 +365,7 @@ The parallel port-to-bridge connections and bridge-to-headstage connections are 
 
 When turned on, the onboard LED should blink periodically.
 
-####<a name="firmware-versions">Firmware versions</a>####
+## <a name="firmware-versions">Firmware versions</a>####
 There are other firmware version in this directory, many of them were used in the process and developing
 the final firmware.
 
@@ -418,15 +419,17 @@ the final firmware.
 
 * `radio_AGC_IIR.asm`:
 
-    Built off radio_AGC.asm, but added two IIR biquads to act as band-pass filter, set to [500, 9000Hz]. Compile with `FIMRWARE_VERSION=radio_AGC_IIR`, use "memory_AGC_IIR.h".
+    Built off radio_AGC.asm, but added two IIR biquads to act as band-pass filter, set to [250, 9000Hz]. Compile with `FIMRWARE_VERSION=radio_AGC_IIR`, use "memory_AGC_IIR.h".
 
     The blackfin cache memory organization can be visualized by the spreadsheet `radio_AGC_IIR_memoryMap.ods`.
 
     To use with gtkclient, compile gtkclient with `RADIO_AGC_IIR` set to true in its Makefile. Same spike false-positives will occur.
                    
-    Note that unlike the original gtkclient, this version will not have an option to set the gain. This is because previously the samples were 12-bits, with Q16 values, the IIR may adjust its coefficients to apply a gain of up to 2 on its incoming samples, this is the mechanism through which Tim's gtkclient applies the gain. In the RHD version of headstage, the incoming samples are already 16-bits, therefore no gain needs/should be applied.
+    <s>Note that unlike the original gtkclient, this version will not have an option to set the gain. This is because previously the samples were 12-bits, with Q16 values, the IIR may adjust its coefficients to apply a gain of up to 2 on its incoming samples, this is the mechanism through which Tim's gtkclient applies the gain. In the RHD version of headstage, the incoming samples are already 16-bits, therefore no gain needs/should be applied.</s> 
+    
+    The `IIR-gain` field allows an extra gain to be applied via the low-pass biquad. In practice, this should limitied between [-2.5, 2.5]. See [Wireless Headstage: Implementing direct-form I biquad IIR filters](http://allenyin.github.io/reading_list/2016/01/DirectFormI-IIR-butterworth-filters) for details. This is the case for all RHD firmware containing AGC and IIR stages.
                    
-    By changing the IIR-biquad coefficients, oscillations of different frequency may be introduced. The `osc` radio button in this version of gtkclient does this. Clicking that radio button sets the IIR coefficients of the selected channels so the final IIR outputs oscilate at 919Hz. Clicking the `500-9000Hz` radio button restores the bandpass filtering behavior on the selected channels. This may serve as a good test for radio operation.
+    By changing the IIR-biquad coefficients, oscillations of different frequency may be introduced. The `osc` radio button in this version of gtkclient does this. Clicking that radio button sets the IIR coefficients of the selected channels so the final IIR outputs oscilate at 250Hz. Clicking the `250-9000Hz` radio button restores the bandpass filtering behavior on the selected channels. This may serve as a good test for radio operation.
 
 * `IIR_oscillator_test.asm`: 
    
@@ -438,20 +441,26 @@ the final firmware.
 
      Adding the spike-sorting using SAA instructions to radio_AGC_IIR.asm. <s>This is the final firmware for RHD headstages</s>. Compile with `FIRMWARE_VERSION=radio_AGC_IIR_SAA`, uses "memory_AGC_IIR_SAA.h". 
 
-     The blackfin cache memory organization can be visualized by the spreadsheet `radio_all_memoryMap.ods`.
+     The blackfin cache memory organization can be visualized by the spreadsheet `radio_AGC_IIR_SAA_memoryMap.ods`.
 
      Edit on 4/5/2016 - Validation has shown that AGC makes spike sort harder when SNR is low. Therefore, this is no longer recommended as the final version for RHD-headstage.
 
 * `radio_gain_IIR_SAA.asm`:
 
-     The IIR and SAA parts of the signal chain are present in this version of the firmware. However, the AGC stage has been replaced by a manually set fixed-gain stage, the gain ranges from -128 to 127.5 in increments of 0.5. Compile with `FIRMWARE_VERSION=radio_gain_IIR_SAA`, uses "memory_gain_IIR_SAA.h".
+     The IIR and SAA parts of the signal chain are present in this version of the firmware. However, the AGC stage has been replaced by a manually set fixed-gain stage, the gain ranges from -128 to 127.5 in increments of 0.5. In gtkclient, this is the box labeled `preGain`. Compile with `FIRMWARE_VERSION=radio_gain_IIR_SAA`, uses "memory_gain_IIR_SAA.h".
 
     The blackfin cache memory organization can be visualized by the spreadsheet `radio_gain_IIR_SAA_memoryMap.ods`.
 
-    As of 4/5/2016, this is recommended as the final firmware version to be used on the RHD-headstage.
+    <s>As of 4/5/2016, this is recommended as the final firmware version to be used on the RHD-headstage.</s>
+
+* `radio_AGC_LMS_IIR_SAA.asm`:
+
+    This version contains AGC, LMS, IIR, and SAA stage (the same signal chain as the RHA version), with the exception that the IIR stage contains only 1 LPF and HPF biquad). The LMS stage is incredibly useful for real recordings to reduce the noise and the IIR-gain can then amplifier the passband even more. LMS can be turned off via the setting in gtkclient. As of 7/26/2017, this is the preferred firmware version to use on the RHD-headstages.
+
+    The blackfin cache memory organization can be visualized by `radio_AGC_LMS_IIR_SAA_memoryMap.ods`.
 
 
-####<a name="JTAG-testing">JTAG testing</a>
+## <a name="JTAG-testing">JTAG testing</a>
 Both RHD and RHA headstages have JTAG connectors that allows for in-circuit debugging. Documented here are the procedures for using the [gnICE debugger](https://docs.blackfin.uclinux.org/doku.php?id=hw:jtag:gnice-plus). 
 
 After flasing the firmware you want to test onto the headstage, connect the 9-pin Omnetics connector labeled L on the [bridge](#bridge_labeled) to the 9-pin Omnetics connector on the back of the headstage.
@@ -504,7 +513,7 @@ To launch Insight, type `bfin-elf-insight stage.dxe`, should be able to connect 
 
 As of version6.6, Insight may pop messages asking `Make breakpoint pending on future shared library load?` -- choose `no` on all of them. Error message saying `error: bad text index "4"` can also be safely ignored by clicking `ok`.
 
-#####<a name="Utility-programs">Utility Programs</a>
+## <a name="Utility-programs">Utility Programs</a>
 
 `myopen_multi/headstage2_firmware` also includes a number of utility programs used in the development and debugging process:
 
@@ -591,13 +600,13 @@ As of version6.6, Insight may pop messages asking `Make breakpoint pending on fu
     To use `calc_memoryAddr.py`, change the variables defined in the beginning of the file to match the corresponding firmware memory header file. Then run `setAGC(15)` for example to calculate what address gtkclient would output for changing the AGC target of channel 15. That address can then be verified against the `radio_AGC_memoryMap.ods`, for example, in the case of testing `radio_AGC.asm`.
 
 
-##<a name="gtkclient">Client Software</a>
+## <a name="gtkclient">Client Software</a>
 
 The client software, *gtkclient* is as summarized in Hanson's [thesis](http://m8ta.com/tim/dissertation.pdf)
 
 > The sorting client is written in C/C++ using the GTK2 GUI toolkit with OpenGL and HLSL for graphics, [...] exclusively on Debian GNU/Linux. It consists of around 12600 lines of code, much for managing the GUI, displaying waveforms on the screen, maintaining persistent state, saving data, and communicating with [other] software clients [such as BMI3].
 
-###<a name="gtkclient-dependency">Dependency</a>
+## <a name="gtkclient-dependency">Dependency</a>
 
 Most of the dependency can be installed by going to `myopen_multi/gtkclient_multi` and run `make deps` and following the instructions.
 
@@ -609,7 +618,9 @@ gtkclient also requires `nvidia-cg-toolkit`, it is recommended (if not mandatory
 
 gtkclient is known to work fine on `Nvidia GeForce GTX760/770/550 Ti`. 
 
-###<a name="gtkclient-compile">Compilation</a>
+On different Linux distros, the file path to `HDF5` and `libmatio` may be different. Compilation errors regarding these libraries can be fixed by giving the installed paths to them in [gtkclient's Makefile](https://github.com/allenyin/allen_wireless/blob/master/myopen_multi/gtkclient_multi/Makefile)(`HDF4INCLUDE`).
+
+## <a name="gtkclient-compile">Compilation</a>
 
 gtkclient can be compiled to work with both RHA-headstage and RHD-headstage, the latter of which may operate on multiple versions of firmware.
 
@@ -633,7 +644,7 @@ Then `make clean; make` to compile.
 
 To compile gtkclient to work with other [firmware versions on RHD-headstage](#firmware-versions), set the corresponding option among `HEADSTAGE_TIM`, `RADIO_BASIC`, `RADIO_AGC`, `RADIO_AGC_IIR`, `RADIO_AGC_IIR_SAA` and `RADIO_GAIN_IIR_SAA` to `true` while setting the others to `false`.
 
-###<a name="running-gtkclient">Running gtkclient</a>
+## <a name="running-gtkclient">Running gtkclient</a>
 
 Communication between gtkclient and the headstages work as follows:
 
@@ -666,7 +677,7 @@ Actions made in the gtkclient GUI may result in command packets sent from gtkcli
 
 The gtkclient interfaces for both RHA-headstage and RHD-headstage are largely similar. It's recommended to read this entire section to understand the interfaces and their differences.
 
-###<a name="RHAgtkclient">RHA-headstage gtkclient</a>
+## <a name="RHAgtkclient">RHA-headstage gtkclient</a>
 
 Below is a screenshot of the main interface of gtkclient compiled for RHA-headstage (`HEADSTAGE_TIM=true`), when the `rasters` tab is selected.
 
@@ -762,81 +773,34 @@ The `Raster Window` selection box selects which channels' rasters are viewed. Ea
 The `Raster span` selection box sets the time length of the displayed data for the raster display (see `g_rasterSpan` in `src/gtkclient.cpp`).
 
 
-###<a name="RHDgtkclient_AGC">RHD-headstage gtkclient with AGC</a>
+## <a name="RHDgtkclient">RHD-headstage gtkclient</a>
 
-Below is a screenshot of the main interface of gtkclient compiled for RHD-headstage <s>deployment</s> firmware (`RADIO_AGC_IIR_SAA=true`), with the `raster` tab selected.
+Below is a screenshot of the main interface of gtkclient compiled for RHD-headstage <s>deployment</s> firmware (`RADIO_AGC_LMS_IIR_SAA=true`), with the `raster` tab selected.
 
-![RHDclient_main_AGC](https://github.com/allenyin/allen_wireless/raw/master/images/RHDgtkclientMain_AGC.png)
+![RHDclient_main_LMS](https://github.com/allenyin/allen_wireless/raw/master/images/RHDgtkclientMain_LMS.png)
 
-It is very similar to that of the RHA-headstage gtkclient. The main differences are:
+It is now mostly identical to that of the RHA-headstage gtkclient. The biggest difference is the options available in the signal-chain selection box.
 
-1. There's no `gain` input setting near the channel selection boxes. Consequently, there is no `Set all gains from A` button in the `rasters` pane.
+These differences reflect the differences in the DSP signal-chain implemented. Specifically, we have introduced `Samples from Intan` as the first inspectable signal, and the removal of the `x4(n-1)/y3(n-1)` to `y4(n-2)` items from the signal chain. The removal is due to the RHD-headstage only implement two IIR biquads instead of 4.
 
-2. There is no `LMS` settings.
+We have reduced the available filter options to either inducing osccilation using `osc`, or use the default option of `250-9kHz`. The `osc` option sets the filters to oscillate at 250Hz instead of 919Hz used in RHA-headstage.
 
-3. The options available in the `filter` box are different.
-
-4. The options available in the signal-chain selection box are different.
-
-These differences reflect the differences in the DSP signal-chain implemented in RHD-headstage's <s>deployment</s> AGC-version of firmware, as well as the hardware difference between the `Intan RHD2132` amplifiers and the `Intan RHA2132` amplifiers + ADC combination. The signal-chain implemented here includes, in cascading order:
-
-1. AGC - to amplify the input signal to a fixed power level. However, due to implementation differences, the same `AGC target` setting here will yield different resulting signal level from that in RHA-headstage-gtkclient.
-
-2. Infinite Impulse Response (IIR) digital filters. The RHD-headstage firmware implements 4-poles butterworth bandpass filter by cascading two direct-form I biquads. The coefficients of tehse filters can be set in specific ways:
-
-    * The `250-9kHz` option in the `filter` box sets the filter on the four channels selected to pass the frequencies between 250Hz and 7kHz. This is the default option. Note the slightly different frequency range here from RHAgtkclient.
-    * The `osc` option in the `filter` box sets the filter on the four channels such that the filter outputs oscillate at roughly 919Hz, with amplitude depending on the signal power prior to selecting this option. The oscillation is only displayed when the `8 y2(n-1)/final output` option is selected in the `signal chain` box.
-
-        The oscillation frequency is different due to ease of selecting coefficients using the two-stage bandpass filters. 
-
-    The behavior of filtering option selection is the same.
-
-There is no `LMS` stage in the signal chain -- thus no `LMS` settings.
-
-The new amplifiers digitize the input signals with higher precision, so there is no need and no available bits to digitally amplify the signals in the IIR stage - hence the removal of `gain` input settings (see [IIR implementation](http://allenyin.github.io/reading_list/2016/01/DirectFormI-IIR-butterworth-filters/) for details).
-
-As a result of the signal chain differences, the signal chain selection box on the `raster` page presents different options. The default option is `8 y2(n-1)/final output HPF`, which is the output of the last stage of IIR filters (high pass).
+The default signal chain, and that immediately preceeding spike sorting is `9 y2(n-1)/final output HPF`.
 
 The available options are:
 * `0 Samples from Intan`: They are samples output by the Intan RHD2132 amplifiers, before any DSP from the blackfin.
 * `1 Integrated mean`: Intermediate value used in the AGC stage, similar to an estimate of the raw input signal power.
 * `2 AGC gain`: channel's AGC gain
-* `3 AGC out`: Output of the AGC stage 
-* `4 x1(n-1)/AGC out`: Output of the AGC stage, input to the first IIR biquad.
-* `5 x1(n-2)`: Last time step's input to the first IIR biquad.
-* `6 y1(n-1) LPF`: Output of the first IIR biquad, equivalent to input to the second IIR biquad.
-* `7 y1(n-2) LPF`: Last time step's output of the first IIR biquad/input to the second IIR biquad.
-* `8 y2(n-1)/final output HPF`: Output of the second IIR biquad, final output of the signal chain. It's the default option.
-* `9 y2(n-2) HPF`: Last time step's output of the second IIR biquad.
-
-Other these signal-chain related differences, everything else on RHAgtkclient and RHDgtkclient are identical.
-
-###<a name="RHDgtkclient_gain">RHD-headstage gtkclient with fixed gain</a>
-
-Below is a screenshot of the main interface of gtkclient compiled for RHD-headstage deployment firmware (`RADIO_GAIN_IIR_SAA=true`), with the `raster` tab selected.
-
-![RHDclient_main_gain](https://github.com/allenyin/allen_wireless/raw/master/images/RHDgtkclientMain_gain.png)
-
-It differs from RHDgtkclient-AGC in:
-
-1. There's no `AGC target` setting near the channel selection boxes. Instead, there is a `pre-gain` setting. The value here may range from -128 to -127.5, in increments of 0.5.
-
-2. The signal chain box offers different options, they reflect the differences between the firmware `radio_gain_IIR_SAA.asm` and `radio_AGC_IIR_SAA.asm`, which in cascading order:
-
-    1. Fixed pre-gain. The incoming samples from Intan amplifiers are directly multiplied by the manually set pre-gain.
-    2. IIR digital filters, these are identical as those in the AGC-version of firmware.
-
-Therefore, the signal chain selection box has less options. The default option is `6 y2(n-1)/final output HPF`, which is the output of the last stage of the IIR filters. The available options are:
-* `0 Samples from Intan`: They are samples output by the Intan RHD2132 amplifiers, before any blackfin DSP.
-* `1 Gained Sample`: The sample values after multiplied by pre-gain.
-* `2 x1(n-1)/Gained Sample`: Same as the gained sample, input to the first IIR biquad.
-* `3 x1(n-2)`: Last time step's input to the first IIR biquad.
-* `4 y1(n-1) LPF`: Output of the first IIR (low pass) biquad, equivalent to input to the second IIR biquad.
-* `5 y1(n-2) LPF`: last time step's output of the first IIR biquad/input to the second IIR biquad.
-* `6 y2(n-1)/final output HPF`: Output of the second IIR biquad (highpass), final output of the signal chain. It's the default option.
-* `7 y2(n-2) HPF`: Last time step's output of the second IIR biquad.
+* `3 Saturated AGC out`: Saturated Output of the AGC stage, used for LMS stage after.
+* `4 AGC/LMS out`: Ouput of the LMS stage. If LMS option is turned off, this is equivalent to AGC stage.
+* `5 x1(n-1)/LMS out`: Output of the LMS stage, input to the first IIR biquad.
+* `6 x1(n-2)`: Last time step's input to the first IIR biquad.
+* `7 y1(n-1) LPF`: Output of the first IIR biquad, equivalent to input to the second IIR biquad.
+* `8 y1(n-2) LPF`: Last time step's output of the first IIR biquad/input to the second IIR biquad.
+* `9 y2(n-1)/final output HPF`: Output of the second IIR biquad, final output of the signal chain. It's the default option.
+* `10 y2(n-2) HPF`: Last time step's output of the second IIR biquad.
     
-###<a name="SpikeSorting">Spike sorting</a>
+## <a name="SpikeSorting">Spike sorting</a>
 Below is a screenshot showing the RHDgtkclient-gain's `spikes` tab. Other than the absence of AGC setting, it is identical to RHAclient's.
 
 ![spike_page](https://github.com/allenyin/allen_wireless/raw/master/images/RHDgtkclient_spikes.png)
@@ -857,9 +821,7 @@ After the template and apertures for a channel are set and sent to the headstage
 
 When spikes are detected, the interspike interval, binned at 768us spike sample rate is plotted on the bottom of the PCA-projection window. This can be seen in the screenshot as well for channel 71. 
 
-
-
-###<a name="SavingRecordings">Saving recordings</a>
+## <a name="SavingRecordings">Saving recordings</a>
 
 Below is a screenshot showing the client's `file` tab, identical for both RHAgtkclient and RHDgtkclient.
 
@@ -920,7 +882,7 @@ mstimer = mstimer/f_mstimer;    % convert values in mstimer to seconds
 spikeTimes = mstimer(spike_ts); % spike times in bridge time, in seconds
 ```
 
-###<a name="TestRecording">Test recording</a>
+## <a name="TestRecording">Test recording</a>
 
 Below is a screenshot showing the client's `test` tab, identical for both RHAgtkclient and all versions of RHDgtkclient.
 
@@ -936,7 +898,7 @@ On the left side, the `test` tab provides several buttons. The purpose of this t
 
 3. `Stop`: Stops the recording. Allows new recording to be initiated subsequently from either `test` or `file` page.
 
-###<a name="gtkclientConfigurations">Configuration files</a>
+## <a name="gtkclientConfigurations">Configuration files</a>
 
 Instances of gtkclient saves information about its state via [protobuf](https://developers.google.com/protocol-buffers/docs/cpptutorial) in two binary files: `state.bin` and `configuration.bin`.
 
@@ -951,11 +913,11 @@ However, be careful to not mix the usage of RHA-headstage/gtkclient generated te
 
 In general, do not mix using RHA-headstages with RHD-headstages.
 
-###<a name="TCPgtkclient">Communication with other programs</a>
+## <a name="TCPgtkclient">Communication with other programs</a>
 
 gtkclient can send firing rates information to requester throgh a TCP/IP socket. See Skunkape for implementation.
 
-###<a name="gtkclient-TODO">TODO/possible improvements</a>
+## <a name="gtkclient-TODO">TODO/possible improvements</a>
 * More threadsafe
 
 * Redsicovery of bridges after gtkclient is killed...maybe implement by remembering IP of bridges?
@@ -971,7 +933,7 @@ This section has only covered using gtkclient compiled with `HEADSTAGE_TIM` opti
 
 Compilations of gtkclient with the other RHD-headstage options contains a subset of the `RADIO_AGC_IIR_SAA` gtkclient's functions.
 
-##<a name="quickstart">Quick Start</a>
+## <a name="quickstart">Quick Start</a>
 
 Here are steps to use 2 RHD-headstages with deployment firmware:
 
