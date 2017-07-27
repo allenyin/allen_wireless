@@ -777,7 +777,7 @@ The `Raster span` selection box sets the time length of the displayed data for t
 
 Below is a screenshot of the main interface of gtkclient compiled for RHD-headstage <s>deployment</s> firmware (`RADIO_AGC_LMS_IIR_SAA=true`), with the `raster` tab selected.
 
-![RHDclient_main_LMS](https://github.com/allenyin/allen_wireless/raw/master/images/RHDgtkclient_main_LMS.png)
+![RHDclient_main_LMS](https://github.com/allenyin/allen_wireless/raw/master/images/RHDclient_main_LMS.png)
 
 It is now mostly identical to that of the RHA-headstage gtkclient. The biggest difference is the options available in the signal-chain selection box.
 
