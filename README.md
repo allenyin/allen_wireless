@@ -863,7 +863,7 @@ The program `convert` is compiled along with gtkclient from `src/convert.cpp`. R
 
 * $.nlg: Contains raw signed 8-bit integer matrix of analog traces (the continuously transmitted four selected channels). It's a matrix of 4x(received packets x 6). Each packet contains 6 samples from 4 channels. The script `plot_raw_channels.m` will plot these signals given the name of the nlg file.
 
-* $.chn.gz: gzipped version of $.nlg files.
+* $.chn.gz: gzipped version of the channel information of the raw analog traces.
 
 * $.log.gz: gzipped text of messages within the file (i.e. ASCII versions of the outgoing commands)
 
