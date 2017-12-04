@@ -82,6 +82,8 @@ int main(int argn, char **argc){
 		printf("\t\t\t spike times, indexes time or mstimer \n");
 		printf("\t\t\t these are sorted on the headstage but only  \n");
 		printf("\t\t\t timestamped on the bridge to conserve bandwidth \n");
+        printf("\t\t\t this is 0-indexed, in matlab, add 1 to spike_ts \n");
+        printf("\t\t\t before indexing time or mstimer!\n");
 		printf("\t\t spike_ch \n");
 		printf("\t\t\t channel of the spike. same length as spike_ts.\n");
 		printf("\t\t spike_unit \n");
@@ -245,6 +247,7 @@ int main(int argn, char **argc){
 		//okay, allocate appropriate data structs:
 		// time (double), analog(i8), channel (i8),
 		// spike_time (double), spikes(i32)
+        // radio_ch (i16 -- 2 bytes), t_id (i16 -- 2 bytes)
 		double* time;
 		double* strobe_tx;
 		double* strobe_rx;
@@ -255,7 +258,10 @@ int main(int argn, char **argc){
 		mat_int8_t* spike_ch;
 		mat_int8_t* spike_unit;
 		mat_uint32_t*  track_frame;
+        mat_uint16_t* radio_ch;
+        mat_uint16_t* t_id;
 		// store timestamp (in samples), rx time (not necessarily accurate) - one per pkt
+        // store radio_ch and tid - one per received data pkt.
 		// store channel # and sample
 		// store channel & timestamp for spikes.
 		// just ignore dropped packets for now.
@@ -270,6 +276,11 @@ int main(int argn, char **argc){
 		  if(!spike_ch){ printf("could not allocate spike_ch variable."); exit(0);}
 		spike_unit = (mat_int8_t*)malloc(spikes * 32);
 		  if(!spike_unit){ printf("could not allocate spike_unit variable."); exit(0);}
+
+        radio_ch = (mat_uint16_t*)malloc(rxpackets * sizeof(mat_uint16_t));
+          if(!radio_ch){ printf("could not allocate radio_ch variable."); exit(0);}
+        t_id = (mat_uint16_t*)malloc(rxpackets * sizeof(mat_uint16_t));
+          if(!t_id){ printf("could not allocate t_id variable."); exit(0);}
 
 		analog = (unsigned char*)malloc(rxpackets * 24 );
 		  if(!analog){ printf("could not allocate analog variable."); exit(0);}
@@ -334,6 +345,8 @@ int main(int argn, char **argc){
 									msgs[echo][0] = 0;
 								}
 								time[tp] = rxtime + (double)i * 6.0 / 31250.0;
+                                radio_ch[tp] = (mat_uint16_t)radioChannel;
+                                t_id[tp] = (mat_uint16_t)tid;
 								mstimer[tp] = p.ms;
 								for(int j=0; j<6; j++){
 									for(int k=0; k<4; k++){
@@ -430,7 +443,7 @@ int main(int argn, char **argc){
 					track_frame[kp] = frame;
 					//fseeko(in,siz, SEEK_CUR);
 					pos += 16+siz;
-					printf("%lg %d\n", txtime, frame);
+					//printf("%lg %d\n", txtime, frame);
 					kp++;
 					if(kp > strobepackets){
 						printf("error! time position kp > strobepackets\n");
@@ -519,8 +532,21 @@ int main(int argn, char **argc){
 		Mat_VarWrite( mat, matvar, MAT_COMPRESSION_NONE );
 		Mat_VarFree(matvar);
 		free(track_frame);
-		
 
+        // radio_ch
+        matvar = Mat_VarCreate("radio_ch", MAT_C_UINT16, MAT_T_UINT16,
+                                1, &tpp, radio_ch, 0);
+        Mat_VarWrite(mat, matvar, MAT_COMPRESSION_NONE);
+        Mat_VarFree(matvar);
+        free(radio_ch);
+
+        // t_id
+        matvar = Mat_VarCreate("t_id", MAT_C_UINT16, MAT_T_UINT16,
+                                1, &tpp, t_id, 0);
+        Mat_VarWrite(mat, matvar, MAT_COMPRESSION_NONE);
+        Mat_VarFree(matvar);
+        free(t_id);
+		
 		//most analog traces do not fit into 2 gigs -- write them out RAW.
 		printf("writing raw analog traces\n");
 		fwrite(analog, 1, tp * 24, nlg);

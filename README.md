@@ -19,8 +19,6 @@
     * [Running gtkclient](#running-gtkclient)
         * [RHA-headstage gtkclient](#RHAgtkclient)
         * [RHD-headstage gtkclient](#RHDgtkclient)
-<!---        * [RHD-headstage gtkclient with AGC](#RHDgtkclient_AGC)
-        * [RHD-headstage gtkclient with fixed gain](#RHDgtkclient_gain) -->
         * [Spike sorting](#SpikeSorting)
         * [Saving recordings](#SavingRecordings)
         * [Test recording](#TestRecording)
@@ -857,7 +855,7 @@ The program `convert` is compiled along with gtkclient from `src/convert.cpp`. R
 * $.mat, which contains the vectors:
     * `time` - wall time within the client, synchronous to the BMI (or any program requesting firing rates through TCP/IP).
     * `mstimer` - hardware clock on bridge, runs at 9155.273438Hz. One entry per received packet. Timestamps for spikes should be pretty accurate.
-    * `spike_ts` - spike times, indexes time and mstimer. The spikes are matched on the headstages but only timestamped on teh bridge to conserve bandwidth.
+    * `spike_ts` - spike times, indexes time and mstimer. The spikes are matched on the headstages but only timestamped on teh bridge to conserve bandwidth. Note that `spike_ts` indexes into `time` and `mstimer` in C-style, which is 0-indexed. When using in MATLAB, add 1 to this vector.
     * `spike_ch` - Channel of the spikes detected, same length as `spike_ts`.
     * `spike_unit` - Unit of the spike detected in a channel. Same length as `spike_ts`. Note this wireless system assumes that both units in a channel can't fire at once.
 
@@ -875,7 +873,7 @@ To convert the spike times relative to recording start, the following scheme can
 load(spikeFile);                % load .mat file
 f_mstimer = 9155.273438;        % hardware clock in Hz
 mstimer = double(mstimer);      % convert from uint32 to double
-spike_ts = double(spike_ts);    % convert from uint32 to double
+spike_ts = spike_ts+1;          % convert to 1-indexed
 
 mstimer = mstimer - mstimer(1); % process mstimer to start at 0
 mstimer = mstimer/f_mstimer;    % convert values in mstimer to seconds
