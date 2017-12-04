@@ -858,6 +858,8 @@ The program `convert` is compiled along with gtkclient from `src/convert.cpp`. R
     * `spike_ts` - spike times, indexes time and mstimer. The spikes are matched on the headstages but only timestamped on teh bridge to conserve bandwidth. Note that `spike_ts` indexes into `time` and `mstimer` in C-style, which is 0-indexed. When using in MATLAB, add 1 to this vector.
     * `spike_ch` - Channel of the spikes detected, same length as `spike_ts`.
     * `spike_unit` - Unit of the spike detected in a channel. Same length as `spike_ts`. Note this wireless system assumes that both units in a channel can't fire at once.
+    * `radio_ch` - Radio channel of each received packet.
+    * `t_id` - Sock-thread id (each sock thread handles communication with each bridge) of each received packet.
 
 * $.nlg: Contains raw signed 8-bit integer matrix of analog traces (the continuously transmitted four selected channels). It's a matrix of 4x(received packets x 6). Each packet contains 6 samples from 4 channels. The script `plot_raw_channels.m` will plot these signals given the name of the nlg file.
 

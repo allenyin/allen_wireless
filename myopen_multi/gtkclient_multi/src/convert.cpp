@@ -88,6 +88,12 @@ int main(int argn, char **argc){
 		printf("\t\t\t channel of the spike. same length as spike_ts.\n");
 		printf("\t\t spike_unit \n");
 		printf("\t\t\t unit of the spike. same length as spike_ts.\n");
+        printf("\t\t radio_ch \n");
+        printf("\t\t\t radio channel associated with each packet,\n");
+        printf("\t\t\t same length as mstimer and time\n");
+        printf("\t\t t_id \n");
+        printf("\t\t\t index of sock-thread associated with each packet,\n");
+        printf("\t\t\t same length as mstimer and time\n");
 		printf("\t $.nlg \n");
 		printf("\t\t raw signed 8-bit integer matrix of analog traces. \n");
 		printf("\t\t matrix: 4 by (rxpackets * 6) \n");
